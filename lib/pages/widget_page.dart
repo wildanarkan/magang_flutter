@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:magang_flutter/pages/business_trip_detail_page.dart';
 import 'package:magang_flutter/pages/business_trip_page.dart';
 import 'package:magang_flutter/pages/home_page.dart';
+import 'package:magang_flutter/pages/wallet_page.dart';
 import 'package:magang_flutter/widgets/build_button.dart';
 
 class WidgetPage extends StatelessWidget {
@@ -50,6 +51,18 @@ class WidgetPage extends StatelessWidget {
                 context,
                 MaterialPageRoute(
                   builder: (context) => const BusinessTripDetailPage(),
+                ),
+              );
+            },
+          ),
+          BuildButton(
+            context: context,
+            title: 'wallet page',
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => const WalletPage(),
                 ),
               );
             },
