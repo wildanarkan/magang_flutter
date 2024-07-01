@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:magang_flutter/common/app_color.dart';
+import 'package:magang_flutter/pages/payroll_history_page.dart';
+import 'package:magang_flutter/widgets/build_rowicon.dart';
 import 'package:magang_flutter/widgets/build_test_appbar.dart';
 
 class LeaveHistoryPage extends StatelessWidget {
@@ -6,37 +9,64 @@ class LeaveHistoryPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(
-      appBar: BuildTestAppbar(
+    return  Scaffold(
+      appBar: const BuildTestAppbar(
         title: 'Leave'),
         body: Column(
           children: [
-            Padding(
-              padding: EdgeInsets.symmetric(horizontal: 30 ,vertical: 20),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Row(
-                    children: [
-                      Icon(Icons.task,
-                      size: 24,),
-                      SizedBox(width: 20,),
-                      Text(
-                        'Approval',
-                        style: TextStyle(
-                          fontWeight: FontWeight.w600,
-                          fontSize: 14
-                        ),
-                      )
-                    ],
-                  ),
-                  Icon(Icons.arrow_forward_ios,
-                  size: 20,)
-                ],
-              ),
-            )
+            BuildRowicon(
+              icon: Icons.task,
+              title: 'Approval',
+              iconColor: AppColor.primary,
+              onTap: (){
+               Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => const PayrollHistoryPage(),
+                ),
+              );
+              },
+               ),
+               BuildRowicon(
+              icon: Icons.task_alt,
+              iconColor: AppColor.primary,
+              title: 'Make Leave Application',
+              onTap: (){
+               Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => const PayrollHistoryPage(),
+                ),
+              );
+              }, ),
+               BuildRowicon(
+              icon: Icons.people_alt,
+              iconColor: AppColor.primary,
+              title: 'Employee Leave History',
+              onTap: (){
+               Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => const PayrollHistoryPage(),
+                ),
+              );
+              }, ),
+               BuildRowicon(
+              icon: Icons.person,
+              iconColor: AppColor.primary,
+              title: 'Personal Leave History',
+              onTap: (){
+               Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => const PayrollHistoryPage(),
+                ),
+              );
+              }, ),
           ],
         ),
     );
   }
 }
+
+

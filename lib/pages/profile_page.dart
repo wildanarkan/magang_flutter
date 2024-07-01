@@ -5,6 +5,7 @@ import 'package:magang_flutter/pages/leave_history_page.dart';
 import 'package:magang_flutter/pages/payroll_history_page.dart';
 import 'package:magang_flutter/pages/profile_detail_page.dart';
 import 'package:magang_flutter/widgets/build_appbar.dart';
+import 'package:magang_flutter/widgets/build_rowicon.dart';
 
 class ProfilePage extends StatelessWidget {
   const ProfilePage({super.key});
@@ -24,64 +25,63 @@ class ProfilePage extends StatelessWidget {
             children: [
               header(),
               const SizedBox(height: 30),
-
-              // Uncomment and adjust as needed for additional menu items
               Positioned(
-                top: 250, // Adjust the top position as needed
+                top: 240,
                 left: 30,
                 right: 30,
                 child: Column(
                   children: [
-                    GestureDetector(
-                        onTap: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (BuildContext context) =>
-                                  const ProfileDetailPage(),
-                            ),
-                          );
-                        },
-                        child: buildItemMenu(Icons.contact_page, 'Detail')),
-                    const SizedBox(height: 20),
-                    GestureDetector(
+                    BuildRowicon(
+                      icon: Icons.contact_page_sharp,
+                      iconColor: AppColor.primary,
+                      title: 'Detail',
                       onTap: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (BuildContext context) =>
-                                  const LeaveHistoryPage(),
-                            ),
-                          );
-                        },
-                      child: buildItemMenu(Icons.personal_injury_sharp, 'Leave History')),
-                    const SizedBox(height: 20),
-                    GestureDetector(
-                      onTap: () {
-                         Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (BuildContext context) =>
-                                  const PayrollHistoryPage(),
-                            ),
-                          );
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => const ProfileDetailPage(),
+                          ),
+                        );
                       },
-                      child: buildItemMenu(Icons.account_balance_wallet_rounded,
-                          'Payroll History'),
                     ),
-                    const SizedBox(height: 20),
-                    GestureDetector(
-                       onTap: () {
-                         Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (BuildContext context) =>
-                                  const ContractHistoryPage(),
-                            ),
-                          );
+                    BuildRowicon(
+                      icon: Icons.personal_injury_sharp,
+                      iconColor: AppColor.primary,
+                      title: 'Leave History',
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => const LeaveHistoryPage(),
+                          ),
+                        );
                       },
-                      child: buildItemMenu(
-                          Icons.contact_mail_outlined, 'Contract History'),
+                    ),
+                    BuildRowicon(
+                      icon: Icons.account_balance_wallet,
+                      iconColor: AppColor.primary,
+                      title: 'Payroll History',
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => const PayrollHistoryPage(),
+                          ),
+                        );
+                      },
+                    ),
+                    BuildRowicon(
+                      icon: Icons.contact_mail_outlined,
+                      iconColor: AppColor.primary,
+                      title: 'Contract History',
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => const ContractHistoryPage(),
+                          ),
+                        );
+                      },
                     ),
                     const SizedBox(height: 20),
                   ],
