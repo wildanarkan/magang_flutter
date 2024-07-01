@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:magang_flutter/pages/navigator_page.dart';
 import 'package:magang_flutter/widgets/background_image.dart';
+import 'package:magang_flutter/widgets/build_button.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -11,6 +13,7 @@ class LoginPage extends StatefulWidget {
 class _LoginPageState extends State<LoginPage> {
   final edtEmail = TextEditingController();
   final edtPassword = TextEditingController();
+
   login(String email, String password, BuildContext context) {
     // Implement your login logic here
   }
@@ -20,30 +23,28 @@ class _LoginPageState extends State<LoginPage> {
     super.dispose();
   }
 
-@override
-Widget build(BuildContext context) {
-  return Scaffold(
-    resizeToAvoidBottomInset: false,
-    body: Stack(
-      fit: StackFit.expand,
-      children: [
-        const BackgroundImage(
-          imageProvider: AssetImage('assets/background.png'),
-          imageAlignment: Alignment(0.16, 0),
+  @override
+  Widget build(BuildContext context) {
+    return SafeArea(
+      child: Scaffold(
+        resizeToAvoidBottomInset: true,
+        body: BackgroundImage(
+          imageProvider: const AssetImage('assets/background.png'),
+          imageAlignment: const Alignment(0.16, 0),
+          child: SingleChildScrollView(
+            child: Column(
+              // crossAxisAlignment: CrossAxisAlignment.,
+              children: [
+                buildHeader(),
+                // const Spacer(),
+                loginInput(),
+              ],
+            ),
+          ),
         ),
-        Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            buildHeader(),
-            const Spacer(),
-            loginInput(),
-          ],
-        ),
-      ],
-    ),
-  );
-}
-
+      ),
+    );
+  }
 
   Widget loginInput() {
     return Padding(
@@ -95,58 +96,46 @@ Widget build(BuildContext context) {
           const SizedBox(
             height: 20,
           ),
-          SizedBox(
-            width: double.infinity,
-            height: 50,
-            child: ElevatedButton(
-              onPressed: () {},
-              style: ButtonStyle(
-                backgroundColor: WidgetStateProperty.all<Color>(Colors.blue),
-                foregroundColor: WidgetStateProperty.all<Color>(Colors.white),
-                shape: WidgetStateProperty.all<RoundedRectangleBorder>(
-                  RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(15.0)),
+          BuildButton(
+            context: context,
+            title: 'Login',
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => const NavigatorPage(),
                 ),
-              ),
-              child: const Text(
-                'Login',
-              ),
-            ),
+              );
+            },
           )
         ],
       ),
     );
   }
 
-  AspectRatio buildHeader() {
-    return AspectRatio(
-      aspectRatio: 1,
+  Widget buildHeader() {
+    return SizedBox(
+      height: 500,
       child: Stack(
+
         children: [
           Positioned(
             left: 30,
             right: 30,
-            bottom: 20,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                ColorFiltered(
-                  colorFilter: const ColorFilter.mode(
-                    Colors.white,
-                    BlendMode.srcATop,
-                  ),
-                  child: Image.asset(
-                    'assets/logo.png',
-                    height: 350,
-                    width: 350,
-                  ),
-                ),
-                const SizedBox(width: 20),
-              ],
+            child: ColorFiltered(
+              colorFilter: const ColorFilter.mode(
+                Colors.white,
+                BlendMode.srcATop,
+              ),
+              child: Image.asset(
+                'assets/logo.png',
+                height: 350,
+                width: 350,
+              ),
             ),
           ),
           const Positioned(
-            top: 300,
+            top: 280,
             left: 30,
             right: 30,
             bottom: 0,
