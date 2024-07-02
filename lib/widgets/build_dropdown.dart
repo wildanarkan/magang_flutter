@@ -47,7 +47,7 @@ class _BuildDropdownState extends State<BuildDropdown> {
             width: double.infinity,
             padding: const EdgeInsets.all(10),
             decoration: BoxDecoration(
-                color: AppColor.complete,
+                color: AppColor.inputBackground,
                 borderRadius: BorderRadius.circular(10)),
             child: DropdownButton<String>(
               isExpanded: true,

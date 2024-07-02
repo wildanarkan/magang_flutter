@@ -55,12 +55,12 @@ class _BuildPickDateState extends State<BuildPickDate> {
             width: double.infinity,
             // padding: const EdgeInsets.all(10),
             decoration: BoxDecoration(
-              color: AppColor.complete,
+              color: AppColor.inputBackground,
               borderRadius: BorderRadius.circular(10),
             ),
             child: TextField(
               style: TextStyle(
-                color: AppColor.textBody,
+                color: AppColor.textTitle,
                 fontWeight: FontWeight.w500,
                 fontSize: 14,
               ),

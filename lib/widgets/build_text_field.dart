@@ -44,7 +44,7 @@ class _BuildTextFieldState extends State<BuildTextField> {
             width: double.infinity,
             padding: const EdgeInsets.all(10),
             decoration: BoxDecoration(
-                color: AppColor.complete,
+                color: AppColor.inputBackground,
                 borderRadius: BorderRadius.circular(10)),
             child: TextField(
               style: TextStyle(
@@ -58,8 +58,6 @@ class _BuildTextFieldState extends State<BuildTextField> {
                   borderSide: BorderSide.none,
                   borderRadius: BorderRadius.circular(10),
                 ),
-                // filled: true,
-                // contentPadding: const EdgeInsets.all(10),
               ),
             ),
           ),
