@@ -112,7 +112,9 @@ class _AskLeavePageState extends State<AskLeavePage> {
               context: context,
               title: 'Simpan',
               width: 320,
-              onPressed: () {},
+              onPressed: () {
+                Navigator.pop(context);
+              },
             ),
           ),
         ],

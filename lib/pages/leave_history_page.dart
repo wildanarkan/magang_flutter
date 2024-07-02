@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:magang_flutter/common/app_color.dart';
 import 'package:magang_flutter/pages/ask_leave_page.dart';
-import 'package:magang_flutter/pages/payroll_history_page.dart';
+import 'package:magang_flutter/pages/employee_leave_history_page.dart';
+import 'package:magang_flutter/pages/leave_request_page.dart';
+import 'package:magang_flutter/pages/personal_leave_history_page.dart';
 import 'package:magang_flutter/widgets/build_rowicon.dart';
 import 'package:magang_flutter/widgets/build_test_appbar.dart';
 
@@ -23,7 +25,7 @@ class LeaveHistoryPage extends StatelessWidget {
                Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (context) => const PayrollHistoryPage(),
+                  builder: (context) => const LeaveRequestPage(),
                 ),
               );
               },
@@ -48,7 +50,7 @@ class LeaveHistoryPage extends StatelessWidget {
                Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (context) => const PayrollHistoryPage(),
+                  builder: (context) => const EmployeeLeaveHistoryPage(),
                 ),
               );
               }, ),
@@ -60,7 +62,7 @@ class LeaveHistoryPage extends StatelessWidget {
                Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (context) => const PayrollHistoryPage(),
+                  builder: (context) => const PersonalLeaveHistoryPage(),
                 ),
               );
               }, ),

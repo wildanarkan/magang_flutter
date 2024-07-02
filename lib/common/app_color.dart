@@ -16,6 +16,8 @@ class AppColor {
   // TEXT 
   static Color textTitle =  const Color(0xff2A3739);
   static Color textBody = const Color(0xff8798AD);
+  static Color textContainer = const Color(0xffAE640B);
+  static Color textBUtton = const Color(0xffA81616);
 
   // INPUT
   static Color inputBackground = const Color(0xffFAFAFA);
@@ -35,6 +37,8 @@ class AppColor {
   static Color backgroundPending = const Color(0xffF0EAE0);
   static Color decline = const Color(0xffFA4D75);
   static Color backgroundDecline= const Color(0xffF0E0E0);
+  static Color backgroundContainer= const Color(0xffF0EAE0);
+
 
 
 }
