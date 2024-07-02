@@ -62,7 +62,7 @@ class _AddBusiniessTripPageState extends State<AddBusiniessTripPage> {
                   ),
                   const BuildTextField(
                     title: 'Company Address',
-                    required: true,
+                    required: false,
                   ),
                   BuildPickDate(
                     title: 'Pick Date',

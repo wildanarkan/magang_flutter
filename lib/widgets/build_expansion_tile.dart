@@ -22,7 +22,9 @@ class VExpansionTile extends StatefulWidget {
     this.collapsedTextColor,
     this.iconColor,
     this.collapsedIconColor,
-  })  : assert(
+    this.trailingIcon,
+    this.biayaExpansion,
+  }) : assert(
           expandedCrossAxisAlignment != CrossAxisAlignment.baseline,
           'CrossAxisAlignment.baseline is not supported since the expanded children '
           'are aligned in a column, not a row. Try to use another constant.',
@@ -36,6 +38,7 @@ class VExpansionTile extends StatefulWidget {
   final Color? backgroundColor;
   final Color? collapsedBackgroundColor;
   final Widget? trailing;
+  final Widget? trailingIcon;
 
   final bool initiallyExpanded;
   final bool maintainState;
@@ -47,17 +50,24 @@ class VExpansionTile extends StatefulWidget {
   final Color? collapsedIconColor;
   final Color? textColor;
   final Color? collapsedTextColor;
+  final bool? biayaExpansion;
 
   @override
   State<VExpansionTile> createState() => _ExpansionTileState();
 }
 
-class _ExpansionTileState extends State<VExpansionTile> with SingleTickerProviderStateMixin {
+class _ExpansionTileState extends State<VExpansionTile>
+    with SingleTickerProviderStateMixin {
   static const Duration _kExpand = Duration(milliseconds: 200);
 
-  static final Animatable<double> _easeOutTween = CurveTween(curve: Curves.easeOut);
-  static final Animatable<double> _easeInTween = CurveTween(curve: Curves.easeIn);
-  static final Animatable<double> _halfTween = Tween<double>(begin: 0.0, end: 0.5);
+  static final Animatable<double> _easeOutTween =
+      CurveTween(curve: Curves.easeOut);
+  static final Animatable<double> _easeInTween =
+      CurveTween(curve: Curves.easeIn);
+  static final Animatable<double> _halfTween =
+      Tween<double>(begin: 0.0, end: 0.5);
+  static final Animatable<double> _biayaTween =
+      Tween<double>(begin: 0.75, end: 1.50);
 
   final ColorTween _borderColorTween = ColorTween();
   final ColorTween _headerColorTween = ColorTween();
@@ -79,13 +89,19 @@ class _ExpansionTileState extends State<VExpansionTile> with SingleTickerProvide
     super.initState();
     _controller = AnimationController(duration: _kExpand, vsync: this);
     _heightFactor = _controller.drive(_easeInTween);
+    if(widget.biayaExpansion == true){
+    _iconTurns = _controller.drive(_biayaTween.chain(_easeInTween));
+    }else{
     _iconTurns = _controller.drive(_halfTween.chain(_easeInTween));
+    }
     _borderColor = _controller.drive(_borderColorTween.chain(_easeOutTween));
     _headerColor = _controller.drive(_headerColorTween.chain(_easeInTween));
     _iconColor = _controller.drive(_iconColorTween.chain(_easeInTween));
-    _backgroundColor = _controller.drive(_backgroundColorTween.chain(_easeOutTween));
+    _backgroundColor =
+        _controller.drive(_backgroundColorTween.chain(_easeOutTween));
 
-    _isExpanded = PageStorage.of(context).readState(context) as bool? ?? widget.initiallyExpanded;
+    _isExpanded = PageStorage.of(context).readState(context) as bool? ??
+        widget.initiallyExpanded;
     if (_isExpanded) _controller.value = 1.0;
   }
 
@@ -181,7 +197,8 @@ class _ExpansionTileState extends State<VExpansionTile> with SingleTickerProvide
         child: Padding(
           padding: widget.childrenPadding ?? EdgeInsets.zero,
           child: Column(
-            crossAxisAlignment: widget.expandedCrossAxisAlignment ?? CrossAxisAlignment.center,
+            crossAxisAlignment:
+                widget.expandedCrossAxisAlignment ?? CrossAxisAlignment.center,
             children: widget.children,
           ),
         ),

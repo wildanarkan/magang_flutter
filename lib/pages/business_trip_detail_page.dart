@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:magang_flutter/common/app_color.dart';
 import 'package:magang_flutter/common/app_status.dart';
+import 'package:magang_flutter/pages/estimasi_biaya_page.dart';
+import 'package:magang_flutter/pages/realisasi_biaya_page.dart';
 import 'package:magang_flutter/widgets/build_button.dart';
 import 'package:magang_flutter/widgets/build_test_appbar.dart';
 
@@ -26,16 +28,18 @@ class BusinessTripDetailPage extends StatelessWidget {
       body: Stack(
         children: [
           ListView(
-            padding: const EdgeInsets.only(bottom: 80), // Menambahkan padding di bagian bawah
+            padding: const EdgeInsets.only(bottom: 80),
             children: [
               Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 10),
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 24, vertical: 10),
                 child: Container(
                   decoration: BoxDecoration(
                     color: Colors.white,
                     borderRadius: BorderRadius.circular(8),
                   ),
-                  padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 17),
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 16, vertical: 17),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
@@ -141,9 +145,9 @@ class BusinessTripDetailPage extends StatelessWidget {
                                   Text(
                                     'Manager',
                                     style: TextStyle(
-                                      fontSize: 12,
-                                      fontWeight: FontWeight.w500,
-                                      color: AppColor.textTitle),
+                                        fontSize: 12,
+                                        fontWeight: FontWeight.w500,
+                                        color: AppColor.textTitle),
                                   ),
                                 ],
                               )
@@ -179,9 +183,9 @@ class BusinessTripDetailPage extends StatelessWidget {
                               Text(
                                 'Surabaya, IndrapuraJaya 2/1',
                                 style: TextStyle(
-                                  fontSize: 12,
-                                  fontWeight: FontWeight.w500,
-                                  color: AppColor.textTitle),
+                                    fontSize: 12,
+                                    fontWeight: FontWeight.w500,
+                                    color: AppColor.textTitle),
                               ),
                             ],
                           )
@@ -215,9 +219,9 @@ class BusinessTripDetailPage extends StatelessWidget {
                               Text(
                                 '30-11-2021 - 02-12-2021',
                                 style: TextStyle(
-                                  fontSize: 12,
-                                  fontWeight: FontWeight.w500,
-                                  color: AppColor.textTitle),
+                                    fontSize: 12,
+                                    fontWeight: FontWeight.w500,
+                                    color: AppColor.textTitle),
                               ),
                             ],
                           )
@@ -273,9 +277,9 @@ class BusinessTripDetailPage extends StatelessWidget {
                           Text(
                             'Employee List',
                             style: TextStyle(
-                              fontSize: 12,
-                              fontWeight: FontWeight.w400,
-                              color: AppColor.textBody),
+                                fontSize: 12,
+                                fontWeight: FontWeight.w400,
+                                color: AppColor.textBody),
                           ),
                           const SizedBox(
                             height: 16,
@@ -295,9 +299,9 @@ class BusinessTripDetailPage extends StatelessWidget {
                                 Text(
                                   'Employee 5263265367',
                                   style: TextStyle(
-                                    fontSize: 14,
-                                    fontWeight: FontWeight.w600,
-                                    color: AppColor.textTitle),
+                                      fontSize: 14,
+                                      fontWeight: FontWeight.w600,
+                                      color: AppColor.textTitle),
                                 ),
                               ],
                             ),
@@ -317,9 +321,9 @@ class BusinessTripDetailPage extends StatelessWidget {
                                 Text(
                                   'Employee 5263265367',
                                   style: TextStyle(
-                                    fontSize: 14,
-                                    fontWeight: FontWeight.w600,
-                                    color: AppColor.textTitle),
+                                      fontSize: 14,
+                                      fontWeight: FontWeight.w600,
+                                      color: AppColor.textTitle),
                                 ),
                               ],
                             ),
@@ -345,7 +349,13 @@ class BusinessTripDetailPage extends StatelessWidget {
                         child: BuildButton(
                           context: context,
                           title: 'Perkiraan',
-                          onPressed: () {},
+                          onPressed: () {
+                            Navigator.of(context).push(
+                              MaterialPageRoute(
+                                builder: (context) => const EstimasiBiayaPage(),
+                              ),
+                            );
+                          },
                         ),
                       ),
                       const SizedBox(width: 17),
@@ -353,7 +363,13 @@ class BusinessTripDetailPage extends StatelessWidget {
                         child: BuildButton(
                           context: context,
                           title: 'Realisasi',
-                          onPressed: () {},
+                          onPressed: () {
+                            Navigator.of(context).push(
+                              MaterialPageRoute(
+                                builder: (context) => const RealisasiBiayaPage(),
+                              ),
+                            );
+                          },
                         ),
                       ),
                     ],
