@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:magang_flutter/pages/leave_request_detail_page.dart';
-import 'package:magang_flutter/widgets/build_card_info4.dart';
+import 'package:magang_flutter/widgets/build_card_info.dart';
 import 'package:magang_flutter/widgets/build_test_appbar.dart';
 
 class PersonalLeaveHistoryPage extends StatelessWidget {
@@ -23,10 +23,10 @@ class PersonalLeaveHistoryPage extends StatelessWidget {
         child: ListView(
           padding: const EdgeInsets.only(bottom: 120, top: 20),
           children: [
-            BuildCardInfo4(
+            BuildCardInfo(
               company: "Cuti Tahunan",
               appStatus: 'pending',
-              onPressed: () {
+              onTap: () {
                 Navigator.of(context).push(
                   MaterialPageRoute(
                     builder: (context) => const LeaveRequestDetailPage(),
@@ -34,10 +34,10 @@ class PersonalLeaveHistoryPage extends StatelessWidget {
                 );
               },
             ),
-            BuildCardInfo4(
+            BuildCardInfo(
               company: "Cuti Tahunan",
               appStatus: 'approved',
-              onPressed: () {
+              onTap: () {
                 Navigator.of(context).push(
                   MaterialPageRoute(
                     builder: (context) => const LeaveRequestDetailPage(),
@@ -45,10 +45,10 @@ class PersonalLeaveHistoryPage extends StatelessWidget {
                 );
               },
             ),
-            BuildCardInfo4(
+            BuildCardInfo(
               company: "Cuti Hamil",
               appStatus: 'approved',
-              onPressed: () {
+              onTap: () {
                 Navigator.of(context).push(
                   MaterialPageRoute(
                     builder: (context) => const LeaveRequestDetailPage(),
@@ -56,10 +56,10 @@ class PersonalLeaveHistoryPage extends StatelessWidget {
                 );
               },
             ),
-             BuildCardInfo4(
+             BuildCardInfo(
               company: "Cuti Tahunan",
               appStatus: 'decline',
-              onPressed: () {
+              onTap: () {
                 Navigator.of(context).push(
                   MaterialPageRoute(
                     builder: (context) => const LeaveRequestDetailPage(),

@@ -6,90 +6,99 @@ import 'package:magang_flutter/common/app_status.dart';
 class BuildCardInfo extends StatelessWidget {
   const BuildCardInfo({
     super.key,
-    required this.city,
+     this.city,
     required this.company,
     required this.appStatus,
     this.padding = const EdgeInsets.only(bottom: 20),
     this.useContainer = true,
+    this.icon,
+    this.onTap,
   });
 
-  final String city;
+  final String? city;
   final String company;
   final String appStatus;
   final EdgeInsetsGeometry padding;
   final bool useContainer;
+  final Widget? icon;
+  final VoidCallback? onTap;
 
   @override
   Widget build(BuildContext context) {
-    Widget content = Column(
-      children: [
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  company,
-                  style: TextStyle(
-                    fontWeight: FontWeight.w600,
-                    fontSize: 18,
-                    color: AppColor.textTitle,
+    Widget content = GestureDetector(
+      onTap: onTap,
+      child: Column(
+        children: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    company,
+                    style: TextStyle(
+                      fontWeight: FontWeight.w600,
+                      fontSize: 18,
+                      color: AppColor.textTitle,
+                    ),
                   ),
-                ),
-                const SizedBox(
-                  height: 5,
-                ),
-                Text(
-                  city,
-                  style: TextStyle(
-                    fontWeight: FontWeight.w400,
-                    fontSize: 12,
-                    color: AppColor.textBody,
+                  const SizedBox(
+                    height: 5,
                   ),
+                  if(city != null)
+                  Text(
+                    city ?? '',
+                    style: TextStyle(
+                      fontWeight: FontWeight.w400,
+                      fontSize: 12,
+                      color: AppColor.textBody,
+                    ),
+                  ),
+                ],
+              ),
+              _getAppStatusWidget(appStatus),
+            ],
+          ),
+          const Divider(),
+          Row(
+            children: [
+              icon ??
+                  Icon(
+                    Icons.access_time_filled,
+                    color: AppColor.iconBrown,
+                    size: 24,
+                  ),
+              const SizedBox(
+                width: 5,
+              ),
+              Text(
+                DateFormat('dd-MM-yyyy').format(DateTime.now()).toString(),
+                style: TextStyle(
+                  fontWeight: FontWeight.w400,
+                  fontSize: 12,
+                  color: AppColor.textBody,
                 ),
-              ],
-            ),
-            _getAppStatusWidget(appStatus),
-          ],
-        ),
-        const Divider(),
-        Row(
-          children: [
-            Icon(
-              Icons.access_time_filled,
-              color: AppColor.iconBrown,
-              size: 24,
-            ),
-            const SizedBox(
-              width: 5,
-            ),
-            Text(
-              DateFormat('dd-MM-yyyy').format(DateTime.now()).toString(),
-              style: TextStyle(
-                fontWeight: FontWeight.w400,
-                fontSize: 12,
-                color: AppColor.textBody,
               ),
-            ),
-            const SizedBox(
-              width: 5,
-            ),
-            const Text('-'),
-            const SizedBox(
-              width: 5,
-            ),
-            Text(
-              DateFormat('dd-MM-yyyy').format(DateTime.now()).toString(),
-              style: TextStyle(
-                fontWeight: FontWeight.w400,
-                fontSize: 12,
-                color: AppColor.textBody,
+              const SizedBox(
+                width: 5,
               ),
-            ),
-          ],
-        ),
-      ],
+              const Text('-'),
+              const SizedBox(
+                width: 5,
+              ),
+              Text(
+                DateFormat('dd-MM-yyyy').format(DateTime.now()).toString(),
+                style: TextStyle(
+                  fontWeight: FontWeight.w400,
+                  fontSize: 12,
+                  color: AppColor.textBody,
+                ),
+              ),
+            ],
+          ),
+        ],
+      ),
     );
 
     if (useContainer) {
@@ -120,9 +129,13 @@ class BuildCardInfo extends StatelessWidget {
       case 'onProgress':
         return AppStatus.onProgress();
       case 'complete':
-        return AppStatus.complete();
+        return AppStatus.complete(null);
       case 'decline':
         return AppStatus.decline();
+      case 'pending':
+        return AppStatus.pending();
+      case 'approved':
+        return AppStatus.complete('Approved');
       default:
         return const SizedBox.shrink();
     }

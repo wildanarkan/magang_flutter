@@ -21,9 +21,6 @@ class AppColor {
 
   // INPUT
   static Color inputBackground = const Color(0xffFAFAFA);
-
-  // BUTTON
-  static Color redButton= const Color(0xffA81616);
   
   // INFO
   static Color draft = const Color(0xffA86D16);
@@ -35,9 +32,8 @@ class AppColor {
   static Color backgroundComplete= const Color(0x1A1DCA43);
   static Color pending = const Color(0xffAE640B);
   static Color backgroundPending = const Color(0xffF0EAE0);
-  static Color decline = const Color(0xffFA4D75);
+  static Color decline = const Color(0xffA81616);
   static Color backgroundDecline= const Color(0xffF0E0E0);
-  static Color backgroundContainer= const Color(0xffF0EAE0);
 
 
 

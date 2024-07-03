@@ -144,7 +144,7 @@ Widget build(BuildContext context) {
                                       ),
                                       child: Icon(
                                         Icons.cancel,
-                                        color: AppColor.redButton,
+                                        color: AppColor.decline,
                                       ),
                                     ),
                                   ),

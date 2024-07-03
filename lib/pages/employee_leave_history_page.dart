@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:magang_flutter/pages/leave_request_detail_page.dart';
-import 'package:magang_flutter/widgets/build_card_info2.dart';
+import 'package:magang_flutter/widgets/build_card_info.dart';
 import 'package:magang_flutter/widgets/build_test_appbar.dart';
 
 class EmployeeLeaveHistoryPage extends StatelessWidget {
@@ -23,11 +23,11 @@ class EmployeeLeaveHistoryPage extends StatelessWidget {
         child: ListView(
           padding: const EdgeInsets.only(bottom: 120, top: 20),
           children: [
-            BuildCardInfo2(
+            BuildCardInfo(
               city: 'Cuti Tahunan',
               company: "Agung Supratman",
               appStatus: 'pending',
-              onPressed: () {
+              onTap: () {
                 Navigator.of(context).push(
                   MaterialPageRoute(
                     builder: (context) => const LeaveRequestDetailPage(),
@@ -35,11 +35,11 @@ class EmployeeLeaveHistoryPage extends StatelessWidget {
                 );
               },
             ),
-            BuildCardInfo2(
+            BuildCardInfo(
               city: 'Cuti Tahunan',
               company: "Agung Supratman",
               appStatus: 'approved',
-              onPressed: () {
+              onTap: () {
                 Navigator.of(context).push(
                   MaterialPageRoute(
                     builder: (context) => const LeaveRequestDetailPage(),
@@ -47,11 +47,11 @@ class EmployeeLeaveHistoryPage extends StatelessWidget {
                 );
               },
             ),
-            BuildCardInfo2(
+            BuildCardInfo(
               city: 'Cuti Tahunan',
               company: "Agung Supratman",
               appStatus: 'approved',
-              onPressed: () {
+              onTap: () {
                 Navigator.of(context).push(
                   MaterialPageRoute(
                     builder: (context) => const LeaveRequestDetailPage(),
@@ -59,44 +59,44 @@ class EmployeeLeaveHistoryPage extends StatelessWidget {
                 );
               },
             ),
-             BuildCardInfo2(
+             BuildCardInfo(
               city: 'Cuti Tahunan',
               company: "Agung Supratman",
               appStatus: 'decline',
-              onPressed: () {
+              onTap: () {
                 Navigator.of(context).push(
                   MaterialPageRoute(
                     builder: (context) => const LeaveRequestDetailPage(),
                   ),
                 );
               },
-            ), BuildCardInfo2(
+            ), BuildCardInfo(
               city: 'Cuti Tahunan',
               company: "Agung Supratman",
               appStatus: 'approved',
-              onPressed: () {
+              onTap: () {
                 Navigator.of(context).push(
                   MaterialPageRoute(
                     builder: (context) => const LeaveRequestDetailPage(),
                   ),
                 );
               },
-            ), BuildCardInfo2(
+            ), BuildCardInfo(
               city: 'Cuti Tahunan',
               company: "Agung Supratman",
               appStatus: 'approved',
-              onPressed: () {
+              onTap: () {
                 Navigator.of(context).push(
                   MaterialPageRoute(
                     builder: (context) => const LeaveRequestDetailPage(),
                   ),
                 );
               },
-            ), BuildCardInfo2(
+            ), BuildCardInfo(
               city: 'Cuti Tahunan',
               company: "Agung Supratman",
               appStatus: 'approved',
-              onPressed: () {
+              onTap: () {
                 Navigator.of(context).push(
                   MaterialPageRoute(
                     builder: (context) => const LeaveRequestDetailPage(),

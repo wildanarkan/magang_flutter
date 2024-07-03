@@ -3,7 +3,6 @@ import 'package:magang_flutter/common/app_color.dart';
 import 'package:magang_flutter/pages/employee_leave_history_page.dart';
 import 'package:magang_flutter/widgets/build_button.dart';
 import 'package:magang_flutter/widgets/build_button_reject.dart';
-import 'package:magang_flutter/widgets/build_card_info3.dart';
 import 'package:magang_flutter/widgets/build_link.dart';
 import 'package:magang_flutter/widgets/build_test_appbar.dart';
 import 'package:magang_flutter/widgets/build_text_column.dart';
@@ -65,11 +64,11 @@ class LeaveRequestDetailPage extends StatelessWidget {
                     const SizedBox(height: 10),
                     const Divider(),
                     const SizedBox(height: 10),
-                    const BuildCardInfo3(
-                      city: 'Leave Category',
-                      company: "Cuti Tahunan",
-                      appStatus: 'pending',
-                    ),
+                    // const BuildCardInfo3(
+                    //   city: 'Leave Category',
+                    //   company: "Cuti Tahunan",
+                    //   appStatus: 'pending',
+                    // ),
                     const SizedBox(height: 10),
                     const BuildTextColumn(title: 'duration', content: '3 Days'),
                     const SizedBox(

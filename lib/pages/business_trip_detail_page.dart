@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:magang_flutter/common/app_color.dart';
 import 'package:magang_flutter/common/app_status.dart';
 import 'package:magang_flutter/pages/estimasi_biaya_page.dart';
+import 'package:magang_flutter/pages/perbandingan_biaya_page.dart';
 import 'package:magang_flutter/pages/realisasi_biaya_page.dart';
 import 'package:magang_flutter/widgets/build_button.dart';
 import 'package:magang_flutter/widgets/build_test_appbar.dart';
@@ -366,7 +367,8 @@ class BusinessTripDetailPage extends StatelessWidget {
                           onPressed: () {
                             Navigator.of(context).push(
                               MaterialPageRoute(
-                                builder: (context) => const RealisasiBiayaPage(),
+                                builder: (context) =>
+                                    const RealisasiBiayaPage(),
                               ),
                             );
                           },
@@ -378,7 +380,13 @@ class BusinessTripDetailPage extends StatelessWidget {
                   BuildButton(
                     context: context,
                     title: 'Perbandingan',
-                    onPressed: () {},
+                    onPressed: () {
+                      Navigator.of(context).push(
+                        MaterialPageRoute(
+                          builder: (context) => const PerbandinganBiayaPage(),
+                        ),
+                      );
+                    },
                     width: double.infinity,
                     backgroundColor: Colors.white,
                     foregroundColor: Colors.black,

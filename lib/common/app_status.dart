@@ -23,7 +23,7 @@ class AppStatus {
     );
   }
 
-  static Widget complete() {
+  static Widget complete(String? text) {
     return Container(
       padding: const EdgeInsets.symmetric(
         horizontal: 10,
@@ -34,7 +34,7 @@ class AppStatus {
         color: AppColor.backgroundComplete,
       ),
       child: Text(
-        'Complete',
+        text ?? 'Complete',
         style: TextStyle(
           color: AppColor.complete,
           fontSize: 12,
@@ -58,6 +58,27 @@ class AppStatus {
         'Declined',
         style: TextStyle(
           color: AppColor.decline,
+          fontSize: 12,
+          fontWeight: FontWeight.w400,
+        ),
+      ),
+    );
+  }
+
+   static Widget pending() {
+    return Container(
+      padding: const EdgeInsets.symmetric(
+        horizontal: 10,
+        vertical: 5,
+      ),
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(20),
+        color: AppColor.backgroundPending,
+      ),
+      child: Text(
+        'Pending',
+        style: TextStyle(
+          color: AppColor.pending,
           fontSize: 12,
           fontWeight: FontWeight.w400,
         ),
