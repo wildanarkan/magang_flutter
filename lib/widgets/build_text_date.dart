@@ -12,7 +12,7 @@ class BuildTextDate extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    DateTime currentDate = DateTime.now();
+    DateTime currentDate = DateTime.now();  
     String formattedDate = DateFormat('dd-MM-yyyy').format(currentDate); 
 
     return Column(

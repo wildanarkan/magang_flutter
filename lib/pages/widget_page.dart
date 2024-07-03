@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:magang_flutter/pages/balance_sheet_detail_page.dart';
 import 'package:magang_flutter/pages/balance_sheet_page.dart';
 import 'package:magang_flutter/pages/business_trip_detail_page.dart';
 import 'package:magang_flutter/pages/business_trip_page.dart';
@@ -78,6 +79,19 @@ class WidgetPage extends StatelessWidget {
                 context,
                 MaterialPageRoute(
                   builder: (context) => const EditBiayaPage(),
+                ),
+              );
+            },
+          ),
+          const SizedBox(height: 15,),
+          BuildButton(
+            context: context,
+            title: 'Balance Sheet Detail',
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => const BalanceSheetDetailPage(),
                 ),
               );
             },
