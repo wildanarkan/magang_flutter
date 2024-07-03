@@ -44,7 +44,7 @@ class AppStatus {
     );
   }
 
-  static Widget decline() {
+  static Widget decline(String? text) {
     return Container(
       padding: const EdgeInsets.symmetric(
         horizontal: 10,
@@ -55,7 +55,7 @@ class AppStatus {
         color: AppColor.backgroundDecline,
       ),
       child: Text(
-        'Declined',
+        text ?? 'Declined',
         style: TextStyle(
           color: AppColor.decline,
           fontSize: 12,

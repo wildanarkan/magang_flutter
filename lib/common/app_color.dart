@@ -33,7 +33,7 @@ class AppColor {
   static Color pending = const Color(0xffAE640B);
   static Color backgroundPending = const Color(0xffF0EAE0);
   static Color decline = const Color(0xffA81616);
-  static Color backgroundDecline= const Color(0xffF0E0E0);
+  static Color backgroundDecline= const Color(0x1AA81616);
 
 
 

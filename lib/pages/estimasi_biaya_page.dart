@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:magang_flutter/common/app_color.dart';
 import 'package:magang_flutter/widgets/build_expansion_biaya.dart';
 import 'package:magang_flutter/widgets/build_test_appbar.dart';
-import 'package:magang_flutter/widgets/build_text_between.dart';
 import 'package:magang_flutter/widgets/build_total.dart';
+import 'package:magang_flutter/widgets/build_widget_between.dart';
 
 class EstimasiBiayaPage extends StatelessWidget {
   const EstimasiBiayaPage({super.key});
@@ -41,8 +41,8 @@ class EstimasiBiayaPage extends StatelessWidget {
                     padding: EdgeInsets.only(bottom: 16.0),
                     child: Divider(),
                   ),
-                  BuildTextBetween(
-                    leftText: Text(
+                  BuildWidgetBetween(
+                    leftWidget: Text(
                       'Cempaka',
                       style: TextStyle(
                         color: AppColor.textBody,
@@ -50,7 +50,7 @@ class EstimasiBiayaPage extends StatelessWidget {
                         fontWeight: FontWeight.w400,
                       ),
                     ),
-                    rightText: Text(
+                    rightWidget: Text(
                       'Rp 1.000.000,00',
                       style: TextStyle(
                         color: AppColor.textTitle,
@@ -59,8 +59,8 @@ class EstimasiBiayaPage extends StatelessWidget {
                       ),
                     ),
                   ),
-                  BuildTextBetween(
-                    leftText: Text(
+                  BuildWidgetBetween(
+                    leftWidget: Text(
                       'Kereta',
                       style: TextStyle(
                         color: AppColor.textBody,
@@ -68,7 +68,7 @@ class EstimasiBiayaPage extends StatelessWidget {
                         fontWeight: FontWeight.w400,
                       ),
                     ),
-                    rightText: Text(
+                    rightWidget: Text(
                       'Rp 150.000,00',
                       style: TextStyle(
                         color: AppColor.textTitle,

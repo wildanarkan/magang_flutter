@@ -131,7 +131,7 @@ class BuildCardInfo extends StatelessWidget {
       case 'complete':
         return AppStatus.complete(null);
       case 'decline':
-        return AppStatus.decline();
+        return AppStatus.decline(null);
       case 'pending':
         return AppStatus.pending();
       case 'approved':
