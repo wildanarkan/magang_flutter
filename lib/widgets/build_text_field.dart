@@ -2,10 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:magang_flutter/common/app_color.dart';
 
 class BuildTextField extends StatefulWidget {
-  const BuildTextField({super.key, required this.title, this.required = false});
+  const BuildTextField({super.key, required this.title, this.required = false,
+   this.hintText});
 
   final String title;
   final bool required;
+  final String? hintText;
 
   @override
   State<BuildTextField> createState() => _BuildTextFieldState();
@@ -52,6 +54,10 @@ class _BuildTextFieldState extends State<BuildTextField> {
                   fontWeight: FontWeight.w500,
                   fontSize: 14),
               decoration: InputDecoration(
+                hintStyle: TextStyle(
+                  color: AppColor.textBody
+                ),
+                hintText: widget.hintText,
                 isDense: true,
                 isCollapsed: true,
                 border: OutlineInputBorder(
