@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:magang_flutter/pages/balance_sheet_page.dart';
 import 'package:magang_flutter/pages/business_trip_detail_page.dart';
 import 'package:magang_flutter/pages/business_trip_page.dart';
+import 'package:magang_flutter/pages/edit_biaya_page.dart';
 import 'package:magang_flutter/pages/home_page.dart';
 import 'package:magang_flutter/widgets/build_button.dart';
 
@@ -64,6 +65,19 @@ class WidgetPage extends StatelessWidget {
                 context,
                 MaterialPageRoute(
                   builder: (context) => const BalanceSheetPage(),
+                ),
+              );
+            },
+          ),
+          const SizedBox(height: 15,),
+          BuildButton(
+            context: context,
+            title: 'Edit Biaya',
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => const EditBiayaPage(),
                 ),
               );
             },
