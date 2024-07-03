@@ -12,7 +12,7 @@ class BuildCardInfo extends StatelessWidget {
     this.padding = const EdgeInsets.only(bottom: 20),
     this.useContainer = true,
     this.icon,
-    this.onTap,
+    this.onTap, 
   });
 
   final String? city;
@@ -21,7 +21,7 @@ class BuildCardInfo extends StatelessWidget {
   final EdgeInsetsGeometry padding;
   final bool useContainer;
   final Widget? icon;
-  final VoidCallback? onTap;
+  final VoidCallback? onTap; 
 
   @override
   Widget build(BuildContext context) {
@@ -34,7 +34,7 @@ class BuildCardInfo extends StatelessWidget {
             children: [
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
+                children:[
                   Text(
                     company,
                     style: TextStyle(
