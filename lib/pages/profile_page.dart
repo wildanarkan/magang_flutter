@@ -4,143 +4,143 @@ import 'package:magang_flutter/pages/contract_history_page.dart';
 import 'package:magang_flutter/pages/leave_history_page.dart';
 import 'package:magang_flutter/pages/payroll_history_page.dart';
 import 'package:magang_flutter/pages/profile_detail_page.dart';
-import 'package:magang_flutter/widgets/build_appbar.dart';
+import 'package:magang_flutter/widgets/build_button.dart';
 import 'package:magang_flutter/widgets/build_rowicon.dart';
 
 class ProfilePage extends StatelessWidget {
-  const ProfilePage({super.key});
+  const ProfilePage({ super.key });
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.amber,
-      body: ListView(
-        padding: const EdgeInsets.all(0),
+    return  Scaffold(
+      body: Stack(
         children: [
-          BuildAppbar(
-            context: context,
-            title: 'Profile',
+          Container(
+            width: double.infinity,
+            decoration: const BoxDecoration(
+              image: DecorationImage(
+                fit: BoxFit.fitWidth,
+                image: AssetImage('assets/blue_background.png'),
+                alignment: Alignment.topCenter,
+              ),
+            ),
           ),
-          Stack(
-            children: [
-              header(),
-              const SizedBox(height: 30),
+          ListView(
+            padding: const EdgeInsets.only(
+                top: 25, bottom: 120, left: 25, right: 25),
+            children:  [
+              const Padding(
+                padding: EdgeInsets.only(top: 40, bottom: 25),
+                child: Text(
+                  'Profile',
+                  style: TextStyle(
+                    fontSize: 16,
+                    color: Colors.white,
+                    fontWeight: FontWeight.w600,
+                  ),
+                ),
+              ),
               Positioned(
                 top: 240,
                 left: 30,
                 right: 30,
-                child: Column(
-                  children: [
-                    BuildRowicon(
-                      icon: Icons.contact_page_sharp,
-                      iconColor: AppColor.primary,
-                      title: 'Detail',
-                      onTap: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => const ProfileDetailPage(),
-                          ),
-                        );
-                      },
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 24),
+                  child: Container(
+                    decoration:  BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(8)
                     ),
-                    BuildRowicon(
-                      icon: Icons.personal_injury_sharp,
-                      iconColor: AppColor.primary,
-                      title: 'Leave History',
-                      onTap: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => const LeaveHistoryPage(),
+                    child: Column(
+                      children: [
+                         Padding(
+                          padding: const EdgeInsets.only(top: 75),
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              const Text(
+                                'Kevin Anggara',
+                                style: TextStyle(
+                                  fontSize: 14,
+                                  fontWeight: FontWeight.w600
+                                ),
+                              ),
+                              Text(
+                                'HRD',
+                                style: TextStyle(
+                                  fontSize: 12,
+                                  fontWeight: FontWeight.w400,
+                                  color: AppColor.textBody
+                                ),
+                              )
+                            ],
                           ),
-                        );
-                      },
+                        ),
+                        const Divider(),
+                        BuildRowicon(
+                          icon: Icons.contact_page_sharp,
+                          iconColor: AppColor.primary,
+                          title: 'Detail',
+                          onTap: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => const ProfileDetailPage(),
+                              ),
+                            );
+                          },
+                        ),
+                        BuildRowicon(
+                          icon: Icons.personal_injury_sharp,
+                          iconColor: AppColor.primary,
+                          title: 'Leave History',
+                          onTap: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => const LeaveHistoryPage(),
+                              ),
+                            );
+                          },
+                        ),
+                        BuildRowicon(
+                          icon: Icons.account_balance_wallet,
+                          iconColor: AppColor.primary,
+                          title: 'Payroll History',
+                          onTap: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => const PayrollHistoryPage(),
+                              ),
+                            );
+                          },
+                        ),
+                        BuildRowicon(
+                          icon: Icons.contact_mail_outlined,
+                          iconColor: AppColor.primary,
+                          title: 'Contract History',
+                          onTap: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => const ContractHistoryPage(),
+                              ),
+                            );
+                          },
+                        ),
+                        const SizedBox(height: 20),
+                      ],
                     ),
-                    BuildRowicon(
-                      icon: Icons.account_balance_wallet,
-                      iconColor: AppColor.primary,
-                      title: 'Payroll History',
-                      onTap: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => const PayrollHistoryPage(),
-                          ),
-                        );
-                      },
-                    ),
-                    BuildRowicon(
-                      icon: Icons.contact_mail_outlined,
-                      iconColor: AppColor.primary,
-                      title: 'Contract History',
-                      onTap: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => const ContractHistoryPage(),
-                          ),
-                        );
-                      },
-                    ),
-                    const SizedBox(height: 20),
-                  ],
+                  ),
                 ),
               ),
             ],
           ),
-        ],
-      ),
-    );
-  }
-
-  Widget header() {
-    return Stack(
-      children: [
-        Positioned(
-          child: Container(
-            height: 200, // Adjust the height as needed
-            color: AppColor.primary,
-            margin: const EdgeInsets.only(bottom: 350),
-          ),
-        ),
-        Positioned(
-          top: 100, // Adjust the top position as needed
-          left: 30,
-          right: 30,
-          bottom: 0,
-          child: Container(
-            decoration: BoxDecoration(
-              color: Colors.white,
-              borderRadius: BorderRadius.circular(16),
-            ),
-            padding: const EdgeInsets.all(20),
-            child: Column(
-              children: [
-                const SizedBox(height: 50),
-                Text(
-                  'JOKO',
-                  style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                    color: AppColor.textTitle,
-                    fontSize: 18,
-                  ),
-                ),
-                Text(
-                  'EMAIL',
-                  style: TextStyle(
-                    fontWeight: FontWeight.w300,
-                    color: AppColor.textBody,
-                    fontSize: 14,
-                  ),
-                ),
-                const SizedBox(height: 50),
-                // buildItemMenu(Icons.edit, 'Edit Profile'), // Moved to the main stack
-              ],
-            ),
-          ),
-        ),
-        Positioned(
+          Positioned(
+            top: 50,
+            left: 0,
+            right: 0,
           child: Center(
             child: Container(
               margin: const EdgeInsets.only(top: 30),
@@ -167,42 +167,24 @@ class ProfilePage extends StatelessWidget {
             ),
           ),
         ),
-      ],
-    );
-  }
-
-  Widget buildItemMenu(IconData icon, String title, [VoidCallback? onTap]) {
-    return GestureDetector(
-      onTap: onTap,
-      child: Container(
-        decoration: BoxDecoration(
-          color: Colors.white,
-          borderRadius: BorderRadius.circular(12),
-        ),
-        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-        child: Row(
-          children: [
-            Icon(
-              icon,
-              color: AppColor.primary,
-              size: 30,
-            ),
-            const SizedBox(width: 16),
-            Expanded(
-              child: Text(
-                title,
-                style: TextStyle(
-                  color: AppColor.textTitle,
-                  fontSize: 20,
-                ),
+         Align(
+           alignment: Alignment.bottomCenter,
+           child: Padding(
+              padding: const EdgeInsets.fromLTRB(35,0, 35, 140),
+              child: BuildButton(
+                context: context,
+                title: 'Logout',
+                backgroundColor: Colors.white,
+                foregroundColor: AppColor.decline,
+                borderColor: AppColor.decline,
+                width: 320,
+                onPressed: () {
+                  Navigator.pop(context);
+                },
               ),
             ),
-            const Icon(
-              Icons.navigate_next,
-              color: Colors.black,
-            ),
-          ],
-        ),
+         ),
+        ],
       ),
     );
   }

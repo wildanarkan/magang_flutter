@@ -39,69 +39,73 @@ class _AskLeavePageState extends State<AskLeavePage> {
         children: [
           Expanded(
             child: SingleChildScrollView(
-              child: Container(
-                decoration: BoxDecoration(
-                  color: AppColor.backgroundOnProgress,
-                ),
-                padding: const EdgeInsets.symmetric(horizontal: 35, vertical: 20),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      'Leave Category',
-                      style: TextStyle(
-                        fontWeight: FontWeight.w400,
-                        fontSize: 14,
-                        color: AppColor.textBody,
+              child: Padding(
+                padding: const EdgeInsets.all(24),
+                child: Container(
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(8),
+                    color: Colors.white,
+                  ),
+                  padding: const EdgeInsets.symmetric(horizontal: 35, vertical: 20),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        'Leave Category',
+                        style: TextStyle(
+                          fontWeight: FontWeight.w400,
+                          fontSize: 14,
+                          color: AppColor.textBody,
+                        ),
                       ),
-                    ),
-                    BuildDropdown(
-                      hint: 'Select',
-                      title: '',
-                      selectedItem: selectedCompany,
-                      item: companyItem,
-                    ),
-                    const Row(
-                      children: [
-                        Text(
-                          'Limit:',
-                          style: TextStyle(
-                            fontSize: 14,
-                            fontWeight: FontWeight.w400,
+                      BuildDropdown(
+                        hint: 'Select',
+                        title: '',
+                        selectedItem: selectedCompany,
+                        item: companyItem,
+                      ),
+                      const Row(
+                        children: [
+                          Text(
+                            'Limit:',
+                            style: TextStyle(
+                              fontSize: 14,
+                              fontWeight: FontWeight.w400,
+                            ),
                           ),
-                        ),
-                        Text(
-                          ' 10 days',
-                          style: TextStyle(
-                            fontSize: 14,
-                            fontWeight: FontWeight.bold,
+                          Text(
+                            ' 10 days',
+                            style: TextStyle(
+                              fontSize: 14,
+                              fontWeight: FontWeight.bold,
+                            ),
                           ),
-                        ),
-                      ],
-                    ),
-                    const SizedBox(height: 10,),
-                    const BuildTextField(
-                      title: 'Reason For Leave',
-                      hintText: 'Holiday',
-                    ),
-                    Row(
-                      children: [
-                        Expanded(
-                          child: BuildPickDate(
-                            title: 'Start Leave Date',
-                            dateController: startDateController,
+                        ],
+                      ),
+                      const SizedBox(height: 10,),
+                      const BuildTextField(
+                        title: 'Reason For Leave',
+                        hintText: 'Holiday',
+                      ),
+                      Row(
+                        children: [
+                          Expanded(
+                            child: BuildPickDate(
+                              title: 'Start Leave Date',
+                              dateController: startDateController,
+                            ),
                           ),
-                        ),
-                        const SizedBox(width: 10,),
-                        Expanded(
-                          child: BuildPickDate(
-                            title: 'End Leave Date',
-                            dateController: endDateController,
+                          const SizedBox(width: 10,),
+                          Expanded(
+                            child: BuildPickDate(
+                              title: 'End Leave Date',
+                              dateController: endDateController,
+                            ),
                           ),
-                        ),
-                      ],
-                    ),
-                  ],
+                        ],
+                      ),
+                    ],
+                  ),
                 ),
               ),
             ),

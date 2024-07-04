@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:magang_flutter/common/app_color.dart';
 import 'package:magang_flutter/pages/leave_request_detail_page.dart';
 import 'package:magang_flutter/widgets/build_card_info.dart';
 import 'package:magang_flutter/widgets/build_test_appbar.dart';
@@ -27,6 +28,11 @@ class EmployeeLeaveHistoryPage extends StatelessWidget {
               city: 'Cuti Tahunan',
               company: "Agung Supratman",
               appStatus: 'pending',
+               icon: Icon(
+                Icons.calendar_today_outlined,
+                size: 16,
+                color: AppColor.textBody,
+              ),
               onTap: () {
                 Navigator.of(context).push(
                   MaterialPageRoute(
@@ -39,6 +45,11 @@ class EmployeeLeaveHistoryPage extends StatelessWidget {
               city: 'Cuti Tahunan',
               company: "Agung Supratman",
               appStatus: 'approved',
+               icon: Icon(
+                Icons.calendar_today_outlined,
+                size: 16,
+                color: AppColor.textBody,
+              ),
               onTap: () {
                 Navigator.of(context).push(
                   MaterialPageRoute(
@@ -51,6 +62,11 @@ class EmployeeLeaveHistoryPage extends StatelessWidget {
               city: 'Cuti Tahunan',
               company: "Agung Supratman",
               appStatus: 'approved',
+               icon: Icon(
+                Icons.calendar_today_outlined,
+                size: 16,
+                color: AppColor.textBody,
+              ),
               onTap: () {
                 Navigator.of(context).push(
                   MaterialPageRoute(
@@ -63,6 +79,11 @@ class EmployeeLeaveHistoryPage extends StatelessWidget {
               city: 'Cuti Tahunan',
               company: "Agung Supratman",
               appStatus: 'decline',
+               icon: Icon(
+                Icons.calendar_today_outlined,
+                size: 16,
+                color: AppColor.textBody,
+              ),
               onTap: () {
                 Navigator.of(context).push(
                   MaterialPageRoute(
@@ -74,6 +95,11 @@ class EmployeeLeaveHistoryPage extends StatelessWidget {
               city: 'Cuti Tahunan',
               company: "Agung Supratman",
               appStatus: 'approved',
+               icon: Icon(
+                Icons.calendar_today_outlined,
+                size: 16,
+                color: AppColor.textBody,
+              ),
               onTap: () {
                 Navigator.of(context).push(
                   MaterialPageRoute(
@@ -85,6 +111,11 @@ class EmployeeLeaveHistoryPage extends StatelessWidget {
               city: 'Cuti Tahunan',
               company: "Agung Supratman",
               appStatus: 'approved',
+               icon: Icon(
+                Icons.calendar_today_outlined,
+                size: 16,
+                color: AppColor.textBody,
+              ),
               onTap: () {
                 Navigator.of(context).push(
                   MaterialPageRoute(
@@ -96,6 +127,11 @@ class EmployeeLeaveHistoryPage extends StatelessWidget {
               city: 'Cuti Tahunan',
               company: "Agung Supratman",
               appStatus: 'approved',
+               icon: Icon(
+                Icons.calendar_today_outlined,
+                size: 16,
+                color: AppColor.textBody,
+              ),
               onTap: () {
                 Navigator.of(context).push(
                   MaterialPageRoute(

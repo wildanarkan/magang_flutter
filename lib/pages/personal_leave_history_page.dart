@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:magang_flutter/common/app_color.dart';
 import 'package:magang_flutter/pages/leave_request_detail_page.dart';
 import 'package:magang_flutter/widgets/build_card_info.dart';
 import 'package:magang_flutter/widgets/build_test_appbar.dart';
@@ -26,6 +27,11 @@ class PersonalLeaveHistoryPage extends StatelessWidget {
             BuildCardInfo(
               company: "Cuti Tahunan",
               appStatus: 'pending',
+               icon: Icon(
+                Icons.calendar_today_outlined,
+                size: 16,
+                color: AppColor.textBody,
+              ),
               onTap: () {
                 Navigator.of(context).push(
                   MaterialPageRoute(
@@ -37,6 +43,11 @@ class PersonalLeaveHistoryPage extends StatelessWidget {
             BuildCardInfo(
               company: "Cuti Tahunan",
               appStatus: 'approved',
+               icon: Icon(
+                Icons.calendar_today_outlined,
+                size: 16,
+                color: AppColor.textBody,
+              ),
               onTap: () {
                 Navigator.of(context).push(
                   MaterialPageRoute(
@@ -48,6 +59,11 @@ class PersonalLeaveHistoryPage extends StatelessWidget {
             BuildCardInfo(
               company: "Cuti Hamil",
               appStatus: 'approved',
+               icon: Icon(
+                Icons.calendar_today_outlined,
+                size: 16,
+                color: AppColor.textBody,
+              ),
               onTap: () {
                 Navigator.of(context).push(
                   MaterialPageRoute(
@@ -59,6 +75,11 @@ class PersonalLeaveHistoryPage extends StatelessWidget {
              BuildCardInfo(
               company: "Cuti Tahunan",
               appStatus: 'decline',
+               icon: Icon(
+                Icons.calendar_today_outlined,
+                size: 16,
+                color: AppColor.textBody,
+              ),
               onTap: () {
                 Navigator.of(context).push(
                   MaterialPageRoute(

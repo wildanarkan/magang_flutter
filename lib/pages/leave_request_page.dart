@@ -40,6 +40,11 @@ class LeaveRequestPage extends StatelessWidget {
               city: 'Cuti Tahunan',
               company: "Maman Sudrajat",
               appStatus: 'approved',
+               icon: Icon(
+                Icons.calendar_today_outlined,
+                size: 16,
+                color: AppColor.textBody,
+              ),
               onTap: () {
                 Navigator.of(context).push(
                   MaterialPageRoute(
@@ -52,6 +57,11 @@ class LeaveRequestPage extends StatelessWidget {
               city: 'Cuti Tahunan',
               company: "Joko Sasongko",
               appStatus: 'approved',
+               icon: Icon(
+                Icons.calendar_today_outlined,
+                size: 16,
+                color: AppColor.textBody,
+              ),
               onTap: () {
                 Navigator.of(context).push(
                   MaterialPageRoute(

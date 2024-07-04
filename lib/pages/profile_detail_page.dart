@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:magang_flutter/common/app_color.dart';
 import 'package:magang_flutter/pages/change_password_page.dart';
 import 'package:magang_flutter/pages/edit_profile_page.dart';
-import 'package:magang_flutter/widgets/build_appbar.dart';
 import 'package:magang_flutter/widgets/build_button.dart';
+import 'package:magang_flutter/widgets/build_test_appbar.dart';
 
 class ProfileDetailPage extends StatelessWidget {
   const ProfileDetailPage({super.key});
@@ -14,17 +14,19 @@ class ProfileDetailPage extends StatelessWidget {
       body: ListView(
         padding: const EdgeInsets.all(0),
         children: [
-          BuildAppbar(
-            context: context,
+          const BuildTestAppbar(
             title: 'Profile Detail',
           ),
           Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 20),
+            padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 24),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Container(
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(8),
                   color: Colors.white,
+                  ),
                   child: Padding(
                     padding: const EdgeInsets.fromLTRB(30, 10, 10, 10),
                     child: Column(
