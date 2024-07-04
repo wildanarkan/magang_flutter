@@ -63,6 +63,5 @@ class BuildContractHistory extends StatelessWidget {
         ),
       ),
     );
-    ();
   }
 }

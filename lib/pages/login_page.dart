@@ -100,7 +100,7 @@ class _LoginPageState extends State<LoginPage> {
             context: context,
             title: 'Login',
             onPressed: () {
-              Navigator.push(
+              Navigator.pushReplacement(
                 context,
                 MaterialPageRoute(
                   builder: (context) => const NavigatorPage(),

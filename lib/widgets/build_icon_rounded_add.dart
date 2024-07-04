@@ -5,11 +5,12 @@ class BuildIconRoundedAdd extends StatelessWidget {
   const BuildIconRoundedAdd({
     super.key,
     this.size,
-    this.padding,
-    required this.onPressed,
+    this.rounded,
+    required this.onPressed, this.padding,
   });
 
   final double? size;
+  final double? rounded;
   final double? padding;
   final VoidCallback onPressed;
 
@@ -17,12 +18,20 @@ class BuildIconRoundedAdd extends StatelessWidget {
   Widget build(BuildContext context) {
     return IconButton(
       style: ButtonStyle(
-        backgroundColor: WidgetStatePropertyAll(AppColor.primary)
+        shape: WidgetStateProperty.all<RoundedRectangleBorder>(
+          RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(rounded ?? 20.0),
+          ),
+        ),
+        backgroundColor: WidgetStateProperty.all(AppColor.primary),
       ),
-      icon: Icon(
+      icon: const Icon(
         Icons.add_rounded,
-        size: size ?? 20,
+        // size: size ?? 20,
       ),
+      iconSize: 20,
+      padding: EdgeInsets.all(padding ?? 10),
+      constraints: const BoxConstraints(),
       onPressed: onPressed,
       color: Colors.white,
     );

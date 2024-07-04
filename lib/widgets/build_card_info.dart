@@ -6,13 +6,13 @@ import 'package:magang_flutter/common/app_status.dart';
 class BuildCardInfo extends StatelessWidget {
   const BuildCardInfo({
     super.key,
-     this.city,
+    this.city,
     required this.company,
     required this.appStatus,
     this.padding = const EdgeInsets.only(bottom: 20),
     this.useContainer = true,
     this.icon,
-    this.onTap, 
+    this.onTap,
   });
 
   final String? city;
@@ -21,7 +21,7 @@ class BuildCardInfo extends StatelessWidget {
   final EdgeInsetsGeometry padding;
   final bool useContainer;
   final Widget? icon;
-  final VoidCallback? onTap; 
+  final VoidCallback? onTap;
 
   @override
   Widget build(BuildContext context) {
@@ -34,7 +34,7 @@ class BuildCardInfo extends StatelessWidget {
             children: [
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
-                children:[
+                children: [
                   Text(
                     company,
                     style: TextStyle(
@@ -46,15 +46,15 @@ class BuildCardInfo extends StatelessWidget {
                   const SizedBox(
                     height: 5,
                   ),
-                  if(city != null)
-                  Text(
-                    city ?? '',
-                    style: TextStyle(
-                      fontWeight: FontWeight.w400,
-                      fontSize: 12,
-                      color: AppColor.textBody,
+                  if (city != null)
+                    Text(
+                      city ?? '',
+                      style: TextStyle(
+                        fontWeight: FontWeight.w400,
+                        fontSize: 12,
+                        color: AppColor.textBody,
+                      ),
                     ),
-                  ),
                 ],
               ),
               _getAppStatusWidget(appStatus),
@@ -67,7 +67,7 @@ class BuildCardInfo extends StatelessWidget {
                   Icon(
                     Icons.access_time_filled,
                     color: AppColor.iconBrown,
-                    size: 24,
+                    size: 16,
                   ),
               const SizedBox(
                 width: 5,
@@ -83,7 +83,14 @@ class BuildCardInfo extends StatelessWidget {
               const SizedBox(
                 width: 5,
               ),
-              const Text('-'),
+              Text(
+                '-',
+                style: TextStyle(
+                  fontWeight: FontWeight.w400,
+                  fontSize: 12,
+                  color: AppColor.textBody,
+                ),
+              ),
               const SizedBox(
                 width: 5,
               ),

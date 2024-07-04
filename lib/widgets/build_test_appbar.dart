@@ -3,9 +3,13 @@ import 'package:magang_flutter/common/app_color.dart';
 
 class BuildTestAppbar extends StatelessWidget implements PreferredSizeWidget {
   const BuildTestAppbar(
-      {super.key, required this.title, this.actions = const []});
+      {super.key,
+      required this.title,
+      this.actions = const [],
+      this.paddingTitle});
 
   final String title;
+  final EdgeInsetsGeometry? paddingTitle;
   final List<Widget> actions;
 
   @override
@@ -15,12 +19,15 @@ class BuildTestAppbar extends StatelessWidget implements PreferredSizeWidget {
       titleSpacing: 0,
       backgroundColor: Colors.white,
       centerTitle: false,
-      title: Text(
-        title,
-        style: TextStyle(
-          color: AppColor.textTitle,
-          fontSize: 20,
-          fontWeight: FontWeight.w500,
+      title: Padding(
+        padding: paddingTitle ?? const EdgeInsets.all(0),
+        child: Text(
+          title,
+          style: TextStyle(
+            color: AppColor.textTitle,
+            fontSize: 20,
+            fontWeight: FontWeight.w500,
+          ),
         ),
       ),
       actions: actions,

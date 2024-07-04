@@ -2,9 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:magang_flutter/pages/balance_sheet_detail_page.dart';
 import 'package:magang_flutter/pages/balance_sheet_page.dart';
 import 'package:magang_flutter/pages/business_trip_detail_page.dart';
-import 'package:magang_flutter/pages/business_trip_page.dart';
 import 'package:magang_flutter/pages/edit_biaya_page.dart';
-import 'package:magang_flutter/pages/home_page.dart';
 import 'package:magang_flutter/widgets/build_button.dart';
 
 class WidgetPage extends StatelessWidget {
@@ -19,32 +17,6 @@ class WidgetPage extends StatelessWidget {
       body: ListView(
         padding: const EdgeInsets.all(20),
         children: [
-          BuildButton(
-            context: context,
-            title: 'Businness Trip Page',
-            onPressed: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => const BusinessTripPage(),
-                ),
-              );
-            },
-          ),
-          const SizedBox(height: 15,),
-          BuildButton(
-            context: context,
-            title: 'Home Page',
-            onPressed: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => const HomePage(),
-                ),
-              );
-            },
-          ),
-          const SizedBox(height: 15,),
           BuildButton(
             context: context,
             title: 'Business Trip Detail Page',

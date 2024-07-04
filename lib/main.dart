@@ -16,7 +16,7 @@ class MyApp extends StatelessWidget {
         dividerTheme: DividerThemeData(
           color: AppColor.line
         ),
-        scaffoldBackgroundColor: AppColor.iconBrown,
+        scaffoldBackgroundColor: AppColor.scaffold,
       ),
       debugShowCheckedModeBanner: false,
       home: const LoginPage(),

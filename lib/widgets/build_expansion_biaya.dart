@@ -27,7 +27,7 @@ class BuildExpansionBiaya extends StatelessWidget {
           childrenPadding: const EdgeInsets.all(0),
           tilePadding: EdgeInsets.zero,
           expandedCrossAxisAlignment: CrossAxisAlignment.stretch,
-          initiallyExpanded: true,
+          initiallyExpanded: false,
           title: title,
           biayaExpansion: true,
           subtitle: subtitle,

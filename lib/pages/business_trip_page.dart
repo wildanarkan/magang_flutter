@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:magang_flutter/common/app_color.dart';
 import 'package:magang_flutter/pages/add_businiess_trip_page.dart';
 import 'package:magang_flutter/widgets/build_card_info.dart';
+import 'package:magang_flutter/widgets/build_icon_rounded_add.dart';
 import 'package:magang_flutter/widgets/build_test_appbar.dart';
 
 class BusinessTripPage extends StatelessWidget {
@@ -11,6 +12,7 @@ class BusinessTripPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: BuildTestAppbar(
+        paddingTitle: const EdgeInsets.only(left: 20),
         title: 'Business Trip',
         actions: [
           IconButton(
@@ -21,7 +23,10 @@ class BusinessTripPage extends StatelessWidget {
             ),
             color: AppColor.primary,
           ),
-          IconButton(
+          BuildIconRoundedAdd(
+            rounded: 9,
+            size: 10,
+            padding: 5,
             onPressed: () {
               Navigator.push(
                 context,
@@ -30,12 +35,7 @@ class BusinessTripPage extends StatelessWidget {
                 ),
               );
             },
-            icon: const Icon(
-              Icons.add_box_rounded,
-              size: 32,
-            ),
-            color: AppColor.primary,
-          ),
+          )
         ],
       ),
       body: Padding(

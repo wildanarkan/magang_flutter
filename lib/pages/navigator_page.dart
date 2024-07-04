@@ -39,8 +39,8 @@ class _NavigatorPageState extends State<NavigatorPage> {
         height: 81,
         padding: const EdgeInsets.symmetric(vertical: 20),
         decoration: BoxDecoration(
-          color: Colors.amber,
-          borderRadius: BorderRadius.circular(15),
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(8),
         ),
         margin: const EdgeInsets.all(25),
         child: Column(

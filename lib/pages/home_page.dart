@@ -6,7 +6,6 @@ import 'package:magang_flutter/pages/profile_page.dart';
 import 'package:magang_flutter/widgets/build_card_info.dart';
 import 'package:magang_flutter/widgets/build_expansion_tile.dart';
 import 'package:magang_flutter/widgets/build_link.dart';
-import 'package:magang_flutter/widgets/build_shape.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
@@ -16,14 +15,13 @@ class HomePage extends StatelessWidget {
     return Scaffold(
       body: Stack(
         children: [
-          ClipPath(
-            clipper: BuildShape(),
-            child: Container(
-              height: 240,
-              width: double.infinity,
-              decoration: BoxDecoration(
-                borderRadius: const BorderRadius.all(Radius.circular(16.0)),
-                color: AppColor.primary,
+          Container(
+            width: double.infinity,
+            decoration: const BoxDecoration(
+              image: DecorationImage(
+                fit: BoxFit.fitWidth,
+                image: AssetImage('assets/blue_background.png'),
+                alignment: Alignment.topCenter,
               ),
             ),
           ),
@@ -63,16 +61,16 @@ class HomePage extends StatelessWidget {
 
   // BUILD WIDGET
   Container buildCurrentBusiness(BuildContext context) {
-    return  Container(
+    return Container(
       color: Colors.white,
       padding: const EdgeInsets.symmetric(horizontal: 25, vertical: 0),
       child: VExpansionTile(
         childrenPadding: const EdgeInsets.all(0),
         tilePadding: EdgeInsets.zero,
         expandedCrossAxisAlignment: CrossAxisAlignment.stretch,
-        initiallyExpanded: true,
+        initiallyExpanded: false,
         title: Text(
-          'Save Business Trip',
+          'Current Business Trip',
           style: TextStyle(
             fontSize: 14,
             color: AppColor.textBody,
@@ -98,7 +96,7 @@ class HomePage extends StatelessWidget {
         childrenPadding: const EdgeInsets.all(0),
         tilePadding: EdgeInsets.zero,
         expandedCrossAxisAlignment: CrossAxisAlignment.stretch,
-        initiallyExpanded: true,
+        initiallyExpanded: false,
         title: Text(
           'Save Business Trip',
           style: TextStyle(
