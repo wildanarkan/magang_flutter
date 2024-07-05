@@ -25,23 +25,31 @@ class _LoginPageState extends State<LoginPage> {
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Scaffold(
-        resizeToAvoidBottomInset: true,
-        body: BackgroundImage(
-          imageProvider: const AssetImage('assets/background.png'),
-          imageAlignment: const Alignment(0.16, 0),
-          child: SingleChildScrollView(
-            child: Column(
-              // crossAxisAlignment: CrossAxisAlignment.,
-              children: [
-                buildHeader(),
-                // const Spacer(),
-                loginInput(),
-              ],
+    return Scaffold(
+      // resizeToAvoidBottomInset: false,
+      body: Stack(
+        children: [
+          SizedBox(
+            height: MediaQuery.sizeOf(context).height,
+            child: const BackgroundImage(
+              imageProvider: AssetImage('assets/background.png'),
+              imageAlignment: Alignment(0.16, 0),
             ),
           ),
-        ),
+          SingleChildScrollView(
+            child: SizedBox(
+              height: MediaQuery.sizeOf(context).height,
+              child: Column(
+                // crossAxisAlignment: CrossAxisAlignment.,
+                children: [
+                  buildHeader(),
+                  const Spacer(),
+                  loginInput(),
+                ],
+              ),
+            ),
+          ),
+        ],
       ),
     );
   }
@@ -115,11 +123,11 @@ class _LoginPageState extends State<LoginPage> {
 
   Widget buildHeader() {
     return SizedBox(
-      height: 500,
+      height: 300,
       child: Stack(
-
         children: [
           Positioned(
+            top: -20,
             left: 30,
             right: 30,
             child: ColorFiltered(
@@ -135,7 +143,7 @@ class _LoginPageState extends State<LoginPage> {
             ),
           ),
           const Positioned(
-            top: 280,
+            top: 240,
             left: 30,
             right: 30,
             bottom: 0,

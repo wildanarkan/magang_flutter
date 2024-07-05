@@ -3,12 +3,12 @@ import 'package:flutter/material.dart';
 class BackgroundImage extends StatelessWidget {
   final ImageProvider imageProvider;
   final AlignmentGeometry imageAlignment;
-  final Widget child;
+  final Widget? child;
 
   const BackgroundImage({
     super.key,
     required this.imageProvider,
-     this.imageAlignment = const Alignment(0, 0), required this.child,
+     this.imageAlignment = const Alignment(0, 0), this.child,
 
   });
 

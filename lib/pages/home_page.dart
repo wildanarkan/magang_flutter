@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:magang_flutter/common/app_color.dart';
 import 'package:magang_flutter/pages/business_trip_page.dart';
-import 'package:magang_flutter/pages/profile_page.dart';
 import 'package:magang_flutter/widgets/build_card_info.dart';
 import 'package:magang_flutter/widgets/build_expansion_tile.dart';
 import 'package:magang_flutter/widgets/build_link.dart';
@@ -191,12 +190,12 @@ class HomePage extends StatelessWidget {
                       title: 'Go To Profile',
                       context: context,
                       onTap: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => const ProfilePage(),
-                          ),
-                        );
+                        // Navigator.push(
+                        //   context,
+                        //   MaterialPageRoute(
+                        //     builder: (context) => const ProfilePage(),
+                        //   ),
+                        // );
                       },
                     ),
                     const Text(
