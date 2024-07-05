@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:magang_flutter/common/app_color.dart';
-import 'package:magang_flutter/pages/add_businiess_trip_page.dart';
 import 'package:magang_flutter/pages/balance_sheet_detail_page.dart';
+import 'package:magang_flutter/widgets/build_icon_rounded_add.dart';
 import 'package:magang_flutter/widgets/build_test_appbar.dart';
 import 'package:magang_flutter/widgets/build_widget_between.dart';
 
@@ -18,21 +18,12 @@ class BalanceDetailPage extends StatelessWidget {
       appBar: BuildTestAppbar(
         title: 'Balance Detail',
         actions: [
-          IconButton(
-            onPressed: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => const AddBusiniessTripPage(),
-                ),
-              );
-            },
-            icon: const Icon(
-              Icons.add_box_rounded,
-              size: 32,
-            ),
-            color: AppColor.primary,
-          ),
+          BuildIconRoundedAdd(
+            rounded: 9,
+            size: 10,
+            padding: 5,
+            onPressed: () {},
+          )
         ],
       ),
       body: Column(
