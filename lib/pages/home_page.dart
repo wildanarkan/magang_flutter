@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:magang_flutter/common/app_color.dart';
-import 'package:magang_flutter/pages/business_trip_page.dart';
 import 'package:magang_flutter/widgets/build_card_info.dart';
 import 'package:magang_flutter/widgets/build_expansion_tile.dart';
 import 'package:magang_flutter/widgets/build_link.dart';
 
-class HomePage extends StatelessWidget {
+import '../controllers/navigator_page_controllers.dart';
+
+class HomePage extends GetView<NavigatorPageControllers> {
   const HomePage({super.key});
 
   @override
@@ -108,12 +110,7 @@ class HomePage extends StatelessWidget {
             title: 'View All',
             context: context,
             onTap: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => const BusinessTripPage(),
-                ),
-              );
+              controller.changePage(1);
             },
           ),
           const SizedBox(
@@ -190,12 +187,7 @@ class HomePage extends StatelessWidget {
                       title: 'Go To Profile',
                       context: context,
                       onTap: () {
-                        // Navigator.push(
-                        //   context,
-                        //   MaterialPageRoute(
-                        //     builder: (context) => const ProfilePage(),
-                        //   ),
-                        // );
+                        controller.changePage(3);
                       },
                     ),
                     const Text(
