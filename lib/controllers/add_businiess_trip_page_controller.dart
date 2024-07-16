@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class AddBusiniessTripPageController extends GetxController {
-  RxInt selectedPage = 0.obs;
 
   final List<String> companyItem = [
     'PT. BELUM BUKA',

@@ -1,35 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:magang_flutter/common/app_color.dart';
+import 'package:magang_flutter/controllers/ask_leave_page_controller.dart';
 import 'package:magang_flutter/widgets/build_button.dart';
 import 'package:magang_flutter/widgets/build_dropdown.dart';
 import 'package:magang_flutter/widgets/build_pick_date.dart';
 import 'package:magang_flutter/widgets/build_test_appbar.dart';
 import 'package:magang_flutter/widgets/build_text_field.dart';
 
-class AskLeavePage extends StatefulWidget {
+class AskLeavePage extends GetView <AskLeavePageController>{
   const AskLeavePage({super.key});
 
-  @override
-  _AskLeavePageState createState() => _AskLeavePageState();
-}
-
-class _AskLeavePageState extends State<AskLeavePage> {
-  final List<String> companyItem = [
-    'Cuti Tahunan',
-    'Cuti Bulanan',
-    'Cuti Mingguan',
-    'Cuti Harian',
-  ];
-
-  late String selectedCompany;
-  TextEditingController startDateController = TextEditingController();
-  TextEditingController endDateController = TextEditingController();
-
-  @override
-  void initState() {
-    super.initState();
-    selectedCompany = companyItem[0];
-  }
+  
 
   @override
   Widget build(BuildContext context) {
@@ -61,8 +43,8 @@ class _AskLeavePageState extends State<AskLeavePage> {
                       BuildDropdown(
                         hint: 'Select',
                         title: '',
-                        selectedItem: selectedCompany,
-                        item: companyItem,
+                        selectedItem: controller.selectedCompany.value,
+                        item: controller.companyItem,
                       ),
                       const Row(
                         children: [
@@ -92,14 +74,14 @@ class _AskLeavePageState extends State<AskLeavePage> {
                           Expanded(
                             child: BuildPickDate(
                               title: 'Start Leave Date',
-                              dateController: startDateController,
+                              dateController: controller.startDateController.value,
                             ),
                           ),
                           const SizedBox(width: 10,),
                           Expanded(
                             child: BuildPickDate(
                               title: 'End Leave Date',
-                              dateController: endDateController,
+                              dateController: controller.endDateController.value,
                             ),
                           ),
                         ],
