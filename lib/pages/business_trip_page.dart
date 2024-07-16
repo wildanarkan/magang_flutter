@@ -31,7 +31,7 @@ class BusinessTripPage extends StatelessWidget {
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (context) => const AddBusiniessTripPage(),
+                  builder: (context) => AddBusiniessTripPage(),
                 ),
               );
             },
