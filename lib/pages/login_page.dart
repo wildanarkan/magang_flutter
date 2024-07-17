@@ -1,27 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:magang_flutter/controllers/login_page_controller.dart';
 import 'package:magang_flutter/pages/navigator_page.dart';
 import 'package:magang_flutter/widgets/background_image.dart';
 import 'package:magang_flutter/widgets/build_button.dart';
 
-class LoginPage extends StatefulWidget {
+class LoginPage extends GetView<LoginPageController> {
   const LoginPage({super.key});
-
-  @override
-  State<LoginPage> createState() => _LoginPageState();
-}
-
-class _LoginPageState extends State<LoginPage> {
-  final edtEmail = TextEditingController();
-  final edtPassword = TextEditingController();
-
-  login(String email, String password, BuildContext context) {
-    // Implement your login logic here
-  }
-
-  @override
-  void dispose() {
-    super.dispose();
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -44,7 +29,7 @@ class _LoginPageState extends State<LoginPage> {
                 children: [
                   buildHeader(),
                   const Spacer(),
-                  loginInput(),
+                  loginInput(context),
                 ],
               ),
             ),
@@ -54,7 +39,7 @@ class _LoginPageState extends State<LoginPage> {
     );
   }
 
-  Widget loginInput() {
+  Widget loginInput(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.all(30),
       child: Column(
@@ -69,7 +54,7 @@ class _LoginPageState extends State<LoginPage> {
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 TextField(
-                  controller: edtEmail,
+                  controller: controller.edtEmail.value,
                   decoration: const InputDecoration(
                     hintText: "Email",
                     prefixIcon: Icon(
@@ -84,7 +69,7 @@ class _LoginPageState extends State<LoginPage> {
                 ),
                 const Divider(),
                 TextField(
-                  controller: edtPassword,
+                  controller: controller.edtPassword.value,
                   decoration: const InputDecoration(
                     hintText: "Password",
                     prefixIcon: Icon(
