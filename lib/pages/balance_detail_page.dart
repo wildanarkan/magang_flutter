@@ -1,19 +1,18 @@
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
+import 'package:get/get.dart';
 import 'package:magang_flutter/common/app_color.dart';
+import 'package:magang_flutter/controllers/balance_detail_page_controller.dart';
 import 'package:magang_flutter/pages/balance_sheet_detail_page.dart';
 import 'package:magang_flutter/widgets/build_icon_rounded_add.dart';
 import 'package:magang_flutter/widgets/build_test_appbar.dart';
 import 'package:magang_flutter/widgets/build_widget_between.dart';
 
-class BalanceDetailPage extends StatelessWidget {
+class BalanceDetailPage extends GetView<BalanceDetailPageController> {
   const BalanceDetailPage({super.key});
 
   @override
   Widget build(BuildContext context) {
-    final DateTime now = DateTime.now();
-    final String formattedDate = DateFormat('EEEE, d-MM-yyyy').format(now);
-
+    
     return Scaffold(
       appBar: BuildTestAppbar(
         title: 'Balance Detail',
@@ -80,7 +79,7 @@ class BalanceDetailPage extends StatelessWidget {
                   child: BuildWidgetBetween(
                     padding: const EdgeInsets.all(10),
                     leftWidget: Text(
-                      formattedDate,
+                      controller.formattedDate.value,
                       style: const TextStyle(
                         fontWeight: FontWeight.w400,
                         fontSize: 14,
@@ -119,7 +118,7 @@ class BalanceDetailPage extends StatelessWidget {
                   child: BuildWidgetBetween(
                     padding: const EdgeInsets.all(10),
                     leftWidget: Text(
-                      formattedDate,
+                      controller.formattedDate.value,
                       style: const TextStyle(
                         fontWeight: FontWeight.w400,
                         fontSize: 14,
@@ -158,7 +157,7 @@ class BalanceDetailPage extends StatelessWidget {
                   child: BuildWidgetBetween(
                     padding: const EdgeInsets.all(10),
                     leftWidget: Text(
-                      formattedDate,
+                      controller.formattedDate.value,
                       style: const TextStyle(
                         fontWeight: FontWeight.w400,
                         fontSize: 14,

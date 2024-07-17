@@ -1,17 +1,16 @@
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
+import 'package:get/get.dart';
 import 'package:magang_flutter/common/app_color.dart';
+import 'package:magang_flutter/controllers/balance_sheet_detail_page_controller.dart';
 import 'package:magang_flutter/widgets/build_test_appbar.dart';
 import 'package:magang_flutter/widgets/build_widget_between.dart';
 
-class BalanceSheetDetailPage extends StatelessWidget {
+class BalanceSheetDetailPage extends GetView<BalanceSheetDetailPageController> {
   const BalanceSheetDetailPage({super.key});
 
   @override
   Widget build(BuildContext context) {
-    final DateTime now = DateTime.now();
-    final String formattedDate = DateFormat('EEEE, d-MM-yyyy').format(now);
-
+  
     return Scaffold(
       appBar: const BuildTestAppbar(
         title: 'Balance Sheet',
@@ -32,7 +31,7 @@ class BalanceSheetDetailPage extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      formattedDate,
+                      controller.formattedDate.value,
                       style: const TextStyle(
                         fontSize: 14,
                         fontWeight: FontWeight.w600,
