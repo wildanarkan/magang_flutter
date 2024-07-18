@@ -7,11 +7,12 @@ import 'package:magang_flutter/widgets/build_icon_rounded_add.dart';
 import 'package:magang_flutter/widgets/build_test_appbar.dart';
 import 'package:magang_flutter/widgets/build_widget_between.dart';
 
-class BalanceDetailPage extends GetView<BalanceDetailPageController> {
+class BalanceDetailPage extends StatelessWidget {
   const BalanceDetailPage({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final controller = Get.put(BalanceDetailPageController());
     
     return Scaffold(
       appBar: BuildTestAppbar(

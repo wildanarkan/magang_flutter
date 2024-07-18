@@ -1,21 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:magang_flutter/common/app_color.dart';
-import 'package:magang_flutter/controllers/add_businiess_trip_page_controller.dart';
-import 'package:magang_flutter/controllers/ask_leave_page_controller.dart';
-import 'package:magang_flutter/controllers/balance_detail_page_controller.dart';
-import 'package:magang_flutter/controllers/balance_sheet_detail_page_controller.dart';
-import 'package:magang_flutter/controllers/login_page_controller.dart';
-import 'package:magang_flutter/controllers/navigator_page_controllers.dart';
 import 'package:magang_flutter/pages/login_page.dart';
 
 void main(){
-   Get.put(NavigatorPageControllers());
-   Get.put(AddBusiniessTripPageController());
-   Get.put(AskLeavePageController());
-   Get.put(BalanceDetailPageController());
-   Get.put(BalanceSheetDetailPageController());
-   Get.put(LoginPageController());
   runApp(const MyApp());
 }
 

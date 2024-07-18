@@ -4,26 +4,29 @@ import 'package:magang_flutter/common/app_color.dart';
 import 'package:magang_flutter/controllers/navigator_page_controllers.dart';
 import 'package:magang_flutter/widgets/fab_bottom_app_bar.dart';
 
-class NavigatorPage extends GetView<NavigatorPageControllers> {
+class NavigatorPage extends StatelessWidget {
   const NavigatorPage({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final controller = Get.put(NavigatorPageControllers());
+
     return Scaffold(
       body: Obx(
         () => Stack(
           children: [
             IndexedStack(
-                index: controller.selectedPage.value,
-                children: controller.page),
-            bottomNavigator(),
+              index: controller.selectedPage.value,
+              children: controller.page,
+            ),
+            bottomNavigator(controller),
           ],
         ),
       ),
     );
   }
 
-  Widget bottomNavigator() {
+  Widget bottomNavigator(NavigatorPageControllers controller) {
     return Align(
       alignment: Alignment.bottomCenter,
       child: Container(

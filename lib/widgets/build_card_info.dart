@@ -25,103 +25,103 @@ class BuildCardInfo extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Widget content = GestureDetector(
-      onTap: onTap,
-      child: Column(
-        children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
+    Widget content = Column(
+      children: [
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  company,
+                  style: TextStyle(
+                    fontWeight: FontWeight.w600,
+                    fontSize: 18,
+                    color: AppColor.textTitle,
+                  ),
+                ),
+                const SizedBox(
+                  height: 5,
+                ),
+                if (city != null)
                   Text(
-                    company,
+                    city ?? '',
                     style: TextStyle(
-                      fontWeight: FontWeight.w600,
-                      fontSize: 18,
-                      color: AppColor.textTitle,
+                      fontWeight: FontWeight.w400,
+                      fontSize: 12,
+                      color: AppColor.textBody,
                     ),
                   ),
-                  const SizedBox(
-                    height: 5,
-                  ),
-                  if (city != null)
-                    Text(
-                      city ?? '',
-                      style: TextStyle(
-                        fontWeight: FontWeight.w400,
-                        fontSize: 12,
-                        color: AppColor.textBody,
-                      ),
-                    ),
-                ],
-              ),
-              _getAppStatusWidget(appStatus),
-            ],
-          ),
-          const Divider(),
-          Row(
-            children: [
-              icon ??
-                  Icon(
-                    Icons.access_time_filled,
-                    color: AppColor.iconBrown,
-                    size: 16,
-                  ),
-              const SizedBox(
-                width: 5,
-              ),
-              Text(
-                DateFormat('dd-MM-yyyy').format(DateTime.now()).toString(),
-                style: TextStyle(
-                  fontWeight: FontWeight.w400,
-                  fontSize: 12,
-                  color: AppColor.textBody,
+              ],
+            ),
+            _getAppStatusWidget(appStatus),
+          ],
+        ),
+        const Divider(),
+        Row(
+          children: [
+            icon ??
+                Icon(
+                  Icons.access_time_filled,
+                  color: AppColor.iconBrown,
+                  size: 16,
                 ),
+            const SizedBox(
+              width: 5,
+            ),
+            Text(
+              DateFormat('dd-MM-yyyy').format(DateTime.now()).toString(),
+              style: TextStyle(
+                fontWeight: FontWeight.w400,
+                fontSize: 12,
+                color: AppColor.textBody,
               ),
-              const SizedBox(
-                width: 5,
+            ),
+            const SizedBox(
+              width: 5,
+            ),
+            Text(
+              '-',
+              style: TextStyle(
+                fontWeight: FontWeight.w400,
+                fontSize: 12,
+                color: AppColor.textBody,
               ),
-              Text(
-                '-',
-                style: TextStyle(
-                  fontWeight: FontWeight.w400,
-                  fontSize: 12,
-                  color: AppColor.textBody,
-                ),
+            ),
+            const SizedBox(
+              width: 5,
+            ),
+            Text(
+              DateFormat('dd-MM-yyyy').format(DateTime.now()).toString(),
+              style: TextStyle(
+                fontWeight: FontWeight.w400,
+                fontSize: 12,
+                color: AppColor.textBody,
               ),
-              const SizedBox(
-                width: 5,
-              ),
-              Text(
-                DateFormat('dd-MM-yyyy').format(DateTime.now()).toString(),
-                style: TextStyle(
-                  fontWeight: FontWeight.w400,
-                  fontSize: 12,
-                  color: AppColor.textBody,
-                ),
-              ),
-            ],
-          ),
-        ],
-      ),
+            ),
+          ],
+        ),
+      ],
     );
 
     if (useContainer) {
-      content = Container(
-        padding: const EdgeInsets.all(10),
-        decoration: BoxDecoration(
-          color: Colors.white,
-          borderRadius: const BorderRadius.all(
-            Radius.circular(10),
+      content = GestureDetector(
+        onTap: onTap,
+        child: Container(
+          padding: const EdgeInsets.all(10),
+          decoration: BoxDecoration(
+            color: Colors.white,
+            borderRadius: const BorderRadius.all(
+              Radius.circular(10),
+            ),
+            border: Border.all(
+              width: 1,
+              color: AppColor.line,
+            ),
           ),
-          border: Border.all(
-            width: 1,
-            color: AppColor.line,
-          ),
+          child: content,
         ),
-        child: content,
       );
     }
 

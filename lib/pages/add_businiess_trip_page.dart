@@ -8,11 +8,13 @@ import 'package:magang_flutter/widgets/build_pick_date.dart';
 import 'package:magang_flutter/widgets/build_test_appbar.dart';
 import 'package:magang_flutter/widgets/build_text_field.dart';
 
-class AddBusiniessTripPage extends  GetView<AddBusiniessTripPageController> {
+class AddBusiniessTripPage extends  StatelessWidget {
   const AddBusiniessTripPage({super.key});
 
   @override
   Widget build(BuildContext context) {
+     final controller = Get.put(AddBusiniessTripPageController());
+
     return Scaffold(
       appBar: const BuildTestAppbar(title: 'Input Data'),
       body: ListView(

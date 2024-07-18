@@ -11,6 +11,7 @@ class BalanceSheetPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: BuildTestAppbar(
+        paddingTitle: const EdgeInsets.only(left: 20),
         title: 'Balance Sheet',
         actions: [
           BuildIconRoundedAdd(

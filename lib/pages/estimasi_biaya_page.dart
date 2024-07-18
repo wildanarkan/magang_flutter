@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:magang_flutter/common/app_color.dart';
+import 'package:magang_flutter/pages/edit_biaya_page.dart';
 import 'package:magang_flutter/widgets/build_expansion_biaya.dart';
 import 'package:magang_flutter/widgets/build_test_appbar.dart';
 import 'package:magang_flutter/widgets/build_total.dart';
@@ -121,7 +122,14 @@ class EstimasiBiayaPage extends StatelessWidget {
             alignment: Alignment.bottomCenter,
             child: BuildTotal(
               total: 'IDR 1.600.000,00',
-              onPressed: () {},
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => const EditBiayaPage(),
+                  ),
+                );
+              },
             ),
           ),
         ],

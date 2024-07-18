@@ -5,17 +5,19 @@ import 'package:magang_flutter/pages/navigator_page.dart';
 import 'package:magang_flutter/widgets/background_image.dart';
 import 'package:magang_flutter/widgets/build_button.dart';
 
-class LoginPage extends GetView<LoginPageController> {
+class LoginPage extends StatelessWidget {
   const LoginPage({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final controller = Get.put(LoginPageController());
+
     return Scaffold(
       // resizeToAvoidBottomInset: false,
       body: Stack(
         children: [
           SizedBox(
-            height: MediaQuery.sizeOf(context).height,
+            height: MediaQuery.of(context).size.height,
             child: const BackgroundImage(
               imageProvider: AssetImage('assets/background.png'),
               imageAlignment: Alignment(0.16, 0),
@@ -23,13 +25,13 @@ class LoginPage extends GetView<LoginPageController> {
           ),
           SingleChildScrollView(
             child: SizedBox(
-              height: MediaQuery.sizeOf(context).height,
+              height: MediaQuery.of(context).size.height,
               child: Column(
                 // crossAxisAlignment: CrossAxisAlignment.,
                 children: [
                   buildHeader(),
                   const Spacer(),
-                  loginInput(context),
+                  loginInput(context, controller),
                 ],
               ),
             ),
@@ -39,7 +41,7 @@ class LoginPage extends GetView<LoginPageController> {
     );
   }
 
-  Widget loginInput(BuildContext context) {
+  Widget loginInput(BuildContext context, LoginPageController controller) {
     return Padding(
       padding: const EdgeInsets.all(30),
       child: Column(

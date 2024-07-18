@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:magang_flutter/common/app_color.dart';
 import 'package:magang_flutter/pages/add_businiess_trip_page.dart';
+import 'package:magang_flutter/pages/business_trip_detail_page.dart';
 import 'package:magang_flutter/widgets/build_card_info.dart';
 import 'package:magang_flutter/widgets/build_icon_rounded_add.dart';
 import 'package:magang_flutter/widgets/build_test_appbar.dart';
@@ -31,7 +32,7 @@ class BusinessTripPage extends StatelessWidget {
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (context) => AddBusiniessTripPage(),
+                  builder: (context) => const AddBusiniessTripPage(),
                 ),
               );
             },
@@ -42,41 +43,49 @@ class BusinessTripPage extends StatelessWidget {
         padding: const EdgeInsets.symmetric(horizontal: 25),
         child: ListView(
           padding: const EdgeInsets.only(bottom: 120, top: 20),
-          children: const [
+          children:  [
             BuildCardInfo(
                 city: 'Surabaya',
                 company: "PT TATA NIAGA",
-                appStatus: 'complete'),
-            BuildCardInfo(
+                appStatus: 'complete',
+                onTap: () {
+                Navigator.of(context).push(
+                  MaterialPageRoute(
+                    builder: (context) => const BusinessTripDetailPage(),
+                  ),
+                );
+              },
+                ),
+            const BuildCardInfo(
               city: 'Bandung',
               company: "PT SINAR ABADI",
               appStatus: 'onProgress',
             ),
-            BuildCardInfo(
+            const BuildCardInfo(
               city: 'Jakarta',
               company: "PT SIDOMUNCUL",
               appStatus: 'decline',
             ),
-            BuildCardInfo(
+            const BuildCardInfo(
               city: 'Madura',
               company: "PT USAHA KREATIF",
               appStatus: 'complete',
             ),
-            BuildCardInfo(
+            const BuildCardInfo(
                 city: 'Surabaya',
                 company: "PT TATA NIAGA",
                 appStatus: 'complete'),
-            BuildCardInfo(
+            const BuildCardInfo(
               city: 'Bandung',
               company: "PT SINAR ABADI",
               appStatus: 'onProgress',
             ),
-            BuildCardInfo(
+            const BuildCardInfo(
               city: 'Jakarta',
               company: "PT SIDOMUNCUL",
               appStatus: 'decline',
             ),
-            BuildCardInfo(
+            const BuildCardInfo(
               city: 'Madura',
               company: "PT USAHA KREATIF",
               appStatus: 'complete',

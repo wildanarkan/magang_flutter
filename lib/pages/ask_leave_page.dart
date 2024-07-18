@@ -8,13 +8,15 @@ import 'package:magang_flutter/widgets/build_pick_date.dart';
 import 'package:magang_flutter/widgets/build_test_appbar.dart';
 import 'package:magang_flutter/widgets/build_text_field.dart';
 
-class AskLeavePage extends GetView <AskLeavePageController>{
+class AskLeavePage extends StatelessWidget{
   const AskLeavePage({super.key});
 
   
 
   @override
   Widget build(BuildContext context) {
+    final controller = Get.put(AskLeavePageController());
+
     return Scaffold(
       appBar: const BuildTestAppbar(title: 'Form Ask to Leave'),
       body: Column(
