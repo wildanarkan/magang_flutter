@@ -3,9 +3,10 @@ import 'package:magang_flutter/common/app_color.dart';
 
 class BuildTextField extends StatefulWidget {
   const BuildTextField({super.key, required this.title, this.required = false,
-   this.hintText});
+   this.hintText, this.controller});
 
   final String title;
+  final TextEditingController? controller;
   final bool required;
   final String? hintText;
 
@@ -49,6 +50,7 @@ class _BuildTextFieldState extends State<BuildTextField> {
                 color: AppColor.inputBackground,
                 borderRadius: BorderRadius.circular(10)),
             child: TextField(
+              controller: widget.controller,
               style: TextStyle(
                   color: AppColor.textTitle,
                   fontWeight: FontWeight.w500,
