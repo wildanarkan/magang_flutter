@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:magang_flutter/widgets/build_appbar.dart';
 import 'package:magang_flutter/widgets/build_button.dart';
+import 'package:magang_flutter/widgets/build_test_appbar.dart';
 import 'package:magang_flutter/widgets/build_text_field.dart';
 
 class EditProfilePage extends StatelessWidget {
@@ -12,8 +12,7 @@ class EditProfilePage extends StatelessWidget {
       body: ListView(
         padding: const EdgeInsets.all(0),
         children: [
-          BuildAppbar(
-            context: context,
+          const BuildTestAppbar(
             title: 'Edit Profile',
           ),
           Padding(

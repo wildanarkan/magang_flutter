@@ -80,7 +80,7 @@ class User {
   String? email;
   Null emailVerifiedAt;
   String? genderStatus;
-  Null profilePhoto;
+  String? profilePhoto;
   Null ktpPhoto;
   Null noRekening;
   Null blacklistReason;

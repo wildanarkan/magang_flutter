@@ -14,7 +14,8 @@ class ProfilePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final NavigatorPageControllers controller = Get.find<NavigatorPageControllers>();
+    final NavigatorPageControllers controller =
+        Get.find<NavigatorPageControllers>();
 
     return Scaffold(
       body: Stack(
@@ -63,11 +64,11 @@ class ProfilePage extends StatelessWidget {
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
                                     Obx(() => Text(
-                                      controller.userName.value,
-                                      style: const TextStyle(
-                                          fontSize: 14,
-                                          fontWeight: FontWeight.w600),
-                                    )),
+                                          controller.userName.value,
+                                          style: const TextStyle(
+                                              fontSize: 14,
+                                              fontWeight: FontWeight.w600),
+                                        )),
                                     const SizedBox(
                                       height: 5,
                                     ),
@@ -172,11 +173,20 @@ class ProfilePage extends StatelessWidget {
                         ),
                         child: ClipRRect(
                           borderRadius: BorderRadius.circular(100),
-                          child: Image.asset(
-                            'assets/background.png',
-                            height: 80,
-                            width: 80,
-                            fit: BoxFit.cover,
+                          child: Obx(
+                            () => controller.profilePhotoUrl.value.isNotEmpty
+                                ? Image.network(
+                                    controller.profilePhotoUrl.value,
+                                    height: 80,
+                                    width: 80,
+                                    fit: BoxFit.cover,
+                                  )
+                                : Image.asset(
+                                    'assets/background.png', // Gambar default jika tidak ada foto profil
+                                    height: 80,
+                                    width: 80,
+                                    fit: BoxFit.cover,
+                                  ),
                           ),
                         ),
                       ),

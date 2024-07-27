@@ -14,6 +14,7 @@ class NavigatorPageControllers extends GetxController {
   RxInt selectedPage = 0.obs;
   RxString userName = 'No Data'.obs;
   String? accessToken; // Tambahkan ini untuk menyimpan token
+  RxString profilePhotoUrl = ''.obs; // Menyimpan URL foto profil
 
   @override
   void onInit() {
@@ -24,7 +25,7 @@ class NavigatorPageControllers extends GetxController {
   Future<void> fetchUserData() async {
     print('Fetching user data...');
     try {
-       final token = GetStorage().read('accessToken');
+      final token = GetStorage().read('accessToken');
       final response = await http.get(
         Uri.parse(URLs.user),
         headers: {
@@ -35,6 +36,7 @@ class NavigatorPageControllers extends GetxController {
         final data = json.decode(response.body);
         print('User data: $data');
         userName.value = data['result']['name'] ?? 'No Name';
+        profilePhotoUrl.value = data['result']['profile_photo'] ?? '';
       } else {
         print('Failed to load data: ${response.statusCode}');
       }

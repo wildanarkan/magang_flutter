@@ -13,7 +13,6 @@ class HomePage extends GetView<NavigatorPageControllers> {
 
   @override
   Widget build(BuildContext context) {
-
     return Scaffold(
       body: Stack(
         children: [
@@ -151,11 +150,20 @@ class HomePage extends GetView<NavigatorPageControllers> {
               children: [
                 ClipRRect(
                   borderRadius: BorderRadius.circular(100),
-                  child: Image.asset(
-                    'assets/background.png',
-                    height: 36,
-                    width: 36,
-                    fit: BoxFit.cover,
+                  child: Obx(
+                    () => controller.profilePhotoUrl.value.isNotEmpty
+                        ? Image.network(
+                            controller.profilePhotoUrl.value,
+                            height: 36,
+                            width: 36,
+                            fit: BoxFit.cover,
+                          )
+                        : Image.asset(
+                            'assets/background.png', // Gambar default jika tidak ada foto profil
+                            height: 36,
+                            width: 36,
+                            fit: BoxFit.cover,
+                          ),
                   ),
                 ),
                 const SizedBox(
@@ -164,7 +172,7 @@ class HomePage extends GetView<NavigatorPageControllers> {
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                  Obx(() {
+                    Obx(() {
                       return Text(
                         controller.userName.value,
                         style: TextStyle(
