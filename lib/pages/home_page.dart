@@ -13,6 +13,7 @@ class HomePage extends GetView<NavigatorPageControllers> {
 
   @override
   Widget build(BuildContext context) {
+
     return Scaffold(
       body: Stack(
         children: [
@@ -163,14 +164,16 @@ class HomePage extends GetView<NavigatorPageControllers> {
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(
-                      'Wildan Arkan',
-                      style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 14,
-                        color: AppColor.textTitle,
-                      ),
-                    ),
+                  Obx(() {
+                      return Text(
+                        controller.userName.value,
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 14,
+                          color: AppColor.textTitle,
+                        ),
+                      );
+                    }),
                     Text(
                       'HRD',
                       style: TextStyle(

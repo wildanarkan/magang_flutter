@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:magang_flutter/controllers/login_page_controller.dart';
-import 'package:magang_flutter/pages/navigator_page.dart';
 import 'package:magang_flutter/widgets/background_image.dart';
 import 'package:magang_flutter/widgets/build_button.dart';
 
@@ -13,7 +12,6 @@ class LoginPage extends StatelessWidget {
     final controller = Get.put(LoginPageController());
 
     return Scaffold(
-      // resizeToAvoidBottomInset: false,
       body: Stack(
         children: [
           SizedBox(
@@ -27,7 +25,6 @@ class LoginPage extends StatelessWidget {
             child: SizedBox(
               height: MediaQuery.of(context).size.height,
               child: Column(
-                // crossAxisAlignment: CrossAxisAlignment.,
                 children: [
                   buildHeader(),
                   const Spacer(),
@@ -95,12 +92,7 @@ class LoginPage extends StatelessWidget {
             context: context,
             title: 'Login',
             onPressed: () {
-              Navigator.pushReplacement(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => const NavigatorPage(),
-                ),
-              );
+              controller.login();
             },
           )
         ],

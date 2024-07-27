@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:magang_flutter/common/app_color.dart';
+import 'package:magang_flutter/controllers/navigator_page_controllers.dart';
 import 'package:magang_flutter/pages/contract_history_page.dart';
 import 'package:magang_flutter/pages/leave_history_page.dart';
 import 'package:magang_flutter/pages/payroll_history_page.dart';
@@ -12,6 +14,8 @@ class ProfilePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final NavigatorPageControllers controller = Get.find<NavigatorPageControllers>();
+
     return Scaffold(
       body: Stack(
         children: [
@@ -58,13 +62,15 @@ class ProfilePage extends StatelessWidget {
                                 child: Column(
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
-                                    const Text(
-                                      'Kevin Anggara',
-                                      style: TextStyle(
+                                    Obx(() => Text(
+                                      controller.userName.value,
+                                      style: const TextStyle(
                                           fontSize: 14,
                                           fontWeight: FontWeight.w600),
+                                    )),
+                                    const SizedBox(
+                                      height: 5,
                                     ),
-                                    const SizedBox(height: 5,),
                                     Text(
                                       'HRD',
                                       style: TextStyle(
@@ -75,7 +81,9 @@ class ProfilePage extends StatelessWidget {
                                   ],
                                 ),
                               ),
-                                    const SizedBox(height: 16,),
+                              const SizedBox(
+                                height: 16,
+                              ),
                               const Divider(),
                               BuildRowicon(
                                 icon: Icons.contact_page_sharp,
