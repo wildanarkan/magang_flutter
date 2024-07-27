@@ -25,7 +25,7 @@ class ProfileDetailPage extends StatelessWidget {
                 Container(
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(8),
-                  color: Colors.white,
+                    color: Colors.white,
                   ),
                   child: Padding(
                     padding: const EdgeInsets.fromLTRB(30, 10, 10, 10),
@@ -67,71 +67,140 @@ class ProfileDetailPage extends StatelessWidget {
                           height: 15,
                         ),
                         Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  'First Name',
-                                  style: TextStyle(color: AppColor.textBody),
-                                ),
-                                const Text(
-                                  'arya',
-                                  style: TextStyle(
-                                      color: Colors.black,
-                                      fontWeight: FontWeight.bold),
-                                ),
-                                const SizedBox(
-                                  height: 15,
-                                ),
-                                Text(
-                                  'Gender',
-                                  style: TextStyle(color: AppColor.textBody),
-                                ),
-                                const Text(
-                                  'male',
-                                  style: TextStyle(
-                                      color: Colors.black,
-                                      fontWeight: FontWeight.bold),
-                                ),
-                              ],
+                            Expanded(
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    'First Name',
+                                    style: TextStyle(color: AppColor.textBody),
+                                  ),
+                                  const Text(
+                                    'arya',
+                                    style: TextStyle(
+                                        color: Colors.black,
+                                        fontWeight: FontWeight.bold),
+                                  ),
+                                ],
+                              ),
                             ),
-                            Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  'Last Name',
-                                  style: TextStyle(color: AppColor.textBody),
-                                ),
-                                const Text(
-                                  'putra',
-                                  style: TextStyle(
-                                      color: Colors.black,
-                                      fontWeight: FontWeight.bold),
-                                ),
-                                const SizedBox(
-                                  height: 15,
-                                ),
-                                Text(
-                                  'Religion',
-                                  style: TextStyle(color: AppColor.textBody),
-                                ),
-                                const Text(
-                                  'islam',
-                                  style: TextStyle(
-                                      color: Colors.black,
-                                      fontWeight: FontWeight.bold),
-                                ),
-                                const SizedBox(
-                                  width: 19,
-                                )
-                              ],
+                            const SizedBox(width: 20),
+                            Expanded(
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    'Last Name',
+                                    style: TextStyle(color: AppColor.textBody),
+                                  ),
+                                  const Text(
+                                    'putra',
+                                    style: TextStyle(
+                                        color: Colors.black,
+                                        fontWeight: FontWeight.bold),
+                                  ),
+                                ],
+                              ),
                             ),
-                            const SizedBox(
-                              width: 19,
-                            )
                           ],
+                        ),
+                        const SizedBox(
+                          height: 15,
+                        ),
+                        Row(
+                          children: [
+                            Expanded(
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    'Gender',
+                                    style: TextStyle(color: AppColor.textBody),
+                                  ),
+                                  const Text(
+                                    'male',
+                                    style: TextStyle(
+                                        color: Colors.black,
+                                        fontWeight: FontWeight.bold),
+                                  ),
+                                ],
+                              ),
+                            ),
+                            const SizedBox(width: 20),
+                            Expanded(
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    'Religion',
+                                    style: TextStyle(color: AppColor.textBody),
+                                  ),
+                                  const Text(
+                                    'islam',
+                                    style: TextStyle(
+                                        color: Colors.black,
+                                        fontWeight: FontWeight.bold),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ],
+                        ),
+                        const SizedBox(
+                          height: 15,
+                        ),
+                        Row(
+                          children: [
+                            Expanded(
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    'Role',
+                                    style: TextStyle(color: AppColor.textBody),
+                                  ),
+                                  const Text(
+                                    'hrd',
+                                    style: TextStyle(
+                                        color: Colors.black,
+                                        fontWeight: FontWeight.bold),
+                                  ),
+                                ],
+                              ),
+                            ),
+                            const SizedBox(width: 20),
+                            Expanded(
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    'Employee Group',
+                                    style: TextStyle(color: AppColor.textBody),
+                                  ),
+                                  const Text(
+                                    '1',
+                                    style: TextStyle(
+                                        color: Colors.black,
+                                        fontWeight: FontWeight.bold),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ],
+                        ),
+                        const SizedBox(
+                          height: 15,
+                        ),
+                        Text(
+                          'Position',
+                          style: TextStyle(color: AppColor.textBody),
+                        ),
+                        const Text(
+                          'Leader',
+                          style: TextStyle(
+                              color: Colors.black,
+                              fontWeight: FontWeight.bold),
                         ),
                         const SizedBox(
                           height: 10,
