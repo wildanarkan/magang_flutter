@@ -155,7 +155,7 @@ class ProfilePage extends StatelessWidget {
                         borderColor: AppColor.decline,
                         width: 320,
                         onPressed: () {
-                          Navigator.pop(context);
+                         controller.logout();
                         },
                       ),
                     ],

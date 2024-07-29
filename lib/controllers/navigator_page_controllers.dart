@@ -8,6 +8,7 @@ import 'package:magang_flutter/common/urls.dart';
 import 'package:magang_flutter/pages/balance_sheet_page.dart';
 import 'package:magang_flutter/pages/business_trip_page.dart';
 import 'package:magang_flutter/pages/home_page.dart';
+import 'package:magang_flutter/pages/login_page.dart';
 import 'package:magang_flutter/pages/profile_page.dart';
 
 class NavigatorPageControllers extends GetxController {
@@ -54,5 +55,11 @@ class NavigatorPageControllers extends GetxController {
 
   void changePage(int index) {
     selectedPage.value = index;
+  }
+
+  void logout() {
+    final storage = GetStorage();
+    storage.remove('token');
+    Get.offAll(() => const LoginPage());
   }
 }
