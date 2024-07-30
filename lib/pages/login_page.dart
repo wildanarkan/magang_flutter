@@ -9,7 +9,7 @@ class LoginPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final controller = Get.put(LoginPageController());
+    final LoginPageController controller = Get.find<LoginPageController>();
 
     return Scaffold(
       body: Stack(

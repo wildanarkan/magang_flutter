@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:magang_flutter/common/app_color.dart';
+import 'package:magang_flutter/controllers/login_page_controller.dart';
 import 'package:magang_flutter/controllers/navigator_page_controllers.dart';
 import 'package:magang_flutter/pages/contract_history_page.dart';
 import 'package:magang_flutter/pages/leave_history_page.dart';
@@ -14,8 +15,8 @@ class ProfilePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final NavigatorPageControllers controller =
-        Get.find<NavigatorPageControllers>();
+    final NavigatorPageControllers controller = Get.find<NavigatorPageControllers>();
+    final LoginPageController loginController = Get.find<LoginPageController>();
 
     return Scaffold(
       body: Stack(
@@ -155,7 +156,7 @@ class ProfilePage extends StatelessWidget {
                         borderColor: AppColor.decline,
                         width: 320,
                         onPressed: () {
-                         controller.logout();
+                          loginController.logout();
                         },
                       ),
                     ],
