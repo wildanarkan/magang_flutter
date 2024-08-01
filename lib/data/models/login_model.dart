@@ -70,28 +70,30 @@ class Result {
 
 class User {
   int? id;
-  String? name;
-  Null nik;
-  Null city;
-  Null address;
-  Null religion;
-  Null birthDate;
-  Null phoneNumber;
+  String? firstName;
+  String? lastName;
+  int? nik;
+  String? city;
+  String? address;
+  String? religion;
+  String? birthDate;
+  String? phoneNumber;
   String? email;
-  Null emailVerifiedAt;
+  String? emailVerifiedAt;
   String? genderStatus;
   String? profilePhoto;
-  Null ktpPhoto;
-  Null noRekening;
-  Null blacklistReason;
-  Null blockDate;
+  String? ktpPhoto;
+  int? noRekening;
+  String? blacklistReason;
+  int? blockDate;
   String? maritalStatus;
   String? createdAt;
   String? updatedAt;
 
   User(
       {this.id,
-      this.name,
+      this.firstName,
+      this.lastName,
       this.nik,
       this.city,
       this.address,
@@ -112,7 +114,8 @@ class User {
 
   User.fromJson(Map<String, dynamic> json) {
     id = json['id'];
-    name = json['name'];
+    firstName = json['first_name'];
+    lastName = json['last_name'];
     nik = json['nik'];
     city = json['city'];
     address = json['address'];
@@ -135,7 +138,8 @@ class User {
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
     data['id'] = id;
-    data['name'] = name;
+    data['first_name'] = firstName;
+    data['last_name'] = lastName;
     data['nik'] = nik;
     data['city'] = city;
     data['address'] = address;

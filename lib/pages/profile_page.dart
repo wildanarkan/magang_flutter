@@ -65,7 +65,7 @@ class ProfilePage extends StatelessWidget {
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
                                     Obx(() => Text(
-                                          controller.userName.value,
+                                          '${controller.firstName.value} ${controller.lastName.value}',
                                           style: const TextStyle(
                                               fontSize: 14,
                                               fontWeight: FontWeight.w600),

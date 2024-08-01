@@ -174,7 +174,7 @@ class HomePage extends GetView<NavigatorPageControllers> {
                   children: [
                     Obx(() {
                       return Text(
-                        controller.userName.value,
+                        '${controller.firstName.value} ${controller.lastName.value}',
                         style: TextStyle(
                           fontWeight: FontWeight.bold,
                           fontSize: 14,
