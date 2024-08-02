@@ -23,29 +23,40 @@ class EditProfilePage extends StatelessWidget {
                 Container(
                   width: double.infinity,
                   color: Colors.white,
-                  child: const Padding(
-                    padding: EdgeInsets.all(30),
+                  child: Padding(
+                    padding: const EdgeInsets.all(30),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                       BuildTextField(
-                         title: 'First Name',),
-                         BuildTextField(
-                         title: 'Last Name',),
-                        BuildTextField(
-                         title: 'Phone Number',),
-                        BuildTextField(
-                         title: 'kota',),
-                        BuildTextField(
-                         title: 'Address',),
+                        const BuildTextField(
+                          title: 'First Name',
+                        ),
+                        const BuildTextField(
+                          title: 'Last Name',
+                        ),
+                        const BuildTextField(
+                          title: 'Phone Number',
+                        ),
+                        const BuildTextField(
+                          title: 'kota',
+                        ),
+                        const BuildTextField(
+                          title: 'Address',
+                        ),
+                        const SizedBox(
+                          height: 50,
+                        ),
+                        BuildButton(
+                          context: context,
+                          title: 'Confirm',
+                          onPressed: () {
+                            Navigator.pop(context);
+                          },
+                        )
                       ],
                     ),
                   ),
                 ),
-                const SizedBox(
-                  height: 200,
-                ),
-                BuildButton(context: context, title: 'Confirm', onPressed: () { Navigator.pop(context); },)
               ],
             ),
           ),

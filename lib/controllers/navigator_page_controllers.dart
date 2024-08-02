@@ -14,7 +14,15 @@ class NavigatorPageControllers extends GetxController {
   RxInt selectedPage = 0.obs;
   RxString firstName = 'Null'.obs;
   RxString lastName = 'Null'.obs;
-  RxInt role = 0.obs;
+  RxString gender = 'Null'.obs;
+  RxString religion = 'Null'.obs;
+  RxString role = 'Null'.obs;
+  RxInt employee_group = 0.obs;
+  RxString position = 'Null'.obs;
+  RxString phone_number = 'Null'.obs;
+  RxString address = 'Null'.obs;
+  RxString email = 'Null'.obs;
+  RxInt nip = 0.obs;
   RxString profilePhotoUrl = ''.obs;
   String? accessToken; // Tambahkan ini untuk menyimpan token
   int? userId; // Tambahkan ini untuk menyimpan ID pengguna
@@ -72,7 +80,16 @@ class NavigatorPageControllers extends GetxController {
         final data = json.decode(response.body);
         firstName.value = data['first_name'] ?? 'No Data';
         lastName.value = data['last_name'] ?? 'No Data';
+        gender.value = data['gender'] ?? 'No Data';
+        religion.value = data['religion'] ?? 'No Data';
         role.value = data['role'] ?? 'No Data';
+        employee_group.value = data['employee_group'] ?? 'No Data';
+        position.value = data['position'] ?? 'No Data';
+        phone_number.value = data['phone_number'] ?? 'No Data';
+        address.value = data['address'] ?? 'No Data';
+        email.value = data['email'] ?? 'No Data';
+        nip.value = data['nip'] ?? 'No Data';
+
       } else {
         // Error handling
         print('Failed to load profile data: ${response.statusCode}');
@@ -82,6 +99,8 @@ class NavigatorPageControllers extends GetxController {
       print('Error occurred: $e');
     }
   }
+
+  
 
   List<Widget> page = [
     const HomePage(),

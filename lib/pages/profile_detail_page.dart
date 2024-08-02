@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:magang_flutter/common/app_color.dart';
+import 'package:magang_flutter/controllers/navigator_page_controllers.dart';
 import 'package:magang_flutter/pages/change_password_page.dart';
 import 'package:magang_flutter/pages/edit_profile_page.dart';
 import 'package:magang_flutter/widgets/build_button.dart';
@@ -10,6 +12,9 @@ class ProfileDetailPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final NavigatorPageControllers controller =
+        Get.find<NavigatorPageControllers>();
+
     return Scaffold(
       body: ListView(
         padding: const EdgeInsets.all(0),
@@ -41,7 +46,12 @@ class ProfileDetailPage extends StatelessWidget {
                             ),
                             GestureDetector(
                               onTap: () {
-                                Navigator.push(context, MaterialPageRoute(builder: (context) => const EditProfilePage(),));
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) =>
+                                          const EditProfilePage(),
+                                    ));
                               },
                               child: Row(
                                 children: [
@@ -76,12 +86,14 @@ class ProfileDetailPage extends StatelessWidget {
                                     'First Name',
                                     style: TextStyle(color: AppColor.textBody),
                                   ),
-                                  const Text(
-                                    'arya',
-                                    style: TextStyle(
-                                        color: Colors.black,
-                                        fontWeight: FontWeight.bold),
-                                  ),
+                                  Obx(
+                                    () => Text(
+                                      controller.firstName.value,
+                                      style: const TextStyle(
+                                          color: Colors.black,
+                                          fontWeight: FontWeight.bold),
+                                    ),
+                                  )
                                 ],
                               ),
                             ),
@@ -94,12 +106,14 @@ class ProfileDetailPage extends StatelessWidget {
                                     'Last Name',
                                     style: TextStyle(color: AppColor.textBody),
                                   ),
-                                  const Text(
-                                    'putra',
-                                    style: TextStyle(
-                                        color: Colors.black,
-                                        fontWeight: FontWeight.bold),
-                                  ),
+                                  Obx(
+                                    () => Text(
+                                      controller.lastName.value,
+                                      style: const TextStyle(
+                                          color: Colors.black,
+                                          fontWeight: FontWeight.bold),
+                                    ),
+                                  )
                                 ],
                               ),
                             ),
@@ -118,12 +132,14 @@ class ProfileDetailPage extends StatelessWidget {
                                     'Gender',
                                     style: TextStyle(color: AppColor.textBody),
                                   ),
-                                  const Text(
-                                    'male',
-                                    style: TextStyle(
-                                        color: Colors.black,
-                                        fontWeight: FontWeight.bold),
-                                  ),
+                                  Obx(
+                                    () => Text(
+                                      controller.gender.value,
+                                      style: const TextStyle(
+                                          color: Colors.black,
+                                          fontWeight: FontWeight.bold),
+                                    ),
+                                  )
                                 ],
                               ),
                             ),
@@ -136,12 +152,14 @@ class ProfileDetailPage extends StatelessWidget {
                                     'Religion',
                                     style: TextStyle(color: AppColor.textBody),
                                   ),
-                                  const Text(
-                                    'islam',
-                                    style: TextStyle(
-                                        color: Colors.black,
-                                        fontWeight: FontWeight.bold),
-                                  ),
+                                  Obx(
+                                    () => Text(
+                                      controller.religion.value,
+                                      style: const TextStyle(
+                                          color: Colors.black,
+                                          fontWeight: FontWeight.bold),
+                                    ),
+                                  )
                                 ],
                               ),
                             ),
@@ -160,12 +178,14 @@ class ProfileDetailPage extends StatelessWidget {
                                     'Role',
                                     style: TextStyle(color: AppColor.textBody),
                                   ),
-                                  const Text(
-                                    'hrd',
-                                    style: TextStyle(
-                                        color: Colors.black,
-                                        fontWeight: FontWeight.bold),
-                                  ),
+                                  Obx(
+                                    () => Text(
+                                      controller.role.value,
+                                      style: const TextStyle(
+                                          color: Colors.black,
+                                          fontWeight: FontWeight.bold),
+                                    ),
+                                  )
                                 ],
                               ),
                             ),
@@ -178,12 +198,14 @@ class ProfileDetailPage extends StatelessWidget {
                                     'Employee Group',
                                     style: TextStyle(color: AppColor.textBody),
                                   ),
-                                  const Text(
-                                    '1',
-                                    style: TextStyle(
-                                        color: Colors.black,
-                                        fontWeight: FontWeight.bold),
-                                  ),
+                                  Obx(
+                                    () => Text(
+                                      '${controller.employee_group.value}',
+                                      style: const TextStyle(
+                                          color: Colors.black,
+                                          fontWeight: FontWeight.bold),
+                                    ),
+                                  )
                                 ],
                               ),
                             ),
@@ -196,11 +218,13 @@ class ProfileDetailPage extends StatelessWidget {
                           'Position',
                           style: TextStyle(color: AppColor.textBody),
                         ),
-                        const Text(
-                          'Leader',
-                          style: TextStyle(
-                              color: Colors.black,
-                              fontWeight: FontWeight.bold),
+                        Obx(
+                          () => Text(
+                            controller.position.value,
+                            style: const TextStyle(
+                                color: Colors.black,
+                                fontWeight: FontWeight.bold),
+                          ),
                         ),
                         const SizedBox(
                           height: 10,
@@ -224,9 +248,11 @@ class ProfileDetailPage extends StatelessWidget {
                         const SizedBox(
                           height: 5,
                         ),
-                        const Text(
-                          '089562788181',
-                          style: TextStyle(fontWeight: FontWeight.bold),
+                        Obx(
+                          () => Text(
+                            '${controller.phone_number.value}',
+                            style: const TextStyle(fontWeight: FontWeight.bold),
+                          ),
                         ),
                         const SizedBox(
                           height: 10,
@@ -238,9 +264,11 @@ class ProfileDetailPage extends StatelessWidget {
                         const SizedBox(
                           height: 5,
                         ),
-                        const Text(
-                          'jl. sinobodododo',
-                          style: TextStyle(fontWeight: FontWeight.bold),
+                        Obx(
+                          () => Text(
+                            controller.address.value,
+                            style: const TextStyle(fontWeight: FontWeight.bold),
+                          ),
                         ),
                         const SizedBox(
                           height: 10,
@@ -252,9 +280,11 @@ class ProfileDetailPage extends StatelessWidget {
                         const SizedBox(
                           height: 5,
                         ),
-                        const Text(
-                          'admin@gmail.com',
-                          style: TextStyle(fontWeight: FontWeight.bold),
+                        Obx(
+                          () => Text(
+                            controller.email.value,
+                            style: const TextStyle(fontWeight: FontWeight.bold),
+                          ),
                         ),
                         const SizedBox(
                           height: 10,
@@ -272,22 +302,36 @@ class ProfileDetailPage extends StatelessWidget {
                           height: 10,
                         ),
                         Text(
-                          'Nomor Induk',
+                          'NIP',
                           style: TextStyle(color: AppColor.textBody),
                         ),
                         const SizedBox(
                           height: 5,
                         ),
-                        const Text(
-                          '089562788181',
-                          style: TextStyle(fontWeight: FontWeight.bold),
-                        ),
+                        Obx(
+                          () => Text(
+                            '${controller.nip.value}',
+                            style: const TextStyle(fontWeight: FontWeight.bold),
+                          ),
+                        )
                       ],
                     ),
                   ),
                 ),
-                const SizedBox(height: 100,),
-                BuildButton(context: context, title: 'Change Password', onPressed: () { Navigator.push(context, MaterialPageRoute(builder: (context) => const ChangePasswordPage(),)); },)
+                const SizedBox(
+                  height: 100,
+                ),
+                BuildButton(
+                  context: context,
+                  title: 'Change Password',
+                  onPressed: () {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => const ChangePasswordPage(),
+                        ));
+                  },
+                )
               ],
             ),
           ),

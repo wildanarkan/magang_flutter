@@ -74,7 +74,7 @@ class ProfilePage extends StatelessWidget {
                                       height: 5,
                                     ),
                                     Obx(() => Text(
-                                      '${controller.role.value}',
+                                      controller.role.value,
                                       style: TextStyle(
                                           fontSize: 12,
                                           fontWeight: FontWeight.w400,

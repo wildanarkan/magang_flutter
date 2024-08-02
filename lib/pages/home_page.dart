@@ -182,13 +182,15 @@ class HomePage extends GetView<NavigatorPageControllers> {
                         ),
                       );
                     }),
-                    Text(
-                      'HRD',
-                      style: TextStyle(
-                        fontSize: 12,
-                        color: AppColor.textBody,
+                    Obx(
+                      () => Text(
+                        controller.role.value,
+                        style: TextStyle(
+                          fontSize: 12,
+                          color: AppColor.textBody,
+                        ),
                       ),
-                    ),
+                    )
                   ],
                 ),
                 const Spacer(),
