@@ -73,13 +73,13 @@ class ProfilePage extends StatelessWidget {
                                     const SizedBox(
                                       height: 5,
                                     ),
-                                    Text(
-                                      'HRD',
+                                    Obx(() => Text(
+                                      '${controller.role.value}',
                                       style: TextStyle(
                                           fontSize: 12,
                                           fontWeight: FontWeight.w400,
                                           color: AppColor.textBody),
-                                    )
+                                    ))
                                   ],
                                 ),
                               ),

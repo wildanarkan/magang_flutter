@@ -14,6 +14,7 @@ class NavigatorPageControllers extends GetxController {
   RxInt selectedPage = 0.obs;
   RxString firstName = 'Null'.obs;
   RxString lastName = 'Null'.obs;
+  RxInt role = 0.obs;
   RxString profilePhotoUrl = ''.obs;
   String? accessToken; // Tambahkan ini untuk menyimpan token
   int? userId; // Tambahkan ini untuk menyimpan ID pengguna
@@ -69,10 +70,9 @@ class NavigatorPageControllers extends GetxController {
       if (response.statusCode == 200) {
         // Berhasil mendapatkan data
         final data = json.decode(response.body);
-        final role = data['role'];
         firstName.value = data['first_name'] ?? 'No Data';
         lastName.value = data['last_name'] ?? 'No Data';
-        print('Role: $role');
+        role.value = data['role'] ?? 'No Data';
       } else {
         // Error handling
         print('Failed to load profile data: ${response.statusCode}');
