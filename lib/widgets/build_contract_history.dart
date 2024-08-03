@@ -3,7 +3,9 @@ import 'package:intl/intl.dart';
 import 'package:magang_flutter/common/app_color.dart';
 
 class BuildContractHistory extends StatelessWidget {
-  const BuildContractHistory({super.key});
+  const BuildContractHistory({super.key, this.text});
+
+  final String? text;
 
   @override
   Widget build(BuildContext context) {
@@ -18,9 +20,9 @@ class BuildContractHistory extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const Text(
-                'Monthly Payroll',
-                style: TextStyle(fontWeight: FontWeight.w600, fontSize: 14),
+               Text(
+                text ?? 'Monthly Payroll',
+                style: const TextStyle(fontWeight: FontWeight.w600, fontSize: 14),
               ),
               const SizedBox(
                 height: 10,

@@ -250,7 +250,7 @@ class ProfileDetailPage extends StatelessWidget {
                         ),
                         Obx(
                           () => Text(
-                            '${controller.phone_number.value}',
+                            controller.phone_number.value,
                             style: const TextStyle(fontWeight: FontWeight.bold),
                           ),
                         ),
@@ -313,13 +313,29 @@ class ProfileDetailPage extends StatelessWidget {
                             '${controller.nip.value}',
                             style: const TextStyle(fontWeight: FontWeight.bold),
                           ),
+                        ),
+                        const SizedBox(
+                          height: 10,
+                        ),
+                        Text(
+                          'NIK',
+                          style: TextStyle(color: AppColor.textBody),
+                        ),
+                        const SizedBox(
+                          height: 5,
+                        ),
+                        Obx(
+                          () => Text(
+                            '${controller.nik.value}',
+                            style: const TextStyle(fontWeight: FontWeight.bold),
+                          ),
                         )
                       ],
                     ),
                   ),
                 ),
                 const SizedBox(
-                  height: 100,
+                  height: 50,
                 ),
                 BuildButton(
                   context: context,

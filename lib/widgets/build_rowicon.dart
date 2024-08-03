@@ -14,14 +14,12 @@ class BuildRowicon extends StatelessWidget {
   final VoidCallback onTap;
   final Color? iconColor;
 
-
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () {
-        onTap();
-      },
-      child: Padding(
+      onTap: onTap,
+      child: Container(
+        color: Colors.transparent, // Pastikan Container dapat menerima gesture
         padding: const EdgeInsets.symmetric(horizontal: 30 ,vertical: 20),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -48,4 +46,5 @@ class BuildRowicon extends StatelessWidget {
         ),
       ),
     );
-  }}
+  }
+}

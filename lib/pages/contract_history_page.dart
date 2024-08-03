@@ -13,7 +13,9 @@ class ContractHistoryPage extends StatelessWidget {
       ),
       body: ListView(
       children: const [
-        BuildContractHistory(),
+        BuildContractHistory(
+          text: 'Mantap',
+        ),
         BuildContractHistory(),
       ],
     ),

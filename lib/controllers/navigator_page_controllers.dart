@@ -23,6 +23,7 @@ class NavigatorPageControllers extends GetxController {
   RxString address = 'Null'.obs;
   RxString email = 'Null'.obs;
   RxInt nip = 0.obs;
+  RxInt nik = 0.obs;
   RxString profilePhotoUrl = ''.obs;
   String? accessToken; // Tambahkan ini untuk menyimpan token
   int? userId; // Tambahkan ini untuk menyimpan ID pengguna
@@ -47,6 +48,7 @@ class NavigatorPageControllers extends GetxController {
         final data = json.decode(response.body);
         print('User data: $data');
         userId = data['result']['id']; // Ambil ID pengguna
+        nik.value = data['result']['nik'] ?? 'No Data';
         profilePhotoUrl.value = data['result']['profile_photo'] ?? '';
 
         // Panggil fetchProfileData dengan ID
