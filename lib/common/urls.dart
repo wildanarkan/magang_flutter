@@ -3,4 +3,5 @@ class URLs {
     static const login = '${baseUrl}login';
     static const user = '${baseUrl}user';
     static const profile = '${baseUrl}profile/';
+    static const changePassword = '${baseUrl}password';
 }
