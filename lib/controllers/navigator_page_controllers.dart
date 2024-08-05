@@ -114,4 +114,12 @@ class NavigatorPageControllers extends GetxController {
   void changePage(int index) {
     selectedPage.value = index;
   }
+
+  // Method to refresh data after update
+  void refreshProfileData() {
+    if (userId != null) {
+      fetchProfileData(userId!);
+    }
+  }
+  
 }

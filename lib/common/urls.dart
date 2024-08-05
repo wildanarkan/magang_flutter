@@ -4,4 +4,5 @@ class URLs {
     static const user = '${baseUrl}user';
     static const profile = '${baseUrl}profile/';
     static const changePassword = '${baseUrl}password';
+    static const editprofile = '${baseUrl}edit';
 }

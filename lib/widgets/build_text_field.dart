@@ -2,13 +2,20 @@ import 'package:flutter/material.dart';
 import 'package:magang_flutter/common/app_color.dart';
 
 class BuildTextField extends StatefulWidget {
-  const BuildTextField({super.key, required this.title, this.required = false,
-   this.hintText, this.controller});
+  const BuildTextField({
+    super.key,
+    required this.title,
+    this.required = false,
+    this.hintText,
+    this.controller,
+    this.onChanged,
+  });
 
   final String title;
   final TextEditingController? controller;
   final bool required;
   final String? hintText;
+  final Function(String)? onChanged;
 
   @override
   State<BuildTextField> createState() => _BuildTextFieldState();
@@ -30,15 +37,15 @@ class _BuildTextFieldState extends State<BuildTextField> {
                 color: AppColor.textBody,
               ),
             ),
-            if(widget.required == true)
-            const Text(
-              ' (*)',
-              style: TextStyle(
-                fontSize: 14,
-                fontWeight: FontWeight.w400,
-                color: Colors.red,
-              ),
-            )
+            if (widget.required == true)
+              const Text(
+                ' (*)',
+                style: TextStyle(
+                  fontSize: 14,
+                  fontWeight: FontWeight.w400,
+                  color: Colors.red,
+                ),
+              )
           ],
         ),
         Padding(
@@ -67,6 +74,7 @@ class _BuildTextFieldState extends State<BuildTextField> {
                   borderRadius: BorderRadius.circular(10),
                 ),
               ),
+              onChanged: widget.onChanged,
             ),
           ),
         ),

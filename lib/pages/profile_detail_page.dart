@@ -46,12 +46,7 @@ class ProfileDetailPage extends StatelessWidget {
                             ),
                             GestureDetector(
                               onTap: () {
-                                Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                      builder: (context) =>
-                                          const EditProfilePage(),
-                                    ));
+                                Get.to(() => const EditProfilePage());
                               },
                               child: Row(
                                 children: [
@@ -341,11 +336,7 @@ class ProfileDetailPage extends StatelessWidget {
                   context: context,
                   title: 'Change Password',
                   onPressed: () {
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => ChangePasswordPage(),
-                        ));
+                    Get.to(() =>  ChangePasswordPage());
                   },
                 )
               ],
