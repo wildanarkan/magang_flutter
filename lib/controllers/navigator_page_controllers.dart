@@ -20,6 +20,7 @@ class NavigatorPageControllers extends GetxController {
   RxInt employee_group = 0.obs;
   RxString position = 'Null'.obs;
   RxString phone_number = 'Null'.obs;
+  RxString city = 'Null'.obs;
   RxString address = 'Null'.obs;
   RxString email = 'Null'.obs;
   RxInt nip = 0.obs;
@@ -49,6 +50,7 @@ class NavigatorPageControllers extends GetxController {
         print('User data: $data');
         userId = data['result']['id']; // Ambil ID pengguna
         nik.value = data['result']['nik'] ?? 'No Data';
+        city.value = data['result']['city'] ?? 'No Data';
         profilePhotoUrl.value = data['result']['profile_photo'] ?? '';
 
         // Panggil fetchProfileData dengan ID

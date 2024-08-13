@@ -209,21 +209,6 @@ class ProfileDetailPage extends StatelessWidget {
                         const SizedBox(
                           height: 15,
                         ),
-                        Text(
-                          'Position',
-                          style: TextStyle(color: AppColor.textBody),
-                        ),
-                        Obx(
-                          () => Text(
-                            controller.position.value,
-                            style: const TextStyle(
-                                color: Colors.black,
-                                fontWeight: FontWeight.bold),
-                          ),
-                        ),
-                        const SizedBox(
-                          height: 10,
-                        ),
                         const Divider(),
                         const SizedBox(
                           height: 10,
@@ -261,7 +246,7 @@ class ProfileDetailPage extends StatelessWidget {
                         ),
                         Obx(
                           () => Text(
-                            controller.address.value,
+                            '${controller.city.value}, ${controller.address.value}',
                             style: const TextStyle(fontWeight: FontWeight.bold),
                           ),
                         ),

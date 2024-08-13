@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:http/http.dart' as http;
 import 'package:magang_flutter/common/urls.dart';
+import 'package:magang_flutter/controllers/navigator_page_controllers.dart';
 
 class EditProfilePageController extends GetxController {
   RxString firstName = ''.obs;
@@ -22,6 +23,16 @@ class EditProfilePageController extends GetxController {
   @override
   void onInit() {
     super.onInit();
+    
+    // Ambil data dari NavigatorPageControllers
+    final navigatorController = Get.find<NavigatorPageControllers>();
+    firstName.value = navigatorController.firstName.value;
+    lastName.value = navigatorController.lastName.value;
+    phoneNumber.value = navigatorController.phone_number.value;
+    city.value = navigatorController.city.value;
+    address.value = navigatorController.address.value;
+
+    // Set nilai TextEditingController sesuai data yang diambil
     firstNameController.text = firstName.value;
     lastNameController.text = lastName.value;
     phoneNumberController.text = phoneNumber.value;
