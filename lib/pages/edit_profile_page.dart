@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:magang_flutter/controllers/navigator_page_controllers.dart';
-import 'package:magang_flutter/pages/profile_detail_page.dart';
 import 'package:magang_flutter/widgets/build_button.dart';
 import 'package:magang_flutter/widgets/build_test_appbar.dart';
 import 'package:magang_flutter/widgets/build_text_field.dart';
@@ -77,7 +76,7 @@ class EditProfilePage extends StatelessWidget {
                               // Update data di NavigatorPageControllers
                               Get.find<NavigatorPageControllers>()
                                   .fetchUserData();
-                              Get.off(() => const ProfileDetailPage());
+                               Navigator.pop(context); // Menggunakan Navigator.pop
                             }
                           },
                         )
