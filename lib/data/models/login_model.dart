@@ -72,7 +72,7 @@ class User {
   int? id;
   String? firstName;
   String? lastName;
-  int? nik;
+  String? nik; // Ubah dari int? ke String?
   String? city;
   String? address;
   String? religion;
@@ -83,40 +83,41 @@ class User {
   String? genderStatus;
   String? profilePhoto;
   String? ktpPhoto;
-  int? noRekening;
+  String? noRekening; // Ubah dari int? ke String?
   String? blacklistReason;
-  int? blockDate;
+  String? blockDate; // Ubah dari int? ke String?
   String? maritalStatus;
   String? createdAt;
   String? updatedAt;
 
-  User(
-      {this.id,
-      this.firstName,
-      this.lastName,
-      this.nik,
-      this.city,
-      this.address,
-      this.religion,
-      this.birthDate,
-      this.phoneNumber,
-      this.email,
-      this.emailVerifiedAt,
-      this.genderStatus,
-      this.profilePhoto,
-      this.ktpPhoto,
-      this.noRekening,
-      this.blacklistReason,
-      this.blockDate,
-      this.maritalStatus,
-      this.createdAt,
-      this.updatedAt});
+  User({
+    this.id,
+    this.firstName,
+    this.lastName,
+    this.nik,
+    this.city,
+    this.address,
+    this.religion,
+    this.birthDate,
+    this.phoneNumber,
+    this.email,
+    this.emailVerifiedAt,
+    this.genderStatus,
+    this.profilePhoto,
+    this.ktpPhoto,
+    this.noRekening,
+    this.blacklistReason,
+    this.blockDate,
+    this.maritalStatus,
+    this.createdAt,
+    this.updatedAt,
+  });
 
   User.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     firstName = json['first_name'];
     lastName = json['last_name'];
-    nik = json['nik'];
+    nik = json['nik']?.toString(); // Konversi ke String jika perlu
     city = json['city'];
     address = json['address'];
     religion = json['religion'];
@@ -127,9 +128,9 @@ class User {
     genderStatus = json['gender_status'];
     profilePhoto = json['profile_photo'];
     ktpPhoto = json['ktp_photo'];
-    noRekening = json['no_rekening'];
+    noRekening = json['no_rekening']?.toString(); // Konversi ke String jika perlu
     blacklistReason = json['blacklist_reason'];
-    blockDate = json['block_date'];
+    blockDate = json['block_date']?.toString(); // Konversi ke String jika perlu
     maritalStatus = json['marital_status'];
     createdAt = json['created_at'];
     updatedAt = json['updated_at'];
