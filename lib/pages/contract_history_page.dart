@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:magang_flutter/controllers/contract_history_page_controller.dart';
 import 'package:magang_flutter/widgets/build_contract_history.dart';
 import 'package:magang_flutter/widgets/build_test_appbar.dart';
 
@@ -7,18 +9,25 @@ class ContractHistoryPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final ContractHistoryPageController controller = Get.put(ContractHistoryPageController());
+
     return Scaffold(
-       appBar: const BuildTestAppbar(
+      appBar: const BuildTestAppbar(
         title: 'Contract History',
       ),
-      body: ListView(
-      children: const [
-        BuildContractHistory(
-          text: 'Mantap',
-        ),
-        BuildContractHistory(),
-      ],
-    ),
+      body: Obx(() {
+        return ListView.builder(
+          itemCount: controller.contracts.length,
+          itemBuilder: (context, index) {
+            final contract = controller.contracts[index];
+            return BuildContractHistory(
+              text: contract['status'] ?? 'No Data',
+              start_date: contract['start_date'] ?? 'No Data',
+              end_date: contract['end_date'] ?? 'No Data',
+            );
+          },
+        );
+      }),
     );
   }
 }

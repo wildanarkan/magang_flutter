@@ -17,6 +17,7 @@ class LoginPageController extends GetxController {
 
   void logout() {
     storage.remove('accessToken');
+    storage.remove('userId');
     storage.write('isLoggedIn', false); // Set isLoggedIn ke false saat logout
     resetFields();
     Get.offAll(() => const LoginPage());
@@ -29,6 +30,7 @@ class LoginPageController extends GetxController {
     try {
       final token = await UserRepository().login(email, password);
       if (token != null) {
+        
         storage.write('accessToken', token);
         storage.write('isLoggedIn', true); // Set isLoggedIn ke true saat login berhasil
         Get.offAll(() => const NavigatorPage());

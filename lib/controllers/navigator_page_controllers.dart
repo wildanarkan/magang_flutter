@@ -39,6 +39,7 @@ class NavigatorPageControllers extends GetxController {
     print('Fetching user data...');
     try {
       final token = GetStorage().read('accessToken');
+      // Misalnya setelah login berhasil
       final response = await http.get(
         Uri.parse(URLs.user),
         headers: {
@@ -55,6 +56,8 @@ class NavigatorPageControllers extends GetxController {
 
         // Panggil fetchProfileData dengan ID
         if (userId != null) {
+          GetStorage().write('userId',
+              '$userId'); // Ganti '1' dengan ID pengguna yang sebenarnya
           fetchProfileData(userId!);
         }
       } else {
@@ -93,7 +96,6 @@ class NavigatorPageControllers extends GetxController {
         address.value = data['address'] ?? 'No Data';
         email.value = data['email'] ?? 'No Data';
         nip.value = data['nip'] ?? 'No Data';
-
       } else {
         // Error handling
         print('Failed to load profile data: ${response.statusCode}');
@@ -103,8 +105,6 @@ class NavigatorPageControllers extends GetxController {
       print('Error occurred: $e');
     }
   }
-
-  
 
   List<Widget> page = [
     const HomePage(),
@@ -123,5 +123,4 @@ class NavigatorPageControllers extends GetxController {
       fetchProfileData(userId!);
     }
   }
-  
 }
