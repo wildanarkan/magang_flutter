@@ -7,4 +7,5 @@ class URLs {
     static const changePassword = '${baseUrl}password';
     static const editprofile = '${baseUrl}edit';
     static const contract = '${baseUrl}contract/';
+    static const payroll = '${baseUrl}payroll/';
 }
