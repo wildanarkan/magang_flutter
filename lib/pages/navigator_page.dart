@@ -52,8 +52,8 @@ class NavigatorPage extends StatelessWidget {
                     iconPage: Icons.card_travel_rounded,
                     title: 'Business Trip'),
                 FABBottomAppBarItem(
-                    iconPage: Icons.account_balance_wallet_rounded,
-                    title: 'Wallet'),
+                    iconPage: Icons.time_to_leave,
+                    title: 'Leave'),
                 FABBottomAppBarItem(iconPage: Icons.person, title: 'Profile'),
               ],
             ),

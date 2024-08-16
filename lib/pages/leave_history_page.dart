@@ -12,64 +12,65 @@ class LeaveHistoryPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return  Scaffold(
+    return Scaffold(
       appBar: const BuildTestAppbar(
-        title: 'Leave'),
-        body: Column(
-          children: [
-            BuildRowicon(
-              icon: Icons.task,
-              title: 'Approval',
-              iconColor: AppColor.primary,
-              onTap: (){
-               Navigator.push(
+          paddingTitle: EdgeInsets.only(left: 20), title: 'Leave'),
+      body: Column(
+        children: [
+          BuildRowicon(
+            icon: Icons.task,
+            title: 'Approval',
+            iconColor: AppColor.primary,
+            onTap: () {
+              Navigator.push(
                 context,
                 MaterialPageRoute(
                   builder: (context) => const LeaveRequestPage(),
                 ),
               );
-              },
-               ),
-               BuildRowicon(
-              icon: Icons.task_alt,
-              iconColor: AppColor.primary,
-              title: 'Make Leave Application',
-              onTap: (){
-               Navigator.push(
+            },
+          ),
+          BuildRowicon(
+            icon: Icons.task_alt,
+            iconColor: AppColor.primary,
+            title: 'Make Leave Application',
+            onTap: () {
+              Navigator.push(
                 context,
                 MaterialPageRoute(
                   builder: (context) => const AskLeavePage(),
                 ),
               );
-              }, ),
-               BuildRowicon(
-              icon: Icons.people_alt,
-              iconColor: AppColor.primary,
-              title: 'Employee Leave History',
-              onTap: (){
-               Navigator.push(
+            },
+          ),
+          BuildRowicon(
+            icon: Icons.people_alt,
+            iconColor: AppColor.primary,
+            title: 'Employee Leave History',
+            onTap: () {
+              Navigator.push(
                 context,
                 MaterialPageRoute(
                   builder: (context) => const EmployeeLeaveHistoryPage(),
                 ),
               );
-              }, ),
-               BuildRowicon(
-              icon: Icons.person,
-              iconColor: AppColor.primary,
-              title: 'Personal Leave History',
-              onTap: (){
-               Navigator.push(
+            },
+          ),
+          BuildRowicon(
+            icon: Icons.person,
+            iconColor: AppColor.primary,
+            title: 'Personal Leave History',
+            onTap: () {
+              Navigator.push(
                 context,
                 MaterialPageRoute(
                   builder: (context) => const PersonalLeaveHistoryPage(),
                 ),
               );
-              }, ),
-          ],
-        ),
+            },
+          ),
+        ],
+      ),
     );
   }
 }
-
-

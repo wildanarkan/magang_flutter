@@ -4,7 +4,6 @@ import 'package:magang_flutter/common/app_color.dart';
 import 'package:magang_flutter/controllers/login_page_controller.dart';
 import 'package:magang_flutter/controllers/navigator_page_controllers.dart';
 import 'package:magang_flutter/pages/contract_history_page.dart';
-import 'package:magang_flutter/pages/leave_history_page.dart';
 import 'package:magang_flutter/pages/payroll_history_page.dart';
 import 'package:magang_flutter/pages/profile_detail_page.dart';
 import 'package:magang_flutter/widgets/build_button.dart';
@@ -101,20 +100,20 @@ class ProfilePage extends StatelessWidget {
                                   );
                                 },
                               ),
-                              BuildRowicon(
-                                icon: Icons.personal_injury_sharp,
-                                iconColor: AppColor.primary,
-                                title: 'Leave History',
-                                onTap: () {
-                                  Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                      builder: (context) =>
-                                          const LeaveHistoryPage(),
-                                    ),
-                                  );
-                                },
-                              ),
+                              // BuildRowicon(
+                              //   icon: Icons.personal_injury_sharp,
+                              //   iconColor: AppColor.primary,
+                              //   title: 'Leave History',
+                              //   onTap: () {
+                              //     Navigator.push(
+                              //       context,
+                              //       MaterialPageRoute(
+                              //         builder: (context) =>
+                              //             const LeaveHistoryPage(),
+                              //       ),
+                              //     );
+                              //   },
+                              // ),
                               BuildRowicon(
                                 icon: Icons.account_balance_wallet,
                                 iconColor: AppColor.primary,
