@@ -13,7 +13,7 @@ class LeaveHistoryPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return  Scaffold(
+    return Scaffold(
       appBar: const BuildTestAppbar(
         title: 'Leave'),
         body: Column(
@@ -52,5 +52,3 @@ class LeaveHistoryPage extends StatelessWidget {
     );
   }
 }
-
-
