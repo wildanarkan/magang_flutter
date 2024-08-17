@@ -99,14 +99,14 @@ class ProfilePage extends StatelessWidget {
                                   Get.to(() => const ProfileDetailPage());
                                 },
                               ),
-                              BuildRowicon(
-                                icon: Icons.personal_injury_sharp,
-                                iconColor: AppColor.primary,
-                                title: 'Leave History',
-                                onTap: () {
-                                  Get.to(() => const LeaveHistoryPage());
-                                },
-                              ),
+                              // BuildRowicon(
+                              //   icon: Icons.personal_injury_sharp,
+                              //   iconColor: AppColor.primary,
+                              //   title: 'Leave History',
+                              //   onTap: () {
+                              //     Get.to(() => const LeaveHistoryPage());
+                              //   },
+                              // ),
                               BuildRowicon(
                                 icon: Icons.account_balance_wallet,
                                 iconColor: AppColor.primary,
