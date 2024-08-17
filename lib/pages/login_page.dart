@@ -127,7 +127,8 @@ class LoginPage extends StatelessWidget {
             right: 30,
             bottom: 0,
             child: Text(
-              'The Distribution must Transform',
+              'The Distribution must Transforms',
+              textAlign: TextAlign.center,
               style: TextStyle(
                 color: Colors.white,
                 fontSize: 21,

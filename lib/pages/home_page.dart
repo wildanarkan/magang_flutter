@@ -1,5 +1,9 @@
+import 'dart:developer';
+
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:intl/intl.dart';
 import 'package:magang_flutter/common/app_color.dart';
 import 'package:magang_flutter/widgets/build_card_info.dart';
@@ -79,8 +83,8 @@ class HomePage extends GetView<NavigatorPageControllers> {
         ),
         children: const [
           BuildCardInfo(
-            city: 'Surabaya',
-            company: 'PT. Maju Jaya',
+            title: 'PT. Maju Jaya',
+            subtitle: 'Surabaya',
             appStatus: 'onProgress',
             useContainer: false,
           ),
@@ -117,16 +121,16 @@ class HomePage extends GetView<NavigatorPageControllers> {
             height: 10,
           ),
           const BuildCardInfo(
-            city: 'Surabaya',
-            company: 'PT. Maju Jaya',
+            title: 'PT. Maju Jaya',
+            subtitle: 'Surabaya',
             appStatus: 'onProgress',
           ),
           const SizedBox(
             height: 15,
           ),
           const BuildCardInfo(
-            city: 'Bandung',
-            company: 'PT. Sidomuncul',
+            title: 'PT. Sidomuncul',
+            subtitle: 'Bandung',
             appStatus: 'complete',
           ),
         ],
@@ -149,23 +153,43 @@ class HomePage extends GetView<NavigatorPageControllers> {
             Row(
               children: [
                 ClipRRect(
-                  borderRadius: BorderRadius.circular(100),
-                  child: Obx(
-                    () => controller.profilePhotoUrl.value.isNotEmpty
-                        ? Image.network(
-                            controller.profilePhotoUrl.value,
-                            height: 36,
-                            width: 36,
-                            fit: BoxFit.cover,
-                          )
-                        : Image.asset(
-                            'assets/background.png', // Gambar default jika tidak ada foto profil
-                            height: 36,
-                            width: 36,
-                            fit: BoxFit.cover,
+                          borderRadius: BorderRadius.circular(100),
+                          child: Obx(
+                            () => CachedNetworkImage(
+                              width: 36,
+                              imageUrl: controller.profilePhotoUrl.value,
+                              imageBuilder: (context, imageProvider) =>
+                                  Container(
+                                height: 36,
+                                width: 36,
+                                decoration: BoxDecoration(
+                                  image: DecorationImage(
+                                    image: imageProvider,
+                                    fit: BoxFit.contain,
+                                  ),
+                                ),
+                              ),
+                              httpHeaders: {
+                                'Authorization':
+                                    'Bearer ${GetStorage().read('accessToken')}',
+                              },
+                              placeholder: (context, url) =>
+                                  const CircularProgressIndicator(
+                                valueColor:
+                                    AlwaysStoppedAnimation<Color>(Colors.black),
+                              ),
+                              errorWidget: (context, url, error) {
+                                log(error.toString());
+                                return Image.asset(
+                                  'assets/background.png', // Gambar default jika tidak ada foto profil
+                                  height: 36,
+                                  width: 36,
+                                  fit: BoxFit.cover,
+                                );
+                              },
+                            ),
                           ),
-                  ),
-                ),
+                        ),
                 const SizedBox(
                   width: 12,
                 ),

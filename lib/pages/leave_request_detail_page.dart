@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:magang_flutter/common/app_color.dart';
 import 'package:magang_flutter/pages/employee_leave_history_page.dart';
 import 'package:magang_flutter/widgets/build_button.dart';
@@ -51,13 +52,7 @@ class LeaveRequestDetailPage extends StatelessWidget {
                             title: 'Look Employee History',
                             context: context,
                             onTap: () {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) =>
-                                      const EmployeeLeaveHistoryPage(),
-                                ),
-                              );
+                              Get.to(() => const EmployeeLeaveHistoryPage());
                             },
                           ),
                         ],
@@ -139,7 +134,7 @@ class LeaveRequestDetailPage extends StatelessWidget {
               title: 'Accept',
               width: 320,
               onPressed: () {
-                Navigator.pop(context);
+                Get.back();
               },
             ),
           ),
@@ -153,7 +148,7 @@ class LeaveRequestDetailPage extends StatelessWidget {
               borderColor: AppColor.decline,
               width: 320,
               onPressed: () {
-                Navigator.pop(context);
+                Get.back();
               },
             ),
           ),

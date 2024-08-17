@@ -76,7 +76,7 @@ class EditProfilePage extends StatelessWidget {
                               // Update data di NavigatorPageControllers
                               Get.find<NavigatorPageControllers>()
                                   .fetchUserData();
-                               Navigator.pop(context); // Menggunakan Navigator.pop
+                               Get.back(); // Menggunakan Navigator.pop
                             }
                           },
                         )

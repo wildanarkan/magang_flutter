@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:magang_flutter/common/app_color.dart';
 import 'package:magang_flutter/pages/edit_biaya_page.dart';
 import 'package:magang_flutter/widgets/build_expansion_biaya.dart';
@@ -141,12 +142,7 @@ class RealisasiBiayaPage extends StatelessWidget {
             child: BuildTotal(
               total: 'IDR 1.600.000,00',
               onPressed: () {
-                 Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => const EditBiayaPage(),
-                  ),
-                );
+                 Get.to(() => const EditBiayaPage());
               },
             ),
           ),

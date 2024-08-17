@@ -1,5 +1,9 @@
+import 'dart:developer';
+
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:magang_flutter/common/app_color.dart';
 import 'package:magang_flutter/controllers/login_page_controller.dart';
 import 'package:magang_flutter/controllers/navigator_page_controllers.dart';
@@ -15,7 +19,8 @@ class ProfilePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final NavigatorPageControllers controller = Get.find<NavigatorPageControllers>();
+    final NavigatorPageControllers controller =
+        Get.find<NavigatorPageControllers>();
     final LoginPageController loginController = Get.find<LoginPageController>();
 
     return Scaffold(
@@ -74,12 +79,12 @@ class ProfilePage extends StatelessWidget {
                                       height: 5,
                                     ),
                                     Obx(() => Text(
-                                      controller.role.value,
-                                      style: TextStyle(
-                                          fontSize: 12,
-                                          fontWeight: FontWeight.w400,
-                                          color: AppColor.textBody),
-                                    ))
+                                          controller.role.value,
+                                          style: TextStyle(
+                                              fontSize: 12,
+                                              fontWeight: FontWeight.w400,
+                                              color: AppColor.textBody),
+                                        ))
                                   ],
                                 ),
                               ),
@@ -92,13 +97,7 @@ class ProfilePage extends StatelessWidget {
                                 iconColor: AppColor.primary,
                                 title: 'Detail',
                                 onTap: () {
-                                  Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                      builder: (context) =>
-                                          const ProfileDetailPage(),
-                                    ),
-                                  );
+                                  Get.to(() => const ProfileDetailPage());
                                 },
                               ),
                               BuildRowicon(
@@ -106,13 +105,7 @@ class ProfilePage extends StatelessWidget {
                                 iconColor: AppColor.primary,
                                 title: 'Leave History',
                                 onTap: () {
-                                  Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                      builder: (context) =>
-                                          const LeaveHistoryPage(),
-                                    ),
-                                  );
+                                  Get.to(() => const LeaveHistoryPage());
                                 },
                               ),
                               BuildRowicon(
@@ -120,13 +113,7 @@ class ProfilePage extends StatelessWidget {
                                 iconColor: AppColor.primary,
                                 title: 'Payroll History',
                                 onTap: () {
-                                  Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                      builder: (context) =>
-                                          const PayrollHistoryPage(),
-                                    ),
-                                  );
+                                  Get.to(() => const PayrollHistoryPage());
                                 },
                               ),
                               BuildRowicon(
@@ -134,13 +121,7 @@ class ProfilePage extends StatelessWidget {
                                 iconColor: AppColor.primary,
                                 title: 'Contract History',
                                 onTap: () {
-                                  Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                      builder: (context) =>
-                                          const ContractHistoryPage(),
-                                    ),
-                                  );
+                                  Get.to(() => const ContractHistoryPage());
                                 },
                               ),
                               const SizedBox(height: 20),
@@ -175,19 +156,39 @@ class ProfilePage extends StatelessWidget {
                         child: ClipRRect(
                           borderRadius: BorderRadius.circular(100),
                           child: Obx(
-                            () => controller.profilePhotoUrl.value.isNotEmpty
-                                ? Image.network(
-                                    controller.profilePhotoUrl.value,
-                                    height: 80,
-                                    width: 80,
-                                    fit: BoxFit.cover,
-                                  )
-                                : Image.asset(
-                                    'assets/background.png', // Gambar default jika tidak ada foto profil
-                                    height: 80,
-                                    width: 80,
-                                    fit: BoxFit.cover,
+                            () => CachedNetworkImage(
+                              width: 80,
+                              imageUrl: controller.profilePhotoUrl.value,
+                              imageBuilder: (context, imageProvider) =>
+                                  Container(
+                                height: 80,
+                                width: 80,
+                                decoration: BoxDecoration(
+                                  image: DecorationImage(
+                                    image: imageProvider,
+                                    fit: BoxFit.contain,
                                   ),
+                                ),
+                              ),
+                              httpHeaders: {
+                                'Authorization':
+                                    'Bearer ${GetStorage().read('accessToken')}',
+                              },
+                              placeholder: (context, url) =>
+                                  const CircularProgressIndicator(
+                                valueColor:
+                                    AlwaysStoppedAnimation<Color>(Colors.black),
+                              ),
+                              errorWidget: (context, url, error) {
+                                log(error.toString());
+                                return Image.asset(
+                                  'assets/background.png', // Gambar default jika tidak ada foto profil
+                                  height: 80,
+                                  width: 80,
+                                  fit: BoxFit.cover,
+                                );
+                              },
+                            ),
                           ),
                         ),
                       ),

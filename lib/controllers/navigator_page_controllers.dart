@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -53,6 +54,8 @@ class NavigatorPageControllers extends GetxController {
         nik.value = data['result']['nik'] ?? 'No Data';
         city.value = data['result']['city'] ?? 'No Data';
         profilePhotoUrl.value = data['result']['profile_photo'] ?? '';
+
+        log(profilePhotoUrl.value);
 
         // Panggil fetchProfileData dengan ID
         if (userId != null) {

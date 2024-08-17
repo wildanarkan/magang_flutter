@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class BuildAppbar extends StatelessWidget {
   const BuildAppbar({
@@ -26,7 +27,7 @@ class BuildAppbar extends StatelessWidget {
               children: [
                 BackButton(
                     onPressed: () {
-                      Navigator.pop(context);
+                      Get.back();
                     },
                     color: Colors.black),
                  Text(

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:magang_flutter/common/app_color.dart';
 import 'package:magang_flutter/common/app_status.dart';
 import 'package:magang_flutter/pages/estimasi_biaya_page.dart';
@@ -351,11 +352,7 @@ class BusinessTripDetailPage extends StatelessWidget {
                           context: context,
                           title: 'Perkiraan',
                           onPressed: () {
-                            Navigator.of(context).push(
-                              MaterialPageRoute(
-                                builder: (context) => const EstimasiBiayaPage(),
-                              ),
-                            );
+                            Get.to(() => const EstimasiBiayaPage());
                           },
                         ),
                       ),
@@ -365,12 +362,7 @@ class BusinessTripDetailPage extends StatelessWidget {
                           context: context,
                           title: 'Realisasi',
                           onPressed: () {
-                            Navigator.of(context).push(
-                              MaterialPageRoute(
-                                builder: (context) =>
-                                    const RealisasiBiayaPage(),
-                              ),
-                            );
+                            Get.to(() => const RealisasiBiayaPage());
                           },
                         ),
                       ),
@@ -381,11 +373,7 @@ class BusinessTripDetailPage extends StatelessWidget {
                     context: context,
                     title: 'Perbandingan',
                     onPressed: () {
-                      Navigator.of(context).push(
-                        MaterialPageRoute(
-                          builder: (context) => const PerbandinganBiayaPage(),
-                        ),
-                      );
+                      Get.to(() => const PerbandinganBiayaPage());
                     },
                     width: double.infinity,
                     backgroundColor: Colors.white,

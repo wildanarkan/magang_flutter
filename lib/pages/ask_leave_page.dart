@@ -101,7 +101,7 @@ class AskLeavePage extends StatelessWidget{
               title: 'Simpan',
               width: 320,
               onPressed: () {
-                Navigator.pop(context);
+                Get.back();
               },
             ),
           ),

@@ -19,6 +19,8 @@ class AskLeavePageController extends GetxController {
   @override
   void onInit() {
     super.onInit();
+    // companyItem = companyItem.where((element) => element == 'Cuti Harian',).toList();
+    // companyItem = companyItem.where((element) => element == 'Cuti Harian',).toList();
     selectedCompany = 'Cuti Tahunan'.obs;
   }
 }

@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:magang_flutter/common/app_color.dart';
 import 'package:magang_flutter/pages/ask_leave_page.dart';
 import 'package:magang_flutter/pages/employee_leave_history_page.dart';
-import 'package:magang_flutter/pages/leave_request_page.dart';
+import 'package:magang_flutter/pages/leave_approval_page.dart';
 import 'package:magang_flutter/pages/personal_leave_history_page.dart';
 import 'package:magang_flutter/widgets/build_rowicon.dart';
 import 'package:magang_flutter/widgets/build_test_appbar.dart';
@@ -22,12 +23,7 @@ class LeaveHistoryPage extends StatelessWidget {
               title: 'Approval',
               iconColor: AppColor.primary,
               onTap: (){
-               Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => const LeaveRequestPage(),
-                ),
-              );
+               Get.to(() => const LeaveRequestPage());
               },
                ),
                BuildRowicon(
@@ -35,36 +31,21 @@ class LeaveHistoryPage extends StatelessWidget {
               iconColor: AppColor.primary,
               title: 'Make Leave Application',
               onTap: (){
-               Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => const AskLeavePage(),
-                ),
-              );
+              Get.to(() => const AskLeavePage());
               }, ),
                BuildRowicon(
               icon: Icons.people_alt,
               iconColor: AppColor.primary,
               title: 'Employee Leave History',
               onTap: (){
-               Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => const EmployeeLeaveHistoryPage(),
-                ),
-              );
+               Get.to(() => const EmployeeLeaveHistoryPage());
               }, ),
                BuildRowicon(
               icon: Icons.person,
               iconColor: AppColor.primary,
               title: 'Personal Leave History',
               onTap: (){
-               Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => const PersonalLeaveHistoryPage(),
-                ),
-              );
+              Get.to(() => const PersonalLeaveHistoryPage());
               }, ),
           ],
         ),

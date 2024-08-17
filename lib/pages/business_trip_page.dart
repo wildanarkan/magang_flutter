@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:magang_flutter/common/app_color.dart';
 import 'package:magang_flutter/pages/add_businiess_trip_page.dart';
 import 'package:magang_flutter/pages/business_trip_detail_page.dart';
@@ -29,12 +30,7 @@ class BusinessTripPage extends StatelessWidget {
             size: 10,
             padding: 5,
             onPressed: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => const AddBusiniessTripPage(),
-                ),
-              );
+              Get.to(() => const AddBusiniessTripPage());
             },
           )
         ],
@@ -43,51 +39,47 @@ class BusinessTripPage extends StatelessWidget {
         padding: const EdgeInsets.symmetric(horizontal: 25),
         child: ListView(
           padding: const EdgeInsets.only(bottom: 120, top: 20),
-          children:  [
+          children: [
             BuildCardInfo(
-                city: 'Surabaya',
-                company: "PT TATA NIAGA",
-                appStatus: 'complete',
-                onTap: () {
-                Navigator.of(context).push(
-                  MaterialPageRoute(
-                    builder: (context) => const BusinessTripDetailPage(),
-                  ),
-                );
+              title: "PT TATA NIAGA",
+              subtitle: 'Surabaya',
+              appStatus: 'complete',
+              onTap: () {
+                Get.to(() => const BusinessTripDetailPage());
               },
-                ),
+            ),
             const BuildCardInfo(
-              city: 'Bandung',
-              company: "PT SINAR ABADI",
+              title: "PT SINAR ABADI",
+              subtitle: 'Bandung',
               appStatus: 'onProgress',
             ),
             const BuildCardInfo(
-              city: 'Jakarta',
-              company: "PT SIDOMUNCUL",
+              title: "PT SIDOMUNCUL",
+              subtitle: 'Jakarta',
               appStatus: 'decline',
             ),
             const BuildCardInfo(
-              city: 'Madura',
-              company: "PT USAHA KREATIF",
+              title: "PT USAHA KREATIF",
+              subtitle: 'Madura',
               appStatus: 'complete',
             ),
             const BuildCardInfo(
-                city: 'Surabaya',
-                company: "PT TATA NIAGA",
+                title: "PT TATA NIAGA",
+                subtitle: 'Surabaya',
                 appStatus: 'complete'),
             const BuildCardInfo(
-              city: 'Bandung',
-              company: "PT SINAR ABADI",
+              title: "PT SINAR ABADI",
+              subtitle: 'Bandung',
               appStatus: 'onProgress',
             ),
             const BuildCardInfo(
-              city: 'Jakarta',
-              company: "PT SIDOMUNCUL",
+              title: "PT SIDOMUNCUL",
+              subtitle: 'Jakarta',
               appStatus: 'decline',
             ),
             const BuildCardInfo(
-              city: 'Madura',
-              company: "PT USAHA KREATIF",
+              title: "PT USAHA KREATIF",
+              subtitle: 'Madura',
               appStatus: 'complete',
             )
           ],

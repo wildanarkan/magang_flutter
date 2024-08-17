@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:magang_flutter/common/app_color.dart';
 import 'package:magang_flutter/pages/leave_request_detail_page.dart';
 import 'package:magang_flutter/widgets/build_card_info.dart';
@@ -10,13 +11,13 @@ class EmployeeLeaveHistoryPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar:  BuildTestAppbar(
+      appBar: BuildTestAppbar(
         title: 'Leave History',
         actions: [
           IconButton(
-            onPressed: (){}, icon: const Icon(
-              Icons.filter_alt_rounded
-            ),)
+            onPressed: () {},
+            icon: const Icon(Icons.filter_alt_rounded),
+          )
         ],
       ),
       body: Padding(
@@ -25,119 +26,99 @@ class EmployeeLeaveHistoryPage extends StatelessWidget {
           padding: const EdgeInsets.only(bottom: 120, top: 20),
           children: [
             BuildCardInfo(
-              city: 'Cuti Tahunan',
-              company: "Agung Supratman",
+              title: "Agung Supratman",
+              subtitle: 'Cuti Tahunan',
               appStatus: 'pending',
-               icon: Icon(
+              icon: Icon(
                 Icons.calendar_today_outlined,
                 size: 16,
                 color: AppColor.textBody,
               ),
               onTap: () {
-                Navigator.of(context).push(
-                  MaterialPageRoute(
-                    builder: (context) => const LeaveRequestDetailPage(),
-                  ),
-                );
+                Get.to(() => const LeaveRequestDetailPage());
               },
             ),
             BuildCardInfo(
-              city: 'Cuti Tahunan',
-              company: "Agung Supratman",
+              title: "Agung Supratman",
+              subtitle: 'Cuti Tahunan',
               appStatus: 'approved',
-               icon: Icon(
+              icon: Icon(
                 Icons.calendar_today_outlined,
                 size: 16,
                 color: AppColor.textBody,
               ),
               onTap: () {
-                Navigator.of(context).push(
-                  MaterialPageRoute(
-                    builder: (context) => const LeaveRequestDetailPage(),
-                  ),
-                );
+                Get.to(() => const LeaveRequestDetailPage());
               },
             ),
             BuildCardInfo(
-              city: 'Cuti Tahunan',
-              company: "Agung Supratman",
+              title: "Agung Supratman",
+              subtitle: 'Cuti Tahunan',
               appStatus: 'approved',
-               icon: Icon(
+              icon: Icon(
                 Icons.calendar_today_outlined,
                 size: 16,
                 color: AppColor.textBody,
               ),
               onTap: () {
-                Navigator.of(context).push(
-                  MaterialPageRoute(
-                    builder: (context) => const LeaveRequestDetailPage(),
-                  ),
-                );
+                Get.to(() => const LeaveRequestDetailPage());
+
               },
             ),
-             BuildCardInfo(
-              city: 'Cuti Tahunan',
-              company: "Agung Supratman",
+            BuildCardInfo(
+              title: "Agung Supratman",
+              subtitle: 'Cuti Tahunan',
               appStatus: 'decline',
-               icon: Icon(
+              icon: Icon(
                 Icons.calendar_today_outlined,
                 size: 16,
                 color: AppColor.textBody,
               ),
               onTap: () {
-                Navigator.of(context).push(
-                  MaterialPageRoute(
-                    builder: (context) => const LeaveRequestDetailPage(),
-                  ),
-                );
+                Get.to(() => const LeaveRequestDetailPage());
+
               },
-            ), BuildCardInfo(
-              city: 'Cuti Tahunan',
-              company: "Agung Supratman",
+            ),
+            BuildCardInfo(
+              title: "Agung Supratman",
+              subtitle: 'Cuti Tahunan',
               appStatus: 'approved',
-               icon: Icon(
+              icon: Icon(
                 Icons.calendar_today_outlined,
                 size: 16,
                 color: AppColor.textBody,
               ),
               onTap: () {
-                Navigator.of(context).push(
-                  MaterialPageRoute(
-                    builder: (context) => const LeaveRequestDetailPage(),
-                  ),
-                );
+                Get.to(() => const LeaveRequestDetailPage());
+
               },
-            ), BuildCardInfo(
-              city: 'Cuti Tahunan',
-              company: "Agung Supratman",
+            ),
+            BuildCardInfo(
+              title: "Agung Supratman",
+              subtitle: 'Cuti Tahunan',
               appStatus: 'approved',
-               icon: Icon(
+              icon: Icon(
                 Icons.calendar_today_outlined,
                 size: 16,
                 color: AppColor.textBody,
               ),
               onTap: () {
-                Navigator.of(context).push(
-                  MaterialPageRoute(
-                    builder: (context) => const LeaveRequestDetailPage(),
-                  ),
-                );
+                Get.to(() => const LeaveRequestDetailPage());
+
               },
-            ), BuildCardInfo(
-              city: 'Cuti Tahunan',
-              company: "Agung Supratman",
+            ),
+            BuildCardInfo(
+              title: "Agung Supratman",
+              subtitle: 'Cuti Tahunan',
               appStatus: 'approved',
-               icon: Icon(
+              icon: Icon(
                 Icons.calendar_today_outlined,
                 size: 16,
                 color: AppColor.textBody,
               ),
               onTap: () {
-                Navigator.of(context).push(
-                  MaterialPageRoute(
-                    builder: (context) => const LeaveRequestDetailPage(),
-                  ),
-                );
+                Get.to(() => const LeaveRequestDetailPage());
+
               },
             ),
           ],

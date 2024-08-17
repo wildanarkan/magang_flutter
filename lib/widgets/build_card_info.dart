@@ -6,8 +6,8 @@ import 'package:magang_flutter/common/app_status.dart';
 class BuildCardInfo extends StatelessWidget {
   const BuildCardInfo({
     super.key,
-    this.city,
-    required this.company,
+    this.subtitle,
+    required this.title,
     required this.appStatus,
     this.padding = const EdgeInsets.only(bottom: 20),
     this.useContainer = true,
@@ -15,8 +15,8 @@ class BuildCardInfo extends StatelessWidget {
     this.onTap,
   });
 
-  final String? city;
-  final String company;
+  final String? subtitle;
+  final String title;
   final String appStatus;
   final EdgeInsetsGeometry padding;
   final bool useContainer;
@@ -34,7 +34,7 @@ class BuildCardInfo extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  company,
+                  title,
                   style: TextStyle(
                     fontWeight: FontWeight.w600,
                     fontSize: 18,
@@ -44,9 +44,9 @@ class BuildCardInfo extends StatelessWidget {
                 const SizedBox(
                   height: 5,
                 ),
-                if (city != null)
+                if (subtitle != null)
                   Text(
-                    city ?? '',
+                    subtitle ?? '',
                     style: TextStyle(
                       fontWeight: FontWeight.w400,
                       fontSize: 12,

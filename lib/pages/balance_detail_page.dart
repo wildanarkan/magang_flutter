@@ -91,12 +91,9 @@ class BalanceDetailPage extends StatelessWidget {
                       style: TextStyle(color: AppColor.complete),
                     ),
                     onTap: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => const BalanceSheetDetailPage(),
-                        ),
-                      );
+                     
+                      Get.to(() => const BalanceSheetDetailPage());
+                        
                     },
                   ),
                 ),
@@ -126,12 +123,7 @@ class BalanceDetailPage extends StatelessWidget {
                       ),
                     ),
                     onTap: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => const BalanceSheetDetailPage(),
-                        ),
-                      );
+                       Get.to(() => const BalanceSheetDetailPage());
                     },
                     rightWidget: Text(
                       'Rp 80.000,00',
@@ -169,12 +161,7 @@ class BalanceDetailPage extends StatelessWidget {
                       style: TextStyle(color: AppColor.complete),
                     ),
                     onTap: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => const BalanceSheetDetailPage(),
-                        ),
-                      );
+                      Get.to(() => const BalanceSheetDetailPage());
                     },
                   ),
                 ),

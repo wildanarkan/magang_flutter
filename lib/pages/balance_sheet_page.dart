@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:magang_flutter/pages/balance_detail_page.dart';
+import 'package:get/get.dart';
+import 'package:magang_flutter/pages/balance_sheet_detail_page.dart';
 import 'package:magang_flutter/widgets/build_icon_rounded_add.dart';
 import 'package:magang_flutter/widgets/build_test_appbar.dart';
 import 'package:magang_flutter/widgets/build_wallet_card.dart';
@@ -30,12 +31,7 @@ class BalanceSheetPage extends StatelessWidget {
               title: 'Uang Harian',
               content: 'Total: Rp.460.000,00',
               onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => const BalanceDetailPage(),
-                  ),
-                );
+                Get.back();
               },
             ),
             const SizedBox(
@@ -45,12 +41,7 @@ class BalanceSheetPage extends StatelessWidget {
               title: 'Uang Transport',
               content: 'Total: Rp.460.000,00',
               onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => const BalanceDetailPage(),
-                  ),
-                );
+                Get.to(() => const BalanceSheetDetailPage());
               },
             ),
           ],

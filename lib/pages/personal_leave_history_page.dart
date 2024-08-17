@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:magang_flutter/common/app_color.dart';
 import 'package:magang_flutter/pages/leave_request_detail_page.dart';
 import 'package:magang_flutter/widgets/build_card_info.dart';
@@ -10,13 +11,13 @@ class PersonalLeaveHistoryPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar:  BuildTestAppbar(
+      appBar: BuildTestAppbar(
         title: 'Leave History',
         actions: [
           IconButton(
-            onPressed: (){}, icon: const Icon(
-              Icons.filter_alt_rounded
-            ),)
+            onPressed: () {},
+            icon: const Icon(Icons.filter_alt_rounded),
+          )
         ],
       ),
       body: Padding(
@@ -25,69 +26,53 @@ class PersonalLeaveHistoryPage extends StatelessWidget {
           padding: const EdgeInsets.only(bottom: 120, top: 20),
           children: [
             BuildCardInfo(
-              company: "Cuti Tahunan",
+              title: "Cuti Tahunan",
               appStatus: 'pending',
-               icon: Icon(
+              icon: Icon(
                 Icons.calendar_today_outlined,
                 size: 16,
                 color: AppColor.textBody,
               ),
               onTap: () {
-                Navigator.of(context).push(
-                  MaterialPageRoute(
-                    builder: (context) => const LeaveRequestDetailPage(),
-                  ),
-                );
+                Get.to(() => const LeaveRequestDetailPage());
               },
             ),
             BuildCardInfo(
-              company: "Cuti Tahunan",
+              title: "Cuti Tahunan",
               appStatus: 'approved',
-               icon: Icon(
+              icon: Icon(
                 Icons.calendar_today_outlined,
                 size: 16,
                 color: AppColor.textBody,
               ),
               onTap: () {
-                Navigator.of(context).push(
-                  MaterialPageRoute(
-                    builder: (context) => const LeaveRequestDetailPage(),
-                  ),
-                );
+                Get.to(() => const LeaveRequestDetailPage());
               },
             ),
             BuildCardInfo(
-              company: "Cuti Hamil",
+              title: "Cuti Hamil",
               appStatus: 'approved',
-               icon: Icon(
+              icon: Icon(
                 Icons.calendar_today_outlined,
                 size: 16,
                 color: AppColor.textBody,
               ),
               onTap: () {
-                Navigator.of(context).push(
-                  MaterialPageRoute(
-                    builder: (context) => const LeaveRequestDetailPage(),
-                  ),
-                );
+                Get.to(() => const LeaveRequestDetailPage());
               },
             ),
-             BuildCardInfo(
-              company: "Cuti Tahunan",
+            BuildCardInfo(
+              title: "Cuti Tahunan",
               appStatus: 'decline',
-               icon: Icon(
+              icon: Icon(
                 Icons.calendar_today_outlined,
                 size: 16,
                 color: AppColor.textBody,
               ),
               onTap: () {
-                Navigator.of(context).push(
-                  MaterialPageRoute(
-                    builder: (context) => const LeaveRequestDetailPage(),
-                  ),
-                );
+                Get.to(() => const LeaveRequestDetailPage());
               },
-            ), 
+            ),
           ],
         ),
       ),

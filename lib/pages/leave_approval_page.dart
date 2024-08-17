@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:magang_flutter/common/app_color.dart';
 import 'package:magang_flutter/pages/leave_request_detail_page.dart';
 import 'package:magang_flutter/widgets/build_card_info.dart';
@@ -20,8 +21,8 @@ class LeaveRequestPage extends StatelessWidget {
           padding: const EdgeInsets.only(bottom: 120, top: 20),
           children: [
             BuildCardInfo(
-              city: 'Cuti Tahunan',
-              company: "Agung Supratman",
+              title: "Agung Supratman",
+              subtitle: 'Cuti Tahunan',
               appStatus: 'pending',
               icon: Icon(
                 Icons.calendar_today_outlined,
@@ -29,16 +30,13 @@ class LeaveRequestPage extends StatelessWidget {
                 color: AppColor.textBody,
               ),
               onTap: () {
-                Navigator.of(context).push(
-                  MaterialPageRoute(
-                    builder: (context) => const LeaveRequestDetailPage(),
-                  ),
-                );
+                Get.to(() => const LeaveRequestDetailPage());
+
               },
             ),
             BuildCardInfo(
-              city: 'Cuti Tahunan',
-              company: "Maman Sudrajat",
+              title: "Maman Sudrajat",
+              subtitle: 'Cuti Tahunan',
               appStatus: 'approved',
                icon: Icon(
                 Icons.calendar_today_outlined,
@@ -46,16 +44,13 @@ class LeaveRequestPage extends StatelessWidget {
                 color: AppColor.textBody,
               ),
               onTap: () {
-                Navigator.of(context).push(
-                  MaterialPageRoute(
-                    builder: (context) => const LeaveRequestDetailPage(),
-                  ),
-                );
+                Get.to(() => const LeaveRequestDetailPage());
+
               },
             ),
             BuildCardInfo(
-              city: 'Cuti Tahunan',
-              company: "Joko Sasongko",
+              title: "Joko Sasongko",
+              subtitle: 'Cuti Tahunan',
               appStatus: 'approved',
                icon: Icon(
                 Icons.calendar_today_outlined,
@@ -63,11 +58,8 @@ class LeaveRequestPage extends StatelessWidget {
                 color: AppColor.textBody,
               ),
               onTap: () {
-                Navigator.of(context).push(
-                  MaterialPageRoute(
-                    builder: (context) => const LeaveRequestDetailPage(),
-                  ),
-                );
+                Get.to(() => const LeaveRequestDetailPage());
+
               },
             ),
           ],

@@ -21,15 +21,6 @@ class PayrollHistoryPage extends StatelessWidget {
           itemCount: controller.payrolls.length,
           itemBuilder: (context, index) {
             final payroll = controller.payrolls[index];
-
-            // Parsing payroll date
-            DateTime payrollDate;
-            try {
-              payrollDate = DateTime.parse(payroll['payroll_date']);
-            } catch (e) {
-              payrollDate = DateTime.now(); // Default jika parsing gagal
-            }
-
             return BuildPayrollHistory(
               masterCategory: payroll['master_category'] ?? 'No Data',
               payrollDate: payroll['payroll_date']?? 'No Date Available',
