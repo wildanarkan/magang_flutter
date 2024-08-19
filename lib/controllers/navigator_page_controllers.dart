@@ -26,7 +26,7 @@ class NavigatorPageControllers extends GetxController {
   RxString email = 'Null'.obs;
   RxInt nip = 0.obs;
   RxInt nik = 0.obs;
-  RxString profilePhotoUrl = ''.obs;
+  RxString profilePhotoUrl = 'dudul3.jpeg'.obs;
   String? accessToken; // Tambahkan ini untuk menyimpan token
   int? userId; // Tambahkan ini untuk menyimpan ID pengguna
 

@@ -1,11 +1,9 @@
-import 'dart:developer';
-
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get_storage/get_storage.dart';
 import 'package:intl/intl.dart';
 import 'package:magang_flutter/common/app_color.dart';
+import 'package:magang_flutter/common/urls.dart';
 import 'package:magang_flutter/widgets/build_card_info.dart';
 import 'package:magang_flutter/widgets/build_expansion_tile.dart';
 import 'package:magang_flutter/widgets/build_link.dart';
@@ -139,6 +137,8 @@ class HomePage extends GetView<NavigatorPageControllers> {
   }
 
   Widget buildCardProfile(BuildContext context) {
+    // final ProfilePageController profileController =
+    //   Get.find<ProfilePageController>();
     return Container(
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(10),
@@ -153,43 +153,16 @@ class HomePage extends GetView<NavigatorPageControllers> {
             Row(
               children: [
                 ClipRRect(
-                          borderRadius: BorderRadius.circular(100),
-                          child: Obx(
-                            () => CachedNetworkImage(
-                              width: 36,
-                              imageUrl: controller.profilePhotoUrl.value,
-                              imageBuilder: (context, imageProvider) =>
-                                  Container(
-                                height: 36,
-                                width: 36,
-                                decoration: BoxDecoration(
-                                  image: DecorationImage(
-                                    image: imageProvider,
-                                    fit: BoxFit.contain,
-                                  ),
-                                ),
-                              ),
-                              httpHeaders: {
-                                'Authorization':
-                                    'Bearer ${GetStorage().read('accessToken')}',
-                              },
-                              placeholder: (context, url) =>
-                                  const CircularProgressIndicator(
-                                valueColor:
-                                    AlwaysStoppedAnimation<Color>(Colors.black),
-                              ),
-                              errorWidget: (context, url, error) {
-                                log(error.toString());
-                                return Image.asset(
-                                  'assets/background.png', // Gambar default jika tidak ada foto profil
-                                  height: 36,
-                                  width: 36,
-                                  fit: BoxFit.cover,
-                                );
-                              },
-                            ),
-                          ),
-                        ),
+                  borderRadius: BorderRadius.circular(100),
+                  child: Obx(
+                    () => CachedNetworkImage(
+                      height: 40,
+                      width: 40,
+                      imageUrl:
+                          '${URLs.photoUrl}/storage/profile_photos/${controller.profilePhotoUrl.value}',
+                    ),
+                  ),
+                ),
                 const SizedBox(
                   width: 12,
                 ),

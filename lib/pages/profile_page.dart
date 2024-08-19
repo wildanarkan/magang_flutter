@@ -1,12 +1,11 @@
-import 'dart:developer';
-
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get_storage/get_storage.dart';
 import 'package:magang_flutter/common/app_color.dart';
+import 'package:magang_flutter/common/urls.dart';
 import 'package:magang_flutter/controllers/login_page_controller.dart';
 import 'package:magang_flutter/controllers/navigator_page_controllers.dart';
+import 'package:magang_flutter/controllers/profile_page_controller.dart';
 import 'package:magang_flutter/pages/contract_history_page.dart';
 import 'package:magang_flutter/pages/payroll_history_page.dart';
 import 'package:magang_flutter/pages/profile_detail_page.dart';
@@ -21,6 +20,8 @@ class ProfilePage extends StatelessWidget {
     final NavigatorPageControllers controller =
         Get.find<NavigatorPageControllers>();
     final LoginPageController loginController = Get.find<LoginPageController>();
+    final ProfilePageController profileController =
+        Get.find<ProfilePageController>();
 
     return Scaffold(
       body: Stack(
@@ -77,13 +78,15 @@ class ProfilePage extends StatelessWidget {
                                     const SizedBox(
                                       height: 5,
                                     ),
-                                    Obx(() => Text(
-                                          controller.role.value,
-                                          style: TextStyle(
-                                              fontSize: 12,
-                                              fontWeight: FontWeight.w400,
-                                              color: AppColor.textBody),
-                                        ))
+                                    Obx(
+                                      () => Text(
+                                        controller.role.value,
+                                        style: TextStyle(
+                                            fontSize: 12,
+                                            fontWeight: FontWeight.w400,
+                                            color: AppColor.textBody),
+                                      ),
+                                    ),
                                   ],
                                 ),
                               ),
@@ -99,14 +102,6 @@ class ProfilePage extends StatelessWidget {
                                   Get.to(() => const ProfileDetailPage());
                                 },
                               ),
-                              // BuildRowicon(
-                              //   icon: Icons.personal_injury_sharp,
-                              //   iconColor: AppColor.primary,
-                              //   title: 'Leave History',
-                              //   onTap: () {
-                              //     Get.to(() => const LeaveHistoryPage());
-                              //   },
-                              // ),
                               BuildRowicon(
                                 icon: Icons.account_balance_wallet,
                                 iconColor: AppColor.primary,
@@ -146,47 +141,25 @@ class ProfilePage extends StatelessWidget {
                     left: 0,
                     right: 0,
                     child: Center(
-                      child: Container(
-                        margin: const EdgeInsets.only(top: 30),
-                        decoration: const BoxDecoration(
-                          shape: BoxShape.circle,
-                          color: Colors.white,
-                        ),
-                        child: ClipRRect(
-                          borderRadius: BorderRadius.circular(100),
-                          child: Obx(
-                            () => CachedNetworkImage(
-                              width: 80,
-                              imageUrl: controller.profilePhotoUrl.value,
-                              imageBuilder: (context, imageProvider) =>
-                                  Container(
+                      child: GestureDetector(
+                        onTap: () {
+                          profileController.updateProfilePhoto();
+                        },
+                        child: Container(
+                          margin: const EdgeInsets.only(top: 30),
+                          decoration: const BoxDecoration(
+                            shape: BoxShape.circle,
+                            color: Colors.white,
+                          ),
+                          child: ClipRRect(
+                            borderRadius: BorderRadius.circular(100),
+                            child: Obx(
+                              () => CachedNetworkImage(
                                 height: 80,
                                 width: 80,
-                                decoration: BoxDecoration(
-                                  image: DecorationImage(
-                                    image: imageProvider,
-                                    fit: BoxFit.contain,
-                                  ),
-                                ),
+                                imageUrl:
+                                    '${URLs.photoUrl}/storage/profile_photos/${controller.profilePhotoUrl.value}',
                               ),
-                              httpHeaders: {
-                                'Authorization':
-                                    'Bearer ${GetStorage().read('accessToken')}',
-                              },
-                              placeholder: (context, url) =>
-                                  const CircularProgressIndicator(
-                                valueColor:
-                                    AlwaysStoppedAnimation<Color>(Colors.black),
-                              ),
-                              errorWidget: (context, url, error) {
-                                log(error.toString());
-                                return Image.asset(
-                                  'assets/background.png', // Gambar default jika tidak ada foto profil
-                                  height: 80,
-                                  width: 80,
-                                  fit: BoxFit.cover,
-                                );
-                              },
                             ),
                           ),
                         ),
