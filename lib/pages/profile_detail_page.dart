@@ -17,7 +17,6 @@ class ProfileDetailPage extends StatelessWidget {
 
     return Scaffold(
       body: ListView(
-        padding: const EdgeInsets.all(0),
         children: [
           const BuildTestAppbar(
             title: 'Profile Detail',
