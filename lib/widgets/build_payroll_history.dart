@@ -6,11 +6,13 @@ class BuildPayrollHistory extends StatelessWidget {
     required this.masterCategory,
     required this.payrollDate,
     required this.onTap,
+    required this.payrollId,
   });
 
   final String masterCategory;
   final String payrollDate;
   final VoidCallback onTap;
+  final String payrollId;
 
   @override
   Widget build(BuildContext context) {
@@ -32,6 +34,8 @@ class BuildPayrollHistory extends StatelessWidget {
                   style: const TextStyle(
                       fontWeight: FontWeight.w600, fontSize: 14),
                 ),
+                const SizedBox(height: 10),
+                const Divider(),
                 const SizedBox(height: 10),
                 Text(
                   payrollDate,

@@ -1,78 +1,107 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:magang_flutter/common/app_color.dart';
+import 'package:magang_flutter/controllers/payroll_history_page_controller.dart';
 import 'package:magang_flutter/widgets/build_payroll_detail.dart';
 import 'package:magang_flutter/widgets/build_test_appbar.dart';
 
 class PayrollDetailPage extends StatelessWidget {
-  const PayrollDetailPage({super.key});
+  final String payrollId;
+
+  const PayrollDetailPage({required this.payrollId, super.key});
 
   @override
   Widget build(BuildContext context) {
+    final controller = Get.put(PayrollHistoryPageController());
+
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      controller.fetchPayrollDetail(payrollId);
+    });
+
     return Scaffold(
       appBar: const BuildTestAppbar(
         title: 'Payroll Detail',
       ),
-      body: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 24),
-            child: Card(
-              elevation: 6,
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(8),
-              ),
-              color: Colors.white,
-              child: Padding(
-                 padding: const EdgeInsets.fromLTRB(15, 10, 15, 10),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        const Text(
-                          'Monthly Payroll',
-                          style: TextStyle(
-                            fontWeight: FontWeight.w600,
-                            fontSize: 16,
+      body: Obx(() {
+        if (controller.isLoading.value) {
+          return const Center(child: CircularProgressIndicator());
+        }
+
+        final payroll = controller.payrollDetail.value;
+
+        if (payroll == null) {
+          return const Center(child: Text('No payroll details available.'));
+        }
+
+        return Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 24),
+              child: Card(
+                elevation: 6,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(8),
+                ),
+                color: Colors.white,
+                child: Padding(
+                  padding: const EdgeInsets.fromLTRB(15, 10, 15, 10),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(
+                            payroll.masterCategory ?? 'No Category',
+                            style: const TextStyle(
+                              fontWeight: FontWeight.w600,
+                              fontSize: 16,
+                            ),
                           ),
-                        ),
-                        Text(
-                          '2024-10-10',
-                          style: TextStyle(
-                            fontWeight: FontWeight.w400,
-                            fontSize: 14,
-                            color: AppColor.textBody,
+                          Text(
+                            payroll.payrollDate ?? 'No Date',
+                            style: TextStyle(
+                              fontWeight: FontWeight.w400,
+                              fontSize: 14,
+                              color: AppColor.textBody,
+                            ),
                           ),
-                        ),
-                      ],
-                    ),
-                    const SizedBox(height: 20),
-                    const Center(
-                      child: Text(
-                        '5.000.000',
-                        style: TextStyle(
-                          fontWeight: FontWeight.w700,
-                          fontSize: 24,
-                          color: Colors.black87,
+                        ],
+                      ),
+                      const SizedBox(height: 20),
+                      Center(
+                        child: Text(
+                          payroll.netAmount != null ? 'Rp ${payroll.netAmount!.toString()}' : 'Rp 0',
+                          style: const TextStyle(
+                            fontWeight: FontWeight.w700,
+                            fontSize: 24,
+                            color: Colors.black87,
+                          ),
                         ),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
               ),
             ),
-          ),
-          const Divider(),
-          const SizedBox(height: 5),
-          const BuildPayrollDetail(
-            masterCategory: 'Gaji Pokok',
-            nominal: 5000000,
-            note: 'Gajian',
-          ), 
-        ],
-      ),
+            const Divider(
+              color: Colors.black,
+              thickness: 3,
+            ),
+            if (payroll.lines != null && payroll.lines!.isNotEmpty) ...[
+              for (var line in payroll.lines!)
+                BuildPayrollDetail(
+                  masterCategory: line.lineMasterCategory ?? 'No Category',
+                  nominal: line.nominal ?? 0,
+                  note: line.note ?? 'No Note',
+                ),
+            ] else ...[
+              const Center(child: Text('No details available.')),
+            ],
+          ],
+        );
+      }),
     );
   }
 }

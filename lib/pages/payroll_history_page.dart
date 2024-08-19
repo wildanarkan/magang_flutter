@@ -18,15 +18,25 @@ class PayrollHistoryPage extends StatelessWidget {
         title: 'Payroll History',
       ),
       body: Obx(() {
+        // Menambahkan tampilan loading jika payrolls kosong
+        if (controller.payrolls.isEmpty) {
+          return const Center(child: CircularProgressIndicator());
+        }
+
         return ListView.builder(
           itemCount: controller.payrolls.length,
           itemBuilder: (context, index) {
+            // Mengambil data payroll berdasarkan indeks
             final payroll = controller.payrolls[index];
             return BuildPayrollHistory(
-              masterCategory: payroll['master_category'] ?? 'No Data',
-              payrollDate: payroll['payroll_date'] ?? 'No Date Available',
+              masterCategory: payroll.masterCategory ?? 'Tidak Ada Data',
+              payrollDate: payroll.payrollDate ?? 'Tanggal Tidak Tersedia',
+              payrollId: payroll.id.toString(), // Mengirimkan ID payroll
               onTap: () {
-                Get.to(() => const PayrollDetailPage());
+                print(
+                    'Navigating to PayrollDetailPage with ID: ${payroll.id}'); // Debug print
+                Get.to(
+                    () => PayrollDetailPage(payrollId: payroll.id.toString()));
               },
             );
           },

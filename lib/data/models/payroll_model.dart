@@ -27,13 +27,15 @@ class Payrolls {
   String? masterCategory;
   String? payrollDate;
   int? netAmount;
+  List<Lines>? lines;
 
   Payrolls(
       {this.id,
       this.idEmployee,
       this.masterCategory,
       this.payrollDate,
-      this.netAmount});
+      this.netAmount,
+      this.lines});
 
   Payrolls.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -41,6 +43,12 @@ class Payrolls {
     masterCategory = json['master_category'];
     payrollDate = json['payroll_date'];
     netAmount = json['net_amount'];
+    if (json['lines'] != null) {
+      lines = <Lines>[];
+      json['lines'].forEach((v) {
+        lines!.add(Lines.fromJson(v));
+      });
+    }
   }
 
   Map<String, dynamic> toJson() {
@@ -50,6 +58,31 @@ class Payrolls {
     data['master_category'] = masterCategory;
     data['payroll_date'] = payrollDate;
     data['net_amount'] = netAmount;
+    if (lines != null) {
+      data['lines'] = lines!.map((v) => v.toJson()).toList();
+    }
+    return data;
+  }
+}
+
+class Lines {
+  String? lineMasterCategory;
+  int? nominal;
+  String? note;
+
+  Lines({this.lineMasterCategory, this.nominal, this.note});
+
+  Lines.fromJson(Map<String, dynamic> json) {
+    lineMasterCategory = json['line_master_category'];
+    nominal = json['nominal'];
+    note = json['note'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['line_master_category'] = lineMasterCategory;
+    data['nominal'] = nominal;
+    data['note'] = note;
     return data;
   }
 }
