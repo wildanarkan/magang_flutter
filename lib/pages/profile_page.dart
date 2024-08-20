@@ -158,7 +158,7 @@ class ProfilePage extends StatelessWidget {
                                 height: 80,
                                 width: 80,
                                 imageUrl:
-                                    '${URLs.photoUrl}/storage/profile_photos/${controller.profilePhotoUrl.value}',
+                                    '${URLs.photoUrl}${controller.profilePhotoUrl.value}',
                               ),
                             ),
                           ),
