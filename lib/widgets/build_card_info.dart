@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 import 'package:magang_flutter/common/app_color.dart';
 import 'package:magang_flutter/common/app_status.dart';
 
@@ -13,10 +12,14 @@ class BuildCardInfo extends StatelessWidget {
     this.useContainer = true,
     this.icon,
     this.onTap,
+    this.startDate,
+    this.endDate,
   });
 
   final String? subtitle;
   final String title;
+  final String? startDate;
+  final String? endDate;
   final String appStatus;
   final EdgeInsetsGeometry padding;
   final bool useContainer;
@@ -71,7 +74,7 @@ class BuildCardInfo extends StatelessWidget {
               width: 5,
             ),
             Text(
-              DateFormat('dd-MM-yyyy').format(DateTime.now()).toString(),
+              startDate ?? 'kosong',
               style: TextStyle(
                 fontWeight: FontWeight.w400,
                 fontSize: 12,
@@ -93,7 +96,7 @@ class BuildCardInfo extends StatelessWidget {
               width: 5,
             ),
             Text(
-              DateFormat('dd-MM-yyyy').format(DateTime.now()).toString(),
+              endDate ?? 'kosong',
               style: TextStyle(
                 fontWeight: FontWeight.w400,
                 fontSize: 12,
