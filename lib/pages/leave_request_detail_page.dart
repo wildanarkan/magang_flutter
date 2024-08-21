@@ -1,19 +1,23 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:magang_flutter/common/app_color.dart';
-import 'package:magang_flutter/pages/employee_leave_history_page.dart';
+import 'package:magang_flutter/data/models/leave_model.dart';
 import 'package:magang_flutter/widgets/build_button.dart';
 import 'package:magang_flutter/widgets/build_link.dart';
 import 'package:magang_flutter/widgets/build_test_appbar.dart';
 import 'package:magang_flutter/widgets/build_text_date.dart';
 
 class LeaveRequestDetailPage extends StatelessWidget {
-  const LeaveRequestDetailPage({super.key});
+  final Leaves leave;
+
+  const LeaveRequestDetailPage({super.key, required this.leave});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: const BuildTestAppbar(title: 'Leave Request'),
+      appBar: const BuildTestAppbar(
+        title: 'Leave Request',
+      ),
       body: Column(
         children: [
           Expanded(
@@ -25,14 +29,13 @@ class LeaveRequestDetailPage extends StatelessWidget {
                     borderRadius: BorderRadius.circular(8),
                     color: Colors.white,
                   ),
-                  padding:
-                      const EdgeInsets.all(20),
+                  padding: const EdgeInsets.all(20),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      const Text(
-                        'Agung Supratman',
-                        style: TextStyle(
+                      Text(
+                        '${leave.firstName} ${leave.lastName}',
+                        style: const TextStyle(
                           fontSize: 14,
                           fontWeight: FontWeight.w600,
                         ),
@@ -41,9 +44,9 @@ class LeaveRequestDetailPage extends StatelessWidget {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          const Text(
-                            '21132132121',
-                            style: TextStyle(
+                          Text(
+                            leave.nip.toString(),
+                            style: const TextStyle(
                               fontWeight: FontWeight.w400,
                               fontSize: 12,
                             ),
@@ -52,7 +55,7 @@ class LeaveRequestDetailPage extends StatelessWidget {
                             title: 'Look Employee History',
                             context: context,
                             onTap: () {
-                              Get.to(() => const EmployeeLeaveHistoryPage());
+                             Get.back(result: leave.nip); // Kirim nip ke halaman sebelumnya
                             },
                           ),
                         ],
@@ -61,7 +64,7 @@ class LeaveRequestDetailPage extends StatelessWidget {
                       const Divider(),
                       const SizedBox(height: 10),
                       Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Column(
                             children: [
@@ -72,12 +75,10 @@ class LeaveRequestDetailPage extends StatelessWidget {
                                     fontWeight: FontWeight.w400,
                                     color: AppColor.textBody),
                               ),
-                              const SizedBox(
-                                height: 5,
-                              ),
-                              const Text(
-                                'Cuti Tahunan',
-                                style: TextStyle(
+                              const SizedBox(height: 5),
+                              Text(
+                                leave.leaveCategory ?? '',
+                                style: const TextStyle(
                                   fontWeight: FontWeight.w600,
                                   fontSize: 14,
                                 ),
@@ -94,7 +95,7 @@ class LeaveRequestDetailPage extends StatelessWidget {
                               color: AppColor.backgroundPending,
                             ),
                             child: Text(
-                              'Pending',
+                              leave.status ?? 'Pending',
                               style: TextStyle(
                                 color: AppColor.pending,
                                 fontSize: 12,
@@ -105,19 +106,22 @@ class LeaveRequestDetailPage extends StatelessWidget {
                         ],
                       ),
                       const SizedBox(height: 10),
-
-                      const SizedBox(
-                        height: 20,
-                      ),
-                      const Row(
+                      const SizedBox(height: 20),
+                      Row(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Expanded(
-                            child: BuildTextDate(title: 'Start Date'),
+                            child: BuildTextDate(
+                              title: 'Start Date',
+                              date: leave.startDate,
+                            ),
                           ),
-                          SizedBox(width: 10),
+                          const SizedBox(width: 10),
                           Expanded(
-                            child: BuildTextDate(title: 'End Date'),
+                            child: BuildTextDate(
+                              title: 'End Date',
+                              date: leave.endDate,
+                            ),
                           ),
                         ],
                       ),

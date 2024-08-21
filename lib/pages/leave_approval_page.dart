@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:magang_flutter/common/app_color.dart';
-import 'package:magang_flutter/pages/leave_request_detail_page.dart';
 import 'package:magang_flutter/widgets/build_card_info.dart';
 import 'package:magang_flutter/widgets/build_test_appbar.dart';
 
@@ -29,10 +27,6 @@ class LeaveRequestPage extends StatelessWidget {
                 size: 16,
                 color: AppColor.textBody,
               ),
-              onTap: () {
-                Get.to(() => const LeaveRequestDetailPage());
-
-              },
             ),
             BuildCardInfo(
               title: "Maman Sudrajat",
@@ -43,10 +37,6 @@ class LeaveRequestPage extends StatelessWidget {
                 size: 16,
                 color: AppColor.textBody,
               ),
-              onTap: () {
-                Get.to(() => const LeaveRequestDetailPage());
-
-              },
             ),
             BuildCardInfo(
               title: "Joko Sasongko",
@@ -57,10 +47,6 @@ class LeaveRequestPage extends StatelessWidget {
                 size: 16,
                 color: AppColor.textBody,
               ),
-              onTap: () {
-                Get.to(() => const LeaveRequestDetailPage());
-
-              },
             ),
           ],
         ),

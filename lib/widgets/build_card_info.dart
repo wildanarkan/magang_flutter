@@ -138,13 +138,13 @@ class BuildCardInfo extends StatelessWidget {
     switch (status) {
       case 'onProgress':
         return AppStatus.onProgress();
-      case 'complete':
+      case 'Complete':
         return AppStatus.complete(null);
-      case 'decline':
+      case 'Decline':
         return AppStatus.decline(null);
-      case 'pending':
+      case 'Pending':
         return AppStatus.pending();
-      case 'approved':
+      case 'Approved':
         return AppStatus.complete('Approved');
       default:
         return const SizedBox.shrink();

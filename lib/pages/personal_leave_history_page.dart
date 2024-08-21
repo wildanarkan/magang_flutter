@@ -51,7 +51,7 @@ class PersonalLeaveHistoryPage extends StatelessWidget {
                   color: AppColor.textBody,
                 ),
                 onTap: () {
-                  Get.to(() => const LeaveRequestDetailPage()); 
+                  Get.to(() => LeaveRequestDetailPage(leave: leave));
                 },
               );
             },

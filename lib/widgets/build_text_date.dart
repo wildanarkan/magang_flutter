@@ -1,19 +1,17 @@
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 import 'package:magang_flutter/common/app_color.dart';
 
 class BuildTextDate extends StatelessWidget {
   final String title;
+  final String? date;
 
   const BuildTextDate({
     super.key,
-    required this.title,
+    required this.title, this.date,
   });
 
   @override
   Widget build(BuildContext context) {
-    DateTime currentDate = DateTime.now();  
-    String formattedDate = DateFormat('dd-MM-yyyy').format(currentDate); 
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -28,7 +26,7 @@ class BuildTextDate extends StatelessWidget {
         ),
         const SizedBox(height: 5),
         Text(
-          formattedDate,
+          date ?? 'kosong',
           style: const TextStyle(
             fontWeight: FontWeight.w600,
             fontSize: 14,
