@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:magang_flutter/controllers/add_businiess_trip_page_controller.dart';
 import 'package:magang_flutter/widgets/build_button.dart';
-import 'package:magang_flutter/widgets/build_dropdown.dart';
 import 'package:magang_flutter/widgets/build_list_employee.dart';
 import 'package:magang_flutter/widgets/build_pick_date.dart';
 import 'package:magang_flutter/widgets/build_test_appbar.dart';
@@ -31,18 +30,18 @@ class AddBusiniessTripPage extends  StatelessWidget {
                 () => Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    BuildDropdown(
-                      hint: 'Select',
-                      title: 'Company',
-                      selectedItem: controller.selectedCompany.value,
-                      item: controller.companyItem,
-                    ),
-                    BuildDropdown(
-                      hint: 'Select',
-                      title: 'City',
-                      selectedItem: controller.selectedCompany.value,
-                      item: controller.companyItem,
-                    ),
+                    // BuildDropdown(
+                    //   hint: 'Select',
+                    //   title: 'Company',
+                    //   selectedItem: controller.selectedCompany,
+                    //   item: controller.companyItem,
+                    // ),
+                    // BuildDropdown(
+                    //   hint: 'Select',
+                    //   title: 'City',
+                    //   selectedItem: controller.selectedCompany,
+                    //   item: controller.companyItem,
+                    // ),
                     const BuildTextField(
                       title: 'Company Address',
                       required: false,
@@ -63,12 +62,12 @@ class AddBusiniessTripPage extends  StatelessWidget {
                       title: 'PIC Role',
                       required: true,
                     ),
-                    BuildDropdown(
-                      selectedItem: controller.selectedCompany.value,
-                      item: controller.companyItem,
-                      hint: 'Ga Guna',
-                      title: 'Employee',
-                    ),
+                    // BuildDropdown(
+                    //   selectedItem: controller.selectedCompany,
+                    //   item: controller.companyItem,
+                    //   hint: 'Ga Guna',
+                    //   title: 'Employee',
+                    // ),
                     Align(
                       alignment: Alignment.center,
                       child: BuildButton(

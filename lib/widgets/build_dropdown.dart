@@ -8,12 +8,14 @@ class BuildDropdown extends StatefulWidget {
     required this.item,
     required this.hint,
     required this.title,
+    required this.onChanged, // Tambahkan onChanged sebagai parameter
   });
 
   final String selectedItem;
   final String hint;
   final String title;
   final List<String> item;
+  final ValueChanged<String?> onChanged; // Tipe data untuk onChanged
 
   @override
   State<BuildDropdown> createState() => _BuildDropdownState();
@@ -47,8 +49,9 @@ class _BuildDropdownState extends State<BuildDropdown> {
             width: double.infinity,
             padding: const EdgeInsets.all(10),
             decoration: BoxDecoration(
-                color: AppColor.inputBackground,
-                borderRadius: BorderRadius.circular(10)),
+              color: AppColor.inputBackground,
+              borderRadius: BorderRadius.circular(10),
+            ),
             child: DropdownButton<String>(
               isExpanded: true,
               underline: const SizedBox(),
@@ -58,19 +61,24 @@ class _BuildDropdownState extends State<BuildDropdown> {
               items: widget.item.map((String value) {
                 return DropdownMenuItem<String>(
                   value: value,
-                  child: Text(value, style: TextStyle(
-                    color: AppColor.textTitle,
-                fontWeight: FontWeight.w500,
-                fontSize: 14
-                  ),),
+                  child: Text(
+                    value,
+                    style: TextStyle(
+                      color: AppColor.textTitle,
+                      fontWeight: FontWeight.w500,
+                      fontSize: 14,
+                    ),
+                  ),
                 );
               }).toList(),
               onChanged: (String? newValue) {
                 setState(() {
                   selectedItem = newValue ?? selectedItem;
                 });
+                widget.onChanged(
+                    newValue); // Panggil onChanged yang diterima sebagai parameter
               },
-              hint: Text(widget.hint), // Memanggil hint di sini
+              hint: Text(widget.hint),
             ),
           ),
         ),
