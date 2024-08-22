@@ -61,38 +61,32 @@ class AskLeavePageController extends GetxController {
     selectedLimit.value = limit;
   }
 
-  Future<bool> makeLeave() async {
+   Future<void> makeLeave() async {
     try {
       final token = GetStorage().read('accessToken');
-      final leaveCategory = _apiData.firstWhere(
-        (item) => item['name'] == selectedCompany.value,
-      );
-
       final response = await http.post(
         Uri.parse(URLs.leaveStore),
-        headers: <String, String>{
+        headers: {
           'Content-Type': 'application/json; charset=UTF-8',
           'Authorization': 'Bearer $token',
         },
-        body: jsonEncode(<String, String>{
-           'id_leave_category': selectedCompany.value,
+        body: jsonEncode({
+          'id_leave_category': _apiData
+              .firstWhere((item) => item['name'] == selectedCompany.value)['id']
+              .toString(),
           'reason_for_leave': reasonForLeaveController.value.text,
           'start_date': startDateController.value.text,
           'end_date': endDateController.value.text,
         }),
       );
 
-      if (response.statusCode == 200) {
-        Get.snackbar('Success', 'Leave request submitted successfully');
-        return true;
+      if (response.statusCode == 201) {
+        // Get.snackbar('Success', 'Leave request successfully created');
       } else {
-        Get.snackbar(
-            'Error', 'Failed to submit leave request: ${response.body}');
-        return false;
+        Get.snackbar('Error', 'Failed to create leave: ${response.body}');
       }
     } catch (e) {
       Get.snackbar('Error', 'An error occurred: $e');
-      return false;
     }
   }
 }

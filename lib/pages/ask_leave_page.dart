@@ -113,13 +113,8 @@ class AskLeavePage extends StatelessWidget {
                 title: 'Simpan',
                 width: 320,
                 onPressed: () async {
-                  // Memanggil method makeLeave dan menunggu hasilnya
-                  final success = await controller.makeLeave();
-                  if (success) {
-                    // Jika berhasil, tampilkan snackbar dan kembali ke halaman sebelumnya
-                    Get.snackbar('Success', 'Leave request submitted successfully');
-                    Get.back(); // Menggunakan Navigator.pop
-                  }
+                  await controller.makeLeave();
+                  Get.back();
                 },
               ),
             ),
