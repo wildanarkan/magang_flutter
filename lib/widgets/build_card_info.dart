@@ -136,11 +136,11 @@ class BuildCardInfo extends StatelessWidget {
 
   Widget _getAppStatusWidget(String status) {
     switch (status) {
-      case 'onProgress':
+      case 'On Progress':
         return AppStatus.onProgress();
-      case 'Complete':
+      case 'Completed':
         return AppStatus.complete(null);
-      case 'Decline':
+      case 'Declined':
         return AppStatus.decline(null);
       case 'Pending':
         return AppStatus.pending();

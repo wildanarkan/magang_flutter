@@ -9,6 +9,7 @@ import 'package:magang_flutter/data/models/leave_model.dart';
 
 class LeavePageController extends GetxController {
   var leaves = <Leaves>[].obs;  // Observable list to hold leave data
+  var isLoading = true.obs;     // Observable to track loading status
 
   @override
   void onInit() {
@@ -18,6 +19,7 @@ class LeavePageController extends GetxController {
 
   void fetchLeaves() async {
     try {
+      isLoading(true); // Set loading status to true before fetching data
       final token = GetStorage().read('accessToken');
 
       final response = await http.get(
@@ -37,9 +39,14 @@ class LeavePageController extends GetxController {
         }
       } else {
         print('Failed to load leave data: ${response.statusCode}');
+        leaves.value = []; // Clear the leaves list if loading failed
       }
     } catch (e) {
       print('Error occurred: $e');
+      leaves.value = []; // Clear the leaves list if an error occurred
+    } finally {
+      isLoading(false); // Set loading status to false after fetching data
     }
   }
 }
+

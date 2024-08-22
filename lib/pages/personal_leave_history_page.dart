@@ -11,16 +11,17 @@ class PersonalLeaveHistoryPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final PersonalLeaveHistoryPageController controller = Get.put(PersonalLeaveHistoryPageController());
+    final PersonalLeaveHistoryPageController controller =
+        Get.put(PersonalLeaveHistoryPageController());
 
     return Scaffold(
       appBar: BuildTestAppbar(
         title: 'Leave History',
         actions: [
           IconButton(
-            onPressed: () {},
+            onPressed: () => _showFilterBottomSheet(context, controller),
             icon: const Icon(Icons.filter_alt_rounded),
-          )
+          ),
         ],
       ),
       body: Padding(
@@ -30,19 +31,19 @@ class PersonalLeaveHistoryPage extends StatelessWidget {
             return const Center(child: CircularProgressIndicator()); // Menampilkan loading saat data sedang diambil
           }
 
-          if (controller.leaves.isEmpty) {
-            return const Center(child: Text("No leave history available")); // Menampilkan pesan jika data kosong
+          if (controller.filteredLeaves.isEmpty) {
+            return Center(child: Text("No leave history ${controller.statusFilter.value}")); // Menampilkan pesan jika data kosong
           }
 
           return ListView.builder(
             padding: const EdgeInsets.only(bottom: 120, top: 20),
-            itemCount: controller.leaves.length,
+            itemCount: controller.filteredLeaves.length,
             itemBuilder: (context, index) {
-              final leave = controller.leaves[index];
+              final leave = controller.filteredLeaves[index];
 
               return BuildCardInfo(
-                title: leave.leaveCategory ?? '', 
-                appStatus: leave.status ?? '', 
+                title: leave.leaveCategory ?? '',
+                appStatus: leave.status ?? '',
                 startDate: leave.startDate ?? '',
                 endDate: leave.endDate ?? '',
                 icon: Icon(
@@ -51,6 +52,7 @@ class PersonalLeaveHistoryPage extends StatelessWidget {
                   color: AppColor.textBody,
                 ),
                 onTap: () {
+                  controller.statusFilter.value = '';
                   Get.to(() => LeaveRequestDetailPage(leave: leave));
                 },
               );
@@ -58,6 +60,47 @@ class PersonalLeaveHistoryPage extends StatelessWidget {
           );
         }),
       ),
+    );
+  }
+
+  void _showFilterBottomSheet(BuildContext context, PersonalLeaveHistoryPageController controller) {
+    showModalBottomSheet(
+      context: context,
+      builder: (context) {
+        return Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            ListTile(
+              title: const Text('Pending'),
+              onTap: () {
+                controller.statusFilter.value = 'Pending';
+                Get.back();
+              },
+            ),
+            ListTile(
+              title: const Text('Approved'),
+              onTap: () {
+                controller.statusFilter.value = 'Approved';
+                Get.back();
+              },
+            ),
+            ListTile(
+              title: const Text('Declined'),
+              onTap: () {
+                controller.statusFilter.value = 'Declined';
+                Get.back();
+              },
+            ),
+            ListTile(
+              title: const Text('All'),
+              onTap: () {
+                controller.statusFilter.value = ''; // Reset filter
+                Get.back();
+              },
+            ),
+          ],
+        );
+      },
     );
   }
 }

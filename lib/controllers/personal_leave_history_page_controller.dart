@@ -9,6 +9,7 @@ import 'package:magang_flutter/data/models/leave_model.dart';
 class PersonalLeaveHistoryPageController extends GetxController {
   RxList<Leaves> leaves = <Leaves>[].obs;
   RxBool isLoading = false.obs;
+  var statusFilter = ''.obs; // Add this for status filtering
 
   @override
   void onInit() {
@@ -53,5 +54,12 @@ class PersonalLeaveHistoryPageController extends GetxController {
     } finally {
       isLoading.value = false;
     }
+  }
+
+  List<Leaves> get filteredLeaves {
+    if (statusFilter.value.isNotEmpty) {
+      return leaves.where((leave) => leave.status == statusFilter.value).toList();
+    }
+    return leaves;
   }
 }

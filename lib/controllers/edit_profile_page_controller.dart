@@ -75,7 +75,7 @@ class EditProfilePageController extends GetxController {
         city.value = cityController.text;
         address.value = addressController.text;
         
-        Get.snackbar('Success', 'Profile updated successfully');
+        // Get.snackbar('Success', 'Profile updated successfully');
         update(); // Notify listeners to update the UI
         return true;
       } else {

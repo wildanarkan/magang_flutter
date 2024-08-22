@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:magang_flutter/controllers/navigator_page_controllers.dart';
@@ -76,6 +78,7 @@ class EditProfilePage extends StatelessWidget {
                               // Update data di NavigatorPageControllers
                               Get.find<NavigatorPageControllers>()
                                   .fetchUserData();
+                                  log('get back');
                                Get.back(); // Menggunakan Navigator.pop
                             }
                           },

@@ -24,7 +24,7 @@ class LeaveHistoryPage extends StatelessWidget {
             title: 'Approval',
             iconColor: AppColor.primary,
             onTap: () {
-              Get.to(() => const EmployeeLeaveHistoryPage(statusFilter: 'pending',));
+              Get.to(() =>  EmployeeLeaveHistoryPage(statusFilter: 'Pending',));
             },
           ),
           BuildRowicon(
@@ -40,7 +40,7 @@ class LeaveHistoryPage extends StatelessWidget {
             iconColor: AppColor.primary,
             title: 'Employee Leave History',
             onTap: () {
-              Get.to(() => const EmployeeLeaveHistoryPage());
+              Get.to(() =>  EmployeeLeaveHistoryPage());
             },
           ),
           BuildRowicon(

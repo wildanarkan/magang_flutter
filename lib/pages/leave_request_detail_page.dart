@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:magang_flutter/common/app_color.dart';
+import 'package:magang_flutter/common/app_status.dart';
 import 'package:magang_flutter/data/models/leave_model.dart';
 import 'package:magang_flutter/widgets/build_button.dart';
 import 'package:magang_flutter/widgets/build_link.dart';
@@ -85,24 +86,7 @@ class LeaveRequestDetailPage extends StatelessWidget {
                               ),
                             ],
                           ),
-                          Container(
-                            padding: const EdgeInsets.symmetric(
-                              horizontal: 10,
-                              vertical: 5,
-                            ),
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(20),
-                              color: AppColor.backgroundPending,
-                            ),
-                            child: Text(
-                              leave.status ?? 'Pending',
-                              style: TextStyle(
-                                color: AppColor.pending,
-                                fontSize: 12,
-                                fontWeight: FontWeight.w400,
-                              ),
-                            ),
-                          ),
+                          _getAppStatusWidget(leave.status.toString()),
                         ],
                       ),
                       const SizedBox(height: 10),
@@ -161,3 +145,20 @@ class LeaveRequestDetailPage extends StatelessWidget {
     );
   }
 }
+
+Widget _getAppStatusWidget(String status) {
+    switch (status) {
+      case 'onProgress':
+        return AppStatus.onProgress();
+      case 'Complete':
+        return AppStatus.complete(null);
+      case 'Declined':
+        return AppStatus.decline(null);
+      case 'Pending':
+        return AppStatus.pending();
+      case 'Approved':
+        return AppStatus.complete('Approved');
+      default:
+        return const SizedBox.shrink();
+    }
+  }

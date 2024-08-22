@@ -10,8 +10,8 @@ import 'package:magang_flutter/widgets/build_card_info.dart';
 import 'package:magang_flutter/widgets/build_test_appbar.dart';
 
 class EmployeeLeaveHistoryPage extends StatefulWidget {
-  final String? statusFilter;
-  const EmployeeLeaveHistoryPage({super.key, this.statusFilter});
+  String? statusFilter;
+  EmployeeLeaveHistoryPage({super.key, this.statusFilter});
 
   @override
   _EmployeeLeaveHistoryPageState createState() =>
@@ -20,12 +20,13 @@ class EmployeeLeaveHistoryPage extends StatefulWidget {
 
 class _EmployeeLeaveHistoryPageState extends State<EmployeeLeaveHistoryPage> {
   int? nip;
+  String? selectedStatusFilter;
 
   @override
   void initState() {
     super.initState();
-    // Ambil nip dari arguments jika tersedia
-    nip = Get.arguments;
+    nip = Get.arguments; // Ambil nip dari arguments jika tersedia
+    selectedStatusFilter = widget.statusFilter; // Ambil statusFilter dari widget
   }
 
   @override
@@ -36,8 +37,9 @@ class _EmployeeLeaveHistoryPageState extends State<EmployeeLeaveHistoryPage> {
       appBar: BuildTestAppbar(
         title: 'Employee Leave History',
         actions: [
+          if(widget.statusFilter != 'Pending')
           IconButton(
-            onPressed: () {},
+            onPressed: _showFilterBottomSheet,
             icon: const Icon(Icons.filter_alt_rounded),
           )
         ],
@@ -45,23 +47,29 @@ class _EmployeeLeaveHistoryPageState extends State<EmployeeLeaveHistoryPage> {
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 25),
         child: Obx(() {
-          // Filter leaves berdasarkan nip
-          List<Leaves> filteredLeaves = controller.leaves;
-
-          if (widget.statusFilter != null) {
-            filteredLeaves = controller.leaves.where((leave) =>
-              leave.status == 'Pending').toList();
-              log(widget.statusFilter.toString());
+          if (controller.isLoading.value) {
+            return const Center(child: CircularProgressIndicator());
           }
 
-          if(nip != null){
-            filteredLeaves = controller.leaves.where((leave) => leave.nip == nip).toList();
-            log(nip.toString());
+          List<Leaves> filteredLeaves = controller.leaves;
+
+          // Jika NIP tersedia, filter data leave berdasarkan NIP terlebih dahulu
+          if (nip != null) {
+            filteredLeaves = filteredLeaves.where((leave) => leave.nip == nip).toList();
+            log('Filtering by NIP: $nip');
+          }
+
+          // Jika statusFilter tersedia, filter lebih lanjut berdasarkan status
+          if (selectedStatusFilter != null) {
+            filteredLeaves = filteredLeaves.where((leave) => leave.status == selectedStatusFilter).toList();
+            log('Filtering by Status: $selectedStatusFilter');
+            widget.statusFilter = null;
           }
 
           if (filteredLeaves.isEmpty) {
-            return const Center(child: CircularProgressIndicator());
+            return Center(child: Text('No leave history $selectedStatusFilter'));
           }
+
           return ListView.builder(
             padding: const EdgeInsets.only(bottom: 120, top: 20),
             itemCount: filteredLeaves.length,
@@ -84,6 +92,7 @@ class _EmployeeLeaveHistoryPageState extends State<EmployeeLeaveHistoryPage> {
                   if (result != null && result is int) {
                     setState(() {
                       nip = result;
+                      selectedStatusFilter = widget.statusFilter; // Reset status filter jika kembali
                     });
                   }
                 },
@@ -92,6 +101,55 @@ class _EmployeeLeaveHistoryPageState extends State<EmployeeLeaveHistoryPage> {
           );
         }),
       ),
+    );
+  }
+
+  void _showFilterBottomSheet() {
+    showModalBottomSheet(
+      context: context,
+      builder: (context) {
+        return Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            ListTile(
+              title: const Text('Pending'),
+              onTap: () {
+                setState(() {
+                  selectedStatusFilter = 'Pending';
+                });
+                Get.back();
+              },
+            ),
+            ListTile(
+              title: const Text('Approved'),
+              onTap: () {
+                setState(() {
+                  selectedStatusFilter = 'Approved';
+                });
+                Get.back();
+              },
+            ),
+            ListTile(
+              title: const Text('Declined'),
+              onTap: () {
+                setState(() {
+                  selectedStatusFilter = 'Declined';
+                });
+                Get.back();
+              },
+            ),
+            ListTile(
+              title: const Text('All'),
+              onTap: () {
+                setState(() {
+                  selectedStatusFilter = null;
+                });
+                Get.back();
+              },
+            ),
+          ],
+        );
+      },
     );
   }
 }
