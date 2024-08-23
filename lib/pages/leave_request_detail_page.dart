@@ -165,9 +165,9 @@ class LeaveRequestDetailPage extends StatelessWidget {
                   borderColor: AppColor.decline,
                   width: 320,
                   onPressed: () async {
-                    await controller.updateLeaveStatus(leave.id!, 'Canceled');
+                    await controller.deleteLeave(leave.id!);
                     log(leave.id.toString());
-                    log('Canceled');
+                    log('deleted');
                   },
                 ),
               ),

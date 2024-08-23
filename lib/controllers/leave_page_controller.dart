@@ -23,7 +23,7 @@ class LeavePageController extends GetxController {
       final token = GetStorage().read('accessToken');
 
       final response = await http.get(
-        Uri.parse(URLs.leaveList),
+        Uri.parse(URLs.leave),
         headers: {
           'Authorization': 'Bearer $token',
         },

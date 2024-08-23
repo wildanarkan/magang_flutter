@@ -1,8 +1,8 @@
 class URLs {
-  static const baseUrl = 'http://192.168.1.104:8000/';
+  // static const baseUrl = 'http://192.168.1.104:8000/';
   static const baseAppUrl = '${baseUrl}api/app/';
   static const photoUrl = '${baseUrl}storage/profile_photos/';
-  // static const baseUrl = 'http://192.168.0.12:8000/';
+  static const baseUrl = 'http://192.168.0.12:8000/';
   // static const photoUrl = 'http://192.168.0.12:8000';
   // static const baseUrl = 'http://192.168.1.104:8000/api/app/';
   static const login = '${baseAppUrl}login';
@@ -14,8 +14,8 @@ class URLs {
   static const contract = '${baseAppUrl}contract/';
   static const payrolls = '${baseAppUrl}payrolls/user/';
   static const payroll = '${baseAppUrl}payroll/';
-  static const leave = '${baseAppUrl}leave/user/';
-  static const leaveList = '${baseAppUrl}leave/';
+  static const leaveUser = '${baseAppUrl}leave/user/';
+  static const leave = '${baseAppUrl}leave/';
   static const leaveUpdate = '${baseAppUrl}leave/update/';
   static const leaveCategory = '${baseAppUrl}leave/category';
   static const leaveStore = '${baseAppUrl}leave/make/';

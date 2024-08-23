@@ -39,4 +39,31 @@ class LeaveRequestDetailController extends GetxController {
       Get.snackbar('Error', 'An error occurred: $e');
     }
   }
+
+  Future<void> deleteLeave(int leaveId) async {
+    try {
+      final token = GetStorage().read('accessToken');
+      final url = Uri.parse('${URLs.leave}$leaveId');
+      print('URL: $url');
+
+      final response = await http.delete(
+        url, // Ganti dengan URL API yang sesuai
+        headers: {
+          'Authorization': 'Bearer $token',
+        },
+      );
+
+      if (response.statusCode == 200) {
+        final leaveController = Get.find<LeavePageController>();
+        Get.back();
+        leaveController.fetchLeaves();
+        Get.snackbar('Success', 'Leave request deleted');
+      } else {
+        Get.snackbar(
+            'Error', 'Failed to delete leave request: ${response.statusCode}');
+      }
+    } catch (e) {
+      Get.snackbar('Error', 'An error occurred: $e');
+    }
+  }
 }

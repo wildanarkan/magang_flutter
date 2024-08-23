@@ -28,7 +28,7 @@ class PersonalLeaveHistoryPageController extends GetxController {
       isLoading.value = true;
       final token = GetStorage().read('accessToken');
       final response = await http.get(
-        Uri.parse('${URLs.leave}$userId'),
+        Uri.parse('${URLs.leaveUser}$userId'),
         headers: {
           'Authorization': 'Bearer $token',
         },
