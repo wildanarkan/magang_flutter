@@ -16,6 +16,7 @@ class URLs {
   static const payroll = '${baseAppUrl}payroll/';
   static const leave = '${baseAppUrl}leave/user/';
   static const leaveList = '${baseAppUrl}leave/';
+  static const leaveUpdate = '${baseAppUrl}leave/update/';
   static const leaveCategory = '${baseAppUrl}leave/category';
   static const leaveStore = '${baseAppUrl}leave/make/';
 }

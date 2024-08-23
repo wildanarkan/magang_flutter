@@ -114,7 +114,6 @@ class AskLeavePage extends StatelessWidget {
                 width: 320,
                 onPressed: () async {
                   await controller.makeLeave();
-                  Get.back();
                 },
               ),
             ),

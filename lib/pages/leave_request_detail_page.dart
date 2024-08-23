@@ -1,7 +1,10 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:magang_flutter/common/app_color.dart';
 import 'package:magang_flutter/common/app_status.dart';
+import 'package:magang_flutter/controllers/leave_request_detail_controller_page.dart';
 import 'package:magang_flutter/data/models/leave_model.dart';
 import 'package:magang_flutter/widgets/build_button.dart';
 import 'package:magang_flutter/widgets/build_link.dart';
@@ -15,6 +18,8 @@ class LeaveRequestDetailPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final controller = Get.put(LeaveRequestDetailController()); // Tambahkan ini
+
     return Scaffold(
       appBar: const BuildTestAppbar(
         title: 'Leave Request',
@@ -56,7 +61,9 @@ class LeaveRequestDetailPage extends StatelessWidget {
                             title: 'Look Employee History',
                             context: context,
                             onTap: () {
-                             Get.back(result: leave.nip); // Kirim nip ke halaman sebelumnya
+                              Get.back(
+                                  result: leave
+                                      .nip); // Kirim nip ke halaman sebelumnya
                             },
                           ),
                         ],
@@ -115,31 +122,57 @@ class LeaveRequestDetailPage extends StatelessWidget {
               ),
             ),
           ),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 35, vertical: 20),
-            child: BuildButton(
-              context: context,
-              title: 'Accept',
-              width: 320,
-              onPressed: () {
-                Get.back();
-              },
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.fromLTRB(35, 0, 35, 40),
-            child: BuildButton(
-              context: context,
-              title: 'Reject',
-              backgroundColor: Colors.white,
-              foregroundColor: AppColor.decline,
-              borderColor: AppColor.decline,
-              width: 320,
-              onPressed: () {
-                Get.back();
-              },
-            ),
-          ),
+          Column(
+            children: [
+              Padding(
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 35, vertical: 20),
+                child: BuildButton(
+                  context: context,
+                  title: 'Accept',
+                  width: 320,
+                  onPressed: () async {
+                    await controller.updateLeaveStatus(leave.id!, 'Approved');
+                    log(leave.id.toString());
+                    log('Approved');
+                  },
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.fromLTRB(35, 0, 35, 20),
+                child: BuildButton(
+                  context: context,
+                  title: 'Reject',
+                  backgroundColor: Colors.white,
+                  foregroundColor: AppColor.decline,
+                  borderColor: AppColor.decline,
+                  width: 320,
+                  onPressed: () async {
+                    await controller.updateLeaveStatus(leave.id!, 'Declined');
+                    log(leave.id.toString());
+                    log('Declined');
+                    
+                  },
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.fromLTRB(35, 0, 35, 40),
+                child: BuildButton(
+                  context: context,
+                  title: 'Cancel',
+                  backgroundColor: AppColor.decline,
+                  foregroundColor: Colors.white,
+                  borderColor: AppColor.decline,
+                  width: 320,
+                  onPressed: () async {
+                    await controller.updateLeaveStatus(leave.id!, 'Canceled');
+                    log(leave.id.toString());
+                    log('Canceled');
+                  },
+                ),
+              ),
+            ],
+          )
         ],
       ),
     );
@@ -147,18 +180,18 @@ class LeaveRequestDetailPage extends StatelessWidget {
 }
 
 Widget _getAppStatusWidget(String status) {
-    switch (status) {
-      case 'onProgress':
-        return AppStatus.onProgress();
-      case 'Complete':
-        return AppStatus.complete(null);
-      case 'Declined':
-        return AppStatus.decline(null);
-      case 'Pending':
-        return AppStatus.pending();
-      case 'Approved':
-        return AppStatus.complete('Approved');
-      default:
-        return const SizedBox.shrink();
-    }
+  switch (status) {
+    case 'onProgress':
+      return AppStatus.onProgress();
+    case 'Complete':
+      return AppStatus.complete(null);
+    case 'Declined':
+      return AppStatus.decline(null);
+    case 'Pending':
+      return AppStatus.pending();
+    case 'Approved':
+      return AppStatus.complete('Approved');
+    default:
+      return const SizedBox.shrink();
   }
+}

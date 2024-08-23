@@ -81,7 +81,8 @@ class AskLeavePageController extends GetxController {
       );
 
       if (response.statusCode == 201) {
-        // Get.snackbar('Success', 'Leave request successfully created');
+        Get.back();
+        Get.snackbar('Success', 'Leave request successfully created');
       } else {
         Get.snackbar('Error', 'Failed to create leave: ${response.body}');
       }
