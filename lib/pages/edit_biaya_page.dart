@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:magang_flutter/common/app_color.dart';
 import 'package:magang_flutter/controllers/edit_biaya_page_controller.dart';
 import 'package:magang_flutter/widgets/build_button.dart';
+import 'package:magang_flutter/widgets/build_dropdown.dart';
 import 'package:magang_flutter/widgets/build_test_appbar.dart';
 import 'package:magang_flutter/widgets/build_text_field.dart';
 
@@ -34,7 +35,21 @@ class EditBiayaPage extends StatelessWidget {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
+                        BuildDropdown(
+                          hint: 'Select',
+                          title: 'Category',
+                          selectedItem: controller.selectedCompany,
+                          item: controller.companyItem,
+                          onChanged: (newValue) {
+                            controller.selectedCompany = newValue!;
+                          },
+                        ),
                          BuildTextField(
+                          controller: controller.amountController,
+                          title: 'Note',
+                          required: true,
+                        ),
+                        BuildTextField(
                           controller: controller.amountController,
                           title: 'Amount',
                           required: true,

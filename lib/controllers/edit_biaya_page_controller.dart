@@ -28,4 +28,22 @@ class EditBiayaPageController extends GetxController {
   void removeImage(File image) {
     images.remove(image);
   }
+
+  final List<String> companyItem = [
+    'PT. BELUM BUKA',
+    'PT. SIDOMUNCUL',
+    'PT. JAYA ABADI',
+  ];
+
+  // Declare the selectedCompany variable as late
+  late String selectedCompany;
+
+  Rx<TextEditingController> dateController = TextEditingController().obs;
+
+  @override
+  void onInit() {
+    super.onInit();
+    // Initialize the selectedCompany variable
+    selectedCompany = 'PT. BELUM BUKA';
+  }
 }

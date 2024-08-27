@@ -146,6 +146,10 @@ class BuildCardInfo extends StatelessWidget {
         return AppStatus.pending();
       case 'Approved':
         return AppStatus.complete('Approved');
+      case 'Canceled':
+        return AppStatus.canceled('Canceled');
+      case 'Draft':
+        return AppStatus.draft();
       default:
         return const SizedBox.shrink();
     }

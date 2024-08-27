@@ -139,6 +139,15 @@ class _EmployeeLeaveHistoryPageState extends State<EmployeeLeaveHistoryPage> {
               },
             ),
             ListTile(
+              title: const Text('Canceled'),
+              onTap: () {
+                setState(() {
+                  selectedStatusFilter = 'Canceled';
+                });
+                Get.back();
+              },
+            ),
+            ListTile(
               title: const Text('All'),
               onTap: () {
                 setState(() {
