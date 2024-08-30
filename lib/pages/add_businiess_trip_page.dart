@@ -38,21 +38,12 @@ class AddBusiniessTripPage extends StatelessWidget {
                         selectedItem: controller.selectedCompany.value,
                         item: controller.companyItem.value,
                         onChanged: (newValue) {
-                          // Set the new selected company
-                          controller.selectedCompany.value = newValue!;
-
-                          // Reset city selection
-                          controller.selectedCity.value = '';
-
-                          // Clear and update city dropdown items
-                          controller.cityItem.clear();
-                          controller.updateCityItems(newValue);
-
-                          // Reset all fields related to city
-                          controller.clearCityRelatedData();
-
-                          // Enable city dropdown
-                          controller.isCityEnabled.value = true;
+                          if (controller.selectedCompany.value != newValue) {
+                            // Update company and reset city and related fields
+                            controller.selectedCompany.value = newValue!;
+                            controller.updateCityItems(newValue);
+                            controller.clearCityRelatedData();
+                          }
                         },
                       ),
                     ),
@@ -63,14 +54,13 @@ class AddBusiniessTripPage extends StatelessWidget {
                         selectedItem: controller.selectedCity.value,
                         item: controller.cityItem.value,
                         onChanged: (newValue) {
-                          // Update selected city
-                          controller.selectedCity.value = newValue!;
-
-                          // Update related data (address, pic, etc.)
-                          controller.updateCityRelatedData(
-                            controller.selectedCompany.value,
-                            newValue,
-                          );
+                          if (newValue != controller.selectedCity.value) {
+                            controller.selectedCity.value = newValue!;
+                            controller.updateCityRelatedData(
+                              controller.selectedCompany.value,
+                              newValue,
+                            );
+                          }
                         },
                         enabled: controller.isCityEnabled.value,
                       ),
@@ -79,32 +69,28 @@ class AddBusiniessTripPage extends StatelessWidget {
                       () => BuildTextField(
                         title: 'Company Address',
                         readOnly: true,
-                        value: controller
-                            .address.value, // Menampilkan alamat yang terkait
+                        value: controller.address.value,
                       ),
                     ),
                     Obx(
                       () => BuildTextField(
                         title: 'PIC',
                         readOnly: true,
-                        value: controller
-                            .pic.value, // Menampilkan PIC yang terkait
+                        value: controller.pic.value,
                       ),
                     ),
                     Obx(
                       () => BuildTextField(
                         title: 'PIC Role',
                         readOnly: true,
-                        value: controller
-                            .picRole.value, // Menampilkan PIC Role yang terkait
+                        value: controller.picRole.value,
                       ),
                     ),
                     Obx(
                       () => BuildTextField(
                         title: 'PIC Phone',
                         readOnly: true,
-                        value: controller.picPhone
-                            .value, // Menampilkan PIC Phone yang terkait
+                        value: controller.picPhone.value,
                       ),
                     ),
                     Row(
@@ -112,8 +98,7 @@ class AddBusiniessTripPage extends StatelessWidget {
                         Expanded(
                           child: BuildPickDate(
                             title: 'Start Date',
-                            dateController:
-                                controller.startDateController.value,
+                            dateController: controller.startDateController.value,
                           ),
                         ),
                         const SizedBox(width: 10),

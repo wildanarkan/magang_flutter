@@ -41,10 +41,12 @@ class _BuildDropdownState extends State<BuildDropdown> {
   void didUpdateWidget(covariant BuildDropdown oldWidget) {
     super.didUpdateWidget(oldWidget);
 
-    // Reset selected item if the list of items changes or becomes empty
-    if (!widget.item.contains(selectedItem)) {
+    if (widget.item != oldWidget.item ||
+        widget.selectedItem != oldWidget.selectedItem) {
       setState(() {
-        selectedItem = '';
+        selectedItem = widget.item.contains(widget.selectedItem)
+            ? widget.selectedItem
+            : '';
       });
     }
   }

@@ -47,7 +47,7 @@ class AddBusiniessTripPageController extends GetxController {
             .toList();
 
         if (companyItem.isNotEmpty) {
-          fetchCityItems();
+          fetchCompanyCityItems();
           updateCityItems(selectedCompany.value);
         }
       } else {
@@ -59,7 +59,7 @@ class AddBusiniessTripPageController extends GetxController {
     }
   }
 
-  void fetchCityItems() async {
+  void fetchCompanyCityItems() async {
     try {
       final token = GetStorage().read('accessToken');
 
@@ -83,8 +83,9 @@ class AddBusiniessTripPageController extends GetxController {
   }
 
   void updateCityItems(String company) {
-    // Reset the selected city before updating the items
+    // Reset selectedCity and clear related fields
     selectedCity.value = '';
+    clearCityRelatedData();
 
     // Filter data city berdasarkan company yang dipilih
     var filteredData =
@@ -94,8 +95,10 @@ class AddBusiniessTripPageController extends GetxController {
     cityItem.value =
         filteredData.map((item) => item['city_name'].toString()).toList();
 
-    // Clear related fields since the city selection is reset
-    clearCityRelatedData();
+    // Update isCityEnabled berdasarkan apakah ada city items yang tersedia
+    isCityEnabled.value = cityItem.isNotEmpty;
+    log('City Items: ${cityItem.value}');
+    log('Selected City: ${selectedCity.value}');
   }
 
   void clearCityRelatedData() {
