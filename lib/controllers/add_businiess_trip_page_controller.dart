@@ -10,9 +10,13 @@ import 'package:magang_flutter/common/urls.dart';
 class AddBusiniessTripPageController extends GetxController {
   var selectedCompany = ''.obs;
   var selectedCity = ''.obs;
+  var selectedAllCity = ''.obs;
+  var selectedAllUser = ''.obs;
 
   var companyItem = <String>[].obs;
   var cityItem = <String>[].obs;
+  var allCityItem = <String>[].obs;
+  var allUserItem = <String>[].obs;
 
   var isCityEnabled = false.obs;
 
@@ -27,6 +31,8 @@ class AddBusiniessTripPageController extends GetxController {
 
   List<dynamic> _apiDataCompany = []; // Untuk menyimpan seluruh data dari API
   List<dynamic> _apiDataCity = []; // Untuk menyimpan seluruh data dari API
+  List<dynamic> _apiDataAllCity = []; // Untuk menyimpan seluruh data dari API
+  List<dynamic> _apiDataAllUser = []; // Untuk menyimpan seluruh data dari API
 
   void fetchCompanyItems() async {
     try {
@@ -56,6 +62,60 @@ class AddBusiniessTripPageController extends GetxController {
       }
     } catch (e) {
       Get.snackbar('Error', 'Failed to load company items');
+    }
+  }
+
+  void fetchAllCityItems() async {
+    try {
+      final token = GetStorage().read('accessToken');
+
+      final response = await http.get(
+        Uri.parse(URLs.city), // Ganti dengan URL API Anda
+        headers: {
+          'Authorization': 'Bearer $token',
+        },
+      );
+
+      if (response.statusCode == 200) {
+        _apiDataAllCity = json.decode(response.body);
+        allCityItem.value = _apiDataAllCity
+            .map((item) => item['name'].toString())
+            .toSet()
+            .toList();
+
+      } else {
+        log(response.statusCode.toString());
+        Get.snackbar('Error', 'Failed to load all city items');
+      }
+    } catch (e) {
+      Get.snackbar('Error', 'Failed to load all city items');
+    }
+  }
+
+  void fetchAllUserItems() async {
+    try {
+      final token = GetStorage().read('accessToken');
+
+      final response = await http.get(
+        Uri.parse(URLs.allUser), // Ganti dengan URL API Anda
+        headers: {
+          'Authorization': 'Bearer $token',
+        },
+      );
+
+      if (response.statusCode == 200) {
+        _apiDataAllUser = json.decode(response.body);
+        allUserItem.value = _apiDataAllUser
+            .map((item) => item['full_name'].toString())
+            .toSet()
+            .toList();
+
+      } else {
+        log(response.statusCode.toString());
+        Get.snackbar('Error', 'Failed to load all user items');
+      }
+    } catch (e) {
+      Get.snackbar('Error', 'Failed to load all user items');
     }
   }
 
@@ -130,5 +190,7 @@ class AddBusiniessTripPageController extends GetxController {
   void onInit() {
     super.onInit();
     fetchCompanyItems();
+    fetchAllCityItems();
+    fetchAllUserItems();
   }
 }

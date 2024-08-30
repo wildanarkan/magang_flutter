@@ -113,19 +113,19 @@ class AddBusiniessTripPage extends StatelessWidget {
                     BuildDropdown(
                       hint: 'SELECT DEPARTURE',
                       title: 'Departure From',
-                      selectedItem: controller.selectedCompany.value,
-                      item: controller.companyItem.value,
+                      selectedItem: controller.selectedAllCity.value,
+                      item: controller.allCityItem.value,
                       onChanged: (newValue) {
-                        controller.selectedCompany.value = newValue!;
+                        controller.selectedAllCity.value = newValue!;
                       },
                     ),
                     BuildDropdown(
                       hint: 'SELECT EMPLOYEE',
                       title: 'Employee',
-                      selectedItem: controller.selectedCompany.value,
-                      item: controller.companyItem.value,
+                      selectedItem: controller.selectedAllUser.value,
+                      item: controller.allUserItem.value,
                       onChanged: (newValue) {
-                        controller.selectedCompany.value = newValue!;
+                        controller.selectedAllUser.value = newValue!;
                       },
                     ),
                     Align(
