@@ -8,14 +8,18 @@ class BuildTextField extends StatefulWidget {
     this.required = false,
     this.hintText,
     this.controller,
+    this.value, // Tambahkan parameter value
     this.onChanged,
+    this.readOnly,
   });
 
   final String title;
   final TextEditingController? controller;
   final bool required;
+  final bool? readOnly;
   final String? hintText;
   final Function(String)? onChanged;
+  final String? value; // Tambahkan parameter value
 
   @override
   State<BuildTextField> createState() => _BuildTextFieldState();
@@ -54,17 +58,20 @@ class _BuildTextFieldState extends State<BuildTextField> {
             width: double.infinity,
             padding: const EdgeInsets.all(10),
             decoration: BoxDecoration(
-                color: AppColor.inputBackground,
-                borderRadius: BorderRadius.circular(10)),
+              color: AppColor.inputBackground,
+              borderRadius: BorderRadius.circular(10),
+            ),
             child: TextField(
-              controller: widget.controller,
+              readOnly: widget.readOnly ?? false,
+              controller: widget.controller ?? TextEditingController(text: widget.value), // Gunakan value jika controller tidak ada
               style: TextStyle(
-                  color: AppColor.textTitle,
-                  fontWeight: FontWeight.w500,
-                  fontSize: 14),
+                color: AppColor.textTitle,
+                fontWeight: FontWeight.w500,
+                fontSize: 14,
+              ),
               decoration: InputDecoration(
                 hintStyle: TextStyle(
-                  color: AppColor.textBody
+                  color: AppColor.textBody,
                 ),
                 hintText: widget.hintText,
                 isDense: true,

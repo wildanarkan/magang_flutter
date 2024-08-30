@@ -2,17 +2,18 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:magang_flutter/controllers/add_businiess_trip_page_controller.dart';
 import 'package:magang_flutter/widgets/build_button.dart';
+import 'package:magang_flutter/widgets/build_dropdown.dart';
 import 'package:magang_flutter/widgets/build_list_employee.dart';
 import 'package:magang_flutter/widgets/build_pick_date.dart';
 import 'package:magang_flutter/widgets/build_test_appbar.dart';
 import 'package:magang_flutter/widgets/build_text_field.dart';
 
-class AddBusiniessTripPage extends  StatelessWidget {
+class AddBusiniessTripPage extends StatelessWidget {
   const AddBusiniessTripPage({super.key});
 
   @override
   Widget build(BuildContext context) {
-     final controller = Get.put(AddBusiniessTripPageController());
+    final controller = Get.put(AddBusiniessTripPageController());
 
     return Scaffold(
       appBar: const BuildTestAppbar(title: 'Input Data'),
@@ -30,44 +31,100 @@ class AddBusiniessTripPage extends  StatelessWidget {
                 () => Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    // BuildDropdown(
-                    //   hint: 'Select',
-                    //   title: 'Company',
-                    //   selectedItem: controller.selectedCompany,
-                    //   item: controller.companyItem,
-                    // ),
-                    // BuildDropdown(
-                    //   hint: 'Select',
-                    //   title: 'City',
-                    //   selectedItem: controller.selectedCompany,
-                    //   item: controller.companyItem,
-                    // ),
-                    const BuildTextField(
-                      title: 'Company Address',
-                      required: false,
+                    Obx(
+                      () => BuildDropdown(
+                        hint: 'SELECT COMPANY',
+                        title: 'Company',
+                        selectedItem: controller.selectedCompany.value,
+                        item: controller.companyItem.value,
+                        onChanged: (newValue) {
+                          controller.selectedCompany.value = newValue!;
+                          controller.updateCityItems(
+                              newValue); // Panggil fungsi updateCityItems
+                          controller.isCityEnabled.value = true;
+                        },
+                      ),
                     ),
-                    BuildPickDate(
-                      title: 'Pick Date',
-                      dateController: controller.dateController.value,
+                    Obx(
+                      () => BuildDropdown(
+                        hint: 'SELECT CITY',
+                        title: 'City',
+                        selectedItem: controller.selectedCity.value,
+                        item: controller.cityItem.value,
+                        onChanged: (newValue) {
+                          controller.selectedCity.value = newValue!;
+                        },
+                        enabled: controller.isCityEnabled.value,
+                      ),
                     ),
-                    const BuildTextField(
-                      title: 'Departing From',
-                      required: true,
+                    Obx(
+                      () => BuildTextField(
+                        title: 'Company Address',
+                        readOnly: true,
+                        value: controller
+                            .address.value, // Menampilkan alamat yang terkait
+                      ),
                     ),
-                    const BuildTextField(
-                      title: 'PIC',
-                      required: true,
+                    Obx(
+                      () => BuildTextField(
+                        title: 'PIC',
+                        readOnly: true,
+                        value: controller
+                            .pic.value, // Menampilkan PIC yang terkait
+                      ),
                     ),
-                    const BuildTextField(
-                      title: 'PIC Role',
-                      required: true,
+                    Obx(
+                      () => BuildTextField(
+                        title: 'PIC Role',
+                        readOnly: true,
+                        value: controller
+                            .picRole.value, // Menampilkan PIC Role yang terkait
+                      ),
                     ),
-                    // BuildDropdown(
-                    //   selectedItem: controller.selectedCompany,
-                    //   item: controller.companyItem,
-                    //   hint: 'Ga Guna',
-                    //   title: 'Employee',
-                    // ),
+                    Obx(
+                      () => BuildTextField(
+                        title: 'PIC Phone',
+                        readOnly: true,
+                        value: controller.picPhone
+                            .value, // Menampilkan PIC Phone yang terkait
+                      ),
+                    ),
+                    Row(
+                      children: [
+                        Expanded(
+                          child: BuildPickDate(
+                            title: 'Start Date',
+                            dateController:
+                                controller.startDateController.value,
+                          ),
+                        ),
+                        const SizedBox(width: 10),
+                        Expanded(
+                          child: BuildPickDate(
+                            title: 'End Date',
+                            dateController: controller.endDateController.value,
+                          ),
+                        ),
+                      ],
+                    ),
+                    BuildDropdown(
+                      hint: 'SELECT DEPARTURE',
+                      title: 'Departure From',
+                      selectedItem: controller.selectedCompany.value,
+                      item: controller.companyItem.value,
+                      onChanged: (newValue) {
+                        controller.selectedCompany.value = newValue!;
+                      },
+                    ),
+                    BuildDropdown(
+                      hint: 'SELECT EMPLOYEE',
+                      title: 'Employee',
+                      selectedItem: controller.selectedCompany.value,
+                      item: controller.companyItem.value,
+                      onChanged: (newValue) {
+                        controller.selectedCompany.value = newValue!;
+                      },
+                    ),
                     Align(
                       alignment: Alignment.center,
                       child: BuildButton(

@@ -2,14 +2,23 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:magang_flutter/common/app_color.dart';
 import 'package:magang_flutter/common/app_status.dart';
+import 'package:magang_flutter/controllers/business_trip_detail_page_controller.dart';
+import 'package:magang_flutter/data/models/business_trip_model.dart';
 import 'package:magang_flutter/pages/estimasi_biaya_page.dart';
 import 'package:magang_flutter/pages/perbandingan_biaya_page.dart';
 import 'package:magang_flutter/pages/realisasi_biaya_page.dart';
 import 'package:magang_flutter/widgets/build_button.dart';
 import 'package:magang_flutter/widgets/build_test_appbar.dart';
+import 'package:magang_flutter/widgets/build_text_field.dart';
 
 class BusinessTripDetailPage extends StatelessWidget {
-  const BusinessTripDetailPage({super.key});
+  final BusinessTripDetailPageController controller =
+      Get.put(BusinessTripDetailPageController());
+
+  final BusinessTripModel trip;
+  final String? status;
+
+  BusinessTripDetailPage({super.key, required this.trip, this.status});
 
   @override
   Widget build(BuildContext context) {
@@ -51,7 +60,7 @@ class BusinessTripDetailPage extends StatelessWidget {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(
-                                'PT. BELUM BUKA',
+                                trip.companyName ?? 'Unknown Company',
                                 style: TextStyle(
                                   fontSize: 16,
                                   fontWeight: FontWeight.w600,
@@ -59,7 +68,7 @@ class BusinessTripDetailPage extends StatelessWidget {
                                 ),
                               ),
                               Text(
-                                'Surabaya',
+                                trip.cityName ?? 'Unknown City',
                                 style: TextStyle(
                                   fontSize: 12,
                                   fontWeight: FontWeight.w400,
@@ -69,19 +78,12 @@ class BusinessTripDetailPage extends StatelessWidget {
                             ],
                           ),
                           const Spacer(),
-                          Column(
-                            children: [
-                              Text(
-                                '',
-                                style: TextStyle(
-                                  fontSize: 12,
-                                  fontWeight: FontWeight.w400,
-                                  color: AppColor.textBody,
-                                ),
-                              ),
-                              AppStatus.draft(),
-                            ],
-                          ),
+                          if (status == 'Draft') AppStatus.draft(),
+                          if (status == 'On Progress') AppStatus.onProgress(),
+                          if (status == 'Completed')
+                            AppStatus.complete('Completed'),
+                          if (status == 'Canceled')
+                            AppStatus.canceled('Canceled'),
                         ],
                       ),
                       const Padding(
@@ -113,7 +115,7 @@ class BusinessTripDetailPage extends StatelessWidget {
                                     ),
                                   ),
                                   Text(
-                                    'Sucipto',
+                                    trip.pic ?? 'Unknown PIC',
                                     style: TextStyle(
                                       fontSize: 12,
                                       fontWeight: FontWeight.w500,
@@ -145,7 +147,7 @@ class BusinessTripDetailPage extends StatelessWidget {
                                     ),
                                   ),
                                   Text(
-                                    'Manager',
+                                    trip.picRole ?? 'Unknown Role',
                                     style: TextStyle(
                                         fontSize: 12,
                                         fontWeight: FontWeight.w500,
@@ -183,7 +185,43 @@ class BusinessTripDetailPage extends StatelessWidget {
                                 ),
                               ),
                               Text(
-                                'Surabaya, IndrapuraJaya 2/1',
+                                '${trip.cityName}, ${trip.companyAddress ?? 'Unknown Address'}',
+                                style: TextStyle(
+                                    fontSize: 12,
+                                    fontWeight: FontWeight.w500,
+                                    color: AppColor.textTitle),
+                              ),
+                            ],
+                          )
+                        ],
+                      ),
+                      const SizedBox(
+                        height: 24,
+                      ),
+                      Row(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Icon(
+                            Icons.location_city,
+                            size: 18,
+                            color: AppColor.textTitle,
+                          ),
+                          const SizedBox(
+                            width: 12,
+                          ),
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                'Departure from',
+                                style: TextStyle(
+                                  fontSize: 12,
+                                  fontWeight: FontWeight.w400,
+                                  color: AppColor.textBody,
+                                ),
+                              ),
+                              Text(
+                                trip.departureFrom ?? 'Null',
                                 style: TextStyle(
                                     fontSize: 12,
                                     fontWeight: FontWeight.w500,
@@ -219,7 +257,7 @@ class BusinessTripDetailPage extends StatelessWidget {
                                 ),
                               ),
                               Text(
-                                '30-11-2021 - 02-12-2021',
+                                '${trip.startDate} - ${trip.endDate}',
                                 style: TextStyle(
                                     fontSize: 12,
                                     fontWeight: FontWeight.w500,
@@ -251,7 +289,7 @@ class BusinessTripDetailPage extends StatelessWidget {
                                 height: 4,
                               ),
                               Text(
-                                '0 Days',
+                                '${trip.extendDay} Days',
                                 style: TextStyle(
                                   fontSize: 12,
                                   fontWeight: FontWeight.w500,
@@ -265,7 +303,55 @@ class BusinessTripDetailPage extends StatelessWidget {
                             context: context,
                             title: 'Extend',
                             width: 88,
-                            onPressed: () {},
+                            onPressed: () {
+                              showDialog(
+                                context: context,
+                                builder: (BuildContext context) {
+                                  return AlertDialog(
+                                    title: const Text('Extended'),
+                                    content: Column(
+                                      mainAxisSize: MainAxisSize.min,
+                                      children: [
+                                        BuildTextField(
+                                          controller: controller
+                                              .extendedController.value,
+                                          title: 'Extend Days',
+                                          hintText: 'Enter number of days',
+                                          onChanged: (value) {
+                                            controller.extendedController.value
+                                                .text = value;
+                                          },
+                                        ),
+                                        const SizedBox(height: 10),
+                                        BuildButton(
+                                          context: context,
+                                          title: 'Simpan',
+                                          onPressed: () {
+                                            final extendDayValue = int.tryParse(
+                                                controller.extendedController
+                                                    .value.text);
+                                            if (extendDayValue != null) {
+                                              controller.updateExtendedDay(
+                                                  trip.idBusinessTrip!,
+                                                  extendDayValue);
+                                              controller.extendedController
+                                                      .value.text =
+                                                  extendDayValue
+                                                      .toString(); // Update the text field with the new value
+                                              controller
+                                                  .update(); // Notify GetX to update the UI
+                                            } else {
+                                              Get.snackbar('Error',
+                                                  'Please enter a valid number of days');
+                                            }
+                                          },
+                                        ),
+                                      ],
+                                    ),
+                                  );
+                                },
+                              );
+                            },
                           )
                         ],
                       ),
@@ -286,50 +372,31 @@ class BusinessTripDetailPage extends StatelessWidget {
                           const SizedBox(
                             height: 16,
                           ),
-                          Padding(
-                            padding: const EdgeInsets.only(bottom: 10.0),
-                            child: Row(
-                              children: [
-                                Icon(
-                                  Icons.circle,
-                                  size: 8,
-                                  color: AppColor.primary,
-                                ),
-                                const SizedBox(
-                                  width: 8,
-                                ),
-                                Text(
-                                  'Employee 5263265367',
-                                  style: TextStyle(
-                                      fontSize: 14,
-                                      fontWeight: FontWeight.w600,
-                                      color: AppColor.textTitle),
-                                ),
-                              ],
-                            ),
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.only(bottom: 10.0),
-                            child: Row(
-                              children: [
-                                Icon(
-                                  Icons.circle,
-                                  size: 8,
-                                  color: AppColor.primary,
-                                ),
-                                const SizedBox(
-                                  width: 8,
-                                ),
-                                Text(
-                                  'Employee 5263265367',
-                                  style: TextStyle(
-                                      fontSize: 14,
-                                      fontWeight: FontWeight.w600,
-                                      color: AppColor.textTitle),
-                                ),
-                              ],
-                            ),
-                          ),
+                          ...trip.users?.map((user) {
+                                return Padding(
+                                  padding: const EdgeInsets.only(bottom: 10.0),
+                                  child: Row(
+                                    children: [
+                                      Icon(
+                                        Icons.circle,
+                                        size: 8,
+                                        color: AppColor.primary,
+                                      ),
+                                      const SizedBox(
+                                        width: 8,
+                                      ),
+                                      Text(
+                                        user.fullName ?? 'Unknown Employee',
+                                        style: TextStyle(
+                                            fontSize: 14,
+                                            fontWeight: FontWeight.w600,
+                                            color: AppColor.textTitle),
+                                      ),
+                                    ],
+                                  ),
+                                );
+                              }).toList() ??
+                              [const Text('No employees')],
                         ],
                       ),
                     ],

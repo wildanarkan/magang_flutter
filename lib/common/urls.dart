@@ -1,8 +1,8 @@
 class URLs {
-  // static const baseUrl = 'http://192.168.1.104:8000/';
+  static const baseUrl = 'http://192.168.1.104:8000/';
   static const baseAppUrl = '${baseUrl}api/app/';
   static const photoUrl = '${baseUrl}storage/profile_photos/';
-  static const baseUrl = 'http://192.168.0.12:8000/';
+  // static const baseUrl = 'http://192.168.0.12:8000/';
   // static const photoUrl = 'http://192.168.0.12:8000';
   // static const baseUrl = 'http://192.168.1.104:8000/api/app/';
   static const login = '${baseAppUrl}login';
@@ -19,4 +19,8 @@ class URLs {
   static const leaveUpdate = '${baseAppUrl}leave/update/';
   static const leaveCategory = '${baseAppUrl}leave/category';
   static const leaveStore = '${baseAppUrl}leave/make/';
+  static const business = '${baseAppUrl}business/';
+  static const company = '${baseAppUrl}business/company';
+  static const updateExtendedDay = '${baseAppUrl}business/extend/';
+  static const companyCity = '${baseAppUrl}business/companycity/';
 }

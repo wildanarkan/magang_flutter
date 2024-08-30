@@ -8,14 +8,16 @@ class BuildDropdown extends StatefulWidget {
     required this.item,
     required this.hint,
     required this.title,
-    required this.onChanged, // Tambahkan onChanged sebagai parameter
+    required this.onChanged,
+    this.enabled = true,
   });
 
   final String selectedItem;
   final String hint;
   final String title;
   final List<String> item;
-  final ValueChanged<String?> onChanged; // Tipe data untuk onChanged
+  final ValueChanged<String?> onChanged;
+  final bool enabled;
 
   @override
   State<BuildDropdown> createState() => _BuildDropdownState();
@@ -56,7 +58,7 @@ class _BuildDropdownState extends State<BuildDropdown> {
               isExpanded: true,
               underline: const SizedBox(),
               iconEnabledColor: AppColor.textTitle,
-              value: selectedItem,
+              value: selectedItem.isEmpty ? null : selectedItem,
               isDense: true,
               items: widget.item.map((String value) {
                 return DropdownMenuItem<String>(
@@ -71,14 +73,19 @@ class _BuildDropdownState extends State<BuildDropdown> {
                   ),
                 );
               }).toList(),
-              onChanged: (String? newValue) {
-                setState(() {
-                  selectedItem = newValue ?? selectedItem;
-                });
-                widget.onChanged(
-                    newValue); // Panggil onChanged yang diterima sebagai parameter
-              },
-              hint: Text(widget.hint),
+              onChanged: widget.enabled
+                  ? (String? newValue) {
+                      setState(() {
+                        selectedItem = newValue ?? selectedItem;
+                      });
+                      widget.onChanged(newValue);
+                    }
+                  : null,
+              hint: Text(
+                widget.hint,
+                style: TextStyle(color: Colors.grey[300]),
+              ),
+              dropdownColor: widget.enabled ? Colors.white : Colors.grey[300],
             ),
           ),
         ),
