@@ -83,13 +83,44 @@ class AddBusiniessTripPageController extends GetxController {
   }
 
   void updateCityItems(String company) {
+    // Reset the selected city before updating the items
+    selectedCity.value = '';
+
     // Filter data city berdasarkan company yang dipilih
     var filteredData =
         _apiDataCity.where((item) => item['company_name'] == company).toList();
 
+    // Update city dropdown items
     cityItem.value =
         filteredData.map((item) => item['city_name'].toString()).toList();
-       
+
+    // Clear related fields since the city selection is reset
+    clearCityRelatedData();
+  }
+
+  void clearCityRelatedData() {
+    address.value = '';
+    pic.value = '';
+    picRole.value = '';
+    picPhone.value = '';
+  }
+
+  void updateCityRelatedData(String company, String city) {
+    // Cari data yang sesuai dengan company dan city
+    var data = _apiDataCity.firstWhere(
+      (item) => item['company_name'] == company && item['city_name'] == city,
+      orElse: () => null,
+    );
+
+    // Jika data ditemukan, perbarui field terkait
+    if (data != null) {
+      address.value = data['address'].toString();
+      pic.value = data['pic'].toString();
+      picRole.value = data['pic_role'].toString();
+      picPhone.value = data['pic_phone'].toString();
+    } else {
+      clearCityRelatedData(); // Reset jika data tidak ditemukan
+    }
   }
 
   @override

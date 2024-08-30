@@ -38,9 +38,20 @@ class AddBusiniessTripPage extends StatelessWidget {
                         selectedItem: controller.selectedCompany.value,
                         item: controller.companyItem.value,
                         onChanged: (newValue) {
+                          // Set the new selected company
                           controller.selectedCompany.value = newValue!;
-                          controller.updateCityItems(
-                              newValue); // Panggil fungsi updateCityItems
+
+                          // Reset city selection
+                          controller.selectedCity.value = '';
+
+                          // Clear and update city dropdown items
+                          controller.cityItem.clear();
+                          controller.updateCityItems(newValue);
+
+                          // Reset all fields related to city
+                          controller.clearCityRelatedData();
+
+                          // Enable city dropdown
                           controller.isCityEnabled.value = true;
                         },
                       ),
@@ -52,7 +63,14 @@ class AddBusiniessTripPage extends StatelessWidget {
                         selectedItem: controller.selectedCity.value,
                         item: controller.cityItem.value,
                         onChanged: (newValue) {
+                          // Update selected city
                           controller.selectedCity.value = newValue!;
+
+                          // Update related data (address, pic, etc.)
+                          controller.updateCityRelatedData(
+                            controller.selectedCompany.value,
+                            newValue,
+                          );
                         },
                         enabled: controller.isCityEnabled.value,
                       ),

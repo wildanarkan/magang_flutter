@@ -30,6 +30,23 @@ class _BuildDropdownState extends State<BuildDropdown> {
   void initState() {
     super.initState();
     selectedItem = widget.selectedItem;
+
+    // Ensure selected item exists in the items list
+    if (!widget.item.contains(selectedItem)) {
+      selectedItem = '';
+    }
+  }
+
+  @override
+  void didUpdateWidget(covariant BuildDropdown oldWidget) {
+    super.didUpdateWidget(oldWidget);
+
+    // Reset selected item if the list of items changes or becomes empty
+    if (!widget.item.contains(selectedItem)) {
+      setState(() {
+        selectedItem = '';
+      });
+    }
   }
 
   @override
@@ -76,7 +93,7 @@ class _BuildDropdownState extends State<BuildDropdown> {
               onChanged: widget.enabled
                   ? (String? newValue) {
                       setState(() {
-                        selectedItem = newValue ?? selectedItem;
+                        selectedItem = newValue ?? '';
                       });
                       widget.onChanged(newValue);
                     }
