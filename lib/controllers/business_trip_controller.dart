@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -68,6 +69,7 @@ class BusinessTripController extends GetxController {
       );
 
       if (response.statusCode == 200) {
+        log('Success fetch trip');
         List<dynamic> jsonData = json.decode(response.body);
         businessTrips.value =
             jsonData.map((json) => BusinessTripModel.fromJson(json)).toList();

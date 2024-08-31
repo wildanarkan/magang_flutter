@@ -16,10 +16,11 @@ class BusinessTripDetailPage extends StatelessWidget {
   final BusinessTripDetailPageController controller =
       Get.put(BusinessTripDetailPageController());
 
+
   final BusinessTripModel trip;
   final String? status;
 
-  BusinessTripDetailPage({super.key, required this.trip, this.status}) {
+    BusinessTripDetailPage({super.key, required this.trip, this.status}) {
     controller.setInitialExtendDay(
         trip.extendDay ?? 0); // Inisialisasi nilai extendDay
   }
