@@ -5,6 +5,7 @@ class BusinessTripModel {
   String? startDate;
   String? endDate;
   String? status;
+  String? note;
   String? companyAddress;
   String? departureFrom;
   String? pic;
@@ -20,6 +21,7 @@ class BusinessTripModel {
       this.startDate,
       this.endDate,
       this.status,
+      this.note,
       this.companyAddress,
       this.departureFrom,
       this.pic,
@@ -35,6 +37,7 @@ class BusinessTripModel {
     startDate = json['start_date'];
     endDate = json['end_date'];
     status = json['status'];
+    note = json['note'];
     companyAddress = json['company_address'];
     departureFrom = json['departure_from'];
     pic = json['pic'];
@@ -57,6 +60,7 @@ class BusinessTripModel {
     data['start_date'] = startDate;
     data['end_date'] = endDate;
     data['status'] = status;
+    data['note'] = note;
     data['company_address'] = companyAddress;
     data['departure_from'] = departureFrom;
     data['pic'] = pic;
