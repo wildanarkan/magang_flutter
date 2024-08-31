@@ -122,6 +122,7 @@ class NavigatorPageControllers extends GetxController {
       log(selectedPage.toString());
       final businessTripController = Get.find<BusinessTripController>();
       businessTripController.fetchBusinessTrips();
+      businessTripController.resetFilter();
     }
     selectedPage.value = index;
   }
