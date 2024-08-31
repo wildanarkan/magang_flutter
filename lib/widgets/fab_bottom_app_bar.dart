@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:magang_flutter/common/app_color.dart';
+import 'package:magang_flutter/controllers/business_trip_controller.dart';
 
 class FABBottomAppBarItem {
   FABBottomAppBarItem({required this.iconPage, required this.title,});
@@ -37,6 +39,7 @@ class FABBottomAppBar extends StatefulWidget {
 
 class FABBottomAppBarState extends State<FABBottomAppBar> {
   int selectedIndex = 0;
+
   @override
   void initState() {
     super.initState();
@@ -67,33 +70,42 @@ class FABBottomAppBarState extends State<FABBottomAppBar> {
     );
   }
 
-  Widget _buildTabItem(
-    {
+  Widget _buildTabItem({
     FABBottomAppBarItem? item,
     int? index,
     ValueChanged<int>? onPressed,
   }) {
-    Color? color =
-        widget.selectedIndex == index ? widget.selectedColor : AppColor.textBody;
+    Color? color = widget.selectedIndex == index
+        ? widget.selectedColor
+        : AppColor.textBody;
+    
     return Expanded(
       child: SizedBox(
-        // height: widget.height,
-        child: InkWell(
+        child: GestureDetector(
           onTap: () => onPressed!(index!),
+          onDoubleTap: () {
+            if (index == 1) {
+              final businessTripController = Get.find<BusinessTripController>();
+              businessTripController.fetchBusinessTrips();
+              businessTripController.resetFilter();
+            }
+          },
           child: Column(
             mainAxisSize: MainAxisSize.min,
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
-               Icon(item!.iconPage, size: 24, color: color, ),
+              Icon(
+                item!.iconPage,
+                size: 24,
+                color: color,
+              ),
               Text(
                 item.title,
                 textAlign: TextAlign.center,
                 style: TextStyle(
                   color: color,
                   fontSize: 12,
-                  fontWeight: FontWeight.w400
-
-                  // align: TextAlign.center,
+                  fontWeight: FontWeight.w400,
                 ),
               )
             ],
@@ -103,3 +115,4 @@ class FABBottomAppBarState extends State<FABBottomAppBar> {
     );
   }
 }
+
