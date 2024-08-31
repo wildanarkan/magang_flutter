@@ -19,6 +19,7 @@ class BuildBiayaCard extends StatelessWidget {
   final String realisasi;
   final bool? minusPersentase;
 
+  // In BuildBiayaCard
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -42,7 +43,7 @@ class BuildBiayaCard extends StatelessWidget {
               ),
               rightWidget: minusPersentase == false
                   ? AppStatus.complete('$persentase%')
-                  : AppStatus.decline('-$persentase%'),
+                  : AppStatus.decline('$persentase%'),
               padding: const EdgeInsets.all(0),
             ),
             const Padding(

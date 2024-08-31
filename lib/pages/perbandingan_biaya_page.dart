@@ -1,11 +1,21 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:magang_flutter/common/app_color.dart';
+import 'package:magang_flutter/controllers/perbandingan_biaya_page_controller.dart';
+import 'package:magang_flutter/data/models/business_percentage_model.dart';
 import 'package:magang_flutter/widgets/build_biaya_card.dart';
-import 'package:magang_flutter/widgets/build_test_appbar.dart';
-import 'package:magang_flutter/widgets/build_widget_between.dart';
+import 'package:magang_flutter/widgets/build_test_appbar.dart'; // Import BuildTestAppbar
+import 'package:magang_flutter/widgets/build_widget_between.dart'; // Import BuildWidgetBetween
 
 class PerbandinganBiayaPage extends StatelessWidget {
-  const PerbandinganBiayaPage({super.key});
+  final PerbandinganBiayaPageController controller =
+      Get.put(PerbandinganBiayaPageController());
+  final int idBusinessTrip;
+
+  PerbandinganBiayaPage({super.key, required this.idBusinessTrip}) {
+    // Fetch data saat halaman diinisialisasi
+    controller.fetchComparisonData(idBusinessTrip);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -13,113 +23,111 @@ class PerbandinganBiayaPage extends StatelessWidget {
       appBar: const BuildTestAppbar(
         title: 'Perbandingan Biaya',
       ),
-      body: Stack(
-        children: [
-          Padding(
-            padding: const EdgeInsets.all(25),
-            child: ListView(
-              children: const [
-                BuildBiayaCard(
-                  title: 'Hotel',
-                  persentase: '0',
-                  estimasi: 'Rp 1.000.000,00',
-                  realisasi: 'Rp 1.000.000,00',
-                ),
-                BuildBiayaCard(
-                  title: 'Konsumsi',
-                  persentase: '5',
-                  estimasi: 'Rp 200.000,00',
-                  realisasi: 'Rp 190.000,00',
-                ),
-                BuildBiayaCard(
-                  title: 'Transportasi',
-                  persentase: '5',
-                  estimasi: 'Rp 400.000,00',
-                  realisasi: 'Rp 470.000,00',
-                  minusPersentase: true,
-                ),
-              ],
-            ),
-          ),
-          Align(
-            alignment: Alignment.bottomCenter,
-            child: Container(
-              width: double.infinity,
-              padding: const EdgeInsets.all(25),
-              decoration: BoxDecoration(
-                color: Colors.white,
-                boxShadow: [
-                  BoxShadow(
-                    color: Colors.grey.withOpacity(0.5),
-                    spreadRadius: 5,
-                    blurRadius: 7,
-                    offset: const Offset(0, 3), // changes position of shadow
-                  ),
-                ],
-              ),
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
+      body: Obx(() {
+        if (controller.isLoading.value) {
+          return const Center(child: CircularProgressIndicator());
+        }
+
+        final comparisonData = controller.getComparisonData();
+        final percentages =
+            comparisonData['percentages'] as List<BusinessPercentageModel>;
+        final totalNominalPlanning = comparisonData['totalNominalPlanning'];
+        final totalNominalRealization =
+            comparisonData['totalNominalRealization'];
+        final difference = comparisonData['difference'];
+
+        return Column(
+          children: [
+            Expanded(
+              child: ListView(
+                padding: const EdgeInsets.all(16),
                 children: [
-                  BuildWidgetBetween(
-                    leftWidget: Text(
-                      'Total Estimasi',
-                      style: TextStyle(
-                        color: AppColor.textBody,
-                        fontWeight: FontWeight.w400,
-                        fontSize: 14,
-                      ),
-                    ),
-                    rightWidget: Text(
-                      'Rp 1.600.000,00',
-                      style: TextStyle(
-                        color: AppColor.textTitle,
-                        fontWeight: FontWeight.w600,
-                        fontSize: 14,
-                      ),
-                    ),
-                  ),
-                  BuildWidgetBetween(
-                    leftWidget: Text(
-                      'Total Realisasi',
-                      style: TextStyle(
-                        color: AppColor.textBody,
-                        fontWeight: FontWeight.w400,
-                        fontSize: 14,
-                      ),
-                    ),
-                    rightWidget: Text(
-                      'Rp 1.660.000,00',
-                      style: TextStyle(
-                        color: AppColor.textTitle,
-                        fontWeight: FontWeight.w600,
-                        fontSize: 14,
-                      ),
-                    ),
-                  ),
-                  BuildWidgetBetween(
-                    leftWidget: Text(
-                      'Perbedaan Biaya',
-                      style: TextStyle(
-                        color: AppColor.textBody,
-                        fontWeight: FontWeight.w400,
-                        fontSize: 14,
-                      ),
-                    ),
-                    rightWidget: Text(
-                      'Rp 60.000,00',
-                      style: TextStyle(
-                        color: AppColor.textTitle,
-                        fontWeight: FontWeight.w600,
-                        fontSize: 14,
-                      ),
-                    ),
-                  ),
+                  // List of Biaya Cards
+                  ...percentages.map((percentage) {
+                    return BuildBiayaCard(
+                      title: percentage.categoryName ?? 'No Title',
+                      persentase: percentage.percentage ?? '0',
+                      estimasi: percentage.totalNominalPlanning ?? '0',
+                      realisasi: percentage.totalNominalRealization ?? '0',
+                      minusPersentase: (percentage.percentage != null &&
+                          percentage.percentage!.startsWith('-')),
+                    );
+                  }),
+
+                  const SizedBox(height: 16),
                 ],
               ),
             ),
-          ),
-        ],
-      ),
+            Card(
+              elevation: 10,
+              color: Colors.white,
+              margin: const EdgeInsets.all(0),
+              child: Padding(
+                padding: const EdgeInsets.all(20),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    BuildWidgetBetween(
+                      leftWidget: Text(
+                        'Total Estimasi',
+                        style: TextStyle(
+                          color: AppColor.textTitle,
+                          fontWeight: FontWeight.w600,
+                          fontSize: 14,
+                        ),
+                      ),
+                      rightWidget: Text(
+                        'Rp ${totalNominalPlanning ?? '0'}',
+                        style: TextStyle(
+                          color: AppColor.textTitle,
+                          fontWeight: FontWeight.w600,
+                          fontSize: 14,
+                        ),
+                      ),
+                    ),
+                    BuildWidgetBetween(
+                      leftWidget: Text(
+                        'Total Realisasi',
+                        style: TextStyle(
+                          color: AppColor.textTitle,
+                          fontWeight: FontWeight.w600,
+                          fontSize: 14,
+                        ),
+                      ),
+                      rightWidget: Text(
+                        'Rp ${totalNominalRealization ?? '0'}',
+                        style: TextStyle(
+                          color: AppColor.textTitle,
+                          fontWeight: FontWeight.w600,
+                          fontSize: 14,
+                        ),
+                      ),
+                    ),
+                    BuildWidgetBetween(
+                      leftWidget: Text(
+                        'Perbedaan Biaya',
+                        style: TextStyle(
+                          color: AppColor.textTitle,
+                          fontWeight: FontWeight.w600,
+                          fontSize: 14,
+                        ),
+                      ),
+                      rightWidget: Text(
+                        'Rp ${difference ?? '0'}',
+                        style: TextStyle(
+                          color: AppColor.textTitle,
+                          fontWeight: FontWeight.w600,
+                          fontSize: 14,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ],
+        );
+      }),
     );
   }
 }

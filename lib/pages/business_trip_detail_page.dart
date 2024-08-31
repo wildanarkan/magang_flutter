@@ -440,13 +440,14 @@ class BusinessTripDetailPage extends StatelessWidget {
                     context: context,
                     title: 'Perbandingan',
                     onPressed: () {
-                      Get.to(() => const PerbandinganBiayaPage());
+                      Get.to(() => PerbandinganBiayaPage(
+                          idBusinessTrip: trip.idBusinessTrip ?? 0));
                     },
                     width: double.infinity,
                     backgroundColor: Colors.white,
                     foregroundColor: Colors.black,
                     borderColor: AppColor.textBody,
-                  ),
+                  )
                 ],
               ),
             ),
