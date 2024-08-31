@@ -111,7 +111,7 @@ class NavigatorPageControllers extends GetxController {
   }
 
   List<Widget> page = [
-    const HomePage(),
+     HomePage(),
     BusinessTripPage(),
     const LeaveHistoryPage(),
     const ProfilePage(),
