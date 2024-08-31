@@ -18,7 +18,9 @@ class BusinessTripDetailPage extends StatelessWidget {
   final BusinessTripModel trip;
   final String? status;
 
-  BusinessTripDetailPage({super.key, required this.trip, this.status});
+   BusinessTripDetailPage({super.key, required this.trip, this.status}) {
+    controller.setInitialExtendDay(trip.extendDay ?? 0); // Inisialisasi nilai extendDay
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -288,14 +290,14 @@ class BusinessTripDetailPage extends StatelessWidget {
                               const SizedBox(
                                 height: 4,
                               ),
-                              Text(
-                                '${trip.extendDay} Days',
+                              Obx(() => Text(
+                                '${controller.extendDay.value} Days', // Observe nilai extendDay
                                 style: TextStyle(
                                   fontSize: 12,
                                   fontWeight: FontWeight.w500,
                                   color: AppColor.textTitle,
                                 ),
-                              ),
+                              )),
                             ],
                           ),
                           const Spacer(),
@@ -313,6 +315,7 @@ class BusinessTripDetailPage extends StatelessWidget {
                                       mainAxisSize: MainAxisSize.min,
                                       children: [
                                         BuildTextField(
+                                          inputType: TextInputType.number,
                                           controller: controller
                                               .extendedController.value,
                                           title: 'Extend Days',
@@ -334,12 +337,6 @@ class BusinessTripDetailPage extends StatelessWidget {
                                               controller.updateExtendedDay(
                                                   trip.idBusinessTrip!,
                                                   extendDayValue);
-                                              controller.extendedController
-                                                      .value.text =
-                                                  extendDayValue
-                                                      .toString(); // Update the text field with the new value
-                                              controller
-                                                  .update(); // Notify GetX to update the UI
                                             } else {
                                               Get.snackbar('Error',
                                                   'Please enter a valid number of days');
