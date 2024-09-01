@@ -6,11 +6,11 @@ class BuildTotal extends StatelessWidget {
   const BuildTotal({
     super.key,
     this.total,
-    required this.onPressed,
+    this.onPressed, // Membuat onPressed opsional
   });
 
   final String? total;
-  final VoidCallback onPressed;
+  final VoidCallback? onPressed; // Mengubah onPressed menjadi nullable
 
   @override
   Widget build(BuildContext context) {
@@ -48,9 +48,11 @@ class BuildTotal extends StatelessWidget {
                     ),
                   ],
                 ),
-                BuildIconRoundedAdd(
-                  onPressed: onPressed,
-                ),
+                // Hanya tampilkan BuildIconRoundedAdd jika onPressed tidak null
+                if (onPressed != null)
+                  BuildIconRoundedAdd(
+                    onPressed: onPressed!,
+                  ),
               ],
             ),
           ],

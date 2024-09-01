@@ -419,7 +419,8 @@ class BusinessTripDetailPage extends StatelessWidget {
                           context: context,
                           title: 'Perkiraan',
                           onPressed: () {
-                            Get.to(() => const EstimasiBiayaPage());
+                            Get.to(() => EstimasiBiayaPage(
+                                idBusinessTrip: trip.idBusinessTrip ?? 0));
                           },
                         ),
                       ),
@@ -429,7 +430,8 @@ class BusinessTripDetailPage extends StatelessWidget {
                           context: context,
                           title: 'Realisasi',
                           onPressed: () {
-                            Get.to(() => const RealisasiBiayaPage());
+                            Get.to(() => RealisasiBiayaPage(
+                                idBusinessTrip: trip.idBusinessTrip ?? 0));
                           },
                         ),
                       ),

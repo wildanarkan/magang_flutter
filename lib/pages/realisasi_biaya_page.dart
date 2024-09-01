@@ -1,151 +1,112 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:magang_flutter/common/app_color.dart';
+import 'package:magang_flutter/controllers/realisasi_biaya_page_controller.dart';
 import 'package:magang_flutter/pages/edit_biaya_page.dart';
 import 'package:magang_flutter/widgets/build_expansion_biaya.dart';
-import 'package:magang_flutter/widgets/build_test_appbar.dart';
 import 'package:magang_flutter/widgets/build_total.dart';
-import 'package:magang_flutter/widgets/build_widget_between.dart';
 
 class RealisasiBiayaPage extends StatelessWidget {
-  const RealisasiBiayaPage({super.key});
+  final int idBusinessTrip; // Tambahkan parameter untuk ID business trip
+
+  const RealisasiBiayaPage({super.key, required this.idBusinessTrip});
 
   @override
   Widget build(BuildContext context) {
+    final RealisasiBiayaPageController controller =
+        Get.put(RealisasiBiayaPageController());
+
+    // Fetch data dengan ID saat halaman diinisialisasi
+    controller.fetchNominalRealizationData(idBusinessTrip);
+
     return Scaffold(
-      appBar: const BuildTestAppbar(
-        title: 'Realisasi Biaya',
+      appBar: AppBar(
+        title: const Text('Realisasi Biaya'),
       ),
       body: Stack(
         children: [
-          ListView(
-            padding: const EdgeInsets.all(25),
-            children: [
-              BuildExpansionBiaya(
-                title: Text(
-                  'Hotel',
-                  style: TextStyle(
-                    color: AppColor.textBody,
-                    fontSize: 14,
-                    fontWeight: FontWeight.w400,
-                  ),
-                ),
-                subtitle: Text(
-                  'Rp 450.000,00',
-                  style: TextStyle(
-                    color: AppColor.textTitle,
-                    fontSize: 14,
-                    fontWeight: FontWeight.w500,
-                  ),
-                ),
-                children: [
-                  const Padding(
-                    padding: EdgeInsets.only(bottom: 16.0),
-                    child: Divider(),
-                  ),
-                  BuildWidgetBetween(
-                    leftWidget: Text(
-                      'Cempaka',
-                      style: TextStyle(
-                        color: AppColor.textBody,
-                        fontSize: 14,
-                        fontWeight: FontWeight.w400,
-                      ),
-                    ),
-                    rightWidget: Text(
-                      'Rp 400.000,00',
-                      style: TextStyle(
-                        color: AppColor.textTitle,
-                        fontSize: 14,
-                        fontWeight: FontWeight.w500,
-                      ),
+          Obx(() {
+            if (controller.isLoading.value) {
+              return const Center(child: CircularProgressIndicator());
+            }
+
+            final groupedData = controller.groupedData.value;
+            print('Grouped Data in UI: $groupedData'); // Log data in UI
+
+            if (groupedData.isEmpty) {
+              return const Center(child: Text('Tidak ada data'));
+            }
+
+            return ListView(
+              padding: const EdgeInsets.all(16),
+              children: groupedData.entries.map((entry) {
+                final categoryName = entry.key;
+                final items = entry.value;
+
+                return BuildExpansionBiaya(
+                  title: Text(
+                    categoryName,
+                    style: TextStyle(
+                      color: AppColor.textBody,
+                      fontSize: 14,
+                      fontWeight: FontWeight.w400,
                     ),
                   ),
-                  BuildWidgetBetween(
-                    leftWidget: Text(
-                      'Kereta',
-                      style: TextStyle(
-                        color: AppColor.textBody,
-                        fontSize: 14,
-                        fontWeight: FontWeight.w400,
-                      ),
-                    ),
-                    rightWidget: Text(
-                      'Rp 0,00',
-                      style: TextStyle(
-                        color: AppColor.textTitle,
-                        fontSize: 14,
-                        fontWeight: FontWeight.w500,
-                      ),
-                    ),
-                  ),
-                  BuildWidgetBetween(
-                    leftWidget: Text(
-                      'Kena Cas',
-                      style: TextStyle(
-                        color: AppColor.textBody,
-                        fontSize: 14,
-                        fontWeight: FontWeight.w400,
-                      ),
-                    ),
-                    rightWidget: Text(
-                      'Rp 50.000,00',
-                      style: TextStyle(
-                        color: AppColor.textTitle,
-                        fontSize: 14,
-                        fontWeight: FontWeight.w500,
-                      ),
+                  subtitle: Text(
+                    'Rp ${items.fold(0.0, (sum, item) {
+                          final cleanNominal = item.nominalRealization
+                                  ?.replaceAll(RegExp(r'[^\d,]'), '') ??
+                              '0';
+
+                          final normalizedNominal =
+                              cleanNominal.replaceAll(',', '.');
+                          return sum +
+                              (double.tryParse(normalizedNominal) ?? 0.0);
+                        }).toStringAsFixed(2).replaceAll('.', ',')}', // Format sesuai kebutuhan
+                    style: TextStyle(
+                      color: AppColor.textTitle,
+                      fontSize: 14,
+                      fontWeight: FontWeight.w500,
                     ),
                   ),
-                ],
+                  children: items.map((item) {
+                    return ListTile(
+                      contentPadding: const EdgeInsets.all(0),
+                      dense: true,
+                      title: Text(
+                        item.keterangan ?? 'No description',
+                        style: TextStyle(
+                          color: AppColor.textBody,
+                          fontSize: 14,
+                          fontWeight: FontWeight.w400,
+                        ),
+                      ),
+                      trailing: Text(
+                        'Rp ${item.nominalRealization ?? '0'}',
+                        style: TextStyle(
+                          color: AppColor.textTitle,
+                          fontSize: 14,
+                          fontWeight: FontWeight.w500,
+                        ),
+                      ),
+                    );
+                  }).toList(),
+                );
+              }).toList(),
+            );
+          }),
+          Obx(() {
+            return Align(
+              alignment: Alignment.bottomCenter,
+              child: BuildTotal(
+                total: controller
+                    .calculateTotal(), // Use the method from controller
+                onPressed: () {
+                  Get.to(() => const EditBiayaPage());
+                },
               ),
-              BuildExpansionBiaya(
-                title: Text(
-                  'Konsumsi',
-                  style: TextStyle(
-                    color: AppColor.textBody,
-                    fontSize: 14,
-                    fontWeight: FontWeight.w400,
-                  ),
-                ),
-                subtitle: Text(
-                  'Rp 0,00',
-                  style: TextStyle(
-                    color: AppColor.textTitle,
-                    fontSize: 14,
-                    fontWeight: FontWeight.w500,
-                  ),
-                ),
-              ),
-              BuildExpansionBiaya(
-                title: Text(
-                  'Transportasi',
-                  style: TextStyle(
-                    color: AppColor.textBody,
-                    fontSize: 14,
-                    fontWeight: FontWeight.w400,
-                  ),
-                ),
-                subtitle: Text(
-                  'Rp 0,00',
-                  style: TextStyle(
-                    color: AppColor.textTitle,
-                    fontSize: 14,
-                    fontWeight: FontWeight.w500,
-                  ),
-                ),
-              ),
-            ],
-          ),
-          Align(
-            alignment: Alignment.bottomCenter,
-            child: BuildTotal(
-              total: 'IDR 1.600.000,00',
-              onPressed: () {
-                 Get.to(() => const EditBiayaPage());
-              },
-            ),
-          ),
+            );
+          }),
         ],
       ),
     );

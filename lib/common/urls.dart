@@ -28,4 +28,6 @@ class URLs {
   static const allUser = '${baseAppUrl}business/users/fullname';
   static const percentage = '${baseAppUrl}business/percentage';
   static const calculate = '${baseAppUrl}business/calculate';
+  static const nominalRealization = '${baseAppUrl}business/realization';
+  static const nominalPlanning = '${baseAppUrl}business/planning';
 }
