@@ -1,6 +1,9 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:magang_flutter/controllers/add_businiess_trip_page_controller.dart';
+import 'package:magang_flutter/controllers/business_trip_controller.dart';
 import 'package:magang_flutter/widgets/build_button.dart';
 import 'package:magang_flutter/widgets/build_dropdown.dart';
 import 'package:magang_flutter/widgets/build_list_employee.dart';
@@ -93,12 +96,17 @@ class AddBusiniessTripPage extends StatelessWidget {
                         value: controller.picPhone.value,
                       ),
                     ),
+                    BuildTextField(
+                      title: 'Note',
+                      controller: controller.noteController,
+                    ),
                     Row(
                       children: [
                         Expanded(
                           child: BuildPickDate(
                             title: 'Start Date',
-                            dateController: controller.startDateController.value,
+                            dateController:
+                                controller.startDateController.value,
                           ),
                         ),
                         const SizedBox(width: 10),
@@ -134,18 +142,26 @@ class AddBusiniessTripPage extends StatelessWidget {
                         context: context,
                         title: 'Add Employee',
                         width: 131,
-                        onPressed: () {},
+                        onPressed: () {
+                          controller.addEmployeeToList();
+                        },
                       ),
                     ),
                     const Padding(
                       padding: EdgeInsets.symmetric(vertical: 10),
                       child: Divider(),
                     ),
-                    const BuildListEmployee(
-                      nameEmployee: 'Employee 121029102',
-                    ),
-                    const BuildListEmployee(
-                      nameEmployee: 'Employee 928329839',
+                    Obx(
+                      () => Column(
+                        children: controller.employeeList.map((employee) {
+                          return BuildListEmployee(
+                            nameEmployee: employee.fullName,
+                            onDelete: () {
+                              controller.removeEmployee(employee);
+                            },
+                          );
+                        }).toList(),
+                      ),
                     ),
                   ],
                 ),
@@ -157,7 +173,21 @@ class AddBusiniessTripPage extends StatelessWidget {
             child: BuildButton(
               context: context,
               title: 'Simpan',
-              onPressed: () {},
+              onPressed: () async {
+                int? businessTripId = await controller.postBusinessTrip();
+                if (businessTripId != null) {
+                  await controller.postTripDetail(businessTripId);
+                  log('succes');
+                  final businessTripController =
+                      Get.find<BusinessTripController>();
+                  await businessTripController.fetchBusinessTrips();
+                  Get.back();
+                  Get.snackbar('Success', 'Success to create Business Trip');
+                } else {
+                  log(businessTripId.toString());
+                  Get.snackbar('Error', 'Failed to create Business Trip');
+                }
+              },
             ),
           )
         ],

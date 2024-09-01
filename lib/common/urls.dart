@@ -1,9 +1,9 @@
 class URLs {
-  // static const baseUrl = 'http://192.168.1.104:8000/';
+  static const baseUrl = 'http://192.168.1.104:8000/';
   // static const baseUrl = 'http://192.168.43.191:8000/';
   static const baseAppUrl = '${baseUrl}api/app/';
   static const photoUrl = '${baseUrl}storage/profile_photos/';
-  static const baseUrl = 'http://192.168.0.12:8000/';
+  // static const baseUrl = 'http://192.168.0.12:8000/';
   // static const photoUrl = 'http://192.168.0.12:8000';
   // static const baseUrl = 'http://192.168.1.104:8000/api/app/';
   static const login = '${baseAppUrl}login';
@@ -28,6 +28,11 @@ class URLs {
   static const allUser = '${baseAppUrl}business/users/fullname';
   static const percentage = '${baseAppUrl}business/percentage';
   static const calculate = '${baseAppUrl}business/calculate';
+
   static const nominalRealization = '${baseAppUrl}business/realization';
   static const nominalPlanning = '${baseAppUrl}business/planning';
+
+  static const postBusinessTrip = '${baseAppUrl}business/make';
+  static const postTripdetail = '${baseAppUrl}business/trip';
+
 }

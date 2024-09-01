@@ -8,6 +8,7 @@ import 'package:magang_flutter/pages/estimasi_biaya_page.dart';
 import 'package:magang_flutter/pages/perbandingan_biaya_page.dart';
 import 'package:magang_flutter/pages/realisasi_biaya_page.dart';
 import 'package:magang_flutter/widgets/build_button.dart';
+import 'package:magang_flutter/widgets/build_row_text_icon.dart';
 import 'package:magang_flutter/widgets/build_test_appbar.dart';
 import 'package:magang_flutter/widgets/build_text_field.dart';
 
@@ -15,10 +16,14 @@ class BusinessTripDetailPage extends StatelessWidget {
   final BusinessTripDetailPageController controller =
       Get.put(BusinessTripDetailPageController());
 
+
   final BusinessTripModel trip;
   final String? status;
 
-  BusinessTripDetailPage({super.key, required this.trip, this.status});
+    BusinessTripDetailPage({super.key, required this.trip, this.status}) {
+    controller.setInitialExtendDay(
+        trip.extendDay ?? 0); // Inisialisasi nilai extendDay
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -162,110 +167,35 @@ class BusinessTripDetailPage extends StatelessWidget {
                       const SizedBox(
                         height: 24,
                       ),
-                      Row(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Icon(
-                            Icons.location_on_rounded,
-                            size: 18,
-                            color: AppColor.textTitle,
-                          ),
-                          const SizedBox(
-                            width: 12,
-                          ),
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                'City, Address',
-                                style: TextStyle(
-                                  fontSize: 12,
-                                  fontWeight: FontWeight.w400,
-                                  color: AppColor.textBody,
-                                ),
-                              ),
-                              Text(
-                                '${trip.cityName}, ${trip.companyAddress ?? 'Unknown Address'}',
-                                style: TextStyle(
-                                    fontSize: 12,
-                                    fontWeight: FontWeight.w500,
-                                    color: AppColor.textTitle),
-                              ),
-                            ],
-                          )
-                        ],
+                      BuildRowTextIcon(
+                        icons: Icons.location_on_rounded,
+                        title: 'City, Address',
+                        subtitle:
+                            '${trip.cityName}, ${trip.companyAddress ?? 'Unknown Address'}',
                       ),
                       const SizedBox(
                         height: 24,
                       ),
-                      Row(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Icon(
-                            Icons.location_city,
-                            size: 18,
-                            color: AppColor.textTitle,
-                          ),
-                          const SizedBox(
-                            width: 12,
-                          ),
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                'Departure from',
-                                style: TextStyle(
-                                  fontSize: 12,
-                                  fontWeight: FontWeight.w400,
-                                  color: AppColor.textBody,
-                                ),
-                              ),
-                              Text(
-                                trip.departureFrom ?? 'Null',
-                                style: TextStyle(
-                                    fontSize: 12,
-                                    fontWeight: FontWeight.w500,
-                                    color: AppColor.textTitle),
-                              ),
-                            ],
-                          )
-                        ],
+                      BuildRowTextIcon(
+                        title: 'Departure from',
+                        subtitle: trip.departureFrom ?? 'Null',
+                        icons: Icons.location_city,
                       ),
                       const SizedBox(
                         height: 24,
                       ),
-                      Row(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Icon(
-                            Icons.access_time_filled_outlined,
-                            size: 18,
-                            color: AppColor.textTitle,
-                          ),
-                          const SizedBox(
-                            width: 12,
-                          ),
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                'Date',
-                                style: TextStyle(
-                                  fontSize: 12,
-                                  fontWeight: FontWeight.w400,
-                                  color: AppColor.textBody,
-                                ),
-                              ),
-                              Text(
-                                '${trip.startDate} - ${trip.endDate}',
-                                style: TextStyle(
-                                    fontSize: 12,
-                                    fontWeight: FontWeight.w500,
-                                    color: AppColor.textTitle),
-                              ),
-                            ],
-                          )
-                        ],
+                      BuildRowTextIcon(
+                        title: 'Date',
+                        subtitle: '${trip.startDate} - ${trip.endDate}',
+                        icons: Icons.access_time_filled_outlined,
+                      ),
+                      const SizedBox(
+                        height: 24,
+                      ),
+                      BuildRowTextIcon(
+                        title: 'Note',
+                        subtitle: '${trip.note}',
+                        icons: Icons.my_library_books_rounded,
                       ),
                       const SizedBox(
                         height: 24,
@@ -288,12 +218,14 @@ class BusinessTripDetailPage extends StatelessWidget {
                               const SizedBox(
                                 height: 4,
                               ),
-                              Text(
-                                '${trip.extendDay} Days',
-                                style: TextStyle(
-                                  fontSize: 12,
-                                  fontWeight: FontWeight.w500,
-                                  color: AppColor.textTitle,
+                              Obx(
+                                () => Text(
+                                  '${controller.extendDay.value} Days', // Observe nilai extendDay
+                                  style: TextStyle(
+                                    fontSize: 12,
+                                    fontWeight: FontWeight.w500,
+                                    color: AppColor.textTitle,
+                                  ),
                                 ),
                               ),
                             ],
@@ -303,6 +235,7 @@ class BusinessTripDetailPage extends StatelessWidget {
                             context: context,
                             title: 'Extend',
                             width: 88,
+                            height: 40,
                             onPressed: () {
                               showDialog(
                                 context: context,
@@ -313,6 +246,7 @@ class BusinessTripDetailPage extends StatelessWidget {
                                       mainAxisSize: MainAxisSize.min,
                                       children: [
                                         BuildTextField(
+                                          inputType: TextInputType.number,
                                           controller: controller
                                               .extendedController.value,
                                           title: 'Extend Days',
@@ -334,12 +268,6 @@ class BusinessTripDetailPage extends StatelessWidget {
                                               controller.updateExtendedDay(
                                                   trip.idBusinessTrip!,
                                                   extendDayValue);
-                                              controller.extendedController
-                                                      .value.text =
-                                                  extendDayValue
-                                                      .toString(); // Update the text field with the new value
-                                              controller
-                                                  .update(); // Notify GetX to update the UI
                                             } else {
                                               Get.snackbar('Error',
                                                   'Please enter a valid number of days');

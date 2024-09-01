@@ -6,6 +6,7 @@ import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:http/http.dart' as http;
 import 'package:magang_flutter/common/urls.dart';
+import 'package:magang_flutter/data/models/employee_name.dart';
 
 class AddBusiniessTripPageController extends GetxController {
   var selectedCompany = ''.obs;
@@ -18,10 +19,13 @@ class AddBusiniessTripPageController extends GetxController {
   var allCityItem = <String>[].obs;
   var allUserItem = <String>[].obs;
 
+  RxList employeeList = List.empty(growable: true).obs;
+
   var isCityEnabled = false.obs;
 
   var startDateController = TextEditingController().obs;
   var endDateController = TextEditingController().obs;
+  var noteController = TextEditingController();
 
   // Tambahkan variabel baru
   var address = ''.obs;
@@ -33,6 +37,32 @@ class AddBusiniessTripPageController extends GetxController {
   List<dynamic> _apiDataCity = []; // Untuk menyimpan seluruh data dari API
   List<dynamic> _apiDataAllCity = []; // Untuk menyimpan seluruh data dari API
   List<dynamic> _apiDataAllUser = []; // Untuk menyimpan seluruh data dari API
+  var idCompanyCity = 0.obs;
+
+  void addEmployeeToList() {
+    if (employeeList.length < 2) {
+      if (selectedAllUser.isEmpty) {
+        Get.snackbar('Error', 'Mohon pilih employee terlebih dahulu');
+      } else if (!employeeList
+          .any((employee) => employee.fullName == selectedAllUser.value)) {
+        var selectedUser = _apiDataAllUser
+            .firstWhere((user) => user['full_name'] == selectedAllUser.value);
+        employeeList.add(EmployeeName(
+            id: selectedUser['id'], fullName: selectedAllUser.value));
+        log('Added Employee: ${selectedAllUser.value}, ID: ${selectedUser['id']}');
+      } else {
+        Get.snackbar('Error', 'Employee sudah ada dalam list');
+      }
+    } else {
+      Get.snackbar('Error', 'Maksimal hanya bisa menambah 2 orang');
+    }
+    update();
+  }
+
+  void removeEmployee(EmployeeName employee) {
+    employeeList.remove(employee);
+    update();
+  }
 
   void fetchCompanyItems() async {
     try {
@@ -82,7 +112,6 @@ class AddBusiniessTripPageController extends GetxController {
             .map((item) => item['name'].toString())
             .toSet()
             .toList();
-
       } else {
         log(response.statusCode.toString());
         Get.snackbar('Error', 'Failed to load all city items');
@@ -109,7 +138,6 @@ class AddBusiniessTripPageController extends GetxController {
             .map((item) => item['full_name'].toString())
             .toSet()
             .toList();
-
       } else {
         log(response.statusCode.toString());
         Get.snackbar('Error', 'Failed to load all user items');
@@ -121,6 +149,7 @@ class AddBusiniessTripPageController extends GetxController {
 
   void fetchCompanyCityItems() async {
     try {
+      log('fetch company city...');
       final token = GetStorage().read('accessToken');
 
       final response = await http.get(
@@ -134,6 +163,7 @@ class AddBusiniessTripPageController extends GetxController {
         _apiDataCity = json.decode(response.body);
         log(selectedCompany.value);
         log(selectedCity.value);
+        log('Success fetch...');
       } else {
         Get.snackbar('Error', 'Failed to load city items');
       }
@@ -169,22 +199,92 @@ class AddBusiniessTripPageController extends GetxController {
   }
 
   void updateCityRelatedData(String company, String city) {
-    // Cari data yang sesuai dengan company dan city
     var data = _apiDataCity.firstWhere(
       (item) => item['company_name'] == company && item['city_name'] == city,
       orElse: () => null,
     );
 
-    // Jika data ditemukan, perbarui field terkait
     if (data != null) {
       address.value = data['address'].toString();
       pic.value = data['pic'].toString();
       picRole.value = data['pic_role'].toString();
       picPhone.value = data['pic_phone'].toString();
+      idCompanyCity.value = data['id']; // Menyimpan id_company_city
     } else {
-      clearCityRelatedData(); // Reset jika data tidak ditemukan
+      clearCityRelatedData();
     }
   }
+
+  Future<int?> postBusinessTrip() async {
+    final token = GetStorage().read('accessToken');
+
+    final body = {
+      "id_company_city": idCompanyCity.value,
+      "note": noteController.text,
+      "start_date": startDateController.value.text,
+      "end_date": endDateController.value.text,
+      "departure_from": selectedAllCity.value,
+    };
+
+    try {
+      final response = await http.post(
+        Uri.parse(URLs.postBusinessTrip),
+        headers: {
+          'Authorization': 'Bearer $token',
+          'Content-Type': 'application/json',
+        },
+        body: json.encode(body),
+      );
+
+      log('Response status: ${response.statusCode}');
+      log('Response body: ${response.body}');
+
+      if (response.statusCode == 201) {
+        final responseData = json.decode(response.body);
+        log('Business trip ID: ${responseData['data']['id']}');
+        return responseData['data']
+            ['id']; // Pastikan ID dikembalikan dengan benar
+      } else {
+        log('Failed to create business trip: ${response.statusCode}');
+        return null;
+      }
+    } catch (e) {
+      log('Error: $e');
+      return null;
+    }
+  }
+
+  Future<void> postTripDetail(int businessTripId) async {
+  final token = GetStorage().read('accessToken');
+
+  final body = {
+    "id_business_trip": businessTripId,
+    "id_user": employeeList.map((employee) => employee.id).toList(),
+  };
+
+  try {
+    final response = await http.post(
+      Uri.parse(URLs.postTripdetail),
+      headers: {
+        'Authorization': 'Bearer $token',
+        'Content-Type': 'application/json',
+      },
+      body: json.encode(body),
+    );
+
+    log('Response status: ${response.statusCode}');
+    log('Response body: ${response.body}');
+
+    if (response.statusCode == 201) {
+      log('Success Trip detail created successfully');
+    } else {
+      log('Failed to create trip detail: ${response.statusCode}');
+    }
+  } catch (e) {
+    log('Error: $e');
+  }
+}
+
 
   @override
   void onInit() {

@@ -6,7 +6,6 @@ import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:http/http.dart' as http;
 import 'package:magang_flutter/common/urls.dart';
-import 'package:magang_flutter/controllers/business_trip_controller.dart';
 import 'package:magang_flutter/pages/business_trip_page.dart';
 import 'package:magang_flutter/pages/home_page.dart';
 import 'package:magang_flutter/pages/leave_history_page.dart';
@@ -111,18 +110,19 @@ class NavigatorPageControllers extends GetxController {
   }
 
   List<Widget> page = [
-    const HomePage(),
+     HomePage(),
     BusinessTripPage(),
     const LeaveHistoryPage(),
     const ProfilePage(),
   ].obs;
 
   void changePage(int index) {
-    if (selectedPage.value == 1) {
-      log(selectedPage.toString());
-      final businessTripController = Get.find<BusinessTripController>();
-      businessTripController.fetchBusinessTrips();
-    }
+    // if (selectedPage.value == 1) {
+    //   log(selectedPage.toString());
+    //   final businessTripController = Get.find<BusinessTripController>();
+    //   businessTripController.fetchBusinessTrips();
+    //   businessTripController.resetFilter();
+    // }
     selectedPage.value = index;
   }
 

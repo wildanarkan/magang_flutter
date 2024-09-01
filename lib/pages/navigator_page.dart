@@ -52,7 +52,7 @@ class NavigatorPage extends StatelessWidget {
                 FABBottomAppBarItem(iconPage: Icons.home, title: 'Home'),
                 FABBottomAppBarItem(
                     iconPage: Icons.card_travel_rounded,
-                    title: 'Business Trip'),
+                    title: 'Business Trip',),
                 FABBottomAppBarItem(
                     iconPage: Icons.time_to_leave,
                     title: 'Leave'),

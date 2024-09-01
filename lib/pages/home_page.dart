@@ -1,9 +1,9 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:intl/intl.dart';
 import 'package:magang_flutter/common/app_color.dart';
 import 'package:magang_flutter/common/urls.dart';
+import 'package:magang_flutter/controllers/home_page_controller.dart';
 import 'package:magang_flutter/widgets/build_card_info.dart';
 import 'package:magang_flutter/widgets/build_expansion_tile.dart';
 import 'package:magang_flutter/widgets/build_link.dart';
@@ -11,7 +11,8 @@ import 'package:magang_flutter/widgets/build_link.dart';
 import '../controllers/navigator_page_controllers.dart';
 
 class HomePage extends GetView<NavigatorPageControllers> {
-  const HomePage({super.key});
+  final HomePageController homePageController = Get.put(HomePageController());
+  HomePage({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -252,7 +253,7 @@ class HomePage extends GetView<NavigatorPageControllers> {
                             height: 3,
                           ),
                           Text(
-                            DateFormat.Hm().format(DateTime.now()).toString(),
+                            homePageController.startTime.value,
                             style: TextStyle(
                               fontWeight: FontWeight.w600,
                               fontSize: 16,
@@ -287,14 +288,16 @@ class HomePage extends GetView<NavigatorPageControllers> {
                           const SizedBox(
                             height: 3,
                           ),
-                          Text(
-                            DateFormat.Hm().format(DateTime.now()).toString(),
-                            style: TextStyle(
-                              fontWeight: FontWeight.w600,
-                              fontSize: 16,
-                              color: AppColor.textTitle,
-                            ),
-                          ),
+                          Obx(() {
+                            return Text(
+                              homePageController.endTime.value,
+                              style: TextStyle(
+                                fontWeight: FontWeight.w600,
+                                fontSize: 16,
+                                color: AppColor.textTitle,
+                              ),
+                            );
+                          }),
                         ],
                       ),
                     ],

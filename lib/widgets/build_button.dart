@@ -10,11 +10,12 @@ class BuildButton extends StatelessWidget {
     this.width = double.infinity,
     this.backgroundColor,
     this.foregroundColor,
-    this.borderColor,
+    this.borderColor, this.height,
   });
 
   final String title;
   final double width;
+  final double? height;
   final VoidCallback onPressed;
   final Color? backgroundColor;
   final Color? foregroundColor;
@@ -24,7 +25,7 @@ class BuildButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return SizedBox(
       width: width,
-      height: 48,
+      height: height ?? 48,
       child: ElevatedButton(
         onPressed: onPressed,
         style: ButtonStyle(
