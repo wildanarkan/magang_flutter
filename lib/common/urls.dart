@@ -3,6 +3,7 @@ class URLs {
   // static const baseUrl = 'http://192.168.43.191:8000/';
   static const baseAppUrl = '${baseUrl}api/app/';
   static const photoUrl = '${baseUrl}storage/profile_photos/';
+  static const photoDocumentUrl = '${baseUrl}storage/photo_document/';
   // static const baseUrl = 'http://192.168.0.12:8000/';
   // static const photoUrl = 'http://192.168.0.12:8000';
   // static const baseUrl = 'http://192.168.1.104:8000/api/app/';
@@ -33,6 +34,7 @@ class URLs {
   static const nominalPlanning = '${baseAppUrl}business/planning';
 
   static const postBusinessTrip = '${baseAppUrl}business/make';
+  static const postPhotoDocument = '${baseAppUrl}business/upload-file/';
   static const postTripdetail = '${baseAppUrl}business/trip';
 
 }

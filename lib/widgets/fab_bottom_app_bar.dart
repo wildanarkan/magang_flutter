@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:magang_flutter/common/app_color.dart';
-import 'package:magang_flutter/controllers/business_trip_controller.dart';
 
 class FABBottomAppBarItem {
   FABBottomAppBarItem({required this.iconPage, required this.title,});
@@ -83,13 +81,13 @@ class FABBottomAppBarState extends State<FABBottomAppBar> {
       child: SizedBox(
         child: GestureDetector(
           onTap: () => onPressed!(index!),
-          onDoubleTap: () {
-            if (index == 1) {
-              final businessTripController = Get.find<BusinessTripController>();
-              businessTripController.fetchBusinessTrips();
-              businessTripController.resetFilter();
-            }
-          },
+          // onDoubleTap: () {
+          //   if (index == 1) {
+          //     final businessTripController = Get.find<BusinessTripController>();
+          //     businessTripController.fetchBusinessTrips();
+          //     businessTripController.resetFilter();
+          //   }
+          // },
           child: Column(
             mainAxisSize: MainAxisSize.min,
             mainAxisAlignment: MainAxisAlignment.center,

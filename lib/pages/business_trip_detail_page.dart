@@ -1,7 +1,12 @@
+import 'dart:developer';
+import 'dart:io';
+
+import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:magang_flutter/common/app_color.dart';
 import 'package:magang_flutter/common/app_status.dart';
+import 'package:magang_flutter/common/urls.dart';
 import 'package:magang_flutter/controllers/business_trip_detail_page_controller.dart';
 import 'package:magang_flutter/data/models/business_trip_model.dart';
 import 'package:magang_flutter/pages/estimasi_biaya_page.dart';
@@ -10,19 +15,19 @@ import 'package:magang_flutter/pages/realisasi_biaya_page.dart';
 import 'package:magang_flutter/widgets/build_button.dart';
 import 'package:magang_flutter/widgets/build_row_text_icon.dart';
 import 'package:magang_flutter/widgets/build_test_appbar.dart';
-import 'package:magang_flutter/widgets/build_text_field.dart';
 
 class BusinessTripDetailPage extends StatelessWidget {
   final BusinessTripDetailPageController controller =
       Get.put(BusinessTripDetailPageController());
 
-
   final BusinessTripModel trip;
   final String? status;
 
-    BusinessTripDetailPage({super.key, required this.trip, this.status}) {
-    controller.setInitialExtendDay(
-        trip.extendDay ?? 0); // Inisialisasi nilai extendDay
+  BusinessTripDetailPage({super.key, required this.trip, this.status}) {
+    controller.setInitialVariable(
+        trip.extendDay ?? 0,
+        trip.photoDocument ??
+            'No photo document'); // Inisialisasi nilai extendDay
   }
 
   @override
@@ -44,7 +49,7 @@ class BusinessTripDetailPage extends StatelessWidget {
       body: Stack(
         children: [
           ListView(
-            padding: const EdgeInsets.only(bottom: 80),
+            padding: const EdgeInsets.only(bottom: 170),
             children: [
               Padding(
                 padding:
@@ -200,89 +205,6 @@ class BusinessTripDetailPage extends StatelessWidget {
                       const SizedBox(
                         height: 24,
                       ),
-                      Row(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Text(
-                                'Extended',
-                                style: TextStyle(
-                                  fontSize: 12,
-                                  fontWeight: FontWeight.w400,
-                                  color: AppColor.textBody,
-                                ),
-                              ),
-                              const SizedBox(
-                                height: 4,
-                              ),
-                              Obx(
-                                () => Text(
-                                  '${controller.extendDay.value} Days', // Observe nilai extendDay
-                                  style: TextStyle(
-                                    fontSize: 12,
-                                    fontWeight: FontWeight.w500,
-                                    color: AppColor.textTitle,
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
-                          const Spacer(),
-                          BuildButton(
-                            context: context,
-                            title: 'Extend',
-                            width: 88,
-                            height: 40,
-                            onPressed: () {
-                              showDialog(
-                                context: context,
-                                builder: (BuildContext context) {
-                                  return AlertDialog(
-                                    title: const Text('Extended'),
-                                    content: Column(
-                                      mainAxisSize: MainAxisSize.min,
-                                      children: [
-                                        BuildTextField(
-                                          inputType: TextInputType.number,
-                                          controller: controller
-                                              .extendedController.value,
-                                          title: 'Extend Days',
-                                          hintText: 'Enter number of days',
-                                          onChanged: (value) {
-                                            controller.extendedController.value
-                                                .text = value;
-                                          },
-                                        ),
-                                        const SizedBox(height: 10),
-                                        BuildButton(
-                                          context: context,
-                                          title: 'Simpan',
-                                          onPressed: () {
-                                            final extendDayValue = int.tryParse(
-                                                controller.extendedController
-                                                    .value.text);
-                                            if (extendDayValue != null) {
-                                              controller.updateExtendedDay(
-                                                  trip.idBusinessTrip!,
-                                                  extendDayValue);
-                                            } else {
-                                              Get.snackbar('Error',
-                                                  'Please enter a valid number of days');
-                                            }
-                                          },
-                                        ),
-                                      ],
-                                    ),
-                                  );
-                                },
-                              );
-                            },
-                          )
-                        ],
-                      ),
                       const Padding(
                         padding: EdgeInsets.symmetric(vertical: 10),
                         child: Divider(),
@@ -325,6 +247,80 @@ class BusinessTripDetailPage extends StatelessWidget {
                                 );
                               }).toList() ??
                               [const Text('No employees')],
+                        ],
+                      ),
+                      Row(
+                        children: [
+                          Obx(() {
+                            return GestureDetector(
+                              onTap: () async {
+                                final fullUrl =
+                                    '${URLs.photoDocumentUrl}${controller.photoDocument.value}';
+                                await controller.showFileDialog(context, fullUrl);
+                              },
+                              child: Text(
+                                controller.photoDocument.value,
+                                style: TextStyle(
+                                  color: AppColor.textTitle,
+                                  decoration: TextDecoration.underline,
+                                ),
+                              ),
+                            );
+                          }),
+                          IconButton(
+                            icon: const Icon(Icons.attach_file),
+                            onPressed: () async {
+                              // Pilih file dari file manager
+                              final result =
+                                  await FilePicker.platform.pickFiles(
+                                type: FileType.custom,
+                                allowedExtensions: [
+                                  'jpg',
+                                  'jpeg',
+                                  'png',
+                                  'pdf'
+                                ],
+                              );
+
+                              if (result != null &&
+                                  result.files.single.path != null) {
+                                final selectedFile =
+                                    File(result.files.single.path!);
+                                final extension = selectedFile.path
+                                    .split('.')
+                                    .last
+                                    .toLowerCase();
+
+                                if (['jpg', 'jpeg', 'png', 'pdf']
+                                    .contains(extension)) {
+                                  // Tampilkan konfirmasi untuk update file
+                                  Get.defaultDialog(
+                                    title: 'Confirm Update',
+                                    middleText:
+                                        'Are you sure you want to update with this file?',
+                                    textCancel: 'Cancel',
+                                    textConfirm: 'Update',
+                                    onConfirm: () {
+                                      log(extension);
+                                      log('${selectedFile}1');
+                                      controller.updateFileInDatabase(
+                                          selectedFile,
+                                          trip.idBusinessTrip ?? 0);
+                                      log('${trip.photoDocument}2');
+                                    },
+                                  );
+                                } else {
+                                  // Tampilkan pesan error jika file tidak valid
+                                  Get.defaultDialog(
+                                    title: 'Invalid File',
+                                    middleText:
+                                        'Please select a valid jpg, jpeg, png, or pdf file.',
+                                    textConfirm: 'OK',
+                                  );
+                                }
+                              }
+                            },
+                          ),
                         ],
                       ),
                     ],

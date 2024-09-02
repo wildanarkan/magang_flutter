@@ -7,6 +7,7 @@ class BusinessTripModel {
   String? status;
   String? note;
   String? companyAddress;
+  String? photoDocument;
   String? departureFrom;
   String? pic;
   String? picRole;
@@ -23,6 +24,7 @@ class BusinessTripModel {
       this.status,
       this.note,
       this.companyAddress,
+      this.photoDocument,
       this.departureFrom,
       this.pic,
       this.picRole,
@@ -39,6 +41,7 @@ class BusinessTripModel {
     status = json['status'];
     note = json['note'];
     companyAddress = json['company_address'];
+    photoDocument = json['photo_document'];
     departureFrom = json['departure_from'];
     pic = json['pic'];
     picRole = json['pic_role'];
@@ -62,6 +65,7 @@ class BusinessTripModel {
     data['status'] = status;
     data['note'] = note;
     data['company_address'] = companyAddress;
+    data['photo_document'] = photoDocument;
     data['departure_from'] = departureFrom;
     data['pic'] = pic;
     data['pic_role'] = picRole;

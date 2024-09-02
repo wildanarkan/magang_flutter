@@ -73,6 +73,7 @@ class BusinessTripController extends GetxController {
         List<dynamic> jsonData = json.decode(response.body);
         businessTrips.value =
             jsonData.map((json) => BusinessTripModel.fromJson(json)).toList();
+        log(jsonData.toString());
         filterBusinessTrips(); // Apply filter after fetching data
       } else {
         // Handle error

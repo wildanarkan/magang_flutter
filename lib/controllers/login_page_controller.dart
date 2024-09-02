@@ -29,10 +29,12 @@ class LoginPageController extends GetxController {
 
     try {
       final token = await UserRepository().login(email, password);
+      // final businessTrip = BusinessTripModel();
       if (token != null) {
         
-        storage.write('accessToken', token);
-        storage.write('isLoggedIn', true); // Set isLoggedIn ke true saat login berhasil
+        await storage.write('accessToken', token);
+        // await storage.write('businessTrip', businessTrip);
+        await storage.write('isLoggedIn', true); // Set isLoggedIn ke true saat login berhasil
         Get.offAll(() => const NavigatorPage());
       } else {
         Get.snackbar('Error', 'Login gagal. Silakan cek kembali email dan password Anda.');

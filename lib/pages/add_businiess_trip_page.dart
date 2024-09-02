@@ -2,6 +2,7 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:magang_flutter/common/app_color.dart';
 import 'package:magang_flutter/controllers/add_businiess_trip_page_controller.dart';
 import 'package:magang_flutter/controllers/business_trip_controller.dart';
 import 'package:magang_flutter/widgets/build_button.dart';
@@ -127,26 +128,43 @@ class AddBusiniessTripPage extends StatelessWidget {
                         controller.selectedAllCity.value = newValue!;
                       },
                     ),
-                    BuildDropdown(
-                      hint: 'SELECT EMPLOYEE',
-                      title: 'Employee',
-                      selectedItem: controller.selectedAllUser.value,
-                      item: controller.allUserItem.value,
-                      onChanged: (newValue) {
-                        controller.selectedAllUser.value = newValue!;
-                      },
+                    Row(
+                      children: [
+                        Expanded(
+                          child: BuildDropdown(
+                            hint: 'SELECT EMPLOYEE',
+                            title: 'Employee',
+                            selectedItem: controller.selectedAllUser.value,
+                            item: controller.allUserItem.value,
+                            onChanged: (newValue) {
+                              controller.selectedAllUser.value = newValue!;
+                            },
+                          ),
+                        ),
+                        IconButton(
+                          icon: const Icon(Icons.add),
+                          color: Colors.white,
+                          style: IconButton.styleFrom(
+                            shape: const RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(10))),
+                            backgroundColor: AppColor.primary,
+                          ),
+                          onPressed: () {
+                            controller.addEmployeeToList();
+                          },
+                        ),
+                      ],
                     ),
-                    Align(
-                      alignment: Alignment.center,
-                      child: BuildButton(
-                        context: context,
-                        title: 'Add Employee',
-                        width: 131,
-                        onPressed: () {
-                          controller.addEmployeeToList();
-                        },
-                      ),
-                    ),
+                    // Align(
+                    //   alignment: Alignment.center,
+                    //   child: BuildButton(
+                    //     context: context,
+                    //     title: 'Add Employee',
+                    //     width: 131,
+                    //     onPressed: () {
+                    //       controller.addEmployeeToList();
+                    //     },
+                    //   ),
+                    // ),
                     const Padding(
                       padding: EdgeInsets.symmetric(vertical: 10),
                       child: Divider(),
