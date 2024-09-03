@@ -4,6 +4,7 @@ import 'package:magang_flutter/common/app_color.dart';
 import 'package:magang_flutter/controllers/realisasi_biaya_page_controller.dart';
 import 'package:magang_flutter/pages/edit_biaya_page.dart';
 import 'package:magang_flutter/widgets/build_expansion_biaya.dart';
+import 'package:magang_flutter/widgets/build_test_appbar.dart';
 import 'package:magang_flutter/widgets/build_total.dart';
 
 class RealisasiBiayaPage extends StatelessWidget {
@@ -17,8 +18,8 @@ class RealisasiBiayaPage extends StatelessWidget {
         Get.put(RealisasiBiayaPageController(idBusinessTrip: idBusinessTrip));
 
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Realisasi Biaya'),
+      appBar: const BuildTestAppbar(
+        title: 'Realisasi Biaya',
       ),
       body: Stack(
         children: [
@@ -50,13 +51,12 @@ class RealisasiBiayaPage extends StatelessWidget {
                     ),
                   ),
                   subtitle: Text(
-                    'Rp ${items.fold(0.0, (sum, item) {
-                          final cleanNominal = item.nominal?.toString() ?? '0';
-                          final normalizedNominal =
-                              cleanNominal.replaceAll(',', '.');
-                          return sum +
-                              (double.tryParse(normalizedNominal) ?? 0.0);
-                        }).toStringAsFixed(2).replaceAll('.', ',')}',
+                    controller.formatRp(items.fold<double>(0.0, (sum, item) {
+                      final cleanNominal = item.nominal?.toString() ?? '0';
+                      final normalizedNominal =
+                          cleanNominal.replaceAll(',', '.');
+                      return sum + (double.tryParse(normalizedNominal) ?? 0.0);
+                    })),
                     style: TextStyle(
                       color: AppColor.textTitle,
                       fontSize: 14,
@@ -64,23 +64,35 @@ class RealisasiBiayaPage extends StatelessWidget {
                     ),
                   ),
                   children: items.map((item) {
-                    return ListTile(
-                      contentPadding: const EdgeInsets.all(0),
-                      dense: true,
-                      title: Text(
-                        item.keterangan ?? 'Tidak ada deskripsi',
-                        style: TextStyle(
-                          color: AppColor.textBody,
-                          fontSize: 14,
-                          fontWeight: FontWeight.w400,
+                    return GestureDetector(
+                      onTap: () async {
+                        final result = await Get.to(() => EditBiayaPage(
+                              idBusinessTrip: idBusinessTrip,
+                              idItem: item.id, // Tambahkan idItem
+                              isEditMode: true, // Menandakan mode edit
+                            ));
+                        if (result != null && result) {
+                          controller.updateData();
+                        }
+                      },
+                      child: ListTile(
+                        contentPadding: const EdgeInsets.all(0),
+                        dense: true,
+                        title: Text(
+                          '${item.keterangan}' ?? 'Tidak ada deskripsi',
+                          style: TextStyle(
+                            color: AppColor.textBody,
+                            fontSize: 14,
+                            fontWeight: FontWeight.w400,
+                          ),
                         ),
-                      ),
-                      trailing: Text(
-                        'Rp ${item.nominal ?? '0'}',
-                        style: TextStyle(
-                          color: AppColor.textTitle,
-                          fontSize: 14,
-                          fontWeight: FontWeight.w500,
+                        trailing: Text(
+                          controller.formatRp(item.nominal),
+                          style: TextStyle(
+                            color: AppColor.textTitle,
+                            fontSize: 14,
+                            fontWeight: FontWeight.w500,
+                          ),
                         ),
                       ),
                     );

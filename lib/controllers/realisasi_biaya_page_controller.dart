@@ -60,6 +60,14 @@ class RealisasiBiayaPageController extends GetxController {
     }
   }
 
+  String formatRp(amount) {
+    final formattedRp = amount.toStringAsFixed(2).replaceAllMapped(
+          RegExp(r'(\d)(?=(\d{3})+(\.|$))'),
+          (Match m) => '${m[1]}.',
+        );
+    return 'Rp $formattedRp';
+  }
+
   void updateData() {
     fetchNominalRealizationData(idBusinessTrip);
   }
@@ -77,6 +85,6 @@ class RealisasiBiayaPageController extends GetxController {
           (Match m) => '${m[1]}.',
         );
 
-    return 'Rp $formattedTotal';
+    return 'IDR $formattedTotal';
   }
 }

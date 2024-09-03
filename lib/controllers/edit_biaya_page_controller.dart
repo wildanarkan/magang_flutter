@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:developer';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
@@ -7,15 +8,19 @@ import 'package:get_storage/get_storage.dart';
 import 'package:http/http.dart' as http;
 import 'package:image_picker/image_picker.dart';
 import 'package:magang_flutter/common/urls.dart';
+import 'package:magang_flutter/controllers/realisasi_biaya_page_controller.dart';
 
 class EditBiayaPageController extends GetxController {
   final int idBusinessTrip; // Add instance variable for idBusinessTrip
+  final int? idItem;
 
   // Observable properties
   RxBool isLoading = false.obs;
   RxString selectedCompany = ''.obs;
   RxList<String> companyItem = <String>[].obs;
   RxList<File> images = <File>[].obs;
+  RxString existingPhotoUrl = ''.obs;
+  File? photoProof; // Tambahkan deklarasi ini di atas
   Rx<TextEditingController> keteranganController = TextEditingController().obs;
   Rx<TextEditingController> amountController = TextEditingController().obs;
 
@@ -23,12 +28,94 @@ class EditBiayaPageController extends GetxController {
   List<dynamic> _apiData = [];
 
   // Constructor with required idBusinessTrip parameter
-  EditBiayaPageController({required this.idBusinessTrip});
+  EditBiayaPageController({
+    required this.idBusinessTrip,
+    this.idItem,
+  });
 
   @override
   void onInit() {
     super.onInit();
-    fetchCompanyItems(); // Fetch company items when controller is initialized
+    if (idItem != null) {
+      fetchCompanyItems();
+      fetchDataForEdit(); // Fetch data if idItem is not null
+    } else {
+      fetchCompanyItems();
+    }
+  }
+
+  void fetchDataForEdit() async {
+    isLoading.value = true;
+    try {
+      final token = GetStorage().read('accessToken');
+      final response = await http.get(
+        Uri.parse('${URLs.getRealizationId}$idItem'),
+        headers: {
+          'Authorization': 'Bearer $token',
+        },
+      );
+
+      if (response.statusCode == 200) {
+        final data = json.decode(response.body) as Map<String, dynamic>;
+        selectedCompany.value = data['category_expenditure_name'];
+        keteranganController.value.text = data['keterangan'];
+        amountController.value.text = data['nominal'].toString();
+
+        // Jika ada URL gambar, simpan dalam variabel existingPhotoUrl
+        if (data['photo_proof'] != null) {
+          existingPhotoUrl.value = data['photo_proof'];
+        }
+
+        log(data.toString());
+      } else {
+        Get.snackbar('Error', 'Failed to load item details');
+      }
+    } catch (e) {
+      Get.snackbar('Error', 'An error occurred: $e');
+    } finally {
+      isLoading.value = false;
+    }
+  }
+
+  Future<void> updateRealization() async {
+    isLoading.value = true;
+    try {
+      final token = GetStorage().read('accessToken');
+      final uri = Uri.parse('${URLs.putRealization}$idItem');
+
+      final request = http.MultipartRequest('POST', uri)
+        ..headers['Authorization'] = 'Bearer $token';
+
+      // Tambahkan field lainnya ke request
+      request.fields['keterangan'] = keteranganController.value.text;
+      request.fields['nominal'] = amountController.value.text;
+
+      // Jika ada gambar, tambahkan ke request
+      if (photoProof != null) {
+        final file = await http.MultipartFile.fromPath(
+          'photo_proof',
+          photoProof!.path,
+        );
+        request.files.add(file);
+      }
+
+      final response = await request.send();
+
+      if (response.statusCode == 200) {
+        Get.back();
+        final RealisasiBiayaPageController realisasiBiayaPageController =
+            Get.find<RealisasiBiayaPageController>();
+        realisasiBiayaPageController
+            .fetchNominalRealizationData(idBusinessTrip);
+        Get.snackbar('Success', 'Data successfully updated');
+      } else {
+        Get.snackbar('Error', 'Failed to update Data');
+      }
+    } catch (e) {
+      Get.snackbar('Error', 'An error occurred: $e');
+    } finally {
+      isLoading.value = false;
+    }
   }
 
   // Method to select an image from the gallery
@@ -39,7 +126,8 @@ class EditBiayaPageController extends GetxController {
         imageQuality: 80,
       );
       if (pickedFile != null) {
-        images.add(File(pickedFile.path));
+        images.add(File(pickedFile.path)); // Menyimpan ke daftar gambar
+        photoProof = File(pickedFile.path); // Menyimpan gambar yang dipilih
       } else {
         print('No image selected.');
       }
@@ -89,7 +177,7 @@ class EditBiayaPageController extends GetxController {
   }
 
   // Method to submit the edited expense data
-  Future<void> submitEditBiaya() async {
+  Future<void> postRealization() async {
     isLoading.value = true; // Start loading
     try {
       final token = GetStorage().read('accessToken');
@@ -124,6 +212,7 @@ class EditBiayaPageController extends GetxController {
         Get.snackbar('Success', 'Expense successfully updated');
       } else {
         final responseBody = await response.stream.bytesToString();
+        log(response.statusCode.toString());
         Get.snackbar('Error', 'Failed to update expense: $responseBody');
       }
     } catch (e) {

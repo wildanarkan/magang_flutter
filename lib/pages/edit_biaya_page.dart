@@ -2,24 +2,35 @@ import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:magang_flutter/common/app_color.dart';
+import 'package:magang_flutter/common/urls.dart';
 import 'package:magang_flutter/controllers/edit_biaya_page_controller.dart';
 import 'package:magang_flutter/widgets/build_button.dart';
 import 'package:magang_flutter/widgets/build_dropdown.dart';
 import 'package:magang_flutter/widgets/build_test_appbar.dart';
 import 'package:magang_flutter/widgets/build_text_field.dart';
 
+// EditBiayaPage.dart
 class EditBiayaPage extends StatelessWidget {
   final int idBusinessTrip;
+  final int? idItem; // Tambahkan parameter untuk id item
+  final bool
+      isEditMode; // Tambahkan parameter untuk menentukan mode edit atau tambah
 
-  const EditBiayaPage({super.key, required this.idBusinessTrip});
+  const EditBiayaPage({
+    super.key,
+    required this.idBusinessTrip,
+    this.idItem,
+    this.isEditMode = false,
+  });
 
   @override
   Widget build(BuildContext context) {
-    final controller =
-        Get.put(EditBiayaPageController(idBusinessTrip: idBusinessTrip));
+    final controller = Get.put(
+      EditBiayaPageController(idBusinessTrip: idBusinessTrip, idItem: idItem),
+    );
 
     return Scaffold(
-      appBar: const BuildTestAppbar(title: 'Edit Biaya'),
+      appBar: BuildTestAppbar(title: isEditMode ? 'Edit Biaya' : 'Input Biaya'),
       body: Obx(() {
         if (controller.isLoading.value) {
           return const Center(child: CircularProgressIndicator());
@@ -46,6 +57,7 @@ class EditBiayaPage extends StatelessWidget {
                             title: 'Category',
                             selectedItem: controller.selectedCompany.value,
                             item: controller.companyItem,
+                            enabled: isEditMode ? false : true,
                             onChanged: (newValue) {
                               controller.updateSelectedCompany(newValue!);
                             },
@@ -83,6 +95,17 @@ class EditBiayaPage extends StatelessWidget {
                                       height: 129,
                                       width: double.infinity,
                                       fit: BoxFit.cover,
+                                    ),
+                                  );
+                                } else if (controller
+                                    .existingPhotoUrl.isNotEmpty) {
+                                  // Tampilkan gambar dari URL jika ada
+                                  return ClipRRect(
+                                    borderRadius: BorderRadius.circular(12),
+                                    child: Image.network(
+                                      URLs.photoProofUrl +
+                                          controller.existingPhotoUrl.value,
+                                      width: double.infinity,
                                     ),
                                   );
                                 } else {
@@ -124,7 +147,7 @@ class EditBiayaPage extends StatelessWidget {
                                 }
                               }),
                             ),
-                          ),
+                          )
                         ],
                       ),
                     ),
@@ -135,9 +158,18 @@ class EditBiayaPage extends StatelessWidget {
                 children: [
                   BuildButton(
                     context: context,
-                    title: 'Update',
+                    title: isEditMode ? 'Update' : 'Simpan',
                     onPressed: () {
-                      controller.submitEditBiaya();
+                      if (isEditMode) {
+                        controller.updateRealization();
+                      } else {
+                        if (controller.keteranganController.value.text != '' &&
+                            controller.amountController.value.text != '') {
+                          controller.postRealization();
+                        } else {
+                          Get.snackbar('Error', 'Fill your data');
+                        }
+                      }
                     },
                   ),
                   const SizedBox(height: 16),
