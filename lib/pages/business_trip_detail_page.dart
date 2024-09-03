@@ -26,9 +26,9 @@ class BusinessTripDetailPage extends StatelessWidget {
 
   BusinessTripDetailPage({super.key, required this.trip, this.status}) {
     controller.setInitialVariable(
-        trip.extendDay ?? 0,
-        trip.photoDocument ??
-            'No photo document'); // Inisialisasi nilai extendDay
+      trip.extendDay ?? 0,
+      trip.photoDocument ?? 'No photo document',
+    );
   }
 
   @override
@@ -255,7 +255,7 @@ class BusinessTripDetailPage extends StatelessWidget {
                                           inputType: TextInputType.number,
                                           controller: controller
                                               .extendedController.value,
-                                          title: 'Extend Days',
+                                          title: 'Days',
                                           hintText: 'Enter number of days',
                                           onChanged: (value) {
                                             controller.extendedController.value
@@ -353,6 +353,11 @@ class BusinessTripDetailPage extends StatelessWidget {
                                 return Expanded(
                                   child: GestureDetector(
                                     onTap: () {
+                                      if (trip.photoDocument == null) {
+                                        Get.snackbar('No data',
+                                            'Upload your photo document first');
+                                        return;
+                                      }
                                       final fullUrl =
                                           '${URLs.photoDocumentUrl}${controller.photoDocument.value}';
                                       log(fullUrl);
@@ -411,28 +416,199 @@ class BusinessTripDetailPage extends StatelessWidget {
                                     if (['jpg', 'jpeg', 'png', 'pdf']
                                         .contains(extension)) {
                                       // Tampilkan konfirmasi untuk update file
-                                      Get.defaultDialog(
-                                        title: 'Confirm Update',
-                                        middleText:
-                                            'Are you sure you want to update with this file?',
-                                        textCancel: 'Cancel',
-                                        textConfirm: 'Update',
-                                        onConfirm: () {
-                                          log(extension);
-                                          log('${selectedFile}1');
-                                          controller.updateFileInDatabase(
-                                              selectedFile,
-                                              trip.idBusinessTrip ?? 0);
-                                          log('${trip.photoDocument}2');
-                                        },
+
+                                      Get.dialog(
+                                        Column(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.center,
+                                          children: [
+                                            Padding(
+                                              padding:
+                                                  const EdgeInsets.symmetric(
+                                                      horizontal: 40),
+                                              child: Container(
+                                                decoration: const BoxDecoration(
+                                                  color: Colors.white,
+                                                  borderRadius:
+                                                      BorderRadius.all(
+                                                    Radius.circular(20),
+                                                  ),
+                                                ),
+                                                child: Padding(
+                                                  padding: const EdgeInsets.all(
+                                                      20.0),
+                                                  child: Material(
+                                                    color: Colors.white,
+                                                    child: Column(
+                                                      children: [
+                                                        const SizedBox(
+                                                            height: 10),
+                                                        Icon(
+                                                          Icons
+                                                              .help_outline_rounded,
+                                                          size: 100,
+                                                          color:
+                                                              AppColor.primary,
+                                                        ),
+                                                        Text(
+                                                          "Are you sure?",
+                                                          textAlign:
+                                                              TextAlign.center,
+                                                          style: TextStyle(
+                                                              color: AppColor
+                                                                  .textBody,
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .bold,
+                                                              fontSize: 20),
+                                                        ),
+                                                        const SizedBox(
+                                                            height: 15),
+                                                        Text(
+                                                          "Do your really want to upload photo document to business trip?",
+                                                          textAlign:
+                                                              TextAlign.center,
+                                                          style: TextStyle(
+                                                            color: AppColor
+                                                                .textBody,
+                                                            fontSize: 14,
+                                                          ),
+                                                        ),
+                                                        const SizedBox(
+                                                            height: 20),
+                                                        Row(
+                                                          children: [
+                                                            Expanded(
+                                                              child:
+                                                                  BuildButton(
+                                                                title: 'Cancel',
+                                                                backgroundColor:
+                                                                    Colors
+                                                                        .white,
+                                                                foregroundColor:
+                                                                    AppColor
+                                                                        .primary,
+                                                                width: 88,
+                                                                height: 40,
+                                                                onPressed: () {
+                                                                  Get.back();
+                                                                },
+                                                              ),
+                                                            ),
+                                                            const SizedBox(
+                                                                width: 10),
+                                                            Expanded(
+                                                              child:
+                                                                  BuildButton(
+                                                                title: 'Upload',
+                                                                width: 88,
+                                                                height: 40,
+                                                                onPressed: () {
+                                                                  log(extension);
+                                                                  log('${selectedFile}1');
+                                                                  controller.updateFileInDatabase(
+                                                                      selectedFile,
+                                                                      trip.idBusinessTrip ??
+                                                                          0);
+                                                                  log('${trip.photoDocument}2');
+                                                                },
+                                                              ),
+                                                            ),
+                                                          ],
+                                                        ),
+                                                      ],
+                                                    ),
+                                                  ),
+                                                ),
+                                              ),
+                                            ),
+                                          ],
+                                        ),
                                       );
                                     } else {
                                       // Tampilkan pesan error jika file tidak valid
-                                      Get.defaultDialog(
-                                        title: 'Invalid File',
-                                        middleText:
-                                            'Please select a valid jpg, jpeg, png, or pdf file.',
-                                        textConfirm: 'OK',
+                                      Get.dialog(
+                                        Column(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.center,
+                                          children: [
+                                            Padding(
+                                              padding:
+                                                  const EdgeInsets.symmetric(
+                                                      horizontal: 40),
+                                              child: Container(
+                                                decoration: const BoxDecoration(
+                                                  color: Colors.white,
+                                                  borderRadius:
+                                                      BorderRadius.all(
+                                                    Radius.circular(20),
+                                                  ),
+                                                ),
+                                                child: Padding(
+                                                  padding: const EdgeInsets.all(
+                                                      20.0),
+                                                  child: Material(
+                                                    color: Colors.white,
+                                                    child: Column(
+                                                      children: [
+                                                        const SizedBox(
+                                                            height: 10),
+                                                        Icon(
+                                                          Icons
+                                                              .warning_amber_rounded,
+                                                          size: 100,
+                                                          color:
+                                                              AppColor.primary,
+                                                        ),
+                                                        Text(
+                                                          "Invalid Type",
+                                                          textAlign:
+                                                              TextAlign.center,
+                                                          style: TextStyle(
+                                                              color: AppColor
+                                                                  .textBody,
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .bold,
+                                                              fontSize: 20),
+                                                        ),
+                                                        const SizedBox(
+                                                            height: 15),
+                                                        Text(
+                                                          "Please select a valid jpg, jpeg, png, or pdf file.",
+                                                          textAlign:
+                                                              TextAlign.center,
+                                                          style: TextStyle(
+                                                            color: AppColor
+                                                                .textBody,
+                                                            fontSize: 14,
+                                                          ),
+                                                        ),
+                                                        const SizedBox(
+                                                            height: 20),
+                                                        Row(
+                                                          children: [
+                                                            Expanded(
+                                                              child:
+                                                                  BuildButton(
+                                                                title: 'Oke',
+                                                                width: 88,
+                                                                height: 40,
+                                                                onPressed: () {
+                                                                  Get.back();
+                                                                },
+                                                              ),
+                                                            ),
+                                                          ],
+                                                        ),
+                                                      ],
+                                                    ),
+                                                  ),
+                                                ),
+                                              ),
+                                            ),
+                                          ],
+                                        ),
                                       );
                                     }
                                   }

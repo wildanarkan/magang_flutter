@@ -4,7 +4,7 @@ import 'package:magang_flutter/common/app_color.dart';
 class BuildButton extends StatelessWidget {
   const BuildButton({
     super.key,
-    required BuildContext context,
+    BuildContext? context,
     required this.title,
     required this.onPressed,
     this.width = double.infinity,

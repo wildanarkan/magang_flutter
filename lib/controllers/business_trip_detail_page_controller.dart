@@ -2,9 +2,7 @@ import 'dart:convert';
 import 'dart:developer';
 import 'dart:io';
 
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_pdfview/flutter_pdfview.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:http/http.dart' as http;
@@ -66,6 +64,7 @@ class BusinessTripDetailPageController extends GetxController {
 
       if (response.statusCode == 200) {
         extendDay.value = newExtendDay; // Update nilai extendDay di controller
+        extendedController.value.clear();
         isChangeExtend = true; // Perbaikan di sini
         Get.back();
         Get.snackbar('Success', 'Extend updated to $newExtendDay');
@@ -94,52 +93,6 @@ class BusinessTripDetailPageController extends GetxController {
     log(isChangePhoto.toString());
 
     super.onClose();
-  }
-
-  Future<void> showFileDialog(BuildContext context, String fileUrl) async {
-    final extension = fileUrl.split('.').last;
-    if (extension == 'jpg' || extension == 'jpeg' || extension == 'png') {
-      // Show image
-      showDialog(
-        context: context,
-        builder: (context) {
-          return AlertDialog(
-            content: CachedNetworkImage(
-              imageUrl: fileUrl,
-            ),
-          );
-        },
-      );
-    } else if (extension == 'pdf') {
-      // Download and show PDF
-      final response = await http.get(Uri.parse(fileUrl));
-      final file = File('${(await getTemporaryDirectory()).path}/temp.pdf');
-      await file.writeAsBytes(response.bodyBytes);
-
-      showDialog(
-        context: context,
-        builder: (context) {
-          return AlertDialog(
-            content: SizedBox(
-              height: 400,
-              child: PDFView(
-                filePath: file.path,
-              ),
-            ),
-          );
-        },
-      );
-    } else {
-      // Unsupported file type
-      showDialog(
-        context: context,
-        builder: (context) {
-          return const AlertDialog(
-            content: Text("Unsupported file type"),
-          );
-        },
-      );
-    }
   }
 
   Future<void> updateFileInDatabase(File file, int businessTripId) async {
