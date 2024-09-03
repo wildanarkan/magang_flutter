@@ -17,6 +17,11 @@ class PerbandinganBiayaPage extends StatelessWidget {
     controller.fetchComparisonData(idBusinessTrip);
   }
 
+  String formatCurrency(String? value) {
+    // Format nilai dengan prefix "Rp"
+    return value != null ? 'Rp $value' : 'Rp 0';
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -29,12 +34,15 @@ class PerbandinganBiayaPage extends StatelessWidget {
         }
 
         final comparisonData = controller.getComparisonData();
-        final percentages =
-            comparisonData['percentages'] as List<BusinessPercentageModel>;
-        final totalNominalPlanning = comparisonData['totalNominalPlanning'];
+        final List<BusinessPercentageModel> percentages =
+            (comparisonData['percentages'] as List<dynamic>)
+                .map((data) => BusinessPercentageModel.fromJson(data))
+                .toList();
+        final totalNominalPlanning =
+            comparisonData['totalNominalPlanning'] as String?;
         final totalNominalRealization =
-            comparisonData['totalNominalRealization'];
-        final difference = comparisonData['difference'];
+            comparisonData['totalNominalRealization'] as String?;
+        final difference = comparisonData['difference'] as String?;
 
         return Column(
           children: [
@@ -47,8 +55,9 @@ class PerbandinganBiayaPage extends StatelessWidget {
                     return BuildBiayaCard(
                       title: percentage.categoryName ?? 'No Title',
                       persentase: percentage.percentage ?? '0',
-                      estimasi: percentage.totalNominalPlanning ?? '0',
-                      realisasi: percentage.totalNominalRealization ?? '0',
+                      estimasi: formatCurrency(percentage.totalNominalPlanning),
+                      realisasi:
+                          formatCurrency(percentage.totalNominalRealization),
                       minusPersentase: (percentage.percentage != null &&
                           percentage.percentage!.startsWith('-')),
                     );
@@ -77,7 +86,7 @@ class PerbandinganBiayaPage extends StatelessWidget {
                         ),
                       ),
                       rightWidget: Text(
-                        'Rp ${totalNominalPlanning ?? '0'}',
+                        formatCurrency(totalNominalPlanning),
                         style: TextStyle(
                           color: AppColor.textTitle,
                           fontWeight: FontWeight.w600,
@@ -95,7 +104,7 @@ class PerbandinganBiayaPage extends StatelessWidget {
                         ),
                       ),
                       rightWidget: Text(
-                        'Rp ${totalNominalRealization ?? '0'}',
+                        formatCurrency(totalNominalRealization),
                         style: TextStyle(
                           color: AppColor.textTitle,
                           fontWeight: FontWeight.w600,
@@ -113,7 +122,7 @@ class PerbandinganBiayaPage extends StatelessWidget {
                         ),
                       ),
                       rightWidget: Text(
-                        'Rp ${difference ?? '0'}',
+                        formatCurrency(difference),
                         style: TextStyle(
                           color: AppColor.textTitle,
                           fontWeight: FontWeight.w600,

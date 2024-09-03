@@ -52,10 +52,7 @@ class EstimasiBiayaPage extends StatelessWidget {
                   ),
                   subtitle: Text(
                     'Rp ${items.fold(0.0, (sum, item) {
-                          final cleanNominal = item.nominalPlanning
-                                  ?.replaceAll(RegExp(r'[^\d,]'), '') ??
-                              '0';
-
+                          final cleanNominal = item.nominal?.toString() ?? '0';
                           final normalizedNominal =
                               cleanNominal.replaceAll(',', '.');
                           return sum +
@@ -80,7 +77,7 @@ class EstimasiBiayaPage extends StatelessWidget {
                         ),
                       ),
                       trailing: Text(
-                        'Rp ${item.nominalPlanning ?? '0'}',
+                        'Rp ${item.nominal?.toString() ?? '0'}',
                         style: TextStyle(
                           color: AppColor.textTitle,
                           fontSize: 14,

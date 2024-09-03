@@ -26,9 +26,11 @@ class PerbandinganBiayaPageController extends GetxController {
             headers: {'Authorization': 'Bearer $token'}),
       ]);
 
+      // Handle percentage data
       if (responses[0].statusCode == 200) {
-        final dataPercentage = json.decode(responses[0].body);
-        percentages.value = (dataPercentage as List<dynamic>)
+        final List<dynamic> dataPercentage =
+            json.decode(responses[0].body) as List<dynamic>;
+        percentages.value = dataPercentage
             .map((data) => BusinessPercentageModel.fromJson(data))
             .toList();
       } else {
@@ -36,8 +38,10 @@ class PerbandinganBiayaPageController extends GetxController {
         percentages.value = [];
       }
 
+      // Handle calculation data
       if (responses[1].statusCode == 200) {
-        final dataCalculate = json.decode(responses[1].body);
+        final Map<String, dynamic> dataCalculate =
+            json.decode(responses[1].body);
         calculation.value = BusinessCalculateModel.fromJson(dataCalculate);
       } else {
         print('Failed to load calculation data: ${responses[1].statusCode}');
@@ -52,7 +56,7 @@ class PerbandinganBiayaPageController extends GetxController {
 
   Map<String, dynamic> getComparisonData() {
     return {
-      'percentages': percentages.toList(),
+      'percentages': percentages.map((e) => e.toJson()).toList(),
       'totalNominalPlanning': calculation.value?.totalNominalPlanning ?? '0',
       'totalNominalRealization':
           calculation.value?.totalNominalRealization ?? '0',

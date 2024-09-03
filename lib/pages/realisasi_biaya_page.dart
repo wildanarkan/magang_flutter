@@ -14,10 +14,7 @@ class RealisasiBiayaPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final RealisasiBiayaPageController controller =
-        Get.put(RealisasiBiayaPageController());
-
-    // Fetch data dengan ID saat halaman diinisialisasi
-    controller.fetchNominalRealizationData(idBusinessTrip);
+        Get.put(RealisasiBiayaPageController(idBusinessTrip: idBusinessTrip));
 
     return Scaffold(
       appBar: AppBar(
@@ -54,15 +51,12 @@ class RealisasiBiayaPage extends StatelessWidget {
                   ),
                   subtitle: Text(
                     'Rp ${items.fold(0.0, (sum, item) {
-                          final cleanNominal = item.nominalRealization
-                                  ?.replaceAll(RegExp(r'[^\d,]'), '') ??
-                              '0';
-
+                          final cleanNominal = item.nominal?.toString() ?? '0';
                           final normalizedNominal =
                               cleanNominal.replaceAll(',', '.');
                           return sum +
                               (double.tryParse(normalizedNominal) ?? 0.0);
-                        }).toStringAsFixed(2).replaceAll('.', ',')}', // Format sesuai kebutuhan
+                        }).toStringAsFixed(2).replaceAll('.', ',')}',
                     style: TextStyle(
                       color: AppColor.textTitle,
                       fontSize: 14,
@@ -74,7 +68,7 @@ class RealisasiBiayaPage extends StatelessWidget {
                       contentPadding: const EdgeInsets.all(0),
                       dense: true,
                       title: Text(
-                        item.keterangan ?? 'No description',
+                        item.keterangan ?? 'Tidak ada deskripsi',
                         style: TextStyle(
                           color: AppColor.textBody,
                           fontSize: 14,
@@ -82,7 +76,7 @@ class RealisasiBiayaPage extends StatelessWidget {
                         ),
                       ),
                       trailing: Text(
-                        'Rp ${item.nominalRealization ?? '0'}',
+                        'Rp ${item.nominal ?? '0'}',
                         style: TextStyle(
                           color: AppColor.textTitle,
                           fontSize: 14,
@@ -99,10 +93,14 @@ class RealisasiBiayaPage extends StatelessWidget {
             return Align(
               alignment: Alignment.bottomCenter,
               child: BuildTotal(
-                total: controller
-                    .calculateTotal(), // Use the method from controller
-                onPressed: () {
-                  Get.to(() => const EditBiayaPage());
+                total: controller.calculateTotal(),
+                onPressed: () async {
+                  final result = await Get.to(
+                      () => EditBiayaPage(idBusinessTrip: idBusinessTrip));
+                  if (result != null && result) {
+                    controller
+                        .updateData(); // Memanggil updateData untuk mendapatkan data terbaru
+                  }
                 },
               ),
             );

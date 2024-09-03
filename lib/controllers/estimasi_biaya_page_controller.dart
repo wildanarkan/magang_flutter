@@ -4,12 +4,12 @@ import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:http/http.dart' as http;
 import 'package:magang_flutter/common/urls.dart';
-import 'package:magang_flutter/data/models/nominal_planning_model.dart';
+import 'package:magang_flutter/data/models/nominal_model.dart';
 
 class EstimasiBiayaPageController extends GetxController {
   RxBool isLoading = false.obs;
-  RxMap<String, List<NominalPlanningModel>> groupedData =
-      RxMap<String, List<NominalPlanningModel>>({});
+  RxMap<String, List<NominalModel>> groupedData =
+      RxMap<String, List<NominalModel>>({});
 
   Future<void> fetchNominalPlanningData(int idBusinessTrip) async {
     isLoading.value = true;
@@ -23,10 +23,10 @@ class EstimasiBiayaPageController extends GetxController {
       if (response.statusCode == 200) {
         final List<dynamic> data = json.decode(response.body) as List<dynamic>;
 
-        final grouped = <String, List<NominalPlanningModel>>{};
+        final grouped = <String, List<NominalModel>>{};
 
         for (var item in data) {
-          final model = NominalPlanningModel.fromJson(item);
+          final model = NominalModel.fromJson(item);
           final category = model.categoryExpenditureName ?? 'Unknown';
 
           if (!grouped.containsKey(category)) {
@@ -52,7 +52,7 @@ class EstimasiBiayaPageController extends GetxController {
     final total = groupedData.value.values.expand((items) => items).fold(0.0,
         (sum, item) {
       final cleanNominal =
-          item.nominalPlanning?.replaceAll(RegExp(r'[^\d,]'), '') ?? '0';
+          item.nominal?.toString() ?? '0'; // Menggunakan item.nominal
       final normalizedNominal = cleanNominal.replaceAll(',', '.');
       return sum + (double.tryParse(normalizedNominal) ?? 0.0);
     });

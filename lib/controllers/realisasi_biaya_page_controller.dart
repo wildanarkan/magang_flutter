@@ -4,12 +4,23 @@ import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:http/http.dart' as http;
 import 'package:magang_flutter/common/urls.dart';
-import 'package:magang_flutter/data/models/nominal_realization_model.dart';
+import 'package:magang_flutter/data/models/nominal_model.dart';
 
 class RealisasiBiayaPageController extends GetxController {
+  final int idBusinessTrip; // Tambahkan variabel instansi
+
   RxBool isLoading = false.obs;
-  RxMap<String, List<NominalRealizationModel>> groupedData =
-      RxMap<String, List<NominalRealizationModel>>({});
+  RxMap<String, List<NominalModel>> groupedData =
+      RxMap<String, List<NominalModel>>({});
+
+  RealisasiBiayaPageController(
+      {required this.idBusinessTrip}); // Tambahkan parameter ke konstruktor
+
+  @override
+  void onInit() {
+    super.onInit();
+    fetchNominalRealizationData(idBusinessTrip);
+  }
 
   Future<void> fetchNominalRealizationData(int idBusinessTrip) async {
     isLoading.value = true;
@@ -24,11 +35,10 @@ class RealisasiBiayaPageController extends GetxController {
       if (response.statusCode == 200) {
         final List<dynamic> data = json.decode(response.body) as List<dynamic>;
 
-        // Proses daftar data
-        final grouped = <String, List<NominalRealizationModel>>{};
+        final grouped = <String, List<NominalModel>>{};
 
         for (var item in data) {
-          final model = NominalRealizationModel.fromJson(item);
+          final model = NominalModel.fromJson(item);
           final category = model.categoryExpenditureName ?? 'Unknown';
 
           if (!grouped.containsKey(category)) {
@@ -50,17 +60,22 @@ class RealisasiBiayaPageController extends GetxController {
     }
   }
 
+  void updateData() {
+    fetchNominalRealizationData(idBusinessTrip);
+  }
+
   String calculateTotal() {
     final total = groupedData.value.values.expand((items) => items).fold(0.0,
         (sum, item) {
-      final cleanNominal =
-          item.nominalRealization?.replaceAll(RegExp(r'[^\d,]'), '') ?? '0';
+      final cleanNominal = item.nominal?.toString() ?? '0';
       final normalizedNominal = cleanNominal.replaceAll(',', '.');
       return sum + (double.tryParse(normalizedNominal) ?? 0.0);
     });
 
     final formattedTotal = total.toStringAsFixed(2).replaceAllMapped(
-        RegExp(r'(\d)(?=(\d{3})+(\.|$))'), (Match m) => '${m[1]}.');
+          RegExp(r'(\d)(?=(\d{3})+(\.|$))'),
+          (Match m) => '${m[1]}.',
+        );
 
     return 'Rp $formattedTotal';
   }

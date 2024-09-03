@@ -1,20 +1,20 @@
-class NominalPlanningModel {
+class NominalModel {
   int? idCategoryExpenditure;
   String? categoryExpenditureName;
   String? keterangan;
-  String? nominalPlanning;
+  int? nominal;
 
-  NominalPlanningModel(
+  NominalModel(
       {this.idCategoryExpenditure,
       this.categoryExpenditureName,
       this.keterangan,
-      this.nominalPlanning});
+      this.nominal});
 
-  NominalPlanningModel.fromJson(Map<String, dynamic> json) {
+  NominalModel.fromJson(Map<String, dynamic> json) {
     idCategoryExpenditure = json['id_category_expenditure'];
     categoryExpenditureName = json['category_expenditure_name'];
     keterangan = json['keterangan'];
-    nominalPlanning = json['nominal_planning'];
+    nominal = json['nominal'];
   }
 
   Map<String, dynamic> toJson() {
@@ -22,7 +22,7 @@ class NominalPlanningModel {
     data['id_category_expenditure'] = idCategoryExpenditure;
     data['category_expenditure_name'] = categoryExpenditureName;
     data['keterangan'] = keterangan;
-    data['nominal_planning'] = nominalPlanning;
+    data['nominal'] = nominal;
     return data;
   }
 }
