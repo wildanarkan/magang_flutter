@@ -253,10 +253,12 @@ class BusinessTripDetailPage extends StatelessWidget {
                         children: [
                           Obx(() {
                             return GestureDetector(
-                              onTap: () async {
+                              onTap: () {
                                 final fullUrl =
                                     '${URLs.photoDocumentUrl}${controller.photoDocument.value}';
-                                await controller.showFileDialog(context, fullUrl);
+                                    log(fullUrl);
+                                    print(fullUrl);
+                               controller.downloadAndOpenFile(fullUrl, controller.photoDocument.value);
                               },
                               child: Text(
                                 controller.photoDocument.value,

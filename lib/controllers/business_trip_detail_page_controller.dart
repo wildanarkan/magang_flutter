@@ -10,8 +10,8 @@ import 'package:get_storage/get_storage.dart';
 import 'package:http/http.dart' as http;
 import 'package:magang_flutter/common/urls.dart';
 import 'package:magang_flutter/controllers/business_trip_controller.dart';
+import 'package:open_file/open_file.dart';
 import 'package:path_provider/path_provider.dart';
-
 
 class BusinessTripDetailPageController extends GetxController {
   var isCityEnabled = false.obs;
@@ -28,6 +28,23 @@ class BusinessTripDetailPageController extends GetxController {
     photoDocument.value = photo;
     log(extendDay.value.toString());
     log(photoDocument.value.toString());
+  }
+
+  Future<void> downloadAndOpenFile(String url, String fileName) async {
+    try {
+      // Mendapatkan direktori dokumen aplikasi
+      final dir = await getApplicationDocumentsDirectory();
+      final file = File('${dir.path}/$fileName');
+
+      // Mengunduh file dari URL
+      final response = await http.get(Uri.parse(url));
+      await file.writeAsBytes(response.bodyBytes);
+
+      // Membuka file yang telah diunduh
+      OpenFile.open(file.path);
+    } catch (e) {
+      print('Error: $e');
+    }
   }
 
   Future<void> updateExtendedDay(int businessTripId, int newExtendDay) async {
