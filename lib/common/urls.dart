@@ -23,6 +23,7 @@ class URLs {
   static const leaveCategory = '${baseAppUrl}leave/category';
   static const leaveStore = '${baseAppUrl}leave/make/';
   static const business = '${baseAppUrl}business/';
+  static const tripToday = '${baseAppUrl}business/triptoday/';
   static const company = '${baseAppUrl}business/company';
   static const updateExtendedDay = '${baseAppUrl}business/extend/';
   static const companyCity = '${baseAppUrl}business/companycity/';

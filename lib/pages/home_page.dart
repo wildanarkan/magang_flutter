@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:magang_flutter/common/app_color.dart';
 import 'package:magang_flutter/common/urls.dart';
 import 'package:magang_flutter/controllers/home_page_controller.dart';
+import 'package:magang_flutter/pages/business_trip_detail_page.dart';
 import 'package:magang_flutter/widgets/build_card_info.dart';
 import 'package:magang_flutter/widgets/build_expansion_tile.dart';
 import 'package:magang_flutter/widgets/build_link.dart';
@@ -80,13 +81,64 @@ class HomePage extends GetView<NavigatorPageControllers> {
             color: AppColor.textBody,
           ),
         ),
-        children: const [
-          BuildCardInfo(
-            title: 'PT. Maju Jaya',
-            subtitle: 'Surabaya',
-            appStatus: 'onProgress',
-            useContainer: false,
-          ),
+        children: [
+          Obx(() {
+            if (homePageController.isLoading.value) {
+              return const SizedBox(
+                height: 80,
+                  child: Center(child: CircularProgressIndicator()));
+            } else if (homePageController.currentBusinessTrip.isEmpty) {
+              return Padding(
+                padding: const EdgeInsets.symmetric(vertical: 20),
+                child: Center(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Icon(
+                        Icons.no_transfer_outlined,
+                        size: 50,
+                        color: AppColor.textBody,
+                      ),
+                      Text(
+                        'Business trip not found',
+                        style: TextStyle(
+                          fontSize: 14,
+                          color: AppColor.textBody,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              );
+            } else {
+              final trips = homePageController.currentBusinessTrip;
+              return ListView.builder(
+                shrinkWrap: true,
+                physics: const NeverScrollableScrollPhysics(),
+                padding: const EdgeInsets.only(bottom: 20, top: 10),
+                itemCount: trips.length,
+                itemBuilder: (context, index) {
+                  final trip = trips[index];
+                  return BuildCardInfo(
+                    title: trip.companyName ?? 'Unknown Company',
+                    subtitle: trip.cityName ?? 'Unknown City',
+                    appStatus: trip.status ?? 'Unknown Status',
+                    startDate: trip.startDate ?? 'Null',
+                    endDate: trip.endDate ?? 'Null',
+                    useContainer: true,
+                    onTap: () {
+                      Get.to(
+                        () => BusinessTripDetailPage(
+                          trip: trip,
+                          status: trip.status,
+                        ),
+                      );
+                    },
+                  );
+                },
+              );
+            }
+          }),
         ],
       ),
     );

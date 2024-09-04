@@ -7,6 +7,7 @@ import 'package:get_storage/get_storage.dart';
 import 'package:http/http.dart' as http;
 import 'package:magang_flutter/common/urls.dart';
 import 'package:magang_flutter/controllers/business_trip_controller.dart';
+import 'package:magang_flutter/controllers/home_page_controller.dart';
 import 'package:magang_flutter/pages/business_trip_page.dart';
 import 'package:magang_flutter/pages/home_page.dart';
 import 'package:magang_flutter/pages/leave_history_page.dart';
@@ -123,6 +124,11 @@ class NavigatorPageControllers extends GetxController {
       final businessTripController = Get.find<BusinessTripController>();
       businessTripController.fetchBusinessTrips();
       businessTripController.resetFilter();
+    }
+     if (selectedPage.value == 0) {
+      log(selectedPage.toString());
+      final homePageController = Get.find<HomePageController>();
+      homePageController.fetchCurrentBusinessTrips();
     }
     selectedPage.value = index;
   }

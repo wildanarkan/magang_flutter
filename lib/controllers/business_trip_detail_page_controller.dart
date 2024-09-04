@@ -8,6 +8,7 @@ import 'package:get_storage/get_storage.dart';
 import 'package:http/http.dart' as http;
 import 'package:magang_flutter/common/urls.dart';
 import 'package:magang_flutter/controllers/business_trip_controller.dart';
+import 'package:magang_flutter/controllers/home_page_controller.dart';
 import 'package:open_file/open_file.dart';
 import 'package:path_provider/path_provider.dart';
 
@@ -83,6 +84,9 @@ class BusinessTripDetailPageController extends GetxController {
     if (isChangeExtend || isChangePhoto) {
       final BusinessTripController businessTripController =
           Get.find<BusinessTripController>();
+      final HomePageController homePageController =
+          Get.find<HomePageController>();
+      homePageController.fetchCurrentBusinessTrips();
       businessTripController.fetchBusinessTrips();
       log('Extend change : $isChangeExtend');
       log('Photo change : $isChangePhoto');
