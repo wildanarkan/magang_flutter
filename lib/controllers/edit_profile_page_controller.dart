@@ -23,7 +23,7 @@ class EditProfilePageController extends GetxController {
   @override
   void onInit() {
     super.onInit();
-    
+
     // Ambil data dari NavigatorPageControllers
     final navigatorController = Get.find<NavigatorPageControllers>();
     firstName.value = navigatorController.firstName.value;
@@ -74,16 +74,31 @@ class EditProfilePageController extends GetxController {
         phoneNumber.value = phoneNumberController.text;
         city.value = cityController.text;
         address.value = addressController.text;
-        
-        // Get.snackbar('Success', 'Profile updated successfully');
-        update(); // Notify listeners to update the UI
+
+        // Show success snackbar
+        Get.snackbar(
+          'Success',
+          'Profile updated successfully',
+        );
+
+        // Wait for snackbar to be visible before navigating back
+        await Future.delayed(const Duration(seconds: 1));
+
+        // Navigate back
+        Navigator.pop(Get.context!); // Use Navigator.pop as an alternative
         return true;
       } else {
-        Get.snackbar('Error', 'Failed to update profile: ${response.body}');
+        Get.snackbar(
+          'Error',
+          'Failed to update profile: ${response.body}',
+        );
         return false;
       }
     } catch (e) {
-      Get.snackbar('Error', 'An error occurred: $e');
+      Get.snackbar(
+        'Error',
+        'An error occurred: $e',
+      );
       return false;
     }
   }

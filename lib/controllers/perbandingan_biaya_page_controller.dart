@@ -54,6 +54,8 @@ class PerbandinganBiayaPageController extends GetxController {
     }
   }
 
+  
+
   Map<String, dynamic> getComparisonData() {
     return {
       'percentages': percentages.map((e) => e.toJson()).toList(),

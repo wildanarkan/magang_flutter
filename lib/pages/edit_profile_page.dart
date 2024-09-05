@@ -51,6 +51,7 @@ class EditProfilePage extends StatelessWidget {
                         ),
                         BuildTextField(
                           title: 'Phone Number',
+                          inputType: TextInputType.number,
                           controller: controller.phoneNumberController,
                           onChanged: (value) =>
                               controller.phoneNumber.value = value,

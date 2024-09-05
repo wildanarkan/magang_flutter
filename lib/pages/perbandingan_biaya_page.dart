@@ -17,9 +17,28 @@ class PerbandinganBiayaPage extends StatelessWidget {
     controller.fetchComparisonData(idBusinessTrip);
   }
 
-  String formatCurrency(String? value) {
-    // Format nilai dengan prefix "Rp"
-    return value != null ? 'Rp $value' : 'Rp 0';
+  String formatCurrency(String amount) {
+    // Hapus pemisah ribuan dan ganti koma desimal dengan titik
+    final normalizedAmount = amount.replaceAll('.', '').replaceAll(',', '.');
+
+    // Konversi string menjadi double
+    final doubleAmount = double.tryParse(normalizedAmount) ?? 0.0;
+
+    // Periksa apakah nilai tersebut negatif
+    final isNegative = doubleAmount < 0;
+
+    // Ambil nilai absolut dari angka
+    final absoluteValue = doubleAmount.abs();
+
+    // Format angka dengan dua desimal dan titik sebagai pemisah ribuan
+    final formattedValue = absoluteValue
+        .toStringAsFixed(2)
+        .replaceAll('.', ',') // Ganti titik desimal dengan koma
+        .replaceAll(RegExp(r'\B(?=(\d{3})+(?!\d))'),
+            '.'); // Tambahkan titik sebagai pemisah ribuan
+
+    // Kembalikan nilai dengan "Rp" di depan dan tanda minus di belakang jika negatif
+    return isNegative ? '- Rp $formattedValue' : 'Rp $formattedValue';
   }
 
   @override
@@ -38,11 +57,12 @@ class PerbandinganBiayaPage extends StatelessWidget {
             (comparisonData['percentages'] as List<dynamic>)
                 .map((data) => BusinessPercentageModel.fromJson(data))
                 .toList();
+
         final totalNominalPlanning =
-            comparisonData['totalNominalPlanning'] as String?;
+            comparisonData['totalNominalPlanning'] as String;
         final totalNominalRealization =
-            comparisonData['totalNominalRealization'] as String?;
-        final difference = comparisonData['difference'] as String?;
+            comparisonData['totalNominalRealization'] as String;
+        final difference = comparisonData['difference'] as String;
 
         return Column(
           children: [
@@ -50,19 +70,21 @@ class PerbandinganBiayaPage extends StatelessWidget {
               child: ListView(
                 padding: const EdgeInsets.all(16),
                 children: [
-                  // List of Biaya Cards
                   ...percentages.map((percentage) {
+                    final estimasi =
+                        formatCurrency(percentage.totalNominalPlanning ?? '0');
+                    final realisasi = formatCurrency(
+                        percentage.totalNominalRealization ?? '0');
+
                     return BuildBiayaCard(
                       title: percentage.categoryName ?? 'No Title',
                       persentase: percentage.percentage ?? '0',
-                      estimasi: formatCurrency(percentage.totalNominalPlanning),
-                      realisasi:
-                          formatCurrency(percentage.totalNominalRealization),
+                      estimasi: estimasi,
+                      realisasi: realisasi,
                       minusPersentase: (percentage.percentage != null &&
                           percentage.percentage!.startsWith('-')),
                     );
                   }),
-
                   const SizedBox(height: 16),
                 ],
               ),

@@ -84,7 +84,7 @@ class AskLeavePageController extends GetxController {
         Get.back();
         Get.snackbar('Success', 'Leave request successfully created');
       } else {
-        Get.snackbar('Error', 'Failed to create leave: ${response.body}');
+        Get.snackbar('Error', 'Failed to create leave, try adding data that has not been filled in');
       }
     } catch (e) {
       Get.snackbar('Error', 'An error occurred: $e');

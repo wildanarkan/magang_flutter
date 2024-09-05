@@ -10,9 +10,8 @@ import 'package:magang_flutter/common/urls.dart';
 import 'package:magang_flutter/controllers/business_trip_detail_page_controller.dart';
 import 'package:magang_flutter/controllers/home_page_controller.dart';
 import 'package:magang_flutter/data/models/business_trip_model.dart';
-import 'package:magang_flutter/pages/estimasi_biaya_page.dart';
+import 'package:magang_flutter/pages/nominal_page.dart';
 import 'package:magang_flutter/pages/perbandingan_biaya_page.dart';
-import 'package:magang_flutter/pages/realisasi_biaya_page.dart';
 import 'package:magang_flutter/widgets/build_button.dart';
 import 'package:magang_flutter/widgets/build_row_text_icon.dart';
 import 'package:magang_flutter/widgets/build_test_appbar.dart';
@@ -648,8 +647,9 @@ class BusinessTripDetailPage extends StatelessWidget {
                           context: context,
                           title: 'Perkiraan',
                           onPressed: () {
-                            Get.to(() => EstimasiBiayaPage(
-                                idBusinessTrip: trip.idBusinessTrip ?? 0));
+                            Get.to(() => NominalPage(
+                                idBusinessTrip: trip.idBusinessTrip ?? 0,
+                                biayaType: 'estimasi'));
                           },
                         ),
                       ),
@@ -659,8 +659,9 @@ class BusinessTripDetailPage extends StatelessWidget {
                           context: context,
                           title: 'Realisasi',
                           onPressed: () {
-                            Get.to(() => RealisasiBiayaPage(
-                                idBusinessTrip: trip.idBusinessTrip ?? 0));
+                            Get.to(() => NominalPage(
+                                idBusinessTrip: trip.idBusinessTrip ?? 0,
+                                biayaType: 'realisasi'));
                           },
                         ),
                       ),

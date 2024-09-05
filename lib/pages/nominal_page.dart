@@ -1,25 +1,35 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:magang_flutter/common/app_color.dart';
-import 'package:magang_flutter/controllers/realisasi_biaya_page_controller.dart';
+import 'package:magang_flutter/controllers/nominal_page_controller.dart'; // Import the unified controller
 import 'package:magang_flutter/pages/edit_biaya_page.dart';
 import 'package:magang_flutter/widgets/build_expansion_biaya.dart';
 import 'package:magang_flutter/widgets/build_test_appbar.dart';
 import 'package:magang_flutter/widgets/build_total.dart';
 
-class RealisasiBiayaPage extends StatelessWidget {
-  final int idBusinessTrip; // Tambahkan parameter untuk ID business trip
+class NominalPage extends StatelessWidget {
+  final int idBusinessTrip;
+  final String biayaType; // 'realisasi' atau 'estimasi'
 
-  const RealisasiBiayaPage({super.key, required this.idBusinessTrip});
+  const NominalPage({
+    super.key,
+    required this.idBusinessTrip,
+    required this.biayaType,
+  });
 
   @override
   Widget build(BuildContext context) {
-    final RealisasiBiayaPageController controller =
-        Get.put(RealisasiBiayaPageController(idBusinessTrip: idBusinessTrip));
+    // Use the unified controller
+    final NominalPageController controller = Get.put(
+      NominalPageController(
+        idBusinessTrip: idBusinessTrip,
+        biayaType: biayaType,
+      ),
+    );
 
     return Scaffold(
-      appBar: const BuildTestAppbar(
-        title: 'Realisasi Biaya',
+      appBar: BuildTestAppbar(
+        title: biayaType == 'realisasi' ? 'Realisasi Biaya' : 'Estimasi Biaya',
       ),
       body: Stack(
         children: [
@@ -29,8 +39,6 @@ class RealisasiBiayaPage extends StatelessWidget {
             }
 
             final groupedData = controller.groupedData.value;
-            print('Grouped Data in UI: $groupedData'); // Log data in UI
-
             if (groupedData.isEmpty) {
               return const Center(child: Text('Tidak ada data'));
             }
@@ -51,7 +59,8 @@ class RealisasiBiayaPage extends StatelessWidget {
                     ),
                   ),
                   subtitle: Text(
-                    controller.formatRp(items.fold<double>(0.0, (sum, item) {
+                    controller
+                        .formatCurrency(items.fold<double>(0.0, (sum, item) {
                       final cleanNominal = item.nominal?.toString() ?? '0';
                       final normalizedNominal =
                           cleanNominal.replaceAll(',', '.');
@@ -68,8 +77,8 @@ class RealisasiBiayaPage extends StatelessWidget {
                       onTap: () async {
                         final result = await Get.to(() => EditBiayaPage(
                               idBusinessTrip: idBusinessTrip,
-                              idItem: item.id, // Tambahkan idItem
-                              isEditMode: true, // Menandakan mode edit
+                              idItem: item.id,
+                              isEditMode: true,
                             ));
                         if (result != null && result) {
                           controller.updateData();
@@ -87,7 +96,8 @@ class RealisasiBiayaPage extends StatelessWidget {
                           ),
                         ),
                         trailing: Text(
-                          controller.formatRp(item.nominal),
+                          controller
+                              .formatCurrency(item.nominal?.toDouble() ?? 0.0),
                           style: TextStyle(
                             color: AppColor.textTitle,
                             fontSize: 14,
@@ -106,14 +116,15 @@ class RealisasiBiayaPage extends StatelessWidget {
               alignment: Alignment.bottomCenter,
               child: BuildTotal(
                 total: controller.calculateTotal(),
-                onPressed: () async {
-                  final result = await Get.to(
-                      () => EditBiayaPage(idBusinessTrip: idBusinessTrip));
-                  if (result != null && result) {
-                    controller
-                        .updateData(); // Memanggil updateData untuk mendapatkan data terbaru
-                  }
-                },
+                onPressed: biayaType == 'realisasi'
+                    ? () async {
+                        final result = await Get.to(() =>
+                            EditBiayaPage(idBusinessTrip: idBusinessTrip));
+                        if (result != null && result) {
+                          controller.updateData();
+                        }
+                      }
+                    : null,
               ),
             );
           }),

@@ -8,7 +8,7 @@ import 'package:get_storage/get_storage.dart';
 import 'package:http/http.dart' as http;
 import 'package:image_picker/image_picker.dart';
 import 'package:magang_flutter/common/urls.dart';
-import 'package:magang_flutter/controllers/realisasi_biaya_page_controller.dart';
+import 'package:magang_flutter/controllers/nominal_page_controller.dart';
 
 class EditBiayaPageController extends GetxController {
   final int idBusinessTrip; // Add instance variable for idBusinessTrip
@@ -86,11 +86,9 @@ class EditBiayaPageController extends GetxController {
       final request = http.MultipartRequest('POST', uri)
         ..headers['Authorization'] = 'Bearer $token';
 
-      // Tambahkan field lainnya ke request
       request.fields['keterangan'] = keteranganController.value.text;
       request.fields['nominal'] = amountController.value.text;
 
-      // Jika ada gambar, tambahkan ke request
       if (photoProof != null) {
         final file = await http.MultipartFile.fromPath(
           'photo_proof',
@@ -103,10 +101,9 @@ class EditBiayaPageController extends GetxController {
 
       if (response.statusCode == 200) {
         Get.back();
-        final RealisasiBiayaPageController realisasiBiayaPageController =
-            Get.find<RealisasiBiayaPageController>();
-        realisasiBiayaPageController
-            .fetchNominalRealizationData(idBusinessTrip);
+        final NominalPageController nominalPageController =
+            Get.find<NominalPageController>();
+        nominalPageController.fetchNominalData(idBusinessTrip);
         Get.snackbar('Success', 'Data successfully updated');
       } else {
         Get.snackbar('Error', 'Failed to update Data');
@@ -178,16 +175,14 @@ class EditBiayaPageController extends GetxController {
 
   // Method to submit the edited expense data
   Future<void> postRealization() async {
-    isLoading.value = true; // Start loading
+    isLoading.value = true;
     try {
       final token = GetStorage().read('accessToken');
-      final uri = Uri.parse(URLs.addBusiness); // Update with your API URL
+      final uri = Uri.parse(URLs.addBusiness);
 
-      // Create a multipart request
       final request = http.MultipartRequest('POST', uri)
         ..headers['Authorization'] = 'Bearer $token';
 
-      // Add fields to the request
       request.fields['id_business_trip'] = idBusinessTrip.toString();
       request.fields['id_category_expenditure'] = _apiData
           .firstWhere((item) => item['name'] == selectedCompany.value)['id']
@@ -195,7 +190,6 @@ class EditBiayaPageController extends GetxController {
       request.fields['nominal'] = amountController.value.text;
       request.fields['keterangan'] = keteranganController.value.text;
 
-      // Add file if available
       if (images.isNotEmpty) {
         final file = http.MultipartFile.fromBytes(
           'photo_proof',
@@ -208,17 +202,16 @@ class EditBiayaPageController extends GetxController {
       final response = await request.send();
 
       if (response.statusCode == 201) {
-        Get.back(result: true); // Return to the previous screen with success
+        Get.back(result: true);
         Get.snackbar('Success', 'Expense successfully updated');
       } else {
         final responseBody = await response.stream.bytesToString();
-        log(response.statusCode.toString());
         Get.snackbar('Error', 'Failed to update expense: $responseBody');
       }
     } catch (e) {
       Get.snackbar('Error', 'An error occurred: $e');
     } finally {
-      isLoading.value = false; // Stop loading
+      isLoading.value = false;
     }
   }
 }
