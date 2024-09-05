@@ -9,10 +9,14 @@ import 'package:http/http.dart' as http;
 import 'package:magang_flutter/common/urls.dart';
 import 'package:magang_flutter/controllers/business_trip_controller.dart';
 import 'package:magang_flutter/controllers/home_page_controller.dart';
+import 'package:magang_flutter/data/models/business_trip_model.dart';
 import 'package:open_file/open_file.dart';
 import 'package:path_provider/path_provider.dart';
 
 class BusinessTripDetailPageController extends GetxController {
+  final BusinessTripModel trip;
+
+  BusinessTripDetailPageController({required this.trip});
   var isCityEnabled = false.obs;
   var extendedController = TextEditingController().obs;
   var extendDay = 0.obs;
@@ -20,6 +24,8 @@ class BusinessTripDetailPageController extends GetxController {
   bool isChangePhoto = false;
   var photoDocument = ''.obs;
   var selectedFile = Rxn<File>();
+  final storage = GetStorage();
+  final isSaved = false.obs;
 
   // Panggil ini saat halaman dimuat untuk menginisialisasi nilai extendDay
   void setInitialVariable(int day, String photo) {
@@ -27,6 +33,11 @@ class BusinessTripDetailPageController extends GetxController {
     photoDocument.value = photo;
     log(extendDay.value.toString());
     log(photoDocument.value.toString());
+  }
+
+  bool checkIfSaved(BusinessTripModel trip) {
+    List<dynamic> savedTrips = storage.read('savedBusinessTrips') ?? [];
+    return savedTrips.any((item) => item['id'] == trip.idBusinessTrip);
   }
 
   Future<void> downloadAndOpenFile(String url, String fileName) async {
@@ -80,21 +91,30 @@ class BusinessTripDetailPageController extends GetxController {
   }
 
   @override
-  void onClose() {
+  void onClose() async {
     if (isChangeExtend || isChangePhoto) {
       final BusinessTripController businessTripController =
           Get.find<BusinessTripController>();
       final HomePageController homePageController =
           Get.find<HomePageController>();
       homePageController.fetchCurrentBusinessTrips();
-      businessTripController.fetchBusinessTrips();
-      log('Extend change : $isChangeExtend');
-      log('Photo change : $isChangePhoto');
+      await businessTripController.fetchBusinessTrips();
+      log('sudah refresh business trip');
+
+      final updatedTrip =
+          businessTripController.getTripById(trip.idBusinessTrip!);
+      if (updatedTrip != null) {
+        homePageController.refreshSavedTrips(updatedTrip);
+      }
       isChangeExtend = false; // Reset isChangeExtend setelah fetching
       isChangePhoto = false; // Reset isChangeExtend setelah fetching
     }
     log(isChangeExtend.toString());
     log(isChangePhoto.toString());
+    print('Semua data di GetStorage:');
+    storage.getKeys().forEach((key) {
+      print('$key: ${storage.read(key)}');
+    });
 
     super.onClose();
   }

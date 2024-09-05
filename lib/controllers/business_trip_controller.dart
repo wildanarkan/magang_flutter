@@ -15,7 +15,7 @@ class BusinessTripController extends GetxController {
   var selectedStartDate = Rxn<DateTime>();
   var selectedCompany = Rxn<String>();
   var filteredBusinessTrips = <BusinessTripModel>[].obs;
-  var noData = false.obs;  // Menyimpan apakah ada data yang sesuai dengan filter atau tidak
+  var noData = false.obs;
 
   var startDateController = TextEditingController().obs;
   var companyItem = <String>[].obs;
@@ -73,7 +73,6 @@ class BusinessTripController extends GetxController {
         List<dynamic> jsonData = json.decode(response.body);
         businessTrips.value =
             jsonData.map((json) => BusinessTripModel.fromJson(json)).toList();
-        log(jsonData.toString());
         filterBusinessTrips(); // Apply filter after fetching data
       } else {
         // Handle error
@@ -84,6 +83,10 @@ class BusinessTripController extends GetxController {
     } finally {
       isLoading(false);
     }
+  }
+
+  BusinessTripModel? getTripById(int id) {
+    return businessTrips.firstWhereOrNull((trip) => trip.idBusinessTrip == id);
   }
 
   void filterBusinessTrips() {

@@ -31,6 +31,7 @@ class NavigatorPageControllers extends GetxController {
   RxString profilePhotoUrl = 'dudul3.jpeg'.obs;
   String? accessToken; // Tambahkan ini untuk menyimpan token
   int? userId; // Tambahkan ini untuk menyimpan ID pengguna
+  final storage = GetStorage();
 
   @override
   void onInit() {
@@ -51,18 +52,21 @@ class NavigatorPageControllers extends GetxController {
       );
       if (response.statusCode == 200) {
         final data = json.decode(response.body);
-        print('User data: $data');
         userId = data['result']['id']; // Ambil ID pengguna
         nik.value = data['result']['nik'] ?? 'No Data';
         city.value = data['result']['city'] ?? 'No Data';
         profilePhotoUrl.value = data['result']['profile_photo'] ?? '';
 
-        log(profilePhotoUrl.value);
+        log('Photo url :${profilePhotoUrl.value}');
 
         // Panggil fetchProfileData dengan ID
         if (userId != null) {
           GetStorage().write('userId',
               '$userId'); // Ganti '1' dengan ID pengguna yang sebenarnya
+          print('Semua data di GetStorage:');
+          storage.getKeys().forEach((key) {
+            print('$key: ${storage.read(key)}');
+          });
           fetchProfileData(userId!);
         }
       } else {
@@ -112,7 +116,7 @@ class NavigatorPageControllers extends GetxController {
   }
 
   List<Widget> page = [
-     HomePage(),
+    HomePage(),
     BusinessTripPage(),
     const LeaveHistoryPage(),
     const ProfilePage(),
@@ -125,7 +129,7 @@ class NavigatorPageControllers extends GetxController {
       businessTripController.fetchBusinessTrips();
       businessTripController.resetFilter();
     }
-     if (selectedPage.value == 0) {
+    if (selectedPage.value == 0) {
       log(selectedPage.toString());
       final homePageController = Get.find<HomePageController>();
       homePageController.fetchCurrentBusinessTrips();

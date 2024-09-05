@@ -131,6 +131,12 @@ class ProfilePage extends StatelessWidget {
                         borderColor: AppColor.decline,
                         width: 320,
                         onPressed: () {
+                          // JIKA INGIN SAVED BUSINESS TRIPS DI HAPUS SAAT LOGOUT
+                          // final HomePageController homePageController =
+                          //     Get.find<HomePageController>();
+                          // homePageController.savedBusinessTrips.clear();
+                          // print(homePageController.savedBusinessTrips.length);
+
                           loginController.logout();
                         },
                       ),

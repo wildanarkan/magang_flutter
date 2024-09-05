@@ -85,7 +85,7 @@ class HomePage extends GetView<NavigatorPageControllers> {
           Obx(() {
             if (homePageController.isLoading.value) {
               return const SizedBox(
-                height: 80,
+                  height: 80,
                   child: Center(child: CircularProgressIndicator()));
             } else if (homePageController.currentBusinessTrip.isEmpty) {
               return Padding(
@@ -171,19 +171,44 @@ class HomePage extends GetView<NavigatorPageControllers> {
           const SizedBox(
             height: 10,
           ),
-          const BuildCardInfo(
-            title: 'PT. Maju Jaya',
-            subtitle: 'Surabaya',
-            appStatus: 'onProgress',
-          ),
-          const SizedBox(
-            height: 15,
-          ),
-          const BuildCardInfo(
-            title: 'PT. Sidomuncul',
-            subtitle: 'Bandung',
-            appStatus: 'complete',
-          ),
+          Obx(() {
+            // Cek apakah savedBusinessTrips kosong
+            if (homePageController.savedBusinessTrips.isEmpty) {
+              return  SizedBox(
+                height: 80,
+                child: Center(
+                  child: Text(
+                    "You don't have any saved business trip",
+                    style: TextStyle(
+                      fontSize: 12,
+                      color: AppColor.textBody,
+                    ),
+                    textAlign: TextAlign.center,
+                  ),
+                ),
+              );
+            } else {
+              return Column(
+                children: homePageController.savedBusinessTrips.map((trip) {
+                  return BuildCardInfo(
+                    title: trip.companyName ?? 'Unknown Company',
+                    subtitle: trip.cityName ?? 'Unknown City',
+                    appStatus: trip.status ?? 'Unknown Status',
+                    startDate: trip.startDate ?? '0000-00-00',
+                    endDate: trip.endDate ?? '0000-00-00',
+                    onTap: () {
+                      Get.to(
+                        () => BusinessTripDetailPage(
+                          trip: trip,
+                          status: trip.status,
+                        ),
+                      );
+                    },
+                  );
+                }).toList(),
+              );
+            }
+          }),
         ],
       ),
     );

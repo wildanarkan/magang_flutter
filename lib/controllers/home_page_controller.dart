@@ -11,6 +11,7 @@ import 'package:magang_flutter/data/models/business_trip_model.dart';
 
 class HomePageController extends GetxController {
   var currentBusinessTrip = <BusinessTripModel>[].obs;
+  var savedBusinessTrips = <BusinessTripModel>[].obs;
   var isLoading = true.obs;
 
   var startTime = ''.obs;
@@ -21,11 +22,54 @@ class HomePageController extends GetxController {
   void onInit() {
     super.onInit();
     fetchCurrentBusinessTrips();
+    loadSavedBusinessTrips();
     _loadStartTime();
     _updateEndTime();
     Timer.periodic(const Duration(minutes: 1), (timer) {
       _updateEndTime();
     });
+  }
+
+  void loadSavedBusinessTrips() {
+    List<dynamic> savedTripsData =
+        GetStorage().read('savedBusinessTrips') ?? [];
+    savedBusinessTrips.value =
+        savedTripsData.map((trip) => BusinessTripModel.fromJson(trip)).toList();
+  }
+
+  bool checkIfSaved(BusinessTripModel trip) {
+    return savedBusinessTrips
+        .any((savedTrip) => savedTrip.idBusinessTrip == trip.idBusinessTrip);
+  }
+
+  void toggleSaveTrip(BusinessTripModel trip) {
+    if (checkIfSaved(trip)) {
+      // Remove from saved trips
+      savedBusinessTrips.removeWhere(
+          (savedTrip) => savedTrip.idBusinessTrip == trip.idBusinessTrip);
+      Get.snackbar('Success', 'Remove at saved business trip');
+    } else {
+      // Add to saved trips
+      savedBusinessTrips.add(trip);
+      Get.snackbar('Success', 'Add at saved business trip');
+    }
+    updateStorage();
+  }
+
+  void refreshSavedTrips(BusinessTripModel trip) {
+    if (checkIfSaved(trip)) {
+      savedBusinessTrips.removeWhere(
+          (savedTrip) => savedTrip.idBusinessTrip == trip.idBusinessTrip);
+      savedBusinessTrips.add(trip);
+      log('trip saved');
+    } else {
+      log('trip tidak saved');
+    }
+  }
+
+  void updateStorage() {
+    GetStorage().write('savedBusinessTrips',
+        savedBusinessTrips.map((trip) => trip.toJson()).toList());
   }
 
   Future<void> fetchCurrentBusinessTrips() async {
@@ -40,7 +84,11 @@ class HomePageController extends GetxController {
       );
 
       if (response.statusCode == 200) {
-        log('Success fetch trip');
+        log('Success fetch current trip');
+        print('Semua data di GetStorage:');
+        storage.getKeys().forEach((key) {
+          print('$key: ${storage.read(key)}');
+        });
         List<dynamic> jsonData = json.decode(response.body);
         currentBusinessTrip.value =
             jsonData.map((json) => BusinessTripModel.fromJson(json)).toList();

@@ -8,6 +8,7 @@ import 'package:magang_flutter/common/app_color.dart';
 import 'package:magang_flutter/common/app_status.dart';
 import 'package:magang_flutter/common/urls.dart';
 import 'package:magang_flutter/controllers/business_trip_detail_page_controller.dart';
+import 'package:magang_flutter/controllers/home_page_controller.dart';
 import 'package:magang_flutter/data/models/business_trip_model.dart';
 import 'package:magang_flutter/pages/estimasi_biaya_page.dart';
 import 'package:magang_flutter/pages/perbandingan_biaya_page.dart';
@@ -18,13 +19,14 @@ import 'package:magang_flutter/widgets/build_test_appbar.dart';
 import 'package:magang_flutter/widgets/build_text_field.dart';
 
 class BusinessTripDetailPage extends StatelessWidget {
-  final BusinessTripDetailPageController controller =
-      Get.put(BusinessTripDetailPageController());
+  final HomePageController homePageController = Get.find<HomePageController>();
+  final BusinessTripDetailPageController controller;
 
   final BusinessTripModel trip;
   final String? status;
 
-  BusinessTripDetailPage({super.key, required this.trip, this.status}) {
+  BusinessTripDetailPage({super.key, required this.trip, this.status})
+      : controller = Get.put(BusinessTripDetailPageController(trip: trip)) {
     controller.setInitialVariable(
       trip.extendDay ?? 0,
       trip.photoDocument ?? 'No photo document',
@@ -37,11 +39,19 @@ class BusinessTripDetailPage extends StatelessWidget {
       appBar: BuildTestAppbar(
         title: 'Business Trip Detail',
         actions: [
-          Icon(
-            Icons.star_rounded,
-            size: 32,
-            color: AppColor.primary,
-          ),
+          Obx(() {
+            bool isSaved = homePageController.checkIfSaved(trip);
+            return IconButton(
+              icon: Icon(
+                isSaved ? Icons.star_rounded : Icons.star_border_rounded,
+                size: 32,
+                color: AppColor.primary,
+              ),
+              onPressed: () {
+                homePageController.toggleSaveTrip(trip);
+              },
+            );
+          }),
           const SizedBox(
             width: 10,
           )
