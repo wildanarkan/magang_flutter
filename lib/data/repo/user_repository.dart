@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:developer';
 
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
@@ -20,6 +21,9 @@ class UserRepository extends GetxService {
       if (response.statusCode == 200) {
         final data = json.decode(response.body);
         final loginModel = LoginModel.fromJson(data);
+        final fullname = '${loginModel.result!.user!.firstName!} ${loginModel.result!.user!.lastName!}';
+        Get.snackbar('Success', 'Login berhasil selamat datang $fullname');
+        log(fullname);
         return loginModel.result?.accessToken; 
       } else {
         print('Login failed: ${response.statusCode}');

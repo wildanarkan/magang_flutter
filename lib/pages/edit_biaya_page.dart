@@ -106,6 +106,21 @@ class EditBiayaPage extends StatelessWidget {
                                       URLs.photoProofUrl +
                                           controller.existingPhotoUrl.value,
                                       width: double.infinity,
+                                      height: 129,
+                                      fit: BoxFit.cover,
+                                      loadingBuilder:
+                                          (context, child, loadingProgress) {
+                                        if (loadingProgress == null) {
+                                          return child; // Gambar sudah dimuat
+                                        }
+                                        return const SizedBox(
+                                          height: 120,
+                                          child: Center(
+                                            child:
+                                                CircularProgressIndicator(), // Tampilkan loading indikator
+                                          ),
+                                        );
+                                      },
                                     ),
                                   );
                                 } else {
@@ -147,7 +162,7 @@ class EditBiayaPage extends StatelessWidget {
                                 }
                               }),
                             ),
-                          )
+                          ),
                         ],
                       ),
                     ),

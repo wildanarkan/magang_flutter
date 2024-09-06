@@ -18,6 +18,7 @@ class PayrollHistoryPageController extends GetxController {
   }
 
   Future<void> fetchPayrolls() async {
+    isLoading.value = true; // Mulai loading
     final userId = GetStorage().read('userId');
     if (userId == null) {
       print('User ID not found');
@@ -47,6 +48,8 @@ class PayrollHistoryPageController extends GetxController {
       }
     } catch (e) {
       print('Error occurred: $e');
+    } finally {
+      isLoading.value = false; // Selesai loading
     }
   }
 

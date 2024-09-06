@@ -8,6 +8,7 @@ import 'package:magang_flutter/pages/business_trip_detail_page.dart';
 import 'package:magang_flutter/widgets/build_card_info.dart';
 import 'package:magang_flutter/widgets/build_expansion_tile.dart';
 import 'package:magang_flutter/widgets/build_link.dart';
+import 'package:magang_flutter/widgets/build_null_safety_icon.dart';
 
 import '../controllers/navigator_page_controllers.dart';
 
@@ -88,27 +89,12 @@ class HomePage extends GetView<NavigatorPageControllers> {
                   height: 80,
                   child: Center(child: CircularProgressIndicator()));
             } else if (homePageController.currentBusinessTrip.isEmpty) {
-              return Padding(
-                padding: const EdgeInsets.symmetric(vertical: 20),
-                child: Center(
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Icon(
-                        Icons.no_transfer_outlined,
-                        size: 50,
-                        color: AppColor.textBody,
-                      ),
-                      Text(
-                        'Business trip not found',
-                        style: TextStyle(
-                          fontSize: 14,
-                          color: AppColor.textBody,
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
+              return const BuildNullSafetyIcon(
+                icon: Icons.no_transfer_outlined,
+                iconSize: 50,
+                text: 'Business trip not found',
+                textSize: 14,
+                padding: EdgeInsets.symmetric(vertical: 20),
               );
             } else {
               final trips = homePageController.currentBusinessTrip;
@@ -125,7 +111,7 @@ class HomePage extends GetView<NavigatorPageControllers> {
                     appStatus: trip.status ?? 'Unknown Status',
                     startDate: trip.startDate ?? 'Null',
                     endDate: trip.endDate ?? 'Null',
-                    useContainer: true,
+                    useContainer: false,
                     onTap: () {
                       Get.to(
                         () => BusinessTripDetailPage(
@@ -174,7 +160,7 @@ class HomePage extends GetView<NavigatorPageControllers> {
           Obx(() {
             // Cek apakah savedBusinessTrips kosong
             if (homePageController.savedBusinessTrips.isEmpty) {
-              return  SizedBox(
+              return SizedBox(
                 height: 80,
                 child: Center(
                   child: Text(

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:magang_flutter/controllers/payroll_history_page_controller.dart';
 import 'package:magang_flutter/pages/payroll_detail_page.dart';
+import 'package:magang_flutter/widgets/build_null_safety_icon.dart';
 import 'package:magang_flutter/widgets/build_payroll_history.dart';
 import 'package:magang_flutter/widgets/build_test_appbar.dart';
 
@@ -19,8 +20,16 @@ class PayrollHistoryPage extends StatelessWidget {
       ),
       body: Obx(() {
         // Menambahkan tampilan loading jika payrolls kosong
-        if (controller.payrolls.isEmpty) {
+        if (controller.isLoading.value) {
           return const Center(child: CircularProgressIndicator());
+        }
+
+        if (controller.payrolls.isEmpty) {
+          return const BuildNullSafetyIcon(
+            icon: Icons.block_rounded,
+            spacing: 10,
+            text: 'Payroll History not found',
+          );
         }
 
         return ListView.builder(

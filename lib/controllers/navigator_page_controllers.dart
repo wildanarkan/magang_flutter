@@ -57,16 +57,16 @@ class NavigatorPageControllers extends GetxController {
         city.value = data['result']['city'] ?? 'No Data';
         profilePhotoUrl.value = data['result']['profile_photo'] ?? '';
 
-        log('Photo url :${profilePhotoUrl.value}');
+        log('User Id :${userId.toString()}');
 
         // Panggil fetchProfileData dengan ID
         if (userId != null) {
-          GetStorage().write('userId',
-              '$userId'); // Ganti '1' dengan ID pengguna yang sebenarnya
+          GetStorage().write('userId', '$userId');
           print('Semua data di GetStorage:');
           storage.getKeys().forEach((key) {
             print('$key: ${storage.read(key)}');
           });
+
           fetchProfileData(userId!);
         }
       } else {
@@ -138,9 +138,9 @@ class NavigatorPageControllers extends GetxController {
   }
 
   // Method to refresh data after update
-  void refreshProfileData() {
-    if (userId != null) {
-      fetchProfileData(userId!);
-    }
-  }
+  // void refreshProfileData() {
+  //   if (userId != null) {
+  //     fetchProfileData(userId!);
+  //   }
+  // }
 }

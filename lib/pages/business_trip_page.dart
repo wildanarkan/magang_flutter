@@ -7,6 +7,7 @@ import 'package:magang_flutter/pages/business_trip_detail_page.dart';
 import 'package:magang_flutter/widgets/build_button.dart';
 import 'package:magang_flutter/widgets/build_card_info.dart';
 import 'package:magang_flutter/widgets/build_icon_rounded_add.dart';
+import 'package:magang_flutter/widgets/build_null_safety_icon.dart';
 import 'package:magang_flutter/widgets/build_test_appbar.dart';
 
 class BusinessTripPage extends StatelessWidget {
@@ -48,24 +49,9 @@ class BusinessTripPage extends StatelessWidget {
           if (controller.isLoading.value) {
             return const Center(child: CircularProgressIndicator());
           } else if (controller.noData.value) {
-            return Center(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Icon(
-                    Icons.no_transfer_outlined,
-                    size: 60,
-                    color: AppColor.textBody,
-                  ),
-                  Text(
-                    'Business trip not found',
-                    style: TextStyle(
-                      fontSize: 17,
-                      color: AppColor.textBody,
-                    ),
-                  ),
-                ],
-              ),
+            return const BuildNullSafetyIcon(
+              icon: Icons.no_transfer_outlined,
+              text: 'Business trip not found',
             );
           } else {
             final trips = controller.filteredBusinessTrips.isEmpty

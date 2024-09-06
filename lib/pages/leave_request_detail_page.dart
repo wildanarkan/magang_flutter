@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 import 'package:magang_flutter/common/app_color.dart';
 import 'package:magang_flutter/common/app_status.dart';
 import 'package:magang_flutter/controllers/leave_request_detail_controller_page.dart';
+import 'package:magang_flutter/controllers/navigator_page_controllers.dart';
 import 'package:magang_flutter/data/models/leave_model.dart';
 import 'package:magang_flutter/widgets/build_button.dart';
 import 'package:magang_flutter/widgets/build_link.dart';
@@ -18,6 +19,8 @@ class LeaveRequestDetailPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final NavigatorPageControllers navigatorPageControllers =
+        Get.find<NavigatorPageControllers>();
     final controller = Get.put(LeaveRequestDetailController()); // Tambahkan ini
 
     return Scaffold(
@@ -124,20 +127,23 @@ class LeaveRequestDetailPage extends StatelessWidget {
           ),
           Column(
             children: [
-              Padding(
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 35, vertical: 20),
-                child: BuildButton(
-                  context: context,
-                  title: 'Accept',
-                  width: 320,
-                  onPressed: () async {
-                    await controller.updateLeaveStatus(leave.id!, 'Approved');
-                    log(leave.id.toString());
-                    log('Approved');
-                  },
+              if (navigatorPageControllers.role.value == 'Junior')
+                Padding(
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 35, vertical: 20),
+                  child: BuildButton(
+                    context: context,
+                    title: 'Accept',
+                    width: 320,
+                    onPressed: () async {
+                      await controller.updateLeaveStatus(leave.id!, 'Approved');
+                      log(leave.id.toString());
+                      log('Approved');
+                    },
+                  ),
                 ),
-              ),
+              if (navigatorPageControllers.role.value == 'Junior')
+
               Padding(
                 padding: const EdgeInsets.fromLTRB(35, 0, 35, 20),
                 child: BuildButton(
@@ -151,7 +157,6 @@ class LeaveRequestDetailPage extends StatelessWidget {
                     await controller.updateLeaveStatus(leave.id!, 'Declined');
                     log(leave.id.toString());
                     log('Declined');
-                    
                   },
                 ),
               ),
@@ -191,7 +196,7 @@ Widget _getAppStatusWidget(String status) {
       return AppStatus.pending();
     case 'Approved':
       return AppStatus.complete('Approved');
-      case 'Canceled':
+    case 'Canceled':
       return AppStatus.canceled('Canceled');
     default:
       return const SizedBox.shrink();

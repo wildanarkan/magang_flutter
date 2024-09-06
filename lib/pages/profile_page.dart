@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:magang_flutter/common/app_color.dart';
 import 'package:magang_flutter/common/urls.dart';
+import 'package:magang_flutter/controllers/home_page_controller.dart';
 import 'package:magang_flutter/controllers/login_page_controller.dart';
 import 'package:magang_flutter/controllers/navigator_page_controllers.dart';
 import 'package:magang_flutter/controllers/profile_page_controller.dart';
@@ -131,11 +132,10 @@ class ProfilePage extends StatelessWidget {
                         borderColor: AppColor.decline,
                         width: 320,
                         onPressed: () {
-                          // JIKA INGIN SAVED BUSINESS TRIPS DI HAPUS SAAT LOGOUT
-                          // final HomePageController homePageController =
-                          //     Get.find<HomePageController>();
-                          // homePageController.savedBusinessTrips.clear();
-                          // print(homePageController.savedBusinessTrips.length);
+                          final HomePageController homePageController =
+                              Get.find<HomePageController>();
+                          homePageController.savedBusinessTrips.clear();
+                          print(homePageController.savedBusinessTrips.length);
 
                           loginController.logout();
                         },

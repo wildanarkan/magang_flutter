@@ -20,6 +20,10 @@ class LoginPageController extends GetxController {
     await GetStorage().erase();
     resetFields();
     Get.offAll(() => const LoginPage());
+    final NavigatorPageControllers navigatorPageControllers =
+        Get.find<NavigatorPageControllers>();
+    Get.snackbar('Success',
+        'Logout berhasil, Sampai jumpa ${navigatorPageControllers.firstName} ${navigatorPageControllers.lastName}.');
   }
 
   Future<void> login() async {
@@ -36,16 +40,13 @@ class LoginPageController extends GetxController {
         storage.getKeys().forEach((key) {
           print('$key: ${storage.read(key)}');
         });
-        final NavigatorPageControllers navigatorPageControllers =
-            Get.put(NavigatorPageControllers());
-        navigatorPageControllers.fetchUserData();
-        Get.offAll(() => const NavigatorPage());
+         Get.offAll(() => const NavigatorPage());
       } else {
-        Get.snackbar('Error',
-            'Login gagal. Silakan cek kembali email dan password Anda.');
+        Get.snackbar('Failed',
+            'Login gagal, Silakan cek kembali email dan password Anda.');
       }
     } catch (e) {
       Get.snackbar('Error', 'Terjadi kesalahan: $e');
-    }
+    } finally {}
   }
 }

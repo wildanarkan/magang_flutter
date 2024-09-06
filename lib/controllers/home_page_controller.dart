@@ -48,10 +48,13 @@ class HomePageController extends GetxController {
       savedBusinessTrips.removeWhere(
           (savedTrip) => savedTrip.idBusinessTrip == trip.idBusinessTrip);
       Get.snackbar('Success', 'Remove at saved business trip');
-    } else {
+    } else if (savedBusinessTrips.length < 2) {
       // Add to saved trips
       savedBusinessTrips.add(trip);
       Get.snackbar('Success', 'Add at saved business trip');
+    } else {
+      log(savedBusinessTrips.length.toString());
+      Get.snackbar('Failed', 'Limit add saved business trip');
     }
     updateStorage();
   }
