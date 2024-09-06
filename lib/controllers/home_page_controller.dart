@@ -14,6 +14,9 @@ class HomePageController extends GetxController {
   var savedBusinessTrips = <BusinessTripModel>[].obs;
   var isLoading = true.obs;
 
+  String startDate = '--:--';
+  String endDate = '--:--';
+
   var startTime = ''.obs;
   var endTime = ''.obs;
   final storage = GetStorage();
@@ -108,7 +111,7 @@ class HomePageController extends GetxController {
 
   void _loadStartTime() {
     String? storedStartTime = storage.read('startTime');
-    if (storedStartTime == null || !_isToday(storedStartTime)) {
+    if (!_isToday(storedStartTime!)) {
       startTime.value = DateFormat.Hm().format(DateTime.now());
       storage.write('startTime', startTime.value);
     } else {

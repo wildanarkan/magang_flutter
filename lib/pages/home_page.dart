@@ -1,4 +1,5 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:floating_draggable_widget/floating_draggable_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:magang_flutter/common/app_color.dart';
@@ -18,49 +19,69 @@ class HomePage extends GetView<NavigatorPageControllers> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Stack(
-        children: [
-          Container(
-            width: double.infinity,
-            decoration: const BoxDecoration(
-              image: DecorationImage(
-                fit: BoxFit.fitWidth,
-                image: AssetImage('assets/blue_background.png'),
-                alignment: Alignment.topCenter,
-              ),
-            ),
-          ),
-          ListView(
-            padding: const EdgeInsets.only(
-                top: 25, bottom: 120, left: 25, right: 25),
-            children: [
-              const Padding(
-                padding: EdgeInsets.only(top: 40, bottom: 25),
-                child: Text(
-                  'Home',
-                  style: TextStyle(
-                    fontSize: 16,
-                    color: Colors.white,
-                    fontWeight: FontWeight.w600,
-                  ),
+    // Get screen width and height
+    final screenWidth = MediaQuery.of(context).size.width;
+    final screenHeight = MediaQuery.of(context).size.height;
+
+    // Calculate dx and dy to position the FAB in the center of the bottom-right corner
+    final dx = screenWidth - 50; // 20 is the margin from the right edge
+    final dy =
+        screenHeight / 2 - 25; // 45 is half the height of the FAB (90 / 2)
+    return FloatingDraggableWidget(
+      floatingWidget: FloatingActionButton(
+        onPressed: () {},
+        backgroundColor: Colors.amber,
+        child: const Icon(Icons.check_rounded, size: 25),
+      ),
+      floatingWidgetHeight: 50,
+      floatingWidgetWidth: 50,
+      autoAlign: true,
+      dx: dx,
+      dy: dy,
+      mainScreenWidget: Scaffold(
+        body: Stack(
+          children: [
+            Container(
+              width: double.infinity,
+              decoration: const BoxDecoration(
+                image: DecorationImage(
+                  fit: BoxFit.fitWidth,
+                  image: AssetImage('assets/blue_background.png'),
+                  alignment: Alignment.topCenter,
                 ),
               ),
-              buildCardProfile(context),
-              const SizedBox(
-                height: 15,
-              ),
-              buildCurrentBusiness(context),
-              const SizedBox(
-                height: 15,
-              ),
-              buildSaveCollapse(context),
-              const SizedBox(
-                height: 15,
-              ),
-            ],
-          ),
-        ],
+            ),
+            ListView(
+              padding: const EdgeInsets.only(
+                  top: 25, bottom: 120, left: 25, right: 25),
+              children: [
+                const Padding(
+                  padding: EdgeInsets.only(top: 40, bottom: 25),
+                  child: Text(
+                    'Home',
+                    style: TextStyle(
+                      fontSize: 16,
+                      color: Colors.white,
+                      fontWeight: FontWeight.w600,
+                    ),
+                  ),
+                ),
+                buildCardProfile(context),
+                const SizedBox(
+                  height: 15,
+                ),
+                buildCurrentBusiness(context),
+                const SizedBox(
+                  height: 15,
+                ),
+                buildSaveCollapse(context),
+                const SizedBox(
+                  height: 15,
+                ),
+              ],
+            ),
+          ],
+        ),
       ),
     );
   }
