@@ -40,7 +40,7 @@ class BuildCardInfo extends StatelessWidget {
                   title,
                   style: TextStyle(
                     fontWeight: FontWeight.w600,
-                    fontSize: 18,
+                    fontSize: 16,
                     color: AppColor.textTitle,
                   ),
                 ),

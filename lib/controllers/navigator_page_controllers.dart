@@ -20,6 +20,7 @@ class NavigatorPageControllers extends GetxController {
   RxString gender = 'Null'.obs;
   RxString religion = 'Null'.obs;
   RxString role = 'Null'.obs;
+  RxInt rolePriority = 0.obs;
   RxInt employee_group = 0.obs;
   RxString position = 'Null'.obs;
   RxString phone_number = 'Null'.obs;
@@ -35,8 +36,14 @@ class NavigatorPageControllers extends GetxController {
 
   @override
   void onInit() {
-    fetchUserData();
+    // fetchUserData();
     super.onInit();
+  }
+
+  @override
+  void onReady() {
+    fetchUserData();
+    super.onReady();
   }
 
   Future<void> fetchUserData() async {
@@ -99,12 +106,14 @@ class NavigatorPageControllers extends GetxController {
         gender.value = data['gender'] ?? 'No Data';
         religion.value = data['religion'] ?? 'No Data';
         role.value = data['role'] ?? 'No Data';
+        rolePriority.value = data['priority'] ?? 'No Data';
         employee_group.value = data['employee_group'] ?? 'No Data';
         position.value = data['position'] ?? 'No Data';
         phone_number.value = data['phone_number'] ?? 'No Data';
         address.value = data['address'] ?? 'No Data';
         email.value = data['email'] ?? 'No Data';
         nip.value = data['nip'] ?? 'No Data';
+        log('Role priority :${rolePriority.value}');
       } else {
         // Error handling
         print('Failed to load profile data: ${response.statusCode}');
@@ -136,11 +145,4 @@ class NavigatorPageControllers extends GetxController {
     }
     selectedPage.value = index;
   }
-
-  // Method to refresh data after update
-  // void refreshProfileData() {
-  //   if (userId != null) {
-  //     fetchProfileData(userId!);
-  //   }
-  // }
 }

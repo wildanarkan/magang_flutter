@@ -6,15 +6,14 @@ import 'package:http/http.dart' as http;
 import 'package:magang_flutter/common/urls.dart';
 import 'package:magang_flutter/data/models/leave_model.dart';
 
-
 class LeavePageController extends GetxController {
-  var leaves = <Leaves>[].obs;  // Observable list to hold leave data
-  var isLoading = true.obs;     // Observable to track loading status
+  var leaves = <Leaves>[].obs; // Observable list to hold leave data
+  var isLoading = true.obs; // Observable to track loading status
 
   @override
   void onInit() {
     super.onInit();
-    fetchLeaves();  // Call your data fetching function when controller initializes
+    fetchLeaves(); // Call your data fetching function when controller initializes
   }
 
   void fetchLeaves() async {
@@ -49,4 +48,3 @@ class LeavePageController extends GetxController {
     }
   }
 }
-

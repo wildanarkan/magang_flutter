@@ -10,7 +10,7 @@ class NavigatorPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Get.lazyPut(() => ProfilePageController());
+    Get.put(ProfilePageController());
     final controller = Get.put(NavigatorPageControllers());
 
     return Scaffold(

@@ -7,6 +7,7 @@ import 'package:magang_flutter/common/urls.dart';
 
 class ContractHistoryPageController extends GetxController {
   RxList<Map<String, dynamic>> contracts = <Map<String, dynamic>>[].obs;
+  RxBool isLoading = false.obs; // Tambahkan state loading
 
   @override
   void onInit() {
@@ -15,6 +16,7 @@ class ContractHistoryPageController extends GetxController {
   }
 
   Future<void> fetchContracts() async {
+    isLoading.value = true; // Mulai loading
     final userId = GetStorage().read('userId');
     if (userId == null) {
       print('User ID not found');
@@ -47,6 +49,8 @@ class ContractHistoryPageController extends GetxController {
     } catch (e) {
       // Error handling untuk koneksi atau lainnya
       print('Error occurred: $e');
+    } finally {
+      isLoading.value = false; // Mulai loading
     }
   }
 }

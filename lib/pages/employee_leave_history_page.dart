@@ -24,6 +24,9 @@ class _EmployeeLeaveHistoryPageState extends State<EmployeeLeaveHistoryPage> {
 
   @override
   void initState() {
+    final LeavePageController controller = Get.find<LeavePageController>();
+    controller.fetchLeaves();
+
     super.initState();
     nip = Get.arguments; // Ambil nip dari arguments jika tersedia
     selectedStatusFilter = widget.statusFilter; // Ambil statusFilter dari widget
@@ -31,7 +34,8 @@ class _EmployeeLeaveHistoryPageState extends State<EmployeeLeaveHistoryPage> {
 
   @override
   Widget build(BuildContext context) {
-    final LeavePageController controller = Get.put(LeavePageController());
+    final LeavePageController controller = Get.find<LeavePageController>();
+
 
     return Scaffold(
       appBar: BuildTestAppbar(

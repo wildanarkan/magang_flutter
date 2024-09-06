@@ -18,6 +18,10 @@ class ContractHistoryPage extends StatelessWidget {
         title: 'Contract History',
       ),
       body: Obx(() {
+        if (controller.isLoading.value) {
+          return const Center(child: CircularProgressIndicator());
+        }
+
         if (controller.contracts.isEmpty) {
           return const BuildNullSafetyIcon(
             icon: Icons.block_rounded,

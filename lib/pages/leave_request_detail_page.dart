@@ -127,7 +127,7 @@ class LeaveRequestDetailPage extends StatelessWidget {
           ),
           Column(
             children: [
-              if (navigatorPageControllers.role.value == 'Junior')
+              if (navigatorPageControllers.rolePriority.value <= 2)
                 Padding(
                   padding:
                       const EdgeInsets.symmetric(horizontal: 35, vertical: 20),
@@ -142,8 +142,7 @@ class LeaveRequestDetailPage extends StatelessWidget {
                     },
                   ),
                 ),
-              if (navigatorPageControllers.role.value == 'Junior')
-
+              if (navigatorPageControllers.rolePriority.value <= 2)
               Padding(
                 padding: const EdgeInsets.fromLTRB(35, 0, 35, 20),
                 child: BuildButton(
@@ -160,6 +159,7 @@ class LeaveRequestDetailPage extends StatelessWidget {
                   },
                 ),
               ),
+              if (leave.nip == navigatorPageControllers.nip.value)
               Padding(
                 padding: const EdgeInsets.fromLTRB(35, 0, 35, 40),
                 child: BuildButton(
