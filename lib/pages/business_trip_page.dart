@@ -136,34 +136,71 @@ class BusinessTripPage extends StatelessWidget {
               },
             ),
             const SizedBox(height: 20),
-            TextField(
-              controller: controller.startDateController.value,
-              readOnly: true,
-              decoration: const InputDecoration(
-                labelText: 'Start Date',
-                border: OutlineInputBorder(),
-                suffixIcon: Icon(Icons.calendar_today),
-              ),
-              onTap: () async {
-                DateTime? pickedDate = await showDatePicker(
-                  context: context,
-                  initialDate: DateTime.now(),
-                  firstDate: DateTime(2000),
-                  lastDate: DateTime(2101),
-                );
-                if (pickedDate != null) {
-                  controller.selectedStartDate.value = pickedDate;
-                  controller.startDateController.value.text = pickedDate
-                      .toIso8601String()
-                      .substring(0, 10); // Update UI
-                }
-              },
+            Row(
+              children: [
+                Expanded(
+                  child: TextField(
+                    controller: controller.startDateController.value,
+                    readOnly: true,
+                    decoration: const InputDecoration(
+                      labelText: 'Date',
+                      border: OutlineInputBorder(),
+                      suffixIcon: Icon(Icons.calendar_today),
+                    ),
+                    onTap: () async {
+                      DateTime? pickedDate = await showDatePicker(
+                        context: context,
+                        initialDate: DateTime.now(),
+                        firstDate: DateTime(2000),
+                        lastDate: DateTime(2101),
+                      );
+                      if (pickedDate != null) {
+                        controller.selectedStartDate.value = pickedDate;
+                        controller.startDateController.value.text = pickedDate
+                            .toIso8601String()
+                            .substring(0, 10); // Update UI
+                      }
+                    },
+                  ),
+                ),
+                Expanded(
+                  child: TextField(
+                    controller: controller.endDateController.value,
+                    readOnly: true,
+                    decoration: const InputDecoration(
+                      labelText: 'Date',
+                      border: OutlineInputBorder(),
+                      suffixIcon: Icon(Icons.calendar_today),
+                    ),
+                    onTap: () async {
+                      DateTime? pickedDate = await showDatePicker(
+                        context: context,
+                        initialDate: DateTime.now(),
+                        firstDate: DateTime(2000),
+                        lastDate: DateTime(2101),
+                      );
+                      if (pickedDate != null) {
+                        controller.selectedEndDate.value = pickedDate;
+                        controller.endDateController.value.text = pickedDate
+                            .toIso8601String()
+                            .substring(0, 10); // Update UI
+                      }
+                    },
+                  ),
+                ),
+              ],
             ),
             const SizedBox(height: 20),
             BuildButton(
               context: context,
               onPressed: () {
+                if (controller.selectedStartDate.value == null ||
+                    controller.selectedEndDate.value == null) {
+                  Get.snackbar('Error', 'Data tanggal harus diisi semua');
+                  return;
+                }
                 controller.startDateController.value.clear();
+                controller.endDateController.value.clear();
                 controller.filterBusinessTrips();
                 Get.back(); // Close the bottom sheet
               },
