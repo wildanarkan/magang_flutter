@@ -28,10 +28,28 @@ class HomePage extends GetView<NavigatorPageControllers> {
     final dy =
         screenHeight / 2 - 25; // 45 is half the height of the FAB (90 / 2)
     return FloatingDraggableWidget(
-      floatingWidget: FloatingActionButton(
-        onPressed: () {},
-        backgroundColor: Colors.amber,
-        child: const Icon(Icons.check_rounded, size: 25),
+      floatingWidget: Obx(
+        () => FloatingActionButton(
+          onPressed: homePageController.isLoading.value
+              ? null
+              : () {
+                  Get.defaultDialog(
+                    title: 'Confirm',
+                    middleText: 'Are you sure you want to check in/out?',
+                    textConfirm: 'Yes',
+                    textCancel: 'No',
+                    confirmTextColor: Colors.white,
+                    onConfirm: () {
+                      Get.back();
+                      homePageController.checkInOut();
+                    },
+                  );
+                },
+          backgroundColor: Colors.amber,
+          child: homePageController.isLoading.value
+              ? const CircularProgressIndicator(color: Colors.white)
+              : const Icon(Icons.check_rounded, size: 25),
+        ),
       ),
       floatingWidgetHeight: 50,
       floatingWidgetWidth: 50,
@@ -336,14 +354,16 @@ class HomePage extends GetView<NavigatorPageControllers> {
                           const SizedBox(
                             height: 3,
                           ),
-                          Text(
-                            homePageController.startTime.value,
-                            style: TextStyle(
-                              fontWeight: FontWeight.w600,
-                              fontSize: 16,
-                              color: AppColor.textTitle,
-                            ),
-                          ),
+                          Obx(() {
+                            return Text(
+                              homePageController.startTime.value,
+                              style: TextStyle(
+                                fontWeight: FontWeight.w600,
+                                fontSize: 16,
+                                color: AppColor.textTitle,
+                              ),
+                            );
+                          })
                         ],
                       )
                     ],

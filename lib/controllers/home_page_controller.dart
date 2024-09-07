@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:developer';
 
+import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:http/http.dart' as http;
@@ -12,13 +13,10 @@ import 'package:magang_flutter/data/models/business_trip_model.dart';
 class HomePageController extends GetxController {
   var currentBusinessTrip = <BusinessTripModel>[].obs;
   var savedBusinessTrips = <BusinessTripModel>[].obs;
-  var isLoading = true.obs;
+  var isLoading = false.obs;
 
-  String startDate = '--:--';
-  String endDate = '--:--';
-
-  var startTime = ''.obs;
-  var endTime = ''.obs;
+  var startTime = '--:--'.obs;
+  var endTime = '--:--'.obs;
   final storage = GetStorage();
 
   @override
@@ -26,11 +24,100 @@ class HomePageController extends GetxController {
     super.onInit();
     fetchCurrentBusinessTrips();
     loadSavedBusinessTrips();
-    _loadStartTime();
-    _updateEndTime();
-    Timer.periodic(const Duration(minutes: 1), (timer) {
-      _updateEndTime();
-    });
+    _loadStoredTimes();
+  }
+
+  void _loadStoredTimes() {
+    startTime.value = storage.read('startTime') ?? '--:--';
+    endTime.value = storage.read('endTime') ?? '--:--';
+  }
+
+  void updateStartTime(String time) {
+    startTime.value = time;
+    storage.write('startTime', time);
+  }
+
+  void updateEndTime(String time) {
+    endTime.value = time;
+    storage.write('endTime', time);
+  }
+
+  Future<bool> _handleLocationPermission() async {
+    bool serviceEnabled;
+    LocationPermission permission;
+
+    serviceEnabled = await Geolocator.isLocationServiceEnabled();
+    if (!serviceEnabled) {
+      Get.snackbar('Error',
+          'Location services are disabled. Please enable the services');
+      return false;
+    }
+
+    permission = await Geolocator.checkPermission();
+    if (permission == LocationPermission.denied) {
+      permission = await Geolocator.requestPermission();
+      if (permission == LocationPermission.denied) {
+        Get.snackbar('Error', 'Location permissions are denied');
+        return false;
+      }
+    }
+
+    if (permission == LocationPermission.deniedForever) {
+      Get.snackbar('Error',
+          'Location permissions are permanently denied, we cannot request permissions.');
+      return false;
+    }
+
+    return true;
+  }
+
+  Future<void> checkInOut() async {
+    try {
+      isLoading.value = true;
+
+      final hasPermission = await _handleLocationPermission();
+      if (!hasPermission) return;
+
+      final position = await Geolocator.getCurrentPosition();
+      final token = GetStorage().read('accessToken');
+      final response = await http.post(
+        Uri.parse(URLs.checkInActivity),
+        body: json.encode({
+          'latitude': position.latitude,
+          'longtitude': position.longitude,
+        }),
+        headers: {
+          'Authorization': 'Bearer $token',
+          'Content-Type': 'application/json',
+        },
+      );
+
+      if (response.statusCode == 200) {
+        final data = json.decode(response.body);
+        final now = DateTime.now();
+        final formattedTime = DateFormat('HH:mm').format(now);
+
+        if (data['message'].contains('Check-in')) {
+          updateStartTime(formattedTime);
+          Get.snackbar('Success', 'Check-in successful');
+        } else if (data['message'].contains('Check-out')) {
+          updateEndTime(formattedTime);
+          Get.snackbar('Success', 'Check-out successful');
+        }
+      } else if (response.statusCode == 400) {
+        final data = json.decode(response.body);
+        Get.snackbar('Error', data['message']);
+      } else {
+        log(URLs.checkInActivity);
+        log(response.statusCode.toString());
+        Get.snackbar('Error', 'An unexpected error occurred');
+      }
+    } catch (e) {
+      Get.snackbar('Error', 'An error occurred: ${e.toString()}');
+      log('Error in checkInOut: ${e.toString()}');
+    } finally {
+      isLoading.value = false;
+    }
   }
 
   void loadSavedBusinessTrips() {
@@ -107,27 +194,5 @@ class HomePageController extends GetxController {
     } finally {
       isLoading(false);
     }
-  }
-
-  void _loadStartTime() {
-    String? storedStartTime = storage.read('startTime');
-    if (!_isToday(storedStartTime!)) {
-      startTime.value = DateFormat.Hm().format(DateTime.now());
-      storage.write('startTime', startTime.value);
-    } else {
-      startTime.value = storedStartTime;
-    }
-  }
-
-  void _updateEndTime() {
-    endTime.value = DateFormat.Hm().format(DateTime.now());
-  }
-
-  bool _isToday(String time) {
-    DateTime now = DateTime.now();
-    DateTime storedTime = DateFormat.Hm().parse(time);
-    return now.day == storedTime.day &&
-        now.month == storedTime.month &&
-        now.year == storedTime.year;
   }
 }
