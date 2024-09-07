@@ -45,10 +45,23 @@ class HomePage extends GetView<NavigatorPageControllers> {
                     },
                   );
                 },
-          backgroundColor: Colors.amber,
+          backgroundColor: homePageController.isLoading.value
+              ? Colors.white
+              : AppColor.primary,
+          elevation: 6, 
+          shape: RoundedRectangleBorder(
+            borderRadius:
+                BorderRadius.circular(14), 
+          ),
           child: homePageController.isLoading.value
-              ? const CircularProgressIndicator(color: Colors.white)
-              : const Icon(Icons.check_rounded, size: 25),
+              ? CircularProgressIndicator(
+                  color: AppColor.primary,
+                )
+              : const Icon(
+                  Icons.fingerprint,
+                  size: 35,
+                  color: Colors.white,
+                ),
         ),
       ),
       floatingWidgetHeight: 50,
