@@ -6,7 +6,6 @@ import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:http/http.dart' as http;
-import 'package:intl/intl.dart';
 import 'package:magang_flutter/common/urls.dart';
 import 'package:magang_flutter/data/models/business_trip_model.dart';
 
@@ -24,7 +23,31 @@ class HomePageController extends GetxController {
     super.onInit();
     fetchCurrentBusinessTrips();
     loadSavedBusinessTrips();
+    _checkDateAndResetTimes();
     _loadStoredTimes();
+    
+  }
+
+  void _checkDateAndResetTimes() {
+    // Ambil tanggal check-in yang tersimpan
+    final lastCheckInDate = storage.read('checkInDate');
+    if (lastCheckInDate != null) {
+      // Konversi tanggal terakhir check-in ke DateTime
+      DateTime lastDate = DateTime.parse(lastCheckInDate);
+
+      // Ambil tanggal hari ini
+      DateTime today = DateTime.now();
+
+      // Jika tanggal berbeda, reset startTime dan endTime
+      if (lastDate.day != today.day ||
+          lastDate.month != today.month ||
+          lastDate.year != today.year) {
+        updateStartTime('--:--');
+        updateEndTime('--:--');
+        log('kena remove');
+        storage.remove('checkInDate'); // Hapus data tanggal check-in lama
+      }
+    }
   }
 
   void _loadStoredTimes() {
@@ -35,6 +58,8 @@ class HomePageController extends GetxController {
   void updateStartTime(String time) {
     startTime.value = time;
     storage.write('startTime', time);
+    storage.write('checkInDate',
+        DateTime.now().toIso8601String()); // Simpan tanggal check-in
   }
 
   void updateEndTime(String time) {
@@ -94,18 +119,22 @@ class HomePageController extends GetxController {
 
       if (response.statusCode == 200) {
         final data = json.decode(response.body);
-        final now = DateTime.now();
-        final formattedTime = DateFormat('HH:mm').format(now);
 
         if (data['message'].contains('Check-in')) {
-          updateStartTime(formattedTime);
+          startTime.value =
+              data['check_in_time']; 
+              updateStartTime(startTime.value);
           Get.snackbar('Success', 'Check-in successful');
         } else if (data['message'].contains('Check-out')) {
-          updateEndTime(formattedTime);
+          endTime.value =
+              data['check_out_time'];
+              updateEndTime(endTime.value);
           Get.snackbar('Success', 'Check-out successful');
         }
       } else if (response.statusCode == 400) {
         final data = json.decode(response.body);
+        log(position.latitude.toString());
+        log(position.longitude.toString());
         Get.snackbar('Error', data['message']);
       } else {
         log(URLs.checkInActivity);
