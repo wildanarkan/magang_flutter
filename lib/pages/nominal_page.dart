@@ -78,6 +78,7 @@ class NominalPage extends StatelessWidget {
                         final result = await Get.to(() => EditBiayaPage(
                               idBusinessTrip: idBusinessTrip,
                               idItem: item.id,
+                              biayaType: biayaType,
                               isEditMode: true,
                             ));
                         if (result != null && result) {
@@ -118,8 +119,10 @@ class NominalPage extends StatelessWidget {
                 total: controller.calculateTotal(),
                 onPressed: biayaType == 'realisasi'
                     ? () async {
-                        final result = await Get.to(() =>
-                            EditBiayaPage(idBusinessTrip: idBusinessTrip));
+                        final result = await Get.to(() => EditBiayaPage(
+                              idBusinessTrip: idBusinessTrip,
+                              biayaType: biayaType,
+                            ));
                         if (result != null && result) {
                           controller.updateData();
                         }

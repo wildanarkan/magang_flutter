@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 import 'package:magang_flutter/common/app_color.dart';
 import 'package:magang_flutter/controllers/add_businiess_trip_page_controller.dart';
 import 'package:magang_flutter/controllers/business_trip_controller.dart';
+import 'package:magang_flutter/pages/navigator_page.dart';
 import 'package:magang_flutter/widgets/build_button.dart';
 import 'package:magang_flutter/widgets/build_dropdown.dart';
 import 'package:magang_flutter/widgets/build_list_employee.dart';
@@ -69,6 +70,24 @@ class AddBusiniessTripPage extends StatelessWidget {
                         enabled: controller.isCityEnabled.value,
                       ),
                     ),
+                    Row(
+                      children: [
+                        Expanded(
+                          child: BuildPickDate(
+                            title: 'Start Date',
+                            dateController:
+                                controller.startDateController.value,
+                          ),
+                        ),
+                        const SizedBox(width: 10),
+                        Expanded(
+                          child: BuildPickDate(
+                            title: 'End Date',
+                            dateController: controller.endDateController.value,
+                          ),
+                        ),
+                      ],
+                    ),
                     Obx(
                       () => BuildTextField(
                         title: 'Company Address',
@@ -101,24 +120,6 @@ class AddBusiniessTripPage extends StatelessWidget {
                       title: 'Note',
                       controller: controller.noteController,
                     ),
-                    Row(
-                      children: [
-                        Expanded(
-                          child: BuildPickDate(
-                            title: 'Start Date',
-                            dateController:
-                                controller.startDateController.value,
-                          ),
-                        ),
-                        const SizedBox(width: 10),
-                        Expanded(
-                          child: BuildPickDate(
-                            title: 'End Date',
-                            dateController: controller.endDateController.value,
-                          ),
-                        ),
-                      ],
-                    ),
                     BuildDropdown(
                       hint: 'SELECT DEPARTURE',
                       title: 'Departure From',
@@ -129,11 +130,13 @@ class AddBusiniessTripPage extends StatelessWidget {
                       },
                     ),
                     Row(
+                      crossAxisAlignment: CrossAxisAlignment.end,
                       children: [
                         Expanded(
                           child: BuildDropdown(
                             hint: 'SELECT EMPLOYEE',
                             title: 'Employee',
+                            spacingDropdown:  const EdgeInsets.only(top: 10, bottom: 0),
                             selectedItem: controller.selectedAllUser.value,
                             item: controller.allUserItem.value,
                             onChanged: (newValue) {
@@ -143,9 +146,12 @@ class AddBusiniessTripPage extends StatelessWidget {
                         ),
                         IconButton(
                           icon: const Icon(Icons.add),
+                          padding: const EdgeInsets.all(10),
                           color: Colors.white,
                           style: IconButton.styleFrom(
-                            shape: const RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(10))),
+                            shape: const RoundedRectangleBorder(
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(10))),
                             backgroundColor: AppColor.primary,
                           ),
                           onPressed: () {
@@ -154,17 +160,6 @@ class AddBusiniessTripPage extends StatelessWidget {
                         ),
                       ],
                     ),
-                    // Align(
-                    //   alignment: Alignment.center,
-                    //   child: BuildButton(
-                    //     context: context,
-                    //     title: 'Add Employee',
-                    //     width: 131,
-                    //     onPressed: () {
-                    //       controller.addEmployeeToList();
-                    //     },
-                    //   ),
-                    // ),
                     const Padding(
                       padding: EdgeInsets.symmetric(vertical: 10),
                       child: Divider(),
@@ -199,7 +194,7 @@ class AddBusiniessTripPage extends StatelessWidget {
                   final businessTripController =
                       Get.find<BusinessTripController>();
                   await businessTripController.fetchBusinessTrips();
-                  Get.back();
+                  Get.off(()=>const NavigatorPage());
                   Get.snackbar('Success', 'Success to create Business Trip');
                 } else {
                   log(businessTripId.toString());

@@ -10,6 +10,7 @@ import 'package:magang_flutter/widgets/build_card_info.dart';
 import 'package:magang_flutter/widgets/build_expansion_tile.dart';
 import 'package:magang_flutter/widgets/build_link.dart';
 import 'package:magang_flutter/widgets/build_null_safety_icon.dart';
+import 'package:magang_flutter/widgets/dialog/build_confirmation_dialog.dart';
 
 import '../controllers/navigator_page_controllers.dart';
 
@@ -33,25 +34,24 @@ class HomePage extends GetView<NavigatorPageControllers> {
           onPressed: homePageController.isLoading.value
               ? null
               : () {
-                  Get.defaultDialog(
-                    title: 'Confirm',
-                    middleText: 'Are you sure you want to check in/out?',
-                    textConfirm: 'Yes',
-                    textCancel: 'No',
-                    confirmTextColor: Colors.white,
-                    onConfirm: () {
-                      Get.back();
-                      homePageController.checkInOut();
-                    },
+                  Get.dialog(
+                    BuildConfirmationDialog(
+                      title: "Are you sure?",
+                      message:
+                          "Do you really want to check in/out?",
+                      onConfirm: () {
+                        Get.back();
+                        homePageController.checkInOut();
+                      },
+                    ),
                   );
                 },
           backgroundColor: homePageController.isLoading.value
               ? Colors.white
               : AppColor.primary,
-          elevation: 6, 
+          elevation: 6,
           shape: RoundedRectangleBorder(
-            borderRadius:
-                BorderRadius.circular(14), 
+            borderRadius: BorderRadius.circular(14),
           ),
           child: homePageController.isLoading.value
               ? CircularProgressIndicator(

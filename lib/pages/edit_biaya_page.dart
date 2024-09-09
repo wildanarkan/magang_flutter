@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:magang_flutter/common/app_color.dart';
 import 'package:magang_flutter/common/urls.dart';
 import 'package:magang_flutter/controllers/edit_biaya_page_controller.dart';
+import 'package:magang_flutter/pages/nominal_page.dart';
 import 'package:magang_flutter/widgets/build_button.dart';
 import 'package:magang_flutter/widgets/build_dropdown.dart';
 import 'package:magang_flutter/widgets/build_test_appbar.dart';
@@ -13,6 +14,7 @@ import 'package:magang_flutter/widgets/build_text_field.dart';
 class EditBiayaPage extends StatelessWidget {
   final int idBusinessTrip;
   final int? idItem; // Tambahkan parameter untuk id item
+  final String biayaType; // Tambahkan parameter untuk id item
   final bool
       isEditMode; // Tambahkan parameter untuk menentukan mode edit atau tambah
 
@@ -20,7 +22,7 @@ class EditBiayaPage extends StatelessWidget {
     super.key,
     required this.idBusinessTrip,
     this.idItem,
-    this.isEditMode = false,
+    this.isEditMode = false, required this.biayaType,
   });
 
   @override
@@ -192,7 +194,7 @@ class EditBiayaPage extends StatelessWidget {
                     context: context,
                     title: 'Cancel',
                     onPressed: () {
-                      Get.back();
+                      Get.off(()=>NominalPage(idBusinessTrip: idBusinessTrip, biayaType: biayaType,));
                     },
                     backgroundColor: Colors.white,
                     foregroundColor: Colors.black,

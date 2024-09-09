@@ -16,6 +16,8 @@ import 'package:magang_flutter/widgets/build_button.dart';
 import 'package:magang_flutter/widgets/build_row_text_icon.dart';
 import 'package:magang_flutter/widgets/build_test_appbar.dart';
 import 'package:magang_flutter/widgets/build_text_field.dart';
+import 'package:magang_flutter/widgets/dialog/build_document_dialog.dart';
+import 'package:magang_flutter/widgets/dialog/build_error_dialog.dart';
 
 class BusinessTripDetailPage extends StatelessWidget {
   final HomePageController homePageController = Get.find<HomePageController>();
@@ -28,7 +30,7 @@ class BusinessTripDetailPage extends StatelessWidget {
       : controller = Get.put(BusinessTripDetailPageController(trip: trip)) {
     controller.setInitialVariable(
       trip.extendDay ?? 0,
-      trip.photoDocument ?? 'No photo document',
+      trip.photoDocument ?? '',
     );
   }
 
@@ -362,7 +364,10 @@ class BusinessTripDetailPage extends StatelessWidget {
                                 return Expanded(
                                   child: GestureDetector(
                                     onTap: () {
-                                      if (trip.photoDocument == null) {
+                                      log(controller.photoDocument.value);
+                                      // log(trip.photoDocument.toString());
+                                      if (controller
+                                          .photoDocument.value.isEmpty) {
                                         Get.snackbar('No data',
                                             'Upload your photo document first');
                                         return;
@@ -380,7 +385,9 @@ class BusinessTripDetailPage extends StatelessWidget {
                                           borderRadius:
                                               BorderRadius.circular(8)),
                                       child: Text(
-                                        controller.photoDocument.value,
+                                        controller.photoDocument.isEmpty
+                                            ? 'No photo document'
+                                            : controller.photoDocument.value,
                                         style: TextStyle(
                                           fontSize: 14,
                                           fontWeight: FontWeight.w600,
@@ -425,198 +432,38 @@ class BusinessTripDetailPage extends StatelessWidget {
                                     if (['jpg', 'jpeg', 'png', 'pdf']
                                         .contains(extension)) {
                                       // Tampilkan konfirmasi untuk update file
-
                                       Get.dialog(
-                                        Column(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.center,
-                                          children: [
-                                            Padding(
-                                              padding:
-                                                  const EdgeInsets.symmetric(
-                                                      horizontal: 40),
-                                              child: Container(
-                                                decoration: const BoxDecoration(
-                                                  color: Colors.white,
-                                                  borderRadius:
-                                                      BorderRadius.all(
-                                                    Radius.circular(20),
-                                                  ),
+                                        BuildDocumentDialog(
+                                          title: "Are you sure?",
+                                          message:
+                                              "Do your really want to upload the selected file to the business trip?",
+                                          fileWidget: extension == 'pdf'
+                                              ? Icon(
+                                                  Icons.picture_as_pdf,
+                                                  size: 100,
+                                                  color: AppColor.primary,
+                                                )
+                                              : Image.file(
+                                                  selectedFile,
+                                                  fit: BoxFit.cover,
                                                 ),
-                                                child: Padding(
-                                                  padding: const EdgeInsets.all(
-                                                      20.0),
-                                                  child: Material(
-                                                    color: Colors.white,
-                                                    child: Column(
-                                                      children: [
-                                                        const SizedBox(
-                                                            height: 10),
-                                                        Icon(
-                                                          Icons
-                                                              .help_outline_rounded,
-                                                          size: 100,
-                                                          color:
-                                                              AppColor.primary,
-                                                        ),
-                                                        Text(
-                                                          "Are you sure?",
-                                                          textAlign:
-                                                              TextAlign.center,
-                                                          style: TextStyle(
-                                                              color: AppColor
-                                                                  .textBody,
-                                                              fontWeight:
-                                                                  FontWeight
-                                                                      .bold,
-                                                              fontSize: 20),
-                                                        ),
-                                                        const SizedBox(
-                                                            height: 15),
-                                                        Text(
-                                                          "Do your really want to upload photo document to business trip?",
-                                                          textAlign:
-                                                              TextAlign.center,
-                                                          style: TextStyle(
-                                                            color: AppColor
-                                                                .textBody,
-                                                            fontSize: 14,
-                                                          ),
-                                                        ),
-                                                        const SizedBox(
-                                                            height: 20),
-                                                        Row(
-                                                          children: [
-                                                            Expanded(
-                                                              child:
-                                                                  BuildButton(
-                                                                title: 'Cancel',
-                                                                backgroundColor:
-                                                                    Colors
-                                                                        .white,
-                                                                foregroundColor:
-                                                                    AppColor
-                                                                        .primary,
-                                                                width: 88,
-                                                                height: 40,
-                                                                onPressed: () {
-                                                                  Get.back();
-                                                                },
-                                                              ),
-                                                            ),
-                                                            const SizedBox(
-                                                                width: 10),
-                                                            Expanded(
-                                                              child:
-                                                                  BuildButton(
-                                                                title: 'Upload',
-                                                                width: 88,
-                                                                height: 40,
-                                                                onPressed: () {
-                                                                  log(extension);
-                                                                  log('${selectedFile}1');
-                                                                  controller.updateFileInDatabase(
-                                                                      selectedFile,
-                                                                      trip.idBusinessTrip ??
-                                                                          0);
-                                                                  log('${trip.photoDocument}2');
-                                                                },
-                                                              ),
-                                                            ),
-                                                          ],
-                                                        ),
-                                                      ],
-                                                    ),
-                                                  ),
-                                                ),
-                                              ),
-                                            ),
-                                          ],
+                                          onConfirm: () {
+                                            log(extension);
+                                            log('${selectedFile}1');
+                                            controller.updateFileInDatabase(
+                                                selectedFile,
+                                                trip.idBusinessTrip ?? 0);
+                                            log('${trip.photoDocument}2');
+                                          },
                                         ),
                                       );
                                     } else {
                                       // Tampilkan pesan error jika file tidak valid
                                       Get.dialog(
-                                        Column(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.center,
-                                          children: [
-                                            Padding(
-                                              padding:
-                                                  const EdgeInsets.symmetric(
-                                                      horizontal: 40),
-                                              child: Container(
-                                                decoration: const BoxDecoration(
-                                                  color: Colors.white,
-                                                  borderRadius:
-                                                      BorderRadius.all(
-                                                    Radius.circular(20),
-                                                  ),
-                                                ),
-                                                child: Padding(
-                                                  padding: const EdgeInsets.all(
-                                                      20.0),
-                                                  child: Material(
-                                                    color: Colors.white,
-                                                    child: Column(
-                                                      children: [
-                                                        const SizedBox(
-                                                            height: 10),
-                                                        Icon(
-                                                          Icons
-                                                              .warning_amber_rounded,
-                                                          size: 100,
-                                                          color:
-                                                              AppColor.primary,
-                                                        ),
-                                                        Text(
-                                                          "Invalid Type",
-                                                          textAlign:
-                                                              TextAlign.center,
-                                                          style: TextStyle(
-                                                              color: AppColor
-                                                                  .textBody,
-                                                              fontWeight:
-                                                                  FontWeight
-                                                                      .bold,
-                                                              fontSize: 20),
-                                                        ),
-                                                        const SizedBox(
-                                                            height: 15),
-                                                        Text(
-                                                          "Please select a valid jpg, jpeg, png, or pdf file.",
-                                                          textAlign:
-                                                              TextAlign.center,
-                                                          style: TextStyle(
-                                                            color: AppColor
-                                                                .textBody,
-                                                            fontSize: 14,
-                                                          ),
-                                                        ),
-                                                        const SizedBox(
-                                                            height: 20),
-                                                        Row(
-                                                          children: [
-                                                            Expanded(
-                                                              child:
-                                                                  BuildButton(
-                                                                title: 'Oke',
-                                                                width: 88,
-                                                                height: 40,
-                                                                onPressed: () {
-                                                                  Get.back();
-                                                                },
-                                                              ),
-                                                            ),
-                                                          ],
-                                                        ),
-                                                      ],
-                                                    ),
-                                                  ),
-                                                ),
-                                              ),
-                                            ),
-                                          ],
+                                        const BuildErrorDialog(
+                                          title: "Invalid Type",
+                                          message:
+                                              "Please select a valid jpg, jpeg, png, or pdf file.",
                                         ),
                                       );
                                     }
