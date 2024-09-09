@@ -34,7 +34,7 @@ class BuildListEmployee extends StatelessWidget {
             ),
           ),
           IconButton(
-            icon: const Icon(Icons.delete, color: Colors.red),
+            icon: Icon(Icons.delete, color: Colors.red[900]),
             onPressed: onDelete,
           ),
         ],

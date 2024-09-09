@@ -16,7 +16,7 @@ import 'package:magang_flutter/widgets/build_button.dart';
 import 'package:magang_flutter/widgets/build_row_text_icon.dart';
 import 'package:magang_flutter/widgets/build_test_appbar.dart';
 import 'package:magang_flutter/widgets/build_text_field.dart';
-import 'package:magang_flutter/widgets/dialog/build_confirmation_dialog.dart';
+import 'package:magang_flutter/widgets/dialog/build_document_dialog.dart';
 import 'package:magang_flutter/widgets/dialog/build_error_dialog.dart';
 
 class BusinessTripDetailPage extends StatelessWidget {
@@ -30,7 +30,7 @@ class BusinessTripDetailPage extends StatelessWidget {
       : controller = Get.put(BusinessTripDetailPageController(trip: trip)) {
     controller.setInitialVariable(
       trip.extendDay ?? 0,
-      trip.photoDocument ?? 'No photo document',
+      trip.photoDocument ?? '',
     );
   }
 
@@ -364,7 +364,10 @@ class BusinessTripDetailPage extends StatelessWidget {
                                 return Expanded(
                                   child: GestureDetector(
                                     onTap: () {
-                                      if (trip.photoDocument == null) {
+                                      log(controller.photoDocument.value);
+                                      // log(trip.photoDocument.toString());
+                                      if (controller
+                                          .photoDocument.value.isEmpty) {
                                         Get.snackbar('No data',
                                             'Upload your photo document first');
                                         return;
@@ -382,7 +385,9 @@ class BusinessTripDetailPage extends StatelessWidget {
                                           borderRadius:
                                               BorderRadius.circular(8)),
                                       child: Text(
-                                        controller.photoDocument.value,
+                                        controller.photoDocument.isEmpty
+                                            ? 'No photo document'
+                                            : controller.photoDocument.value,
                                         style: TextStyle(
                                           fontSize: 14,
                                           fontWeight: FontWeight.w600,
@@ -428,7 +433,7 @@ class BusinessTripDetailPage extends StatelessWidget {
                                         .contains(extension)) {
                                       // Tampilkan konfirmasi untuk update file
                                       Get.dialog(
-                                        BuildConfirmationDialog(
+                                        BuildDocumentDialog(
                                           title: "Are you sure?",
                                           message:
                                               "Do your really want to upload the selected file to the business trip?",

@@ -36,7 +36,6 @@ class HomePage extends GetView<NavigatorPageControllers> {
               : () {
                   Get.dialog(
                     BuildConfirmationDialog(
-                      fileWidget: const Text('data'),
                       title: "Are you sure?",
                       message:
                           "Do you really want to check in/out?",

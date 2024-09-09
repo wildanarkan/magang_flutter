@@ -10,6 +10,7 @@ class BuildDropdown extends StatefulWidget {
     required this.title,
     required this.onChanged,
     this.enabled = true,
+    this.spacingDropdown,
   });
 
   final String selectedItem;
@@ -18,6 +19,7 @@ class BuildDropdown extends StatefulWidget {
   final List<String> item;
   final ValueChanged<String?> onChanged;
   final bool enabled;
+  final EdgeInsetsGeometry? spacingDropdown;
 
   @override
   State<BuildDropdown> createState() => _BuildDropdownState();
@@ -65,7 +67,7 @@ class _BuildDropdownState extends State<BuildDropdown> {
           ),
         ),
         Padding(
-          padding: const EdgeInsets.only(top: 10, bottom: 20),
+          padding: widget.spacingDropdown ?? const EdgeInsets.only(top: 10, bottom: 20),
           child: Container(
             width: double.infinity,
             padding: const EdgeInsets.all(10),

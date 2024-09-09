@@ -9,16 +9,14 @@ class BuildConfirmationDialog extends StatelessWidget {
   final String confirmButtonText;
   final String cancelButtonText;
   final VoidCallback onConfirm;
-  final Widget fileWidget;
 
   const BuildConfirmationDialog({
     super.key,
     required this.title,
     required this.message,
-    this.confirmButtonText = 'Upload',
-    this.cancelButtonText = 'Cancel',
+    this.confirmButtonText = 'Yes',
+    this.cancelButtonText = 'No',
     required this.onConfirm,
-    required this.fileWidget,
   });
 
   @override
@@ -34,7 +32,11 @@ class BuildConfirmationDialog extends StatelessWidget {
           mainAxisSize: MainAxisSize.min,
           children: [
             const SizedBox(height: 10),
-            fileWidget, // Menampilkan file yang dipilih
+            Icon(
+              Icons.help_outline_rounded,
+              size: 100,
+              color: AppColor.primary,
+            ),
             Text(
               title,
               textAlign: TextAlign.center,

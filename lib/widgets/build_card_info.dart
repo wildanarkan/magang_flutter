@@ -126,6 +126,16 @@ class BuildCardInfo extends StatelessWidget {
           child: content,
         ),
       );
+    } else {
+      content = GestureDetector(
+        onTap: onTap,
+        child: Container(
+          decoration: const BoxDecoration(
+            color: Colors.white,      
+          ),
+          child: content,
+        ),
+      );
     }
 
     return Padding(
