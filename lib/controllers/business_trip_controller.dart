@@ -104,39 +104,34 @@ class BusinessTripController extends GetxController {
   }
 
   void filterBusinessTrips() {
-    // Validasi apakah kedua tanggal diisi
-    if ((selectedStartDate.value != null && selectedEndDate.value == null) ||
-        (selectedStartDate.value == null && selectedEndDate.value != null)) {
+    final startDate = selectedStartDate.value;
+    final endDate = selectedEndDate.value;
+
+    // Jika salah satu tanggal diisi tanpa yang lain, tampilkan error
+    if ((startDate != null && endDate == null) ||
+        (startDate == null && endDate != null)) {
       Get.snackbar('Error', 'Data harus diisi semua');
-      return; // Batalkan proses filter jika validasi gagal
+      return; // Batalkan filter jika tanggal tidak diisi dengan benar
     }
 
-    // Lanjutkan dengan filter jika validasi berhasil
+    // Lanjutkan dengan filter
     filteredBusinessTrips.value = businessTrips.where((trip) {
       final matchesStatus = selectedStatus.value == null ||
           selectedStatus.value == 'All' ||
           trip.status == selectedStatus.value;
 
+      final matchesCompany = selectedCompany.value == null ||
+          selectedCompany.value == 'All' ||
+          trip.companyName == selectedCompany.value;
+
       final tripStartDate = DateTime.parse(trip.startDate ?? '');
 
-      final startDate = selectedStartDate.value;
-      final endDate = selectedEndDate.value;
-
+      // Jika kedua tanggal tidak diisi, abaikan filter berdasarkan tanggal
       final matchesDateRange = (startDate == null && endDate == null) ||
-          (startDate != null &&
-              endDate == null &&
-              tripStartDate.isAtLeast(startDate)) ||
-          (startDate == null &&
-              endDate != null &&
-              tripStartDate.isAtMost(endDate)) ||
           (startDate != null &&
               endDate != null &&
               tripStartDate.isAtLeast(startDate) &&
               tripStartDate.isAtMost(endDate));
-
-      final matchesCompany = selectedCompany.value == null ||
-          selectedCompany.value == 'All' ||
-          trip.companyName == selectedCompany.value;
 
       return matchesStatus && matchesDateRange && matchesCompany;
     }).toList();

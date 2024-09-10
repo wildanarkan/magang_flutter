@@ -194,15 +194,25 @@ class BusinessTripPage extends StatelessWidget {
             BuildButton(
               context: context,
               onPressed: () {
-                if (controller.selectedStartDate.value == null ||
-                    controller.selectedEndDate.value == null) {
+                final startDate = controller.selectedStartDate.value;
+                final endDate = controller.selectedEndDate.value;
+
+                // Hanya validasi jika salah satu tanggal diisi (untuk filter tanggal)
+                if ((startDate != null && endDate == null) ||
+                    (startDate == null && endDate != null)) {
                   Get.snackbar('Error', 'Data tanggal harus diisi semua');
                   return;
                 }
+
+                // Clear date input fields after applying filter
                 controller.startDateController.value.clear();
                 controller.endDateController.value.clear();
+
+                // Apply the filter
                 controller.filterBusinessTrips();
-                Get.back(); // Close the bottom sheet
+
+                // Close the bottom sheet after applying the filter
+                Get.back();
               },
               title: 'Apply Filter',
             ),

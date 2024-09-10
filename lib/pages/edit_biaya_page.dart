@@ -108,7 +108,6 @@ class EditBiayaPage extends StatelessWidget {
                                       URLs.photoProofUrl +
                                           controller.existingPhotoUrl.value,
                                       width: double.infinity,
-                                      height: 129,
                                       fit: BoxFit.cover,
                                       loadingBuilder:
                                           (context, child, loadingProgress) {
