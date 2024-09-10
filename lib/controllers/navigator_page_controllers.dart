@@ -68,7 +68,6 @@ class NavigatorPageControllers extends GetxController {
 
         // Panggil fetchProfileData dengan ID
         if (userId != null) {
-          GetStorage().write('userId', '$userId');
           print('Semua data di GetStorage:');
           storage.getKeys().forEach((key) {
             print('$key: ${storage.read(key)}');
@@ -141,6 +140,7 @@ class NavigatorPageControllers extends GetxController {
     if (selectedPage.value == 0) {
       log(selectedPage.toString());
       final homePageController = Get.find<HomePageController>();
+      homePageController.fetchCheckinToday();
       homePageController.fetchCurrentBusinessTrips();
     }
     selectedPage.value = index;

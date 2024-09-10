@@ -41,4 +41,5 @@ class URLs {
   static const putRealization = '${baseAppUrl}business/update/';
   static const getRealizationId = '${baseAppUrl}business/realizationid/';
   static const checkInActivity = '${baseAppUrl}checkin/';
+  static const checkInToday = '${baseAppUrl}checkin/today/';
 }

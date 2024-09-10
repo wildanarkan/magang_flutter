@@ -22,11 +22,48 @@ class HomePageController extends GetxController {
   void onInit() {
     super.onInit();
     fetchCurrentBusinessTrips();
+    fetchCheckinToday();
     loadSavedBusinessTrips();
     _checkDateAndResetTimes();
-    _loadStoredTimes();
-    
+    // _loadStoredTimes();
   }
+
+  Future<void> fetchCheckinToday() async {
+    log('fetch checkin today');
+    try {
+      isLoading(true);
+      final token = storage.read('accessToken');
+      final userId = storage.read('userId');
+      final response = await http.get(
+        Uri.parse('${URLs.checkInToday}$userId'),
+        headers: {
+          'Authorization': 'Bearer $token',
+        },
+      );
+
+      if (response.statusCode == 200) {
+        final data = json.decode(response.body);
+
+        // Memeriksa setiap item dalam data dan memperbarui waktu sesuai tipe
+        for (var item in data) {
+          if (item['type'] == 0) {
+            startTime.value = item['time'].substring(11, 16); // Mengambil format HH:mm
+          } else if (item['type'] == 1) {
+            endTime.value = item['time'].substring(11, 16); // Mengambil format HH:mm
+          }
+        }
+        log("check in todaay" + userId);
+      } else {
+        log("check in todaay" + userId);
+        print(response.statusCode);
+      }
+    } catch (e) {
+      log('Error check today $e');
+    } finally {
+      isLoading(false);
+    }
+  }
+
 
   void _checkDateAndResetTimes() {
     // Ambil tanggal check-in yang tersimpan
@@ -50,21 +87,21 @@ class HomePageController extends GetxController {
     }
   }
 
-  void _loadStoredTimes() {
-    startTime.value = storage.read('startTime') ?? '--:--';
-    endTime.value = storage.read('endTime') ?? '--:--';
-  }
+  // void _loadStoredTimes() {
+  //   startTime.value = storage.read('startTime') ?? '--:--';
+  //   endTime.value = storage.read('endTime') ?? '--:--';
+  // }
 
   void updateStartTime(String time) {
     startTime.value = time;
-    storage.write('startTime', time);
+    // storage.write('startTime', time);
     storage.write('checkInDate',
         DateTime.now().toIso8601String()); // Simpan tanggal check-in
   }
 
   void updateEndTime(String time) {
     endTime.value = time;
-    storage.write('endTime', time);
+    // storage.write('endTime', time);
   }
 
   Future<bool> _handleLocationPermission() async {
@@ -121,14 +158,12 @@ class HomePageController extends GetxController {
         final data = json.decode(response.body);
 
         if (data['message'].contains('Check-in')) {
-          startTime.value =
-              data['check_in_time']; 
-              updateStartTime(startTime.value);
+          startTime.value = data['check_in_time'];
+          // updateStartTime(startTime.value);
           Get.snackbar('Success', 'Check-in successful');
         } else if (data['message'].contains('Check-out')) {
-          endTime.value =
-              data['check_out_time'];
-              updateEndTime(endTime.value);
+          endTime.value = data['check_out_time'];
+          // updateEndTime(endTime.value);
           Get.snackbar('Success', 'Check-out successful');
         }
       } else if (response.statusCode == 400) {
