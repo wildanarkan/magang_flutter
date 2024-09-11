@@ -18,11 +18,11 @@ class BusinessCalculateModel {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['id_business_trip'] = this.idBusinessTrip;
-    data['total_nominal_planning'] = this.totalNominalPlanning;
-    data['total_nominal_realization'] = this.totalNominalRealization;
-    data['difference'] = this.difference;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['id_business_trip'] = idBusinessTrip;
+    data['total_nominal_planning'] = totalNominalPlanning;
+    data['total_nominal_realization'] = totalNominalRealization;
+    data['difference'] = difference;
     return data;
   }
 }

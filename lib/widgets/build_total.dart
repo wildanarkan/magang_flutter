@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:magang_flutter/common/app_color.dart';
-import 'package:magang_flutter/widgets/build_icon_rounded_add.dart';
+import 'package:magang_flutter/widgets/buttons/build_button_rounded.dart';
 
 class BuildTotal extends StatelessWidget {
   const BuildTotal({
@@ -48,9 +48,9 @@ class BuildTotal extends StatelessWidget {
                     ),
                   ],
                 ),
-                // Hanya tampilkan BuildIconRoundedAdd jika onPressed tidak null
+                // Hanya tampilkan BuildButtonRounded jika onPressed tidak null
                 if (onPressed != null)
-                  BuildIconRoundedAdd(
+                  BuildButtonRounded(
                     onPressed: onPressed!,
                   ),
               ],

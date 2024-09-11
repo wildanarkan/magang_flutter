@@ -8,10 +8,10 @@ import 'package:http/http.dart' as http;
 import 'package:magang_flutter/common/urls.dart';
 import 'package:magang_flutter/controllers/business_trip_controller.dart';
 import 'package:magang_flutter/controllers/home_page_controller.dart';
-import 'package:magang_flutter/pages/business_trip_page.dart';
+import 'package:magang_flutter/pages/business%20trip/business_trip_page.dart';
 import 'package:magang_flutter/pages/home_page.dart';
-import 'package:magang_flutter/pages/leave_history_page.dart';
-import 'package:magang_flutter/pages/profile_page.dart';
+import 'package:magang_flutter/pages/leave/leave_history_page.dart';
+import 'package:magang_flutter/pages/profile/profile_page.dart';
 
 class NavigatorPageControllers extends GetxController {
   RxInt selectedPage = 0.obs;

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:magang_flutter/controllers/login_page_controller.dart';
-import 'package:magang_flutter/widgets/background_image.dart';
-import 'package:magang_flutter/widgets/build_button.dart';
+import 'package:magang_flutter/widgets/backgrounds/build_background_image.dart';
+import 'package:magang_flutter/widgets/buttons/build_button.dart';
 
 class LoginPage extends StatelessWidget {
   const LoginPage({super.key});
@@ -16,7 +16,7 @@ class LoginPage extends StatelessWidget {
         children: [
           SizedBox(
             height: MediaQuery.of(context).size.height,
-            child: const BackgroundImage(
+            child: const BuildBackgroundImage(
               imageProvider: AssetImage('assets/background.png'),
               imageAlignment: Alignment(0.16, 0),
             ),

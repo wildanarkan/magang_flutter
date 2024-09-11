@@ -5,12 +5,12 @@ import 'package:get/get.dart';
 import 'package:magang_flutter/common/app_color.dart';
 import 'package:magang_flutter/common/urls.dart';
 import 'package:magang_flutter/controllers/home_page_controller.dart';
-import 'package:magang_flutter/pages/business_trip_detail_page.dart';
-import 'package:magang_flutter/widgets/build_card_info.dart';
-import 'package:magang_flutter/widgets/build_expansion_tile.dart';
-import 'package:magang_flutter/widgets/build_link.dart';
-import 'package:magang_flutter/widgets/build_null_safety_icon.dart';
-import 'package:magang_flutter/widgets/dialog/build_confirmation_dialog.dart';
+import 'package:magang_flutter/pages/business%20trip/business_trip_detail_page.dart';
+import 'package:magang_flutter/widgets/cards/build_card_info.dart';
+import 'package:magang_flutter/widgets/dialogs/build_dialog_confirmation.dart';
+import 'package:magang_flutter/widgets/expansions/build_expansion_tile.dart';
+import 'package:magang_flutter/widgets/nulls/build_null_icon_text.dart';
+import 'package:magang_flutter/widgets/texts/build_text_link.dart';
 
 import '../controllers/navigator_page_controllers.dart';
 
@@ -35,7 +35,7 @@ class HomePage extends GetView<NavigatorPageControllers> {
               ? null
               : () {
                   Get.dialog(
-                    BuildConfirmationDialog(
+                    BuildDialogConfirmation(
                       title: "Are you sure?",
                       message:
                           "Do you really want to check in/out?",
@@ -122,7 +122,7 @@ class HomePage extends GetView<NavigatorPageControllers> {
     return Container(
       color: Colors.white,
       padding: const EdgeInsets.symmetric(horizontal: 25, vertical: 0),
-      child: VExpansionTile(
+      child: BuildExpansionTile(
         childrenPadding: const EdgeInsets.all(0),
         tilePadding: EdgeInsets.zero,
         expandedCrossAxisAlignment: CrossAxisAlignment.stretch,
@@ -141,7 +141,7 @@ class HomePage extends GetView<NavigatorPageControllers> {
                   height: 80,
                   child: Center(child: CircularProgressIndicator()));
             } else if (homePageController.currentBusinessTrip.isEmpty) {
-              return const BuildNullSafetyIcon(
+              return const BuildNullIconText(
                 icon: Icons.no_transfer_outlined,
                 iconSize: 50,
                 text: 'Business trip not found',
@@ -186,7 +186,7 @@ class HomePage extends GetView<NavigatorPageControllers> {
     return Container(
       color: Colors.white,
       padding: const EdgeInsets.symmetric(horizontal: 25, vertical: 0),
-      child: VExpansionTile(
+      child: BuildExpansionTile(
         childrenPadding: const EdgeInsets.all(0),
         tilePadding: EdgeInsets.zero,
         expandedCrossAxisAlignment: CrossAxisAlignment.stretch,
@@ -199,7 +199,7 @@ class HomePage extends GetView<NavigatorPageControllers> {
           ),
         ),
         children: [
-          BuildLink(
+          BuildTextLink(
             title: 'View All',
             context: context,
             onTap: () {
@@ -309,7 +309,7 @@ class HomePage extends GetView<NavigatorPageControllers> {
                 const Spacer(),
                 Column(
                   children: [
-                    BuildLink(
+                    BuildTextLink(
                       title: 'Go To Profile',
                       context: context,
                       onTap: () {
