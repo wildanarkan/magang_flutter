@@ -22,19 +22,33 @@ class ChangePasswordPageController extends GetxController {
   }
 
   Future<void> changePassword() async {
+    if (currentPasswordController.text.isEmpty ||
+        newPasswordController.text.isEmpty ||
+        confirmPasswordController.text.isEmpty) {
+      Get.snackbar(
+        'Error',
+        'Please fill all data',
+      );
+      return;
+    }
+
+    if (newPasswordController.text.length < 8) {
+      Get.snackbar(
+        'Error',
+        'New Password must be at least 8 characters long',
+      );
+      return;
+    }
+
     if (newPasswordController.text != confirmPasswordController.text) {
-      // Tampilkan pesan kesalahan jika kata sandi baru dan konfirmasi tidak cocok
       Get.snackbar(
         'Error',
         'New Password and Confirm Password do not match',
-        snackPosition: SnackPosition.BOTTOM,
       );
       return;
     }
 
     final token = GetStorage().read('accessToken');
-    isLoading.value = true;
-
     final response = await http.post(
       Uri.parse(URLs.changePassword),
       headers: {
@@ -48,22 +62,24 @@ class ChangePasswordPageController extends GetxController {
       }),
     );
 
-    isLoading.value = false;
-
     if (response.statusCode == 200) {
-      print('succes');
+      print('success');
       resetFields();
       Get.snackbar(
         'Success',
         'Password successfully changed',
-        snackPosition: SnackPosition.BOTTOM,
+      );
+    } else if (response.statusCode == 400) {
+      print('Error');
+      Get.snackbar(
+        'Error',
+        'Please enter the correct current password.',
       );
     } else {
-      print('gagal');
+      print(response.statusCode);
       Get.snackbar(
         'Error',
         'Failed to change password',
-        snackPosition: SnackPosition.BOTTOM,
       );
     }
   }

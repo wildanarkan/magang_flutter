@@ -10,13 +10,14 @@ class BuildFieldText extends StatefulWidget {
     this.controller,
     this.value, // Tambahkan parameter value
     this.onChanged,
-    this.readOnly, this.inputType,
+    this.readOnly, this.inputType, this.obscureText,
   });
 
   final String title;
   final TextEditingController? controller;
   final bool required;
   final bool? readOnly;
+  final bool? obscureText;
   final String? hintText;
   final Function(String)? onChanged;
   final String? value; // Tambahkan parameter value
@@ -64,6 +65,7 @@ class _BuildFieldTextState extends State<BuildFieldText> {
             ),
             child: TextField(
               readOnly: widget.readOnly ?? false,
+              obscureText: widget.obscureText ?? false,
               keyboardType: widget.inputType,
               controller: widget.controller ?? TextEditingController(text: widget.value), // Gunakan value jika controller tidak ada
               style: TextStyle(

@@ -1,112 +1,70 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:magang_flutter/common/app_color.dart';
 import 'package:magang_flutter/controllers/change_password_page_controller.dart';
 import 'package:magang_flutter/widgets/appbars/build_appbar.dart';
 import 'package:magang_flutter/widgets/buttons/build_button.dart';
+import 'package:magang_flutter/widgets/fields/build_field_text.dart';
 
 class ChangePasswordPage extends StatelessWidget {
   ChangePasswordPage({super.key});
 
-  final ChangePasswordPageController controller = Get.put(ChangePasswordPageController());
+  final ChangePasswordPageController controller =
+      Get.put(ChangePasswordPageController());
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Obx(() => ListView(
-        padding: const EdgeInsets.all(0),
-        children: [
-          const BuildAppbar(
-            title: 'Change Password',
-          ),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 20),
-            child: Column(
-              children: [
-                Container(
-                  width: double.infinity,
-                  color: Colors.white,
-                  child: Padding(
-                    padding: const EdgeInsets.all(30),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          'Current Password',
-                          style: TextStyle(color: AppColor.textBody),
-                        ),
-                        Container(
-                          padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
-                          decoration: BoxDecoration(
-                              borderRadius: const BorderRadius.all(Radius.circular(20)),
-                              color: AppColor.inputBackground),
-                          child: TextField(
+      appBar: const BuildAppbar(title: 'Change Password'),
+      resizeToAvoidBottomInset: true,
+      body: Padding(
+        padding: const EdgeInsets.all(24.0),
+        child: Column(
+          children: [
+            Expanded(
+              child: SingleChildScrollView(
+                child: Column(
+                  children: [
+                    Container(
+                      padding: const EdgeInsets.all(16),
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(8),
+                      ),
+                      child: Column(
+                        children: [
+                          BuildFieldText(
                             controller: controller.currentPasswordController,
+                            required: true,
                             obscureText: true,
-                            decoration: InputDecoration(
-                                hintStyle: TextStyle(color: AppColor.textBody),
-                                hintText: 'Enter Password',
-                                isDense: true,
-                                border: InputBorder.none),
+                            title: 'Current Password',
                           ),
-                        ),
-                        const SizedBox(height: 5),
-                        Text(
-                          'New Password',
-                          style: TextStyle(color: AppColor.textBody),
-                        ),
-                        Container(
-                          padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
-                          decoration: BoxDecoration(
-                              borderRadius: const BorderRadius.all(Radius.circular(20)),
-                              color: AppColor.inputBackground),
-                          child: TextField(
+                          BuildFieldText(
                             controller: controller.newPasswordController,
+                            required: true,
                             obscureText: true,
-                            decoration: InputDecoration(
-                                hintStyle: TextStyle(color: AppColor.textBody),
-                                hintText: 'Enter Password',
-                                isDense: true,
-                                border: InputBorder.none),
+                            title: 'New Password',
                           ),
-                        ),
-                        const SizedBox(height: 5),
-                        Text(
-                          'Re-enter New Password',
-                          style: TextStyle(color: AppColor.textBody),
-                        ),
-                        Container(
-                          padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
-                          decoration: BoxDecoration(
-                              borderRadius: const BorderRadius.all(Radius.circular(20)),
-                              color: AppColor.inputBackground),
-                          child: TextField(
+                          BuildFieldText(
                             controller: controller.confirmPasswordController,
+                            required: true,
                             obscureText: true,
-                            decoration: InputDecoration(
-                                hintStyle: TextStyle(color: AppColor.textBody),
-                                hintText: 'Enter Password',
-                                isDense: true,
-                                border: InputBorder.none),
+                            title: 'Re-enter new password',
                           ),
-                        ),
-                      ],
+                        ],
+                      ),
                     ),
-                  ),
+                  ],
                 ),
-                const SizedBox(height: 200),
-                BuildButton(
-                  context: context,
-                  title: 'Confirm',
-                  onPressed: controller.changePassword,
-                ),
-                if (controller.isLoading.value)
-                  const CircularProgressIndicator(),
-              ],
+              ),
             ),
-          ),
-        ],
-      )),
+            BuildButton(
+              title: 'Confirm',
+              onPressed: controller.changePassword,
+            ),
+          ],
+        ),
+      ),
     );
   }
 }
+
