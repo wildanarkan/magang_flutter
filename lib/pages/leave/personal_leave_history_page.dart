@@ -74,28 +74,28 @@ class PersonalLeaveHistoryPage extends StatelessWidget {
               title: const Text('Pending'),
               onTap: () {
                 controller.statusFilter.value = 'Pending';
-                Get.back();
+                Get.back(closeOverlays: true);
               },
             ),
             ListTile(
               title: const Text('Approved'),
               onTap: () {
                 controller.statusFilter.value = 'Approved';
-                Get.back();
+                Get.back(closeOverlays: true);
               },
             ),
             ListTile(
               title: const Text('Declined'),
               onTap: () {
                 controller.statusFilter.value = 'Declined';
-                Get.back();
+                Get.back(closeOverlays: true);
               },
             ),
             ListTile(
               title: const Text('All'),
               onTap: () {
                 controller.statusFilter.value = ''; // Reset filter
-                Get.back();
+                Get.back(closeOverlays: true);
               },
             ),
           ],

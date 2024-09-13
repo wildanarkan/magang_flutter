@@ -4,7 +4,6 @@ import 'package:get/get.dart';
 import 'package:magang_flutter/common/app_color.dart';
 import 'package:magang_flutter/common/urls.dart';
 import 'package:magang_flutter/controllers/edit_biaya_page_controller.dart';
-import 'package:magang_flutter/pages/planning/nominal_page.dart';
 import 'package:magang_flutter/widgets/appbars/build_appbar.dart';
 import 'package:magang_flutter/widgets/buttons/build_button.dart';
 import 'package:magang_flutter/widgets/dropdowns/build_dropdown.dart';
@@ -22,7 +21,8 @@ class EditBiayaPage extends StatelessWidget {
     super.key,
     required this.idBusinessTrip,
     this.idItem,
-    this.isEditMode = false, required this.biayaType,
+    this.isEditMode = false,
+    required this.biayaType,
   });
 
   @override
@@ -192,7 +192,7 @@ class EditBiayaPage extends StatelessWidget {
                     context: context,
                     title: 'Cancel',
                     onPressed: () {
-                      Get.off(()=>NominalPage(idBusinessTrip: idBusinessTrip, biayaType: biayaType,));
+                      Get.back(closeOverlays: true);
                     },
                     backgroundColor: Colors.white,
                     foregroundColor: Colors.black,

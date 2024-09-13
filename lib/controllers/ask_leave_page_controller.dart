@@ -81,7 +81,7 @@ class AskLeavePageController extends GetxController {
       );
 
       if (response.statusCode == 201) {
-        Get.back();
+        Get.back(closeOverlays: true);
         Get.snackbar('Success', 'Leave request successfully created');
       } else {
         Get.snackbar('Error', 'Failed to create leave, try adding data that has not been filled in');

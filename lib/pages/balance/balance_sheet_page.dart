@@ -31,7 +31,7 @@ class BalanceSheetPage extends StatelessWidget {
               title: 'Uang Harian',
               content: 'Total: Rp.460.000,00',
               onTap: () {
-                Get.back();
+                Get.back(closeOverlays: true);
               },
             ),
             const SizedBox(

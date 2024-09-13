@@ -100,7 +100,7 @@ class EditBiayaPageController extends GetxController {
       final response = await request.send();
 
       if (response.statusCode == 200) {
-        Get.back();
+        Get.back(closeOverlays: true);
         final NominalPageController nominalPageController =
             Get.find<NominalPageController>();
         nominalPageController.fetchNominalData(idBusinessTrip);
@@ -202,7 +202,7 @@ class EditBiayaPageController extends GetxController {
       final response = await request.send();
 
       if (response.statusCode == 201) {
-        Get.back(result: true);
+        Get.back(result: true, closeOverlays: true);
         Get.snackbar('Success', 'Expense successfully updated');
       } else {
         final responseBody = await response.stream.bytesToString();

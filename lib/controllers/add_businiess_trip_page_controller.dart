@@ -187,8 +187,7 @@ class AddBusiniessTripPageController extends GetxController {
 
     // Update isCityEnabled berdasarkan apakah ada city items yang tersedia
     isCityEnabled.value = cityItem.isNotEmpty;
-    log('City Items: ${cityItem.value}');
-    log('Selected City: ${selectedCity.value}');
+    log('City Items: $cityItem');
   }
 
   void clearCityRelatedData() {

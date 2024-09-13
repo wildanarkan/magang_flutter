@@ -212,7 +212,7 @@ class BusinessTripPage extends StatelessWidget {
                 controller.filterBusinessTrips();
 
                 // Close the bottom sheet after applying the filter
-                Get.back();
+                Get.back(closeOverlays: true);
               },
               title: 'Apply Filter',
             ),

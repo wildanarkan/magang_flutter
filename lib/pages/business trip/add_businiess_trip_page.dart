@@ -5,7 +5,6 @@ import 'package:get/get.dart';
 import 'package:magang_flutter/common/app_color.dart';
 import 'package:magang_flutter/controllers/add_businiess_trip_page_controller.dart';
 import 'package:magang_flutter/controllers/business_trip_controller.dart';
-import 'package:magang_flutter/pages/navigator_page.dart';
 import 'package:magang_flutter/widgets/appbars/build_appbar.dart';
 import 'package:magang_flutter/widgets/buttons/build_button.dart';
 import 'package:magang_flutter/widgets/dropdowns/build_dropdown.dart';
@@ -194,7 +193,7 @@ class AddBusiniessTripPage extends StatelessWidget {
                   final businessTripController =
                       Get.find<BusinessTripController>();
                   await businessTripController.fetchBusinessTrips();
-                  Get.off(()=>const NavigatorPage());
+                      Get.back(closeOverlays: true);
                   Get.snackbar('Success', 'Success to create Business Trip');
                 } else {
                   log(businessTripId.toString());

@@ -53,6 +53,7 @@ class BusinessTripDetailPageController extends GetxController {
       // Membuka file yang telah diunduh
       OpenFile.open(file.path);
     } catch (e) {
+      Get.snackbar('Error', 'Photo document tidak dapat di temukan');
       print('Error: $e');
     }
   }
@@ -78,7 +79,7 @@ class BusinessTripDetailPageController extends GetxController {
         extendDay.value = newExtendDay; // Update nilai extendDay di controller
         extendedController.value.clear();
         isChangeExtend = true; // Perbaikan di sini
-        Get.back();
+        Get.back(closeOverlays: true);
         Get.snackbar('Success', 'Extend updated to $newExtendDay');
       } else {
         Get.snackbar(

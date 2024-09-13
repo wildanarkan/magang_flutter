@@ -121,7 +121,7 @@ class _EmployeeLeaveHistoryPageState extends State<EmployeeLeaveHistoryPage> {
                 setState(() {
                   selectedStatusFilter = 'Pending';
                 });
-                Get.back();
+                Get.back(closeOverlays: true);
               },
             ),
             ListTile(
@@ -130,7 +130,7 @@ class _EmployeeLeaveHistoryPageState extends State<EmployeeLeaveHistoryPage> {
                 setState(() {
                   selectedStatusFilter = 'Approved';
                 });
-                Get.back();
+                Get.back(closeOverlays: true);
               },
             ),
             ListTile(
@@ -139,7 +139,7 @@ class _EmployeeLeaveHistoryPageState extends State<EmployeeLeaveHistoryPage> {
                 setState(() {
                   selectedStatusFilter = 'Declined';
                 });
-                Get.back();
+                Get.back(closeOverlays: true);
               },
             ),
             ListTile(
@@ -148,7 +148,7 @@ class _EmployeeLeaveHistoryPageState extends State<EmployeeLeaveHistoryPage> {
                 setState(() {
                   selectedStatusFilter = 'Canceled';
                 });
-                Get.back();
+                Get.back(closeOverlays: true);
               },
             ),
             ListTile(
@@ -157,7 +157,7 @@ class _EmployeeLeaveHistoryPageState extends State<EmployeeLeaveHistoryPage> {
                 setState(() {
                   selectedStatusFilter = null;
                 });
-                Get.back();
+                Get.back(closeOverlays: true);
               },
             ),
           ],

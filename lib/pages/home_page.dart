@@ -37,10 +37,12 @@ class HomePage extends GetView<NavigatorPageControllers> {
                   Get.dialog(
                     BuildDialogConfirmation(
                       title: "Are you sure?",
-                      message:
-                          "Do you really want to check in/out?",
+                      message: "Do you really want to check in/out?",
+                      onCancel: () {
+                        Get.back(closeOverlays: true);
+                      },
                       onConfirm: () {
-                        Get.back();
+                        Get.back(closeOverlays: true);
                         homePageController.checkInOut();
                       },
                     ),
@@ -145,7 +147,7 @@ class HomePage extends GetView<NavigatorPageControllers> {
                 icon: Icons.no_transfer_outlined,
                 iconSize: 50,
                 text: 'Business trip not found',
-                textSize: 14,
+                textSize: 12,
                 padding: EdgeInsets.symmetric(vertical: 20),
               );
             } else {
@@ -212,18 +214,12 @@ class HomePage extends GetView<NavigatorPageControllers> {
           Obx(() {
             // Cek apakah savedBusinessTrips kosong
             if (homePageController.savedBusinessTrips.isEmpty) {
-              return SizedBox(
-                height: 80,
-                child: Center(
-                  child: Text(
-                    "You don't have any saved business trip",
-                    style: TextStyle(
-                      fontSize: 12,
-                      color: AppColor.textBody,
-                    ),
-                    textAlign: TextAlign.center,
-                  ),
-                ),
+              return const BuildNullIconText(
+                icon: Icons.no_transfer_outlined,
+                iconSize: 50,
+                text: "You don't have any saved business trip",
+                textSize: 12,
+                padding: EdgeInsets.symmetric(vertical: 20),
               );
             } else {
               return Column(

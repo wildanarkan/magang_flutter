@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:magang_flutter/common/app_color.dart';
 import 'package:magang_flutter/widgets/buttons/build_button.dart';
 
@@ -9,6 +8,7 @@ class BuildDialogConfirmation extends StatelessWidget {
   final String confirmButtonText;
   final String cancelButtonText;
   final VoidCallback onConfirm;
+  final VoidCallback onCancel;
 
   const BuildDialogConfirmation({
     super.key,
@@ -17,6 +17,7 @@ class BuildDialogConfirmation extends StatelessWidget {
     this.confirmButtonText = 'Yes',
     this.cancelButtonText = 'No',
     required this.onConfirm,
+    required this.onCancel,
   });
 
   @override
@@ -60,15 +61,12 @@ class BuildDialogConfirmation extends StatelessWidget {
               children: [
                 Expanded(
                   child: BuildButton(
-                    title: cancelButtonText,
-                    backgroundColor: Colors.white,
-                    foregroundColor: AppColor.primary,
-                    width: 88,
-                    height: 40,
-                    onPressed: () {
-                      Get.back();
-                    },
-                  ),
+                      title: cancelButtonText,
+                      backgroundColor: Colors.white,
+                      foregroundColor: AppColor.primary,
+                      width: 88,
+                      height: 40,
+                      onPressed: onCancel),
                 ),
                 const SizedBox(width: 10),
                 Expanded(

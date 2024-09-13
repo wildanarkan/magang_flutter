@@ -19,19 +19,34 @@ import 'package:magang_flutter/widgets/dialogs/build_dialog_error.dart';
 import 'package:magang_flutter/widgets/fields/build_field_text.dart';
 import 'package:magang_flutter/widgets/texts/build_text_icon.dart';
 
-class BusinessTripDetailPage extends StatelessWidget {
-  final HomePageController homePageController = Get.find<HomePageController>();
-  final BusinessTripDetailPageController controller;
-
+class BusinessTripDetailPage extends StatefulWidget {
   final BusinessTripModel trip;
   final String? status;
 
-  BusinessTripDetailPage({super.key, required this.trip, this.status})
-      : controller = Get.put(BusinessTripDetailPageController(trip: trip)) {
-    controller.setInitialVariable(
-      trip.extendDay ?? 0,
-      trip.photoDocument ?? '',
-    );
+  const BusinessTripDetailPage({super.key, required this.trip, this.status});
+
+  @override
+  _BusinessTripDetailPageState createState() => _BusinessTripDetailPageState();
+}
+
+class _BusinessTripDetailPageState extends State<BusinessTripDetailPage> {
+  late final BusinessTripDetailPageController controller;
+  final HomePageController homePageController = Get.find<HomePageController>();
+
+  @override
+  void initState() {
+    super.initState();
+
+    // Inisialisasi controller di sini
+    controller = Get.put(BusinessTripDetailPageController(trip: widget.trip));
+
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      // Panggil setState atau lakukan perubahan state setelah build selesai
+      controller.setInitialVariable(
+        widget.trip.extendDay ?? 0,
+        widget.trip.photoDocument ?? '',
+      );
+    });
   }
 
   @override
@@ -41,7 +56,7 @@ class BusinessTripDetailPage extends StatelessWidget {
         title: 'Business Trip Detail',
         actions: [
           Obx(() {
-            bool isSaved = homePageController.checkIfSaved(trip);
+            bool isSaved = homePageController.checkIfSaved(widget.trip);
             return IconButton(
               icon: Icon(
                 isSaved ? Icons.star_rounded : Icons.star_border_rounded,
@@ -49,7 +64,7 @@ class BusinessTripDetailPage extends StatelessWidget {
                 color: AppColor.primary,
               ),
               onPressed: () {
-                homePageController.toggleSaveTrip(trip);
+                homePageController.toggleSaveTrip(widget.trip);
               },
             );
           }),
@@ -82,7 +97,7 @@ class BusinessTripDetailPage extends StatelessWidget {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(
-                                trip.companyName ?? 'Unknown Company',
+                                widget.trip.companyName ?? 'Unknown Company',
                                 style: TextStyle(
                                   fontSize: 16,
                                   fontWeight: FontWeight.w600,
@@ -90,7 +105,7 @@ class BusinessTripDetailPage extends StatelessWidget {
                                 ),
                               ),
                               Text(
-                                trip.cityName ?? 'Unknown City',
+                                widget.trip.cityName ?? 'Unknown City',
                                 style: TextStyle(
                                   fontSize: 12,
                                   fontWeight: FontWeight.w400,
@@ -100,11 +115,12 @@ class BusinessTripDetailPage extends StatelessWidget {
                             ],
                           ),
                           const Spacer(),
-                          if (status == 'Draft') AppStatus.draft(),
-                          if (status == 'On Progress') AppStatus.onProgress(),
-                          if (status == 'Completed')
+                          if (widget.status == 'Draft') AppStatus.draft(),
+                          if (widget.status == 'On Progress')
+                            AppStatus.onProgress(),
+                          if (widget.status == 'Completed')
                             AppStatus.complete('Completed'),
-                          if (status == 'Canceled')
+                          if (widget.status == 'Canceled')
                             AppStatus.canceled('Canceled'),
                         ],
                       ),
@@ -137,7 +153,7 @@ class BusinessTripDetailPage extends StatelessWidget {
                                     ),
                                   ),
                                   Text(
-                                    trip.pic ?? 'Unknown PIC',
+                                    widget.trip.pic ?? 'Unknown PIC',
                                     style: TextStyle(
                                       fontSize: 12,
                                       fontWeight: FontWeight.w500,
@@ -169,7 +185,7 @@ class BusinessTripDetailPage extends StatelessWidget {
                                     ),
                                   ),
                                   Text(
-                                    trip.picRole ?? 'Unknown Role',
+                                    widget.trip.picRole ?? 'Unknown Role',
                                     style: TextStyle(
                                         fontSize: 12,
                                         fontWeight: FontWeight.w500,
@@ -188,14 +204,14 @@ class BusinessTripDetailPage extends StatelessWidget {
                         icons: Icons.location_on_rounded,
                         title: 'City, Address',
                         subtitle:
-                            '${trip.cityName}, ${trip.companyAddress ?? 'Unknown Address'}',
+                            '${widget.trip.cityName}, ${widget.trip.companyAddress ?? 'Unknown Address'}',
                       ),
                       const SizedBox(
                         height: 24,
                       ),
                       BuildTextIcon(
                         title: 'Departure from',
-                        subtitle: trip.departureFrom ?? 'Null',
+                        subtitle: widget.trip.departureFrom ?? 'Null',
                         icons: Icons.location_city,
                       ),
                       const SizedBox(
@@ -203,7 +219,8 @@ class BusinessTripDetailPage extends StatelessWidget {
                       ),
                       BuildTextIcon(
                         title: 'Date',
-                        subtitle: '${trip.startDate} - ${trip.endDate}',
+                        subtitle:
+                            '${widget.trip.startDate} - ${widget.trip.endDate}',
                         icons: Icons.access_time_filled_outlined,
                       ),
                       const SizedBox(
@@ -211,7 +228,7 @@ class BusinessTripDetailPage extends StatelessWidget {
                       ),
                       BuildTextIcon(
                         title: 'Note',
-                        subtitle: '${trip.note}',
+                        subtitle: '${widget.trip.note}',
                         icons: Icons.my_library_books_rounded,
                       ),
                       const SizedBox(
@@ -283,7 +300,7 @@ class BusinessTripDetailPage extends StatelessWidget {
                                                     .value.text);
                                             if (extendDayValue != null) {
                                               controller.updateExtendedDay(
-                                                  trip.idBusinessTrip!,
+                                                  widget.trip.idBusinessTrip!,
                                                   extendDayValue);
                                             } else {
                                               Get.snackbar('Error',
@@ -317,7 +334,7 @@ class BusinessTripDetailPage extends StatelessWidget {
                           const SizedBox(
                             height: 16,
                           ),
-                          ...trip.users?.map((user) {
+                          ...widget.trip.users?.map((user) {
                                 return Padding(
                                   padding: const EdgeInsets.only(bottom: 10.0),
                                   child: Row(
@@ -365,7 +382,7 @@ class BusinessTripDetailPage extends StatelessWidget {
                                   child: GestureDetector(
                                     onTap: () {
                                       log(controller.photoDocument.value);
-                                      // log(trip.photoDocument.toString());
+                                      // log(widget.trip.photoDocument.toString());
                                       if (controller
                                           .photoDocument.value.isEmpty) {
                                         Get.snackbar('No data',
@@ -452,8 +469,9 @@ class BusinessTripDetailPage extends StatelessWidget {
                                             log('${selectedFile}1');
                                             controller.updateFileInDatabase(
                                                 selectedFile,
-                                                trip.idBusinessTrip ?? 0);
-                                            log('${trip.photoDocument}2');
+                                                widget.trip.idBusinessTrip ??
+                                                    0);
+                                            log('${widget.trip.photoDocument}2');
                                           },
                                         ),
                                       );
@@ -495,7 +513,7 @@ class BusinessTripDetailPage extends StatelessWidget {
                           title: 'Perkiraan',
                           onPressed: () {
                             Get.to(() => NominalPage(
-                                idBusinessTrip: trip.idBusinessTrip ?? 0,
+                                idBusinessTrip: widget.trip.idBusinessTrip ?? 0,
                                 biayaType: 'estimasi'));
                           },
                         ),
@@ -507,7 +525,7 @@ class BusinessTripDetailPage extends StatelessWidget {
                           title: 'Realisasi',
                           onPressed: () {
                             Get.to(() => NominalPage(
-                                idBusinessTrip: trip.idBusinessTrip ?? 0,
+                                idBusinessTrip: widget.trip.idBusinessTrip ?? 0,
                                 biayaType: 'realisasi'));
                           },
                         ),
@@ -520,7 +538,7 @@ class BusinessTripDetailPage extends StatelessWidget {
                     title: 'Perbandingan',
                     onPressed: () {
                       Get.to(() => PerbandinganBiayaPage(
-                          idBusinessTrip: trip.idBusinessTrip ?? 0));
+                          idBusinessTrip: widget.trip.idBusinessTrip ?? 0));
                     },
                     width: double.infinity,
                     backgroundColor: Colors.white,

@@ -27,7 +27,7 @@ class LeaveRequestDetailController extends GetxController {
 
       if (response.statusCode == 200) {
         final leaveController = Get.find<LeavePageController>();
-        Get.back();
+        Get.back(closeOverlays: true);
         leaveController.fetchLeaves();
         Get.snackbar('Success', 'Leave status updated to $status');
       } else {
@@ -55,7 +55,7 @@ class LeaveRequestDetailController extends GetxController {
 
       if (response.statusCode == 200) {
         final leaveController = Get.find<LeavePageController>();
-        Get.back();
+        Get.back(closeOverlays: true);
         leaveController.fetchLeaves();
         Get.snackbar('Success', 'Leave request deleted');
       } else {

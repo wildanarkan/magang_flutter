@@ -127,7 +127,9 @@ class LeaveRequestDetailPage extends StatelessWidget {
           ),
           Column(
             children: [
-              if (navigatorPageControllers.rolePriority.value <= 2)
+              if (navigatorPageControllers.rolePriority.value <= 2 &&
+                  navigatorPageControllers.nip != leave.nip &&
+                  leave.status != 'Approved')
                 Padding(
                   padding:
                       const EdgeInsets.symmetric(horizontal: 35, vertical: 20),
@@ -142,40 +144,43 @@ class LeaveRequestDetailPage extends StatelessWidget {
                     },
                   ),
                 ),
-              if (navigatorPageControllers.rolePriority.value <= 2)
-              Padding(
-                padding: const EdgeInsets.fromLTRB(35, 0, 35, 20),
-                child: BuildButton(
-                  context: context,
-                  title: 'Reject',
-                  backgroundColor: Colors.white,
-                  foregroundColor: AppColor.decline,
-                  borderColor: AppColor.decline,
-                  width: 320,
-                  onPressed: () async {
-                    await controller.updateLeaveStatus(leave.id!, 'Declined');
-                    log(leave.id.toString());
-                    log('Declined');
-                  },
+              if (navigatorPageControllers.rolePriority.value <= 2 &&
+                  navigatorPageControllers.nip != leave.nip &&
+                  leave.status != 'Declined')
+                Padding(
+                  padding: const EdgeInsets.fromLTRB(35, 0, 35, 20),
+                  child: BuildButton(
+                    context: context,
+                    title: 'Reject',
+                    backgroundColor: Colors.white,
+                    foregroundColor: AppColor.decline,
+                    borderColor: AppColor.decline,
+                    width: 320,
+                    onPressed: () async {
+                      await controller.updateLeaveStatus(leave.id!, 'Declined');
+                      log(leave.id.toString());
+                      log('Declined');
+                    },
+                  ),
                 ),
-              ),
-              if (leave.nip == navigatorPageControllers.nip.value)
-              Padding(
-                padding: const EdgeInsets.fromLTRB(35, 0, 35, 40),
-                child: BuildButton(
-                  context: context,
-                  title: 'Cancel',
-                  backgroundColor: AppColor.decline,
-                  foregroundColor: Colors.white,
-                  borderColor: AppColor.decline,
-                  width: 320,
-                  onPressed: () async {
-                    await controller.updateLeaveStatus(leave.id!, 'Canceled');
-                    log(leave.id.toString());
-                    log('canceled');
-                  },
+              if (leave.nip == navigatorPageControllers.nip.value &&
+                  leave.status != 'Canceled')
+                Padding(
+                  padding: const EdgeInsets.fromLTRB(35, 0, 35, 40),
+                  child: BuildButton(
+                    context: context,
+                    title: 'Cancel',
+                    backgroundColor: AppColor.decline,
+                    foregroundColor: Colors.white,
+                    borderColor: AppColor.decline,
+                    width: 320,
+                    onPressed: () async {
+                      await controller.updateLeaveStatus(leave.id!, 'Canceled');
+                      log(leave.id.toString());
+                      log('canceled');
+                    },
+                  ),
                 ),
-              ),
             ],
           )
         ],
