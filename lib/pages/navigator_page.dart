@@ -2,16 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:magang_flutter/common/app_color.dart';
 import 'package:magang_flutter/controllers/navigator_page_controllers.dart';
-import 'package:magang_flutter/controllers/profile_page_controller.dart';
 import 'package:magang_flutter/widgets/fab_bottom_app_bar.dart';
 
-class NavigatorPage extends StatelessWidget {
+class NavigatorPage extends GetView<NavigatorPageControllers> {
   const NavigatorPage({super.key});
 
   @override
   Widget build(BuildContext context) {
-    Get.put(ProfilePageController());
-    final controller = Get.put(NavigatorPageControllers());
 
     return Scaffold(
       body: Obx(

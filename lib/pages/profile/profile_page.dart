@@ -2,24 +2,20 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:magang_flutter/common/app_color.dart';
+import 'package:magang_flutter/common/app_routes.dart';
 import 'package:magang_flutter/common/urls.dart';
 import 'package:magang_flutter/controllers/home_page_controller.dart';
 import 'package:magang_flutter/controllers/login_page_controller.dart';
 import 'package:magang_flutter/controllers/navigator_page_controllers.dart';
 import 'package:magang_flutter/controllers/profile_page_controller.dart';
-import 'package:magang_flutter/pages/contract/contract_history_page.dart';
-import 'package:magang_flutter/pages/payroll/payroll_history_page.dart';
-import 'package:magang_flutter/pages/profile/profile_detail_page.dart';
 import 'package:magang_flutter/widgets/buttons/build_button.dart';
 import 'package:magang_flutter/widgets/buttons/build_button_icon.dart';
 
-class ProfilePage extends StatelessWidget {
+class ProfilePage extends GetView<NavigatorPageControllers> {
   const ProfilePage({super.key});
 
   @override
   Widget build(BuildContext context) {
-    final NavigatorPageControllers controller =
-        Get.find<NavigatorPageControllers>();
     final LoginPageController loginController = Get.find<LoginPageController>();
     final ProfilePageController profileController =
         Get.find<ProfilePageController>();
@@ -100,7 +96,7 @@ class ProfilePage extends StatelessWidget {
                                 iconColor: AppColor.primary,
                                 title: 'Detail',
                                 onTap: () {
-                                  Get.to(() => const ProfileDetailPage());
+                                  Get.toNamed(AppRoutes.profileDetail);
                                 },
                               ),
                               BuildButtonIcon(
@@ -108,7 +104,7 @@ class ProfilePage extends StatelessWidget {
                                 iconColor: AppColor.primary,
                                 title: 'Payroll History',
                                 onTap: () {
-                                  Get.to(() => const PayrollHistoryPage());
+                                  Get.toNamed(AppRoutes.payroll);
                                 },
                               ),
                               BuildButtonIcon(
@@ -116,7 +112,7 @@ class ProfilePage extends StatelessWidget {
                                 iconColor: AppColor.primary,
                                 title: 'Contract History',
                                 onTap: () {
-                                  Get.to(() => const ContractHistoryPage());
+                                  Get.toNamed(AppRoutes.contract);
                                 },
                               ),
                               const SizedBox(height: 20),

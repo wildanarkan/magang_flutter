@@ -5,19 +5,17 @@ import 'package:magang_flutter/controllers/payroll_history_page_controller.dart'
 import 'package:magang_flutter/widgets/appbars/build_appbar.dart';
 import 'package:magang_flutter/widgets/items/build_item_payroll_detail.dart';
 
-class PayrollDetailPage extends StatelessWidget {
+class PayrollDetailPage extends GetView<PayrollHistoryPageController> {
   final String payrollId;
-
-  const PayrollDetailPage({required this.payrollId, super.key});
+  const PayrollDetailPage({super.key, required this.payrollId});
 
   @override
   Widget build(BuildContext context) {
-    final controller = Get.put(PayrollHistoryPageController());
+    final payrollId = Get.parameters['payrollId']!;
 
     WidgetsBinding.instance.addPostFrameCallback((_) {
       controller.fetchPayrollDetail(payrollId);
     });
-
     return Scaffold(
       appBar: const BuildAppbar(
         title: 'Payroll Detail',

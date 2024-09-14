@@ -1,13 +1,12 @@
 import 'dart:async';
-import 'dart:convert';
 import 'dart:developer';
 
 import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
-import 'package:http/http.dart' as http;
-import 'package:magang_flutter/common/urls.dart';
 import 'package:magang_flutter/data/models/business_trip_model.dart';
+import 'package:magang_flutter/data/repo/business_trip_repository.dart';
+import 'package:magang_flutter/data/repo/user_repository.dart';
 
 class HomePageController extends GetxController {
   var currentBusinessTrip = <BusinessTripModel>[].obs;
@@ -18,6 +17,10 @@ class HomePageController extends GetxController {
   var endTime = '--:--'.obs;
   final storage = GetStorage();
 
+  final BusinessTripRepository _businessTripRepository =
+      Get.find<BusinessTripRepository>();
+  final UserRepository userRepository = Get.find<UserRepository>();
+
   @override
   void onInit() {
     super.onInit();
@@ -25,83 +28,40 @@ class HomePageController extends GetxController {
     fetchCheckinToday();
     loadSavedBusinessTrips();
     _checkDateAndResetTimes();
-    // _loadStoredTimes();
+  }
+
+  Future<void> fetchCurrentBusinessTrips() async {
+    try {
+      isLoading(true);
+      final trips = await _businessTripRepository.fetchCurrent();
+      currentBusinessTrip.value = trips;
+    } catch (e) {
+      print('Error fetching current business trips: $e');
+    } finally {
+      isLoading(false);
+    }
   }
 
   Future<void> fetchCheckinToday() async {
     log('fetch checkin today');
     try {
       isLoading(true);
-      final token = storage.read('accessToken');
       final userId = storage.read('userId');
-      final response = await http.get(
-        Uri.parse('${URLs.checkInToday}$userId'),
-        headers: {
-          'Authorization': 'Bearer $token',
-        },
-      );
-
-      if (response.statusCode == 200) {
-        final data = json.decode(response.body);
-
-        // Memeriksa setiap item dalam data dan memperbarui waktu sesuai tipe
-        for (var item in data) {
-          if (item['type'] == 0) {
-            startTime.value = item['time'].substring(11, 16); // Mengambil format HH:mm
-          } else if (item['type'] == 1) {
-            endTime.value = item['time'].substring(11, 16); // Mengambil format HH:mm
-          }
+      final data = await userRepository.fetchCheckinToday(userId);
+      for (var item in data) {
+        final type = item['type'];
+        final time = item['time'];
+        if (type == 0) {
+          startTime.value = time.substring(11, 16);
+        } else if (type == 1) {
+          endTime.value = time.substring(11, 16);
         }
-        log("check in todaay" + userId);
-      } else {
-        log("check in todaay" + userId);
-        print(response.statusCode);
       }
     } catch (e) {
       log('Error check today $e');
     } finally {
       isLoading(false);
     }
-  }
-
-
-  void _checkDateAndResetTimes() {
-    // Ambil tanggal check-in yang tersimpan
-    final lastCheckInDate = storage.read('checkInDate');
-    if (lastCheckInDate != null) {
-      // Konversi tanggal terakhir check-in ke DateTime
-      DateTime lastDate = DateTime.parse(lastCheckInDate);
-
-      // Ambil tanggal hari ini
-      DateTime today = DateTime.now();
-
-      // Jika tanggal berbeda, reset startTime dan endTime
-      if (lastDate.day != today.day ||
-          lastDate.month != today.month ||
-          lastDate.year != today.year) {
-        updateStartTime('--:--');
-        updateEndTime('--:--');
-        log('kena remove');
-        storage.remove('checkInDate'); // Hapus data tanggal check-in lama
-      }
-    }
-  }
-
-  // void _loadStoredTimes() {
-  //   startTime.value = storage.read('startTime') ?? '--:--';
-  //   endTime.value = storage.read('endTime') ?? '--:--';
-  // }
-
-  void updateStartTime(String time) {
-    startTime.value = time;
-    // storage.write('startTime', time);
-    storage.write('checkInDate',
-        DateTime.now().toIso8601String()); // Simpan tanggal check-in
-  }
-
-  void updateEndTime(String time) {
-    endTime.value = time;
-    // storage.write('endTime', time);
   }
 
   Future<bool> _handleLocationPermission() async {
@@ -141,47 +101,47 @@ class HomePageController extends GetxController {
       if (!hasPermission) return;
 
       final position = await Geolocator.getCurrentPosition();
-      final token = GetStorage().read('accessToken');
-      final response = await http.post(
-        Uri.parse(URLs.checkInActivity),
-        body: json.encode({
-          'latitude': position.latitude,
-          'longtitude': position.longitude,
-        }),
-        headers: {
-          'Authorization': 'Bearer $token',
-          'Content-Type': 'application/json',
-        },
-      );
+      final data = await userRepository.checkInOut(
+          position.latitude, position.longitude);
 
-      if (response.statusCode == 200) {
-        final data = json.decode(response.body);
-
-        if (data['message'].contains('Check-in')) {
-          startTime.value = data['check_in_time'];
-          // updateStartTime(startTime.value);
-          Get.snackbar('Success', 'Check-in successful');
-        } else if (data['message'].contains('Check-out')) {
-          endTime.value = data['check_out_time'];
-          // updateEndTime(endTime.value);
-          Get.snackbar('Success', 'Check-out successful');
-        }
-      } else if (response.statusCode == 400) {
-        final data = json.decode(response.body);
-        log(position.latitude.toString());
-        log(position.longitude.toString());
-        Get.snackbar('Error', data['message']);
-      } else {
-        log(URLs.checkInActivity);
-        log(response.statusCode.toString());
-        Get.snackbar('Error', 'An unexpected error occurred');
+      if (data['message'].contains('Check-in')) {
+        startTime.value = data['check_in_time'];
+        Get.snackbar('Success', 'Check-in successful');
+      } else if (data['message'].contains('Check-out')) {
+        endTime.value = data['check_out_time'];
+        Get.snackbar('Success', 'Check-out successful');
       }
     } catch (e) {
-      Get.snackbar('Error', 'An error occurred: ${e.toString()}');
+      Get.snackbar('Error', e.toString().replaceAll('Exception: ', ''));
       log('Error in checkInOut: ${e.toString()}');
     } finally {
       isLoading.value = false;
     }
+  }
+
+  void _checkDateAndResetTimes() {
+    final lastCheckInDate = storage.read('checkInDate');
+    if (lastCheckInDate != null) {
+      DateTime lastDate = DateTime.parse(lastCheckInDate);
+      DateTime today = DateTime.now();
+      if (lastDate.day != today.day ||
+          lastDate.month != today.month ||
+          lastDate.year != today.year) {
+        updateStartTime('--:--');
+        updateEndTime('--:--');
+        log('kena remove');
+        storage.remove('checkInDate');
+      }
+    }
+  }
+
+  void updateStartTime(String time) {
+    startTime.value = time;
+    storage.write('checkInDate', DateTime.now().toIso8601String());
+  }
+
+  void updateEndTime(String time) {
+    endTime.value = time;
   }
 
   void loadSavedBusinessTrips() {
@@ -227,36 +187,5 @@ class HomePageController extends GetxController {
   void updateStorage() {
     GetStorage().write('savedBusinessTrips',
         savedBusinessTrips.map((trip) => trip.toJson()).toList());
-  }
-
-  Future<void> fetchCurrentBusinessTrips() async {
-    try {
-      isLoading(true);
-      final token = GetStorage().read('accessToken');
-      final response = await http.get(
-        Uri.parse(URLs.tripToday),
-        headers: {
-          'Authorization': 'Bearer $token',
-        },
-      );
-
-      if (response.statusCode == 200) {
-        log('Success fetch current trip');
-        print('Semua data di GetStorage:');
-        storage.getKeys().forEach((key) {
-          print('$key: ${storage.read(key)}');
-        });
-        List<dynamic> jsonData = json.decode(response.body);
-        currentBusinessTrip.value =
-            jsonData.map((json) => BusinessTripModel.fromJson(json)).toList();
-      } else {
-        // Handle error
-        print(response.statusCode);
-      }
-    } catch (e) {
-      // Handle exception
-    } finally {
-      isLoading(false);
-    }
   }
 }

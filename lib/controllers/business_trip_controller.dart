@@ -1,12 +1,8 @@
-import 'dart:convert';
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get_storage/get_storage.dart';
-import 'package:http/http.dart' as http;
-import 'package:magang_flutter/common/urls.dart';
 import 'package:magang_flutter/data/models/business_trip_model.dart';
+import 'package:magang_flutter/data/repo/business_trip_repository.dart';
+import 'package:magang_flutter/data/repo/company_repository.dart';
 
 extension DateTimeComparison on DateTime {
   bool isAtLeast(DateTime date) {
@@ -21,18 +17,29 @@ extension DateTimeComparison on DateTime {
 }
 
 class BusinessTripController extends GetxController {
+  // Repository
+  final CompanyRepository companyRepository = Get.find<CompanyRepository>();
+  final BusinessTripRepository _businessTripRepository =
+      Get.find<BusinessTripRepository>();
+
+  // Model
   var businessTrips = <BusinessTripModel>[].obs;
-  var isLoading = true.obs;
-  var selectedStatus = Rxn<String>();
-  var selectedEndDate = Rxn<DateTime>();
-  var selectedStartDate = Rxn<DateTime>();
-  var selectedCompany = Rxn<String>();
   var filteredBusinessTrips = <BusinessTripModel>[].obs;
+  var companyItem = <String>[].obs;
+
+  // Bool
+  var isLoading = true.obs;
   var noData = false.obs;
 
+  // Variable
+  var selectedStatus = Rxn<String>();
+  var selectedCompany = Rxn<String>();
+  var selectedEndDate = Rxn<DateTime>();
+  var selectedStartDate = Rxn<DateTime>();
+
+  // Text Editing Controller
   var endDateController = TextEditingController().obs;
   var startDateController = TextEditingController().obs;
-  var companyItem = <String>[].obs;
 
   @override
   void onInit() {
@@ -40,62 +47,28 @@ class BusinessTripController extends GetxController {
     fetchCompanyItems();
     fetchBusinessTrips();
     resetFilter();
-
-    // Langsung ke filter tanpa apply
-    // selectedStatus.listen((_) => filterBusinessTrips());
-    // selectedStartDate.listen((_) => filterBusinessTrips());
-    // selectedCompany.listen((_) => filterBusinessTrips());
-  }
-
-  void fetchCompanyItems() async {
-    try {
-      final token = GetStorage().read('accessToken');
-      final response = await http.get(
-        Uri.parse(URLs.company),
-        headers: {
-          'Authorization': 'Bearer $token',
-        },
-      );
-
-      if (response.statusCode == 200) {
-        var apiDataCompany = json.decode(response.body);
-        companyItem.value = apiDataCompany
-            .map<String>((item) => item['name'].toString())
-            .toSet()
-            .toList();
-      } else {
-        Get.snackbar('Error', 'Failed to load company items');
-      }
-    } catch (e) {
-      Get.snackbar('Error', 'Failed to load company items');
-    }
   }
 
   Future<void> fetchBusinessTrips() async {
     try {
       isLoading(true);
-      final token = GetStorage().read('accessToken');
-      final response = await http.get(
-        Uri.parse(URLs.business),
-        headers: {
-          'Authorization': 'Bearer $token',
-        },
-      );
-
-      if (response.statusCode == 200) {
-        log('Success fetch trip');
-        List<dynamic> jsonData = json.decode(response.body);
-        businessTrips.value =
-            jsonData.map((json) => BusinessTripModel.fromJson(json)).toList();
-        filterBusinessTrips(); // Apply filter after fetching data
-      } else {
-        // Handle error
-        print(response.statusCode);
-      }
+      final trips = await _businessTripRepository.fetchAll();
+      businessTrips.value = trips;
+      filterBusinessTrips();
     } catch (e) {
-      // Handle exception
+      print('Error fetching current business trips: $e');
     } finally {
       isLoading(false);
+    }
+  }
+
+  void fetchCompanyItems() async {
+    try {
+      final data = await companyRepository.fetchCompany();
+      companyItem.value =
+          data.map<String>((item) => item['name'].toString()).toSet().toList();
+    } catch (e) {
+      Get.snackbar('Error', 'Failed to load company items');
     }
   }
 
@@ -107,14 +80,12 @@ class BusinessTripController extends GetxController {
     final startDate = selectedStartDate.value;
     final endDate = selectedEndDate.value;
 
-    // Jika salah satu tanggal diisi tanpa yang lain, tampilkan error
     if ((startDate != null && endDate == null) ||
         (startDate == null && endDate != null)) {
       Get.snackbar('Error', 'Data harus diisi semua');
-      return; // Batalkan filter jika tanggal tidak diisi dengan benar
+      return;
     }
 
-    // Lanjutkan dengan filter
     filteredBusinessTrips.value = businessTrips.where((trip) {
       final matchesStatus = selectedStatus.value == null ||
           selectedStatus.value == 'All' ||
@@ -126,7 +97,6 @@ class BusinessTripController extends GetxController {
 
       final tripStartDate = DateTime.parse(trip.startDate ?? '');
 
-      // Jika kedua tanggal tidak diisi, abaikan filter berdasarkan tanggal
       final matchesDateRange = (startDate == null && endDate == null) ||
           (startDate != null &&
               endDate != null &&
@@ -136,7 +106,6 @@ class BusinessTripController extends GetxController {
       return matchesStatus && matchesDateRange && matchesCompany;
     }).toList();
 
-    // Update nilai noData berdasarkan apakah ada data yang cocok
     noData.value = filteredBusinessTrips.isEmpty;
   }
 
@@ -147,6 +116,5 @@ class BusinessTripController extends GetxController {
     selectedCompany.value = 'All';
     startDateController.value.clear();
     endDateController.value.clear();
-    // filterBusinessTrips();
   }
 }

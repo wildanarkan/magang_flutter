@@ -4,12 +4,11 @@ import 'package:magang_flutter/controllers/login_page_controller.dart';
 import 'package:magang_flutter/widgets/backgrounds/build_background_image.dart';
 import 'package:magang_flutter/widgets/buttons/build_button.dart';
 
-class LoginPage extends StatelessWidget {
+class LoginPage extends GetView<LoginPageController> {
   const LoginPage({super.key});
 
   @override
   Widget build(BuildContext context) {
-    final LoginPageController controller = Get.find<LoginPageController>();
 
     return Scaffold(
       body: Stack(

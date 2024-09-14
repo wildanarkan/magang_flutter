@@ -1,13 +1,11 @@
-import 'dart:convert';
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
-import 'package:http/http.dart' as http;
-import 'package:magang_flutter/common/urls.dart';
 import 'package:magang_flutter/controllers/business_trip_controller.dart';
 import 'package:magang_flutter/controllers/home_page_controller.dart';
+import 'package:magang_flutter/data/repo/user_repository.dart';
 import 'package:magang_flutter/pages/business%20trip/business_trip_page.dart';
 import 'package:magang_flutter/pages/home_page.dart';
 import 'package:magang_flutter/pages/leave/leave_history_page.dart';
@@ -34,6 +32,8 @@ class NavigatorPageControllers extends GetxController {
   int? userId; // Tambahkan ini untuk menyimpan ID pengguna
   final storage = GetStorage();
 
+  final UserRepository _userRepository = Get.find<UserRepository>();
+
   @override
   void onInit() {
     // fetchUserData();
@@ -49,77 +49,37 @@ class NavigatorPageControllers extends GetxController {
   Future<void> fetchUserData() async {
     print('Fetching user data...');
     try {
-      final token = GetStorage().read('accessToken');
-      // Misalnya setelah login berhasil
-      final response = await http.get(
-        Uri.parse(URLs.user),
-        headers: {
-          'Authorization': 'Bearer $token',
-        },
-      );
-      if (response.statusCode == 200) {
-        final data = json.decode(response.body);
-        userId = data['result']['id']; // Ambil ID pengguna
-        nik.value = data['result']['nik'] ?? 'No Data';
-        city.value = data['result']['city'] ?? 'No Data';
-        profilePhotoUrl.value = data['result']['profile_photo'] ?? '';
+      final data = await _userRepository.fetchUserData();
+      userId = data['result']['id']; // Ambil ID pengguna
+      nik.value = data['result']['nik'] ?? 'No Data';
+      city.value = data['result']['city'] ?? 'No Data';
+      profilePhotoUrl.value = data['result']['profile_photo'] ?? '';
 
-        log('User Id :${userId.toString()}');
+      log('User Id :${userId.toString()}');
 
-        // Panggil fetchProfileData dengan ID
-        if (userId != null) {
-          print('Semua data di GetStorage:');
-          storage.getKeys().forEach((key) {
-            print('$key: ${storage.read(key)}');
-          });
+      if (userId != null) {
+        print('Semua data di GetStorage:');
+        storage.getKeys().forEach((key) {
+          print('$key: ${storage.read(key)}');
+        });
 
-          fetchProfileData(userId!);
-        }
-      } else {
-        print('Failed to load data: ${response.statusCode}');
-      }
-    } catch (e) {
-      print('Error fetching user data: $e');
-    }
-  }
-
-  Future<void> fetchProfileData(int id) async {
-    final String url = '${URLs.profile}$id'; // Pastikan URL benar
-
-    try {
-      // final response = await http.get(Uri.parse(url));
-      final token = GetStorage().read('accessToken');
-
-      final response = await http.get(
-        Uri.parse(url),
-        headers: {
-          'Authorization': 'Bearer $token',
-        },
-      );
-
-      if (response.statusCode == 200) {
-        // Berhasil mendapatkan data
-        final data = json.decode(response.body);
-        firstName.value = data['first_name'] ?? 'No Data';
-        lastName.value = data['last_name'] ?? 'No Data';
-        gender.value = data['gender'] ?? 'No Data';
-        religion.value = data['religion'] ?? 'No Data';
-        role.value = data['role'] ?? 'No Data';
-        rolePriority.value = data['priority'] ?? 'No Data';
-        employee_group.value = data['employee_group'] ?? 'No Data';
-        position.value = data['position'] ?? 'No Data';
-        phone_number.value = data['phone_number'] ?? 'No Data';
-        address.value = data['address'] ?? 'No Data';
-        email.value = data['email'] ?? 'No Data';
-        nip.value = data['nip'] ?? 'No Data';
+        final profileData = await _userRepository.fetchProfileData(userId!);
+        firstName.value = profileData['first_name'] ?? 'No Data';
+        lastName.value = profileData['last_name'] ?? 'No Data';
+        gender.value = profileData['gender'] ?? 'No Data';
+        religion.value = profileData['religion'] ?? 'No Data';
+        role.value = profileData['role'] ?? 'No Data';
+        rolePriority.value = profileData['priority'] ?? 'No Data';
+        employee_group.value = profileData['employee_group'] ?? 'No Data';
+        position.value = profileData['position'] ?? 'No Data';
+        phone_number.value = profileData['phone_number'] ?? 'No Data';
+        address.value = profileData['address'] ?? 'No Data';
+        email.value = profileData['email'] ?? 'No Data';
+        nip.value = profileData['nip'] ?? 'No Data';
         log('Role priority :${rolePriority.value}');
-      } else {
-        // Error handling
-        print('Failed to load profile data: ${response.statusCode}');
       }
     } catch (e) {
-      // Error handling untuk koneksi atau lainnya
-      print('Error occurred: $e');
+      print('Error fetching user or profile data: $e');
     }
   }
 

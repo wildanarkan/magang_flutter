@@ -1,13 +1,12 @@
-import 'dart:convert';
-
 import 'package:get/get.dart';
-import 'package:get_storage/get_storage.dart';
-import 'package:http/http.dart' as http;
-import 'package:magang_flutter/common/urls.dart';
+import 'package:magang_flutter/data/repo/user_repository.dart';
 
 class ContractHistoryPageController extends GetxController {
+  // Repository
+  final UserRepository userRepository = UserRepository();
+  
   RxList<Map<String, dynamic>> contracts = <Map<String, dynamic>>[].obs;
-  RxBool isLoading = false.obs; // Tambahkan state loading
+  RxBool isLoading = false.obs;
 
   @override
   void onInit() {
@@ -16,41 +15,9 @@ class ContractHistoryPageController extends GetxController {
   }
 
   Future<void> fetchContracts() async {
-    isLoading.value = true; // Mulai loading
-    final userId = GetStorage().read('userId');
-    if (userId == null) {
-      print('User ID not found');
-      return;
-    }
-
-    try {
-      final token = GetStorage().read('accessToken');
-
-      final response = await http.get(
-        Uri.parse('${URLs.contract}$userId'),
-        headers: {
-          'Authorization': 'Bearer $token',
-        },
-      );
-
-      if (response.statusCode == 200) {
-        // Berhasil mendapatkan data
-        final data = json.decode(response.body);
-        if (data['contracts'] is List) {
-          contracts.value = List<Map<String, dynamic>>.from(data['contracts']);
-        } else {
-          contracts.value = [];
-        }
-      } else {
-        print(userId);
-        // Error handling
-        print('Failed to load contract data: ${response.statusCode}');
-      }
-    } catch (e) {
-      // Error handling untuk koneksi atau lainnya
-      print('Error occurred: $e');
-    } finally {
-      isLoading.value = false; // Mulai loading
-    }
+    isLoading.value = true;
+    final result = await userRepository.fetchContracts();
+    contracts.value = result;
+    isLoading.value = false;
   }
 }

@@ -10,7 +10,10 @@ import 'package:magang_flutter/widgets/appbars/build_appbar.dart';
 import 'package:magang_flutter/widgets/cards/build_card_info.dart';
 
 class EmployeeLeaveHistoryPage extends StatefulWidget {
+  final LeavePageController controller = Get.find<LeavePageController>();
+
   String? statusFilter;
+
   EmployeeLeaveHistoryPage({super.key, this.statusFilter});
 
   @override
@@ -24,28 +27,31 @@ class _EmployeeLeaveHistoryPageState extends State<EmployeeLeaveHistoryPage> {
 
   @override
   void initState() {
-    final LeavePageController controller = Get.find<LeavePageController>();
-    controller.fetchLeaves();
-
     super.initState();
-    nip = Get.arguments; // Ambil nip dari arguments jika tersedia
-    selectedStatusFilter = widget.statusFilter; // Ambil statusFilter dari widget
+
+    // Ambil controller dan fetch data leaves
+    widget.controller.fetchLeaves();
+
+    // Ambil nip dari arguments jika tersedia
+    nip = Get.arguments;
+
+    // Ambil statusFilter dari widget
+    selectedStatusFilter = widget.statusFilter;
   }
 
   @override
   Widget build(BuildContext context) {
     final LeavePageController controller = Get.find<LeavePageController>();
 
-
     return Scaffold(
       appBar: BuildAppbar(
         title: 'Employee Leave History',
         actions: [
-          if(widget.statusFilter != 'Pending')
-          IconButton(
-            onPressed: _showFilterBottomSheet,
-            icon: const Icon(Icons.filter_alt_rounded),
-          )
+          if (widget.statusFilter != 'Pending')
+            IconButton(
+              onPressed: _showFilterBottomSheet,
+              icon: const Icon(Icons.filter_alt_rounded),
+            ),
         ],
       ),
       body: Padding(
@@ -59,19 +65,23 @@ class _EmployeeLeaveHistoryPageState extends State<EmployeeLeaveHistoryPage> {
 
           // Jika NIP tersedia, filter data leave berdasarkan NIP terlebih dahulu
           if (nip != null) {
-            filteredLeaves = filteredLeaves.where((leave) => leave.nip == nip).toList();
+            filteredLeaves =
+                filteredLeaves.where((leave) => leave.nip == nip).toList();
             log('Filtering by NIP: $nip');
           }
 
           // Jika statusFilter tersedia, filter lebih lanjut berdasarkan status
           if (selectedStatusFilter != null) {
-            filteredLeaves = filteredLeaves.where((leave) => leave.status == selectedStatusFilter).toList();
+            filteredLeaves = filteredLeaves
+                .where((leave) => leave.status == selectedStatusFilter)
+                .toList();
             log('Filtering by Status: $selectedStatusFilter');
-            widget.statusFilter = null;
+            widget.statusFilter = null; // Reset status filter pada widget
           }
 
           if (filteredLeaves.isEmpty) {
-            return Center(child: Text('No leave history $selectedStatusFilter'));
+            return Center(
+                child: Text('No leave history ${selectedStatusFilter ?? ''}'));
           }
 
           return ListView.builder(
@@ -96,7 +106,8 @@ class _EmployeeLeaveHistoryPageState extends State<EmployeeLeaveHistoryPage> {
                   if (result != null && result is int) {
                     setState(() {
                       nip = result;
-                      selectedStatusFilter = widget.statusFilter; // Reset status filter jika kembali
+                      selectedStatusFilter = widget
+                          .statusFilter; // Reset status filter jika kembali
                     });
                   }
                 },

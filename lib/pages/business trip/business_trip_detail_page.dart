@@ -19,44 +19,31 @@ import 'package:magang_flutter/widgets/dialogs/build_dialog_error.dart';
 import 'package:magang_flutter/widgets/fields/build_field_text.dart';
 import 'package:magang_flutter/widgets/texts/build_text_icon.dart';
 
-class BusinessTripDetailPage extends StatefulWidget {
+class BusinessTripDetailPage extends GetView<BusinessTripDetailPageController> {
   final BusinessTripModel trip;
   final String? status;
 
-  const BusinessTripDetailPage({super.key, required this.trip, this.status});
-
-  @override
-  _BusinessTripDetailPageState createState() => _BusinessTripDetailPageState();
-}
-
-class _BusinessTripDetailPageState extends State<BusinessTripDetailPage> {
-  late final BusinessTripDetailPageController controller;
-  final HomePageController homePageController = Get.find<HomePageController>();
-
-  @override
-  void initState() {
-    super.initState();
-
-    // Inisialisasi controller di sini
-    controller = Get.put(BusinessTripDetailPageController(trip: widget.trip));
-
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      // Panggil setState atau lakukan perubahan state setelah build selesai
-      controller.setInitialVariable(
-        widget.trip.extendDay ?? 0,
-        widget.trip.photoDocument ?? '',
-      );
-    });
+  BusinessTripDetailPage({super.key, required this.trip, this.status}){
+    Get.put(BusinessTripDetailPageController(trip: trip));
   }
 
   @override
   Widget build(BuildContext context) {
+    final homePageController = Get.find<HomePageController>();
+
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      controller.setInitialVariable(
+        trip.extendDay ?? 0,
+        trip.photoDocument ?? '',
+      );
+    });
+
     return Scaffold(
       appBar: BuildAppbar(
         title: 'Business Trip Detail',
         actions: [
           Obx(() {
-            bool isSaved = homePageController.checkIfSaved(widget.trip);
+            bool isSaved = homePageController.checkIfSaved(trip);
             return IconButton(
               icon: Icon(
                 isSaved ? Icons.star_rounded : Icons.star_border_rounded,
@@ -64,7 +51,7 @@ class _BusinessTripDetailPageState extends State<BusinessTripDetailPage> {
                 color: AppColor.primary,
               ),
               onPressed: () {
-                homePageController.toggleSaveTrip(widget.trip);
+                homePageController.toggleSaveTrip(trip);
               },
             );
           }),
@@ -97,7 +84,7 @@ class _BusinessTripDetailPageState extends State<BusinessTripDetailPage> {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(
-                                widget.trip.companyName ?? 'Unknown Company',
+                                trip.companyName ?? 'Unknown Company',
                                 style: TextStyle(
                                   fontSize: 16,
                                   fontWeight: FontWeight.w600,
@@ -105,7 +92,7 @@ class _BusinessTripDetailPageState extends State<BusinessTripDetailPage> {
                                 ),
                               ),
                               Text(
-                                widget.trip.cityName ?? 'Unknown City',
+                                trip.cityName ?? 'Unknown City',
                                 style: TextStyle(
                                   fontSize: 12,
                                   fontWeight: FontWeight.w400,
@@ -115,12 +102,12 @@ class _BusinessTripDetailPageState extends State<BusinessTripDetailPage> {
                             ],
                           ),
                           const Spacer(),
-                          if (widget.status == 'Draft') AppStatus.draft(),
-                          if (widget.status == 'On Progress')
+                          if (status == 'Draft') AppStatus.draft(),
+                          if (status == 'On Progress')
                             AppStatus.onProgress(),
-                          if (widget.status == 'Completed')
+                          if (status == 'Completed')
                             AppStatus.complete('Completed'),
-                          if (widget.status == 'Canceled')
+                          if (status == 'Canceled')
                             AppStatus.canceled('Canceled'),
                         ],
                       ),
@@ -153,7 +140,7 @@ class _BusinessTripDetailPageState extends State<BusinessTripDetailPage> {
                                     ),
                                   ),
                                   Text(
-                                    widget.trip.pic ?? 'Unknown PIC',
+                                    trip.pic ?? 'Unknown PIC',
                                     style: TextStyle(
                                       fontSize: 12,
                                       fontWeight: FontWeight.w500,
@@ -185,7 +172,7 @@ class _BusinessTripDetailPageState extends State<BusinessTripDetailPage> {
                                     ),
                                   ),
                                   Text(
-                                    widget.trip.picRole ?? 'Unknown Role',
+                                    trip.picRole ?? 'Unknown Role',
                                     style: TextStyle(
                                         fontSize: 12,
                                         fontWeight: FontWeight.w500,
@@ -204,14 +191,14 @@ class _BusinessTripDetailPageState extends State<BusinessTripDetailPage> {
                         icons: Icons.location_on_rounded,
                         title: 'City, Address',
                         subtitle:
-                            '${widget.trip.cityName}, ${widget.trip.companyAddress ?? 'Unknown Address'}',
+                            '${trip.cityName}, ${trip.companyAddress ?? 'Unknown Address'}',
                       ),
                       const SizedBox(
                         height: 24,
                       ),
                       BuildTextIcon(
                         title: 'Departure from',
-                        subtitle: widget.trip.departureFrom ?? 'Null',
+                        subtitle: trip.departureFrom ?? 'Null',
                         icons: Icons.location_city,
                       ),
                       const SizedBox(
@@ -220,7 +207,7 @@ class _BusinessTripDetailPageState extends State<BusinessTripDetailPage> {
                       BuildTextIcon(
                         title: 'Date',
                         subtitle:
-                            '${widget.trip.startDate} - ${widget.trip.endDate}',
+                            '${trip.startDate} - ${trip.endDate}',
                         icons: Icons.access_time_filled_outlined,
                       ),
                       const SizedBox(
@@ -228,7 +215,7 @@ class _BusinessTripDetailPageState extends State<BusinessTripDetailPage> {
                       ),
                       BuildTextIcon(
                         title: 'Note',
-                        subtitle: '${widget.trip.note}',
+                        subtitle: '${trip.note}',
                         icons: Icons.my_library_books_rounded,
                       ),
                       const SizedBox(
@@ -300,7 +287,7 @@ class _BusinessTripDetailPageState extends State<BusinessTripDetailPage> {
                                                     .value.text);
                                             if (extendDayValue != null) {
                                               controller.updateExtendedDay(
-                                                  widget.trip.idBusinessTrip!,
+                                                  trip.idBusinessTrip!,
                                                   extendDayValue);
                                             } else {
                                               Get.snackbar('Error',
@@ -334,7 +321,7 @@ class _BusinessTripDetailPageState extends State<BusinessTripDetailPage> {
                           const SizedBox(
                             height: 16,
                           ),
-                          ...widget.trip.users?.map((user) {
+                          ...trip.users?.map((user) {
                                 return Padding(
                                   padding: const EdgeInsets.only(bottom: 10.0),
                                   child: Row(
@@ -382,7 +369,7 @@ class _BusinessTripDetailPageState extends State<BusinessTripDetailPage> {
                                   child: GestureDetector(
                                     onTap: () {
                                       log(controller.photoDocument.value);
-                                      // log(widget.trip.photoDocument.toString());
+                                      // log(trip.photoDocument.toString());
                                       if (controller
                                           .photoDocument.value.isEmpty) {
                                         Get.snackbar('No data',
@@ -469,9 +456,9 @@ class _BusinessTripDetailPageState extends State<BusinessTripDetailPage> {
                                             log('${selectedFile}1');
                                             controller.updateFileInDatabase(
                                                 selectedFile,
-                                                widget.trip.idBusinessTrip ??
+                                                trip.idBusinessTrip ??
                                                     0);
-                                            log('${widget.trip.photoDocument}2');
+                                            log('${trip.photoDocument}2');
                                           },
                                         ),
                                       );
@@ -513,7 +500,7 @@ class _BusinessTripDetailPageState extends State<BusinessTripDetailPage> {
                           title: 'Perkiraan',
                           onPressed: () {
                             Get.to(() => NominalPage(
-                                idBusinessTrip: widget.trip.idBusinessTrip ?? 0,
+                                idBusinessTrip: trip.idBusinessTrip ?? 0,
                                 biayaType: 'estimasi'));
                           },
                         ),
@@ -525,7 +512,7 @@ class _BusinessTripDetailPageState extends State<BusinessTripDetailPage> {
                           title: 'Realisasi',
                           onPressed: () {
                             Get.to(() => NominalPage(
-                                idBusinessTrip: widget.trip.idBusinessTrip ?? 0,
+                                idBusinessTrip: trip.idBusinessTrip ?? 0,
                                 biayaType: 'realisasi'));
                           },
                         ),
@@ -538,7 +525,7 @@ class _BusinessTripDetailPageState extends State<BusinessTripDetailPage> {
                     title: 'Perbandingan',
                     onPressed: () {
                       Get.to(() => PerbandinganBiayaPage(
-                          idBusinessTrip: widget.trip.idBusinessTrip ?? 0));
+                          idBusinessTrip: trip.idBusinessTrip ?? 0));
                     },
                     width: double.infinity,
                     backgroundColor: Colors.white,

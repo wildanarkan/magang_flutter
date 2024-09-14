@@ -9,14 +9,11 @@ import 'package:magang_flutter/widgets/fields/build_field_text.dart';
 
 import '../../controllers/edit_profile_page_controller.dart';
 
-class EditProfilePage extends StatelessWidget {
+class EditProfilePage extends GetView<EditProfilePageController> {
   const EditProfilePage({super.key});
 
   @override
   Widget build(BuildContext context) {
-    final EditProfilePageController controller =
-        Get.put(EditProfilePageController());
-
     return Scaffold(
       body: ListView(
         padding: const EdgeInsets.all(0),
@@ -79,8 +76,8 @@ class EditProfilePage extends StatelessWidget {
                               // Update data di NavigatorPageControllers
                               Get.find<NavigatorPageControllers>()
                                   .fetchUserData();
-                                  log('get back');
-                               Get.back(); // Menggunakan Navigator.pop
+                              log('get back');
+                              Get.back(); // Menggunakan Navigator.pop
                             }
                           },
                         )

@@ -1,20 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:magang_flutter/common/app_color.dart';
+import 'package:magang_flutter/common/app_routes.dart';
 import 'package:magang_flutter/controllers/navigator_page_controllers.dart';
-import 'package:magang_flutter/pages/profile/change_password_page.dart';
-import 'package:magang_flutter/pages/profile/edit_profile_page.dart';
 import 'package:magang_flutter/widgets/appbars/build_appbar.dart';
 import 'package:magang_flutter/widgets/buttons/build_button.dart';
 
-class ProfileDetailPage extends StatelessWidget {
+class ProfileDetailPage extends GetView<NavigatorPageControllers> {
   const ProfileDetailPage({super.key});
 
   @override
   Widget build(BuildContext context) {
-    final NavigatorPageControllers controller =
-        Get.find<NavigatorPageControllers>();
-
     return Scaffold(
       body: ListView(
         children: [
@@ -45,15 +41,16 @@ class ProfileDetailPage extends StatelessWidget {
                             ),
                             GestureDetector(
                               onTap: () {
-                                Get.to(() => const EditProfilePage());
+                                Get.toNamed(AppRoutes.profileEdit);
                               },
                               child: Row(
                                 children: [
                                   Text(
                                     'Edit',
                                     style: TextStyle(
-                                        color: AppColor.primary,
-                                        fontWeight: FontWeight.bold),
+                                      color: AppColor.primary,
+                                      fontWeight: FontWeight.bold,
+                                    ),
                                   ),
                                   const SizedBox(
                                     width: 10,
@@ -61,6 +58,7 @@ class ProfileDetailPage extends StatelessWidget {
                                   const Icon(
                                     Icons.edit,
                                     color: Colors.blue,
+                                    size: 15,
                                   ),
                                 ],
                               ),
@@ -320,7 +318,7 @@ class ProfileDetailPage extends StatelessWidget {
                   context: context,
                   title: 'Change Password',
                   onPressed: () {
-                    Get.to(() => ChangePasswordPage());
+                    Get.toNamed(AppRoutes.profileChangePassword);
                   },
                 ),
               ],

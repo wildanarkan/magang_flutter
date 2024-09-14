@@ -1,19 +1,23 @@
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get_storage/get_storage.dart';
-import 'package:http/http.dart' as http;
-import 'package:magang_flutter/common/urls.dart';
 import 'package:magang_flutter/controllers/navigator_page_controllers.dart';
+import 'package:magang_flutter/data/repo/user_repository.dart';
 
 class EditProfilePageController extends GetxController {
+  // Controller
+  final navigatorController = Get.find<NavigatorPageControllers>();
+
+  // Repository
+  final UserRepository _userRepository = Get.find<UserRepository>();
+
+  // Variable
   RxString firstName = ''.obs;
   RxString lastName = ''.obs;
   RxString phoneNumber = ''.obs;
   RxString city = ''.obs;
   RxString address = ''.obs;
 
+  // Text Editing Controller
   final firstNameController = TextEditingController();
   final lastNameController = TextEditingController();
   final phoneNumberController = TextEditingController();
@@ -24,15 +28,12 @@ class EditProfilePageController extends GetxController {
   void onInit() {
     super.onInit();
 
-    // Ambil data dari NavigatorPageControllers
-    final navigatorController = Get.find<NavigatorPageControllers>();
     firstName.value = navigatorController.firstName.value;
     lastName.value = navigatorController.lastName.value;
     phoneNumber.value = navigatorController.phone_number.value;
     city.value = navigatorController.city.value;
     address.value = navigatorController.address.value;
 
-    // Set nilai TextEditingController sesuai data yang diambil
     firstNameController.text = firstName.value;
     lastNameController.text = lastName.value;
     phoneNumberController.text = phoneNumber.value;
@@ -52,53 +53,30 @@ class EditProfilePageController extends GetxController {
 
   Future<bool> editProfile() async {
     try {
-      final token = GetStorage().read('accessToken');
-      final response = await http.post(
-        Uri.parse(URLs.editprofile),
-        headers: <String, String>{
-          'Content-Type': 'application/json; charset=UTF-8',
-          'Authorization': 'Bearer $token'
-        },
-        body: jsonEncode(<String, String>{
-          'first_name': firstName.value,
-          'last_name': lastName.value,
-          'phone_number': phoneNumber.value,
-          'city': city.value,
-          'address': address.value,
-        }),
+      final success = await _userRepository.editProfile(
+        firstName: firstName.value,
+        lastName: lastName.value,
+        phoneNumber: phoneNumber.value,
+        city: city.value,
+        address: address.value,
       );
 
-      if (response.statusCode == 200) {
+      if (success) {
         firstName.value = firstNameController.text;
         lastName.value = lastNameController.text;
         phoneNumber.value = phoneNumberController.text;
         city.value = cityController.text;
         address.value = addressController.text;
 
-        // Show success snackbar
-        Get.snackbar(
-          'Success',
-          'Profile updated successfully',
-        );
+        Get.snackbar('Success', 'Profile updated successfully');
 
-        // Wait for snackbar to be visible before navigating back
         await Future.delayed(const Duration(seconds: 1));
-
-        // Navigate back
-        Navigator.pop(Get.context!); // Use Navigator.pop as an alternative
-        return true;
-      } else {
-        Get.snackbar(
-          'Error',
-          'Failed to update profile: ${response.body}',
-        );
-        return false;
+        Navigator.pop(Get.context!);
       }
+
+      return success;
     } catch (e) {
-      Get.snackbar(
-        'Error',
-        'An error occurred: $e',
-      );
+      Get.snackbar('Error', e.toString().replaceFirst('Exception: ', ''));
       return false;
     }
   }

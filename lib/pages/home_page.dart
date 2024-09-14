@@ -15,7 +15,7 @@ import 'package:magang_flutter/widgets/texts/build_text_link.dart';
 import '../controllers/navigator_page_controllers.dart';
 
 class HomePage extends GetView<NavigatorPageControllers> {
-  final HomePageController homePageController = Get.put(HomePageController());
+  final HomePageController homePageController = Get.find<HomePageController>();
   HomePage({super.key});
 
   @override

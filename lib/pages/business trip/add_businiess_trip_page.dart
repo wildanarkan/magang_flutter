@@ -12,13 +12,11 @@ import 'package:magang_flutter/widgets/fields/build_field_date.dart';
 import 'package:magang_flutter/widgets/fields/build_field_text.dart';
 import 'package:magang_flutter/widgets/items/build_item_employee.dart';
 
-class AddBusiniessTripPage extends StatelessWidget {
+class AddBusiniessTripPage extends GetView<AddBusiniessTripPageController> {
   const AddBusiniessTripPage({super.key});
 
   @override
   Widget build(BuildContext context) {
-    final controller = Get.put(AddBusiniessTripPageController());
-
     return Scaffold(
       appBar: const BuildAppbar(title: 'Input Data'),
       body: ListView(
@@ -135,7 +133,8 @@ class AddBusiniessTripPage extends StatelessWidget {
                           child: BuildDropdown(
                             hint: 'SELECT EMPLOYEE',
                             title: 'Employee',
-                            spacingDropdown:  const EdgeInsets.only(top: 10, bottom: 0),
+                            spacingDropdown:
+                                const EdgeInsets.only(top: 10, bottom: 0),
                             selectedItem: controller.selectedAllUser.value,
                             item: controller.allUserItem.value,
                             onChanged: (newValue) {
@@ -188,12 +187,14 @@ class AddBusiniessTripPage extends StatelessWidget {
               onPressed: () async {
                 int? businessTripId = await controller.postBusinessTrip();
                 if (businessTripId != null) {
-                  await controller.postTripDetail(businessTripId);
+                  if (controller.employeeList.isNotEmpty) {
+                    await controller.postTripDetail(businessTripId);
+                  }
                   log('succes');
                   final businessTripController =
                       Get.find<BusinessTripController>();
                   await businessTripController.fetchBusinessTrips();
-                      Get.back(closeOverlays: true);
+                  Get.back(closeOverlays: true);
                   Get.snackbar('Success', 'Success to create Business Trip');
                 } else {
                   log(businessTripId.toString());

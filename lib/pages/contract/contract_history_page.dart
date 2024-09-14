@@ -5,14 +5,11 @@ import 'package:magang_flutter/widgets/appbars/build_appbar.dart';
 import 'package:magang_flutter/widgets/items/build_item_contract.dart';
 import 'package:magang_flutter/widgets/nulls/build_null_icon_text.dart';
 
-class ContractHistoryPage extends StatelessWidget {
+class ContractHistoryPage extends GetView<ContractHistoryPageController> {
   const ContractHistoryPage({super.key});
 
   @override
   Widget build(BuildContext context) {
-    final ContractHistoryPageController controller =
-        Get.put(ContractHistoryPageController());
-
     return Scaffold(
       appBar: const BuildAppbar(
         title: 'Contract History',

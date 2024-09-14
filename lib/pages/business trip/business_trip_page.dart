@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:magang_flutter/common/app_color.dart';
+import 'package:magang_flutter/common/app_routes.dart';
 import 'package:magang_flutter/controllers/business_trip_controller.dart';
-import 'package:magang_flutter/pages/business%20trip/add_businiess_trip_page.dart';
 import 'package:magang_flutter/pages/business%20trip/business_trip_detail_page.dart';
 import 'package:magang_flutter/widgets/appbars/build_appbar.dart';
 import 'package:magang_flutter/widgets/buttons/build_button.dart';
@@ -10,10 +10,8 @@ import 'package:magang_flutter/widgets/buttons/build_button_rounded.dart';
 import 'package:magang_flutter/widgets/cards/build_card_info.dart';
 import 'package:magang_flutter/widgets/nulls/build_null_icon_text.dart';
 
-class BusinessTripPage extends StatelessWidget {
-  final BusinessTripController controller = Get.put(BusinessTripController());
-
-  BusinessTripPage({super.key});
+class BusinessTripPage extends GetView<BusinessTripController> {
+  const BusinessTripPage({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -38,7 +36,7 @@ class BusinessTripPage extends StatelessWidget {
             size: 10,
             padding: 5,
             onPressed: () {
-              Get.to(() => const AddBusiniessTripPage());
+              Get.toNamed(AppRoutes.tripAdd);
             },
           ),
         ],
