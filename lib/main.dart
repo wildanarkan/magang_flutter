@@ -5,8 +5,12 @@ import 'package:magang_flutter/bindings/change_password_binding.dart';
 import 'package:magang_flutter/bindings/contract_binding.dart';
 import 'package:magang_flutter/bindings/navigator_binding.dart';
 import 'package:magang_flutter/bindings/payroll_history_binding.dart';
+import 'package:magang_flutter/bindings/planning_binding.dart';
+import 'package:magang_flutter/bindings/planning_comparison_binding.dart';
+import 'package:magang_flutter/bindings/planning_edit_binding.dart';
 import 'package:magang_flutter/bindings/profile_edit_binding.dart';
 import 'package:magang_flutter/bindings/trip_add_binding.dart';
+import 'package:magang_flutter/bindings/trip_detail_binding.dart';
 import 'package:magang_flutter/common/app_color.dart';
 import 'package:magang_flutter/common/app_routes.dart';
 import 'package:magang_flutter/controllers/login_page_controller.dart';
@@ -20,6 +24,9 @@ import 'package:magang_flutter/pages/login_page.dart';
 import 'package:magang_flutter/pages/navigator_page.dart';
 import 'package:magang_flutter/pages/payroll/payroll_detail_page.dart';
 import 'package:magang_flutter/pages/payroll/payroll_history_page.dart';
+import 'package:magang_flutter/pages/planning/edit_biaya_page.dart';
+import 'package:magang_flutter/pages/planning/nominal_page.dart';
+import 'package:magang_flutter/pages/planning/perbandingan_biaya_page.dart';
 import 'package:magang_flutter/pages/profile/change_password_page.dart';
 import 'package:magang_flutter/pages/profile/edit_profile_page.dart';
 import 'package:magang_flutter/pages/profile/profile_detail_page.dart';
@@ -69,6 +76,30 @@ class MyApp extends StatelessWidget {
             trip: Get.arguments['trip'] as BusinessTripModel,
             status: Get.arguments['status'] as String?,
           ),
+          binding: TripDetailBinding(),
+        ),
+
+        // Planning
+        GetPage(
+          name: AppRoutes.planning,
+          page: () => const NominalPage(),
+          binding: PlanningBinding(),
+        ),
+        GetPage(
+          name: AppRoutes.planningComparison,
+          page: () => PerbandinganBiayaPage(
+              idBusinessTrip: Get.arguments['idBusinessTrip']),
+          binding: PlanningComparisonBinding(),
+        ),
+        GetPage(
+          name: AppRoutes.planningEdit,
+          page: () => EditBiayaPage(
+            idBusinessTrip: Get.arguments['idBusinessTrip'],
+            biayaType: Get.arguments['biayaType'],
+            idItem: Get.arguments['idItem'],
+            isEditMode: Get.arguments['isEditMode'],
+          ),
+          binding: PlanningEditBinding(),
         ),
 
         // Leave

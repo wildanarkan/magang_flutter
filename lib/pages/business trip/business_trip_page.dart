@@ -3,7 +3,6 @@ import 'package:get/get.dart';
 import 'package:magang_flutter/common/app_color.dart';
 import 'package:magang_flutter/common/app_routes.dart';
 import 'package:magang_flutter/controllers/business_trip_controller.dart';
-import 'package:magang_flutter/pages/business%20trip/business_trip_detail_page.dart';
 import 'package:magang_flutter/widgets/appbars/build_appbar.dart';
 import 'package:magang_flutter/widgets/buttons/build_button.dart';
 import 'package:magang_flutter/widgets/buttons/build_button_rounded.dart';
@@ -67,11 +66,12 @@ class BusinessTripPage extends GetView<BusinessTripController> {
                   startDate: trip.startDate ?? 'Null',
                   endDate: trip.endDate ?? 'Null',
                   onTap: () {
-                    Get.to(
-                      () => BusinessTripDetailPage(
-                        trip: trip,
-                        status: trip.status,
-                      ),
+                    Get.toNamed(
+                      AppRoutes.tripDetail,
+                      arguments: {
+                        'trip': trip,
+                        'status': trip.status
+                      },
                     );
                   },
                 );

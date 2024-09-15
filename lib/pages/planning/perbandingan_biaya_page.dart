@@ -7,37 +7,22 @@ import 'package:magang_flutter/widgets/appbars/build_appbar.dart'; // Import Bui
 import 'package:magang_flutter/widgets/build_widget_between.dart'; // Import BuildWidgetBetween
 import 'package:magang_flutter/widgets/cards/build_card_biaya.dart';
 
-class PerbandinganBiayaPage extends StatelessWidget {
-  final PerbandinganBiayaPageController controller =
-      Get.put(PerbandinganBiayaPageController());
+class PerbandinganBiayaPage extends GetView<PerbandinganBiayaPageController> {
   final int idBusinessTrip;
 
   PerbandinganBiayaPage({super.key, required this.idBusinessTrip}) {
-    // Fetch data saat halaman diinisialisasi
     controller.fetchComparisonData(idBusinessTrip);
   }
 
   String formatCurrency(String amount) {
-    // Hapus pemisah ribuan dan ganti koma desimal dengan titik
     final normalizedAmount = amount.replaceAll('.', '').replaceAll(',', '.');
-
-    // Konversi string menjadi double
     final doubleAmount = double.tryParse(normalizedAmount) ?? 0.0;
-
-    // Periksa apakah nilai tersebut negatif
     final isNegative = doubleAmount < 0;
-
-    // Ambil nilai absolut dari angka
     final absoluteValue = doubleAmount.abs();
-
-    // Format angka dengan dua desimal dan titik sebagai pemisah ribuan
     final formattedValue = absoluteValue
         .toStringAsFixed(2)
-        .replaceAll('.', ',') // Ganti titik desimal dengan koma
-        .replaceAll(RegExp(r'\B(?=(\d{3})+(?!\d))'),
-            '.'); // Tambahkan titik sebagai pemisah ribuan
-
-    // Kembalikan nilai dengan "Rp" di depan dan tanda minus di belakang jika negatif
+        .replaceAll('.', ',')
+        .replaceAll(RegExp(r'\B(?=(\d{3})+(?!\d))'), '.');
     return isNegative ? '- Rp $formattedValue' : 'Rp $formattedValue';
   }
 

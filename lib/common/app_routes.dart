@@ -6,6 +6,11 @@ abstract class AppRoutes {
   static const tripAdd = '/trip/add';
   static const tripDetail = '/trip/detail';
 
+  // Planning 
+  static const planning = '/trip/detail/planning';
+  static const planningEdit = '/trip/detail/planning/edit';
+  static const planningComparison = '/trip/detail/planning_comparison';
+
   // Leave
   static const leaveList = '/leave/list';
   static const leaveListPending = '/leave/list/pending';

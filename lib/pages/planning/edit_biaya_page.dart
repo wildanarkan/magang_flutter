@@ -10,7 +10,7 @@ import 'package:magang_flutter/widgets/dropdowns/build_dropdown.dart';
 import 'package:magang_flutter/widgets/fields/build_field_text.dart';
 
 // EditBiayaPage.dart
-class EditBiayaPage extends StatelessWidget {
+class EditBiayaPage extends GetView<EditBiayaPageController> {
   final int idBusinessTrip;
   final int? idItem; // Tambahkan parameter untuk id item
   final String biayaType; // Tambahkan parameter untuk id item
@@ -27,9 +27,9 @@ class EditBiayaPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final controller = Get.put(
-      EditBiayaPageController(idBusinessTrip: idBusinessTrip, idItem: idItem),
-    );
+    // final controller = Get.put(
+    //   EditBiayaPageController(idBusinessTrip: idBusinessTrip, idItem: idItem),
+    // );
 
     return Scaffold(
       appBar: BuildAppbar(title: isEditMode ? 'Edit Biaya' : 'Input Biaya'),

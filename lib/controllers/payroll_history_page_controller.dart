@@ -3,9 +3,9 @@ import 'package:magang_flutter/data/models/payroll_model.dart';
 import 'package:magang_flutter/data/repo/user_repository.dart';
 
 class PayrollHistoryPageController extends GetxController {
-  // Repository 
-   final UserRepository _userRepository = UserRepository();
-   
+  // Repository
+  final UserRepository _userRepository = UserRepository();
+
   RxList<Payrolls> payrolls = <Payrolls>[].obs;
   Rx<Payrolls?> payrollDetail = Rx<Payrolls?>(null);
   RxBool isLoading = false.obs;
@@ -16,7 +16,7 @@ class PayrollHistoryPageController extends GetxController {
     fetchPayrolls();
   }
 
-    Future<void> fetchPayrolls() async {
+  Future<void> fetchPayrolls() async {
     isLoading.value = true;
     payrolls.value = await _userRepository.fetchPayrolls();
     isLoading.value = false;

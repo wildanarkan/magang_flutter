@@ -41,6 +41,22 @@ class UserRepository extends GetxService {
     }
   }
 
+  Future<List<Map<String, dynamic>>> fetchAllUser() async {
+    final token = storage.read('accessToken');
+    final response = await http.get(
+      Uri.parse(URLs.allUser),
+      headers: {
+        'Authorization': 'Bearer $token',
+      },
+    );
+
+    if (response.statusCode == 200) {
+      return List<Map<String, dynamic>>.from(json.decode(response.body));
+    } else {
+      throw Exception('Failed to load data user');
+    }
+  }
+
   Future<Map<String, dynamic>> checkInOut(
       double latitude, double longitude) async {
     final token = storage.read('accessToken');
@@ -163,7 +179,7 @@ class UserRepository extends GetxService {
     );
 
     if (response.statusCode == 200) {
-      return true; // Password successfully changed
+      return true;
     } else if (response.statusCode == 400) {
       throw Exception('Please enter the correct current password.');
     } else {

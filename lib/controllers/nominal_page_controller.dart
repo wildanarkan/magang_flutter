@@ -1,14 +1,13 @@
-import 'dart:convert';
-
 import 'package:get/get.dart';
-import 'package:get_storage/get_storage.dart';
-import 'package:http/http.dart' as http;
-import 'package:magang_flutter/common/urls.dart';
 import 'package:magang_flutter/data/models/nominal_model.dart';
+import 'package:magang_flutter/data/repo/planning_repository.dart';
 
 class NominalPageController extends GetxController {
+  final PlanningRepository _planningRepository =
+      Get.find<PlanningRepository>();
+
   final int idBusinessTrip;
-  final String biayaType; // 'estimasi' atau 'realisasi'
+  final String biayaType;
 
   RxBool isLoading = false.obs;
   RxMap<String, List<NominalModel>> groupedData =
@@ -27,75 +26,34 @@ class NominalPageController extends GetxController {
 
   Future<void> fetchNominalData(int idBusinessTrip) async {
     isLoading.value = true;
-    final token = GetStorage().read('accessToken') ?? '';
-    final url = biayaType == 'estimasi'
-        ? '${URLs.nominalPlanning}/$idBusinessTrip'
-        : '${URLs.nominalRealization}/$idBusinessTrip';
+    final result = await _planningRepository.fetchNominalData(
+        idBusinessTrip, biayaType);
+    groupedData.value = result;
+    isLoading.value = false;
+  }
 
-    try {
-      final response = await http
-          .get(Uri.parse(url), headers: {'Authorization': 'Bearer $token'});
-
-      if (response.statusCode == 200) {
-        final List<dynamic> data = json.decode(response.body) as List<dynamic>;
-
-        final grouped = <String, List<NominalModel>>{};
-
-        for (var item in data) {
-          final model = NominalModel.fromJson(item);
-          final category = model.categoryExpenditureName ?? 'Unknown';
-
-          if (!grouped.containsKey(category)) {
-            grouped[category] = [];
-          }
-          grouped[category]?.add(model);
-        }
-
-        groupedData.value = grouped;
-      } else {
-        print('Gagal memuat data: ${response.statusCode}');
-        groupedData.value = {};
-      }
-    } catch (e) {
-      print('Terjadi kesalahan: $e');
-      groupedData.value = {};
-    } finally {
-      isLoading.value = false;
-    }
+  void updateData() {
+    fetchNominalData(idBusinessTrip);
   }
 
   String formatIdr(double amount) {
     final isNegative = amount < 0;
     final absoluteValue = amount.abs();
-
-    // Format angka dengan dua desimal dan koma sebagai pemisah desimal
     final formattedValue = absoluteValue
         .toStringAsFixed(2)
-        .replaceAll('.', ',') // Mengganti titik desimal dengan koma
-        .replaceAll(RegExp(r'\B(?=(\d{3})+(?!\d))'),
-            '.'); // Tambahkan titik sebagai pemisah ribuan
-
-    // Kembalikan nilai dengan "Rp" di depan dan tanda minus di belakang jika negatif
+        .replaceAll('.', ',')
+        .replaceAll(RegExp(r'\B(?=(\d{3})+(?!\d))'), '.');
     return isNegative ? 'IDR $formattedValue-' : 'IDR $formattedValue';
   }
 
   String formatCurrency(double amount) {
     final isNegative = amount < 0;
     final absoluteValue = amount.abs();
-
-    // Format angka dengan dua desimal dan koma sebagai pemisah desimal
     final formattedValue = absoluteValue
         .toStringAsFixed(2)
-        .replaceAll('.', ',') // Mengganti titik desimal dengan koma
-        .replaceAll(RegExp(r'\B(?=(\d{3})+(?!\d))'),
-            '.'); // Tambahkan titik sebagai pemisah ribuan
-
-    // Kembalikan nilai dengan "Rp" di depan dan tanda minus di belakang jika negatif
+        .replaceAll('.', ',')
+        .replaceAll(RegExp(r'\B(?=(\d{3})+(?!\d))'), '.');
     return isNegative ? 'Rp $formattedValue-' : 'Rp $formattedValue';
-  }
-
-  void updateData() {
-    fetchNominalData(idBusinessTrip);
   }
 
   String calculateTotal() {
@@ -106,8 +64,6 @@ class NominalPageController extends GetxController {
       final normalizedNominal = cleanNominal.replaceAll(',', '.');
       return sum + (double.tryParse(normalizedNominal) ?? 0.0);
     });
-
-    // Format hasil total sebagai string
     return formatIdr(total);
   }
 }

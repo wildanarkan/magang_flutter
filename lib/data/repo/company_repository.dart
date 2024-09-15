@@ -21,7 +21,23 @@ class CompanyRepository extends GetxService {
     if (response.statusCode == 200) {
       return List<Map<String, dynamic>>.from(json.decode(response.body));
     } else {
-      throw Exception('Failed to load check-in data');
+      throw Exception('Failed to load data company');
+    }
+  }
+
+  Future<List<dynamic>> fetchCompanyCity() async {
+    final token = storage.read('accessToken');
+    final response = await http.get(
+      Uri.parse(URLs.companyCity),
+      headers: {
+        'Authorization': 'Bearer $token',
+      },
+    );
+
+    if (response.statusCode == 200) {
+      return json.decode(response.body);
+    } else {
+      throw Exception('Failed to load data company');
     }
   }
 }

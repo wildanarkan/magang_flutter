@@ -5,13 +5,12 @@ import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:magang_flutter/common/app_color.dart';
+import 'package:magang_flutter/common/app_routes.dart';
 import 'package:magang_flutter/common/app_status.dart';
 import 'package:magang_flutter/common/urls.dart';
 import 'package:magang_flutter/controllers/business_trip_detail_page_controller.dart';
 import 'package:magang_flutter/controllers/home_page_controller.dart';
 import 'package:magang_flutter/data/models/business_trip_model.dart';
-import 'package:magang_flutter/pages/planning/nominal_page.dart';
-import 'package:magang_flutter/pages/planning/perbandingan_biaya_page.dart';
 import 'package:magang_flutter/widgets/appbars/build_appbar.dart';
 import 'package:magang_flutter/widgets/buttons/build_button.dart';
 import 'package:magang_flutter/widgets/dialogs/build_dialog_document.dart';
@@ -23,9 +22,7 @@ class BusinessTripDetailPage extends GetView<BusinessTripDetailPageController> {
   final BusinessTripModel trip;
   final String? status;
 
-  BusinessTripDetailPage({super.key, required this.trip, this.status}){
-    Get.put(BusinessTripDetailPageController(trip: trip));
-  }
+  const BusinessTripDetailPage({super.key, required this.trip, this.status});
 
   @override
   Widget build(BuildContext context) {
@@ -103,8 +100,7 @@ class BusinessTripDetailPage extends GetView<BusinessTripDetailPageController> {
                           ),
                           const Spacer(),
                           if (status == 'Draft') AppStatus.draft(),
-                          if (status == 'On Progress')
-                            AppStatus.onProgress(),
+                          if (status == 'On Progress') AppStatus.onProgress(),
                           if (status == 'Completed')
                             AppStatus.complete('Completed'),
                           if (status == 'Canceled')
@@ -206,8 +202,7 @@ class BusinessTripDetailPage extends GetView<BusinessTripDetailPageController> {
                       ),
                       BuildTextIcon(
                         title: 'Date',
-                        subtitle:
-                            '${trip.startDate} - ${trip.endDate}',
+                        subtitle: '${trip.startDate} - ${trip.endDate}',
                         icons: Icons.access_time_filled_outlined,
                       ),
                       const SizedBox(
@@ -456,8 +451,7 @@ class BusinessTripDetailPage extends GetView<BusinessTripDetailPageController> {
                                             log('${selectedFile}1');
                                             controller.updateFileInDatabase(
                                                 selectedFile,
-                                                trip.idBusinessTrip ??
-                                                    0);
+                                                trip.idBusinessTrip ?? 0);
                                             log('${trip.photoDocument}2');
                                           },
                                         ),
@@ -499,9 +493,13 @@ class BusinessTripDetailPage extends GetView<BusinessTripDetailPageController> {
                           context: context,
                           title: 'Perkiraan',
                           onPressed: () {
-                            Get.to(() => NominalPage(
-                                idBusinessTrip: trip.idBusinessTrip ?? 0,
-                                biayaType: 'estimasi'));
+                            Get.toNamed(
+                              AppRoutes.planning,
+                              arguments: {
+                                'idBusinessTrip': trip.idBusinessTrip ?? 0,
+                                'biayaType': 'estimasi',
+                              },
+                            );
                           },
                         ),
                       ),
@@ -511,9 +509,13 @@ class BusinessTripDetailPage extends GetView<BusinessTripDetailPageController> {
                           context: context,
                           title: 'Realisasi',
                           onPressed: () {
-                            Get.to(() => NominalPage(
-                                idBusinessTrip: trip.idBusinessTrip ?? 0,
-                                biayaType: 'realisasi'));
+                            Get.toNamed(
+                              AppRoutes.planning,
+                              arguments: {
+                                'idBusinessTrip': trip.idBusinessTrip ?? 0,
+                                'biayaType': 'realisasi',
+                              },
+                            );
                           },
                         ),
                       ),
@@ -524,8 +526,14 @@ class BusinessTripDetailPage extends GetView<BusinessTripDetailPageController> {
                     context: context,
                     title: 'Perbandingan',
                     onPressed: () {
-                      Get.to(() => PerbandinganBiayaPage(
-                          idBusinessTrip: trip.idBusinessTrip ?? 0));
+                      // Get.to(() => PerbandinganBiayaPage(
+                      //     idBusinessTrip: trip.idBusinessTrip ?? 0));
+                      Get.toNamed(
+                        AppRoutes.planningComparison,
+                        arguments: {
+                          'idBusinessTrip': trip.idBusinessTrip ?? 0,
+                        },
+                      );
                     },
                     width: double.infinity,
                     backgroundColor: Colors.white,

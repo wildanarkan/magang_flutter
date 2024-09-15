@@ -3,9 +3,9 @@ import 'package:floating_draggable_widget/floating_draggable_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:magang_flutter/common/app_color.dart';
+import 'package:magang_flutter/common/app_routes.dart';
 import 'package:magang_flutter/common/urls.dart';
 import 'package:magang_flutter/controllers/home_page_controller.dart';
-import 'package:magang_flutter/pages/business%20trip/business_trip_detail_page.dart';
 import 'package:magang_flutter/widgets/cards/build_card_info.dart';
 import 'package:magang_flutter/widgets/dialogs/build_dialog_confirmation.dart';
 import 'package:magang_flutter/widgets/expansions/build_expansion_tile.dart';
@@ -167,11 +167,9 @@ class HomePage extends GetView<NavigatorPageControllers> {
                     endDate: trip.endDate ?? 'Null',
                     useContainer: false,
                     onTap: () {
-                      Get.to(
-                        () => BusinessTripDetailPage(
-                          trip: trip,
-                          status: trip.status,
-                        ),
+                      Get.toNamed(
+                        AppRoutes.tripDetail,
+                        arguments: {'trip': trip, 'status': trip.status},
                       );
                     },
                   );
@@ -231,11 +229,9 @@ class HomePage extends GetView<NavigatorPageControllers> {
                     startDate: trip.startDate ?? '0000-00-00',
                     endDate: trip.endDate ?? '0000-00-00',
                     onTap: () {
-                      Get.to(
-                        () => BusinessTripDetailPage(
-                          trip: trip,
-                          status: trip.status,
-                        ),
+                      Get.toNamed(
+                        AppRoutes.tripDetail,
+                        arguments: {'trip': trip, 'status': trip.status},
                       );
                     },
                   );

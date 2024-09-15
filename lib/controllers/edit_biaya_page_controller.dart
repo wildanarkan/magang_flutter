@@ -9,25 +9,28 @@ import 'package:http/http.dart' as http;
 import 'package:image_picker/image_picker.dart';
 import 'package:magang_flutter/common/urls.dart';
 import 'package:magang_flutter/controllers/nominal_page_controller.dart';
+import 'package:magang_flutter/data/repo/planning_repository.dart';
 
 class EditBiayaPageController extends GetxController {
-  final int idBusinessTrip; // Add instance variable for idBusinessTrip
+  final PlanningRepository _planningRepository = PlanningRepository();
+  final NominalPageController nominalPageController =
+      Get.find<NominalPageController>();
+
+  final int idBusinessTrip;
   final int? idItem;
 
-  // Observable properties
   RxBool isLoading = false.obs;
   RxString selectedCompany = ''.obs;
   RxList<String> companyItem = <String>[].obs;
   RxList<File> images = <File>[].obs;
   RxString existingPhotoUrl = ''.obs;
-  File? photoProof; // Tambahkan deklarasi ini di atas
+  File? photoProof;
+
   Rx<TextEditingController> keteranganController = TextEditingController().obs;
   Rx<TextEditingController> amountController = TextEditingController().obs;
 
-  // List to store category data from API
   List<dynamic> _apiData = [];
 
-  // Constructor with required idBusinessTrip parameter
   EditBiayaPageController({
     required this.idBusinessTrip,
     this.idItem,
@@ -37,14 +40,15 @@ class EditBiayaPageController extends GetxController {
   void onInit() {
     super.onInit();
     if (idItem != null) {
-      fetchCompanyItems();
+      fetchCategoryExpenditure();
       fetchDataForEdit(); // Fetch data if idItem is not null
     } else {
-      fetchCompanyItems();
+      fetchCategoryExpenditure();
     }
   }
 
   void fetchDataForEdit() async {
+    log('fetch data for edit');
     isLoading.value = true;
     try {
       final token = GetStorage().read('accessToken');
@@ -80,42 +84,25 @@ class EditBiayaPageController extends GetxController {
   Future<void> updateRealization() async {
     isLoading.value = true;
     try {
-      final token = GetStorage().read('accessToken');
-      final uri = Uri.parse('${URLs.putRealization}$idItem');
-
-      final request = http.MultipartRequest('POST', uri)
-        ..headers['Authorization'] = 'Bearer $token';
-
-      request.fields['keterangan'] = keteranganController.value.text;
-      request.fields['nominal'] = amountController.value.text;
-
-      if (photoProof != null) {
-        final file = await http.MultipartFile.fromPath(
-          'photo_proof',
-          photoProof!.path,
-        );
-        request.files.add(file);
-      }
-
-      final response = await request.send();
-
-      if (response.statusCode == 200) {
-        Get.back(closeOverlays: true);
-        final NominalPageController nominalPageController =
-            Get.find<NominalPageController>();
+      final success = await _planningRepository.updateRealization(
+        idItem: idItem!,
+        keterangan: keteranganController.value.text,
+        nominal: amountController.value.text,
+        photoProof: photoProof,
+        idBusinessTrip: idBusinessTrip,
+      );
+      if (success) {
         nominalPageController.fetchNominalData(idBusinessTrip);
+        Get.back(closeOverlays: true);
         Get.snackbar('Success', 'Data successfully updated');
       } else {
-        Get.snackbar('Error', 'Failed to update Data');
+        Get.snackbar('Error', 'Failed to edit data');
       }
-    } catch (e) {
-      Get.snackbar('Error', 'An error occurred: $e');
     } finally {
       isLoading.value = false;
     }
   }
 
-  // Method to select an image from the gallery
   Future<void> getImageGallery() async {
     try {
       final pickedFile = await ImagePicker().pickImage(
@@ -123,8 +110,8 @@ class EditBiayaPageController extends GetxController {
         imageQuality: 80,
       );
       if (pickedFile != null) {
-        images.add(File(pickedFile.path)); // Menyimpan ke daftar gambar
-        photoProof = File(pickedFile.path); // Menyimpan gambar yang dipilih
+        images.add(File(pickedFile.path)); 
+        photoProof = File(pickedFile.path);
       } else {
         print('No image selected.');
       }
@@ -133,85 +120,57 @@ class EditBiayaPageController extends GetxController {
     }
   }
 
-  // Method to remove an image
   void removeImage(File image) {
     images.remove(image);
   }
 
-  // Method to fetch company items from API
-  void fetchCompanyItems() async {
-    isLoading.value = true; // Start loading
+  Future<void> fetchCategoryExpenditure() async {
+    isLoading.value = true;
     try {
-      final token = GetStorage().read('accessToken');
-      final response = await http.get(
-        Uri.parse(URLs.categories),
-        headers: {
-          'Authorization': 'Bearer $token',
-        },
-      );
-
-      if (response.statusCode == 200) {
-        _apiData = json.decode(response.body);
-        companyItem.value =
-            _apiData.map((item) => item['name'].toString()).toList();
-        print('Company items: ${companyItem.value}'); // Log for debugging
-        if (companyItem.isNotEmpty) {
-          selectedCompany.value = companyItem[0];
-        }
-      } else {
-        Get.snackbar('Error', 'Failed to load company items');
+      final items = await _planningRepository.fetchCategoryExpenditure();
+      _apiData = items;
+      companyItem.value =
+          _apiData.map((item) => item['name'].toString()).toList();
+      if (companyItem.isNotEmpty) {
+        selectedCompany.value = companyItem[0];
       }
     } catch (e) {
-      Get.snackbar('Error', 'Failed to load company items');
+      Get.snackbar('Error', e.toString());
     } finally {
-      isLoading.value = false; // Stop loading
+      isLoading.value = false;
     }
   }
 
-  // Method to update the selected company
   void updateSelectedCompany(String companyName) {
     selectedCompany.value = companyName;
   }
 
-  // Method to submit the edited expense data
   Future<void> postRealization() async {
-    isLoading.value = true;
-    try {
-      final token = GetStorage().read('accessToken');
-      final uri = Uri.parse(URLs.addBusiness);
+    List<http.MultipartFile> files = [];
+    if (images.isNotEmpty) {
+      final file = http.MultipartFile.fromBytes(
+        'photo_proof',
+        await File(images.last.path).readAsBytes(),
+        filename: images.last.path.split('/').last,
+      );
+      files.add(file);
+    }
 
-      final request = http.MultipartRequest('POST', uri)
-        ..headers['Authorization'] = 'Bearer $token';
-
-      request.fields['id_business_trip'] = idBusinessTrip.toString();
-      request.fields['id_category_expenditure'] = _apiData
+    final success = await _planningRepository.postRealization(
+      idBusinessTrip: idBusinessTrip.toString(),
+      selectedCategoryId: _apiData
           .firstWhere((item) => item['name'] == selectedCompany.value)['id']
-          .toString();
-      request.fields['nominal'] = amountController.value.text;
-      request.fields['keterangan'] = keteranganController.value.text;
+          .toString(),
+      nominal: amountController.value.text,
+      keterangan: keteranganController.value.text,
+      files: files,
+    );
 
-      if (images.isNotEmpty) {
-        final file = http.MultipartFile.fromBytes(
-          'photo_proof',
-          await File(images.last.path).readAsBytes(),
-          filename: images.last.path.split('/').last,
-        );
-        request.files.add(file);
-      }
-
-      final response = await request.send();
-
-      if (response.statusCode == 201) {
-        Get.back(result: true, closeOverlays: true);
-        Get.snackbar('Success', 'Expense successfully updated');
-      } else {
-        final responseBody = await response.stream.bytesToString();
-        Get.snackbar('Error', 'Failed to update expense: $responseBody');
-      }
-    } catch (e) {
-      Get.snackbar('Error', 'An error occurred: $e');
-    } finally {
-      isLoading.value = false;
+    if (success) {
+      Get.back(result: true, closeOverlays: true);
+      Get.snackbar('Success', 'Expense successfully created');
+    } else {
+      Get.snackbar('Error', 'Failed to created expense');
     }
   }
 }

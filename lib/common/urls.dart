@@ -38,7 +38,7 @@ class URLs {
   static const postPhotoDocument = '${baseAppUrl}business/upload-file/';
   static const postTripdetail = '${baseAppUrl}business/trip';
   static const addBusiness = '${baseAppUrl}business/add';
-  static const categories = '${baseAppUrl}business/categories';
+  static const categoryExpenditure = '${baseAppUrl}business/categories';
   static const putRealization = '${baseAppUrl}business/update/';
   static const getRealizationId = '${baseAppUrl}business/realizationid/';
   static const checkInActivity = '${baseAppUrl}checkin/';
