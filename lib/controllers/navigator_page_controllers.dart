@@ -8,7 +8,7 @@ import 'package:magang_flutter/controllers/home_page_controller.dart';
 import 'package:magang_flutter/data/repo/user_repository.dart';
 import 'package:magang_flutter/pages/business%20trip/business_trip_page.dart';
 import 'package:magang_flutter/pages/home_page.dart';
-import 'package:magang_flutter/pages/leave/leave_history_page.dart';
+import 'package:magang_flutter/pages/leave/leave_page.dart';
 import 'package:magang_flutter/pages/profile/profile_page.dart';
 
 class NavigatorPageControllers extends GetxController {
@@ -85,7 +85,7 @@ class NavigatorPageControllers extends GetxController {
 
   List<Widget> page = [
     HomePage(),
-    BusinessTripPage(),
+    const BusinessTripPage(),
     const LeaveHistoryPage(),
     const ProfilePage(),
   ].obs;

@@ -9,13 +9,11 @@ import 'package:magang_flutter/widgets/buttons/build_button.dart';
 import 'package:magang_flutter/widgets/dropdowns/build_dropdown.dart';
 import 'package:magang_flutter/widgets/fields/build_field_text.dart';
 
-// EditBiayaPage.dart
 class EditBiayaPage extends GetView<EditBiayaPageController> {
   final int idBusinessTrip;
-  final int? idItem; // Tambahkan parameter untuk id item
-  final String biayaType; // Tambahkan parameter untuk id item
-  final bool
-      isEditMode; // Tambahkan parameter untuk menentukan mode edit atau tambah
+  final int? idItem;
+  final String biayaType;
+  final bool isEditMode;
 
   const EditBiayaPage({
     super.key,
@@ -27,10 +25,6 @@ class EditBiayaPage extends GetView<EditBiayaPageController> {
 
   @override
   Widget build(BuildContext context) {
-    // final controller = Get.put(
-    //   EditBiayaPageController(idBusinessTrip: idBusinessTrip, idItem: idItem),
-    // );
-
     return Scaffold(
       appBar: BuildAppbar(title: isEditMode ? 'Edit Biaya' : 'Input Biaya'),
       body: Obx(() {

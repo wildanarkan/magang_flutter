@@ -5,7 +5,7 @@ import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:http/http.dart' as http;
 import 'package:magang_flutter/common/urls.dart';
-import 'package:magang_flutter/controllers/leave_page_controller.dart';
+import 'package:magang_flutter/controllers/leave_history_page_controller.dart';
 
 class LeaveRequestDetailController extends GetxController {
   Future<void> updateLeaveStatus(int leaveId, String status) async {
@@ -26,7 +26,7 @@ class LeaveRequestDetailController extends GetxController {
       );
 
       if (response.statusCode == 200) {
-        final leaveController = Get.find<LeavePageController>();
+        final leaveController = Get.find<LeaveHistoryPageController>();
         Get.back(closeOverlays: true);
         leaveController.fetchLeaves();
         Get.snackbar('Success', 'Leave status updated to $status');
@@ -54,7 +54,7 @@ class LeaveRequestDetailController extends GetxController {
       );
 
       if (response.statusCode == 200) {
-        final leaveController = Get.find<LeavePageController>();
+        final leaveController = Get.find<LeaveHistoryPageController>();
         Get.back(closeOverlays: true);
         leaveController.fetchLeaves();
         Get.snackbar('Success', 'Leave request deleted');

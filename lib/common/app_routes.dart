@@ -13,7 +13,7 @@ abstract class AppRoutes {
 
   // Leave
   static const leaveList = '/leave/list';
-  static const leaveListPending = '/leave/list/pending';
+  static const leaveDetail = '/leave/list/detail';
 
   // Profile
   static const profileDetail = '/profile/detail';

@@ -12,17 +12,16 @@ import 'package:magang_flutter/widgets/buttons/build_button.dart';
 import 'package:magang_flutter/widgets/texts/build_text_column.dart';
 import 'package:magang_flutter/widgets/texts/build_text_link.dart';
 
-class LeaveRequestDetailPage extends StatelessWidget {
+class LeaveHistoryDetailPage extends GetView<LeaveRequestDetailController> {
   final Leaves leave;
 
-  const LeaveRequestDetailPage({super.key, required this.leave});
+  const LeaveHistoryDetailPage({super.key, required this.leave});
 
   @override
   Widget build(BuildContext context) {
+    final Leaves leave = Get.arguments['leave'];
     final NavigatorPageControllers navigatorPageControllers =
         Get.find<NavigatorPageControllers>();
-    final controller = Get.put(LeaveRequestDetailController()); // Tambahkan ini
-
     return Scaffold(
       appBar: const BuildAppbar(
         title: 'Leave Request',
@@ -64,9 +63,7 @@ class LeaveRequestDetailPage extends StatelessWidget {
                             title: 'Look Employee History',
                             context: context,
                             onTap: () {
-                              Get.back(
-                                  result: leave
-                                      .nip); // Kirim nip ke halaman sebelumnya
+                              Get.back(result: leave.nip);
                             },
                           ),
                         ],

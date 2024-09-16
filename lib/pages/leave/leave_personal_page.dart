@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:magang_flutter/common/app_color.dart';
 import 'package:magang_flutter/controllers/personal_leave_history_page_controller.dart';
-import 'package:magang_flutter/pages/leave/leave_request_detail_page.dart';
 import 'package:magang_flutter/widgets/appbars/build_appbar.dart';
 import 'package:magang_flutter/widgets/cards/build_card_info.dart';
 
@@ -51,10 +50,10 @@ class PersonalLeaveHistoryPage extends StatelessWidget {
                   size: 16,
                   color: AppColor.textBody,
                 ),
-                onTap: () {
-                  controller.statusFilter.value = '';
-                  Get.to(() => LeaveRequestDetailPage(leave: leave));
-                },
+                // onTap: () {
+                //   controller.statusFilter.value = '';
+                //   Get.to(() => LeaveHistoryDetailPage(leave: leave));
+                // },
               );
             },
           );

@@ -119,13 +119,13 @@ class NominalPage extends GetView<NominalPageController> {
                 onPressed: controller.biayaType == 'realisasi'
                     ? () async {
                         final result = await Get.toNamed(
-                                AppRoutes.planningEdit,
-                                arguments: {
-                                  'idBusinessTrip': controller.idBusinessTrip,
-                                  'biayaType': controller.biayaType,
-                                  'isEditMode': false,
-                                },
-                              );
+                          AppRoutes.planningEdit,
+                          arguments: {
+                            'idBusinessTrip': controller.idBusinessTrip,
+                            'biayaType': controller.biayaType,
+                            'isEditMode': false,
+                          },
+                        );
                         if (result != null && result) {
                           controller.updateData();
                         }
