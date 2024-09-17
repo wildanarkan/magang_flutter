@@ -2,6 +2,7 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:magang_flutter/common/app_color.dart';
 import 'package:magang_flutter/common/app_routes.dart';
 import 'package:magang_flutter/controllers/leave_history_page_controller.dart';
 import 'package:magang_flutter/widgets/appbars/build_appbar.dart';
@@ -64,16 +65,17 @@ class LeaveHistoryPage extends GetView<LeaveHistoryPageController> {
                   appStatus: '${leave.status}',
                   startDate: '${leave.startDate}',
                   endDate: '${leave.endDate}',
+                  icon: Icon(
+                    Icons.date_range,
+                    size: 16,
+                    color: AppColor.textBody,
+                  ),
                   onTap: () {
                     Get.toNamed(
                       AppRoutes.leaveDetail,
-                      arguments: {
-                        'leave': leave
-                      }, // Kirim data leave ke halaman detail
+                      arguments: {'leave': leave},
                     )?.then((result) {
-                      // Setelah kembali dari halaman leaveDetail, cek hasilnya
                       if (result != null && result is int) {
-                        // Jika ada result dan tipe result adalah int, panggil fungsi filterByNip dengan result sebagai nip
                         controller.filterByNip(result);
                       }
                     });
@@ -124,11 +126,10 @@ class LeaveHistoryPage extends GetView<LeaveHistoryPageController> {
                     }).toList(),
                     onChanged: (value) {
                       controller.selectedUser.value = value!;
-                      controller
-                          .filterLeaves(); // Memanggil filter setelah pemilihan
+                      controller.filterLeaves();
                     },
                   ),
-                const SizedBox(height: 20),
+                if (!controller.isOnUserPage) const SizedBox(height: 20),
                 DropdownButtonFormField<String>(
                   decoration: const InputDecoration(
                     labelText: 'Status',
@@ -167,9 +168,7 @@ class LeaveHistoryPage extends GetView<LeaveHistoryPageController> {
                           if (pickedDate != null) {
                             controller.selectedStartDate.value = pickedDate;
                             controller.startDateController.value.text =
-                                pickedDate
-                                    .toIso8601String()
-                                    .substring(0, 10); // Update UI
+                                pickedDate.toIso8601String().substring(0, 10);
                           }
                         },
                       ),

@@ -5,8 +5,6 @@ import 'package:get/get.dart';
 import 'package:magang_flutter/common/app_color.dart';
 import 'package:magang_flutter/common/app_routes.dart';
 import 'package:magang_flutter/controllers/navigator_page_controllers.dart';
-import 'package:magang_flutter/pages/leave/leave_add_page.dart';
-import 'package:magang_flutter/pages/leave/leave_personal_page.dart';
 import 'package:magang_flutter/widgets/appbars/build_appbar.dart';
 import 'package:magang_flutter/widgets/buttons/build_button_icon.dart';
 
@@ -47,7 +45,7 @@ class LeaveHistoryPage extends GetView<NavigatorPageControllers> {
               iconColor: AppColor.primary,
               title: 'Make Leave Application',
               onTap: () {
-                Get.to(() => const AskLeavePage());
+                Get.toNamed(AppRoutes.leaveAdd);
               },
             ),
             if (controller.rolePriority.value <= 2)
@@ -69,7 +67,7 @@ class LeaveHistoryPage extends GetView<NavigatorPageControllers> {
               iconColor: AppColor.primary,
               title: 'Personal Leave History',
               onTap: () {
-                Get.to(() => const PersonalLeaveHistoryPage());
+                Get.toNamed(AppRoutes.leavePersonal);
               },
             ),
           ],

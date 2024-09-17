@@ -6,8 +6,13 @@ import 'package:get_storage/get_storage.dart';
 import 'package:http/http.dart' as http;
 import 'package:magang_flutter/common/urls.dart';
 import 'package:magang_flutter/controllers/leave_history_page_controller.dart';
+import 'package:magang_flutter/controllers/leave_personal_page_controller.dart';
 
-class LeaveRequestDetailController extends GetxController {
+class LeaveHistoryDetailPageController extends GetxController {
+  final leaveController = Get.find<LeaveHistoryPageController>();
+  final leavePersonalPageController =
+      Get.find<LeavePersonalPageController>();
+
   Future<void> updateLeaveStatus(int leaveId, String status) async {
     try {
       final token = GetStorage().read('accessToken');
@@ -26,9 +31,9 @@ class LeaveRequestDetailController extends GetxController {
       );
 
       if (response.statusCode == 200) {
-        final leaveController = Get.find<LeaveHistoryPageController>();
         Get.back(closeOverlays: true);
         leaveController.fetchLeaves();
+        leavePersonalPageController.fetchLeaves();
         Get.snackbar('Success', 'Leave status updated to $status');
       } else {
         Get.snackbar(

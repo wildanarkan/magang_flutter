@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:magang_flutter/data/models/leave_model.dart';
 import 'package:magang_flutter/data/repo/leave_history_repository.dart';
-import 'package:magang_flutter/data/repo/user_repository.dart';
 
 extension DateTimeComparison on DateTime {
   bool isAtLeast(DateTime date) {
@@ -16,11 +15,9 @@ extension DateTimeComparison on DateTime {
   }
 }
 
-class LeaveHistoryPageController extends GetxController {
-  // Repository
+class LeavePersonalPageController extends GetxController {
   final LeaveHistoryRepository _leaveHistoryRepository =
       Get.find<LeaveHistoryRepository>();
-  final UserRepository _userRepository = Get.find<UserRepository>();
 
   var leaves = <Leaves>[].obs;
   var isLoading = true.obs;
@@ -28,59 +25,40 @@ class LeaveHistoryPageController extends GetxController {
   var filteredLeaveHistory = <Leaves>[].obs;
   var leaveHistory = <Leaves>[].obs;
 
-  var userItems = <String>[].obs;
-
-  var selectedNip = Rxn<int>();
+  // Variable
   var selectedStatus = Rxn<String>();
-  var selectedUser = Rxn<String>();
   var selectedEndDate = Rxn<DateTime>();
   var selectedStartDate = Rxn<DateTime>();
 
+  // Text Editing Controller
   var endDateController = TextEditingController().obs;
   var startDateController = TextEditingController().obs;
 
   var noData = false.obs;
+  var pending = true.obs;
 
   @override
   void onInit() async {
     super.onInit();
-    await fetchUserItems();
     await fetchLeaves();
     resetFilter();
-  }
-
-  void filterByNip(int nip) {
-    selectedNip.value = nip;
-    filteredLeaveHistory.value =
-        leaveHistory.where((leave) => leave.nip == nip).toList();
-    noData.value = filteredLeaveHistory.isEmpty;
   }
 
   Future<void> fetchLeaves() async {
     try {
       isLoading(true);
-      final leaves = await _leaveHistoryRepository.fetchAll();
-      leaveHistory.value = leaves;
-
-      if (selectedNip.value != null) {
-        filteredLeaveHistory.value = leaveHistory
-            .where((leave) => leave.nip == selectedNip.value)
-            .toList();
+      final leaves = await _leaveHistoryRepository.fetchByUserId();
+      if (leaves.isNotEmpty) {
+        leaveHistory.value = leaves;
+        filterLeaves();
+        noData.value = filteredLeaveHistory.isEmpty;
       } else {
-        filteredLeaveHistory.value = leaveHistory;
+        noData.value = true;
+        leaveHistory.value = [];
       }
-
-      if (Get.arguments != null && Get.arguments['pendingPage'] == true) {
-        // Filter data yang hanya berstatus Pending
-        filteredLeaveHistory.value =
-            leaveHistory.where((leave) => leave.status == 'Pending').toList();
-      } else {
-        filterLeaves(); // Filter sesuai status dan data lainnya
-      }
-
-      noData.value = filteredLeaveHistory.isEmpty;
     } catch (e) {
       print('Error fetching leave history: $e');
+      noData.value = true;
     } finally {
       isLoading(false);
     }
@@ -97,16 +75,9 @@ class LeaveHistoryPageController extends GetxController {
     }
 
     filteredLeaveHistory.value = leaveHistory.where((leave) {
-      final matchesNip =
-          selectedNip.value == null || leave.nip == selectedNip.value;
-
       final matchesStatus = selectedStatus.value == null ||
           selectedStatus.value == 'All' ||
           leave.status == selectedStatus.value;
-
-      final matchesCompany = selectedUser.value == null ||
-          selectedUser.value == 'All' ||
-          '${leave.firstName} ${leave.lastName}' == selectedUser.value;
 
       final leaveStartDate = DateTime.parse(leave.startDate ?? '');
 
@@ -116,26 +87,10 @@ class LeaveHistoryPageController extends GetxController {
               leaveStartDate.isAtLeast(startDate) &&
               leaveStartDate.isAtMost(endDate));
 
-      return matchesNip && matchesStatus && matchesDateRange && matchesCompany;
+      return matchesStatus && matchesDateRange;
     }).toList();
 
     noData.value = filteredLeaveHistory.isEmpty;
-  }
-
-  Future<void> fetchUserItems() async {
-    try {
-      final data = await _userRepository.fetchAllUser();
-      userItems.value = data
-          .map<String>((item) => item['full_name'].toString())
-          .toSet()
-          .toList();
-    } catch (e) {
-      Get.snackbar('Error', 'Failed to load user items');
-    }
-  }
-
-  void resetDropdown() {
-    fetchUserItems(); // Update the user items
   }
 
   Leaves? getTripById(int id) {
@@ -146,10 +101,7 @@ class LeaveHistoryPageController extends GetxController {
     selectedStatus.value = 'All';
     selectedEndDate.value = null;
     selectedStartDate.value = null;
-    selectedUser.value = 'All';
     startDateController.value.clear();
     endDateController.value.clear();
   }
-
-  bool get isOnUserPage => selectedNip.value != null;
 }

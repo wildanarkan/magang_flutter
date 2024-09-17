@@ -3,8 +3,10 @@ import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:magang_flutter/bindings/change_password_binding.dart';
 import 'package:magang_flutter/bindings/contract_binding.dart';
+import 'package:magang_flutter/bindings/leave_add_binding.dart';
 import 'package:magang_flutter/bindings/leave_history_binding.dart';
 import 'package:magang_flutter/bindings/leave_history_detail_binding.dart';
+import 'package:magang_flutter/bindings/leave_personal_binding.dart';
 import 'package:magang_flutter/bindings/navigator_binding.dart';
 import 'package:magang_flutter/bindings/payroll_history_binding.dart';
 import 'package:magang_flutter/bindings/planning_binding.dart';
@@ -21,8 +23,10 @@ import 'package:magang_flutter/data/repo/user_repository.dart';
 import 'package:magang_flutter/pages/business%20trip/add_businiess_trip_page.dart';
 import 'package:magang_flutter/pages/business%20trip/business_trip_detail_page.dart';
 import 'package:magang_flutter/pages/contract/contract_history_page.dart';
+import 'package:magang_flutter/pages/leave/leave_add_page.dart';
 import 'package:magang_flutter/pages/leave/leave_history_detail_page.dart';
 import 'package:magang_flutter/pages/leave/leave_history_page.dart';
+import 'package:magang_flutter/pages/leave/leave_personal_page.dart';
 import 'package:magang_flutter/pages/login_page.dart';
 import 'package:magang_flutter/pages/navigator_page.dart';
 import 'package:magang_flutter/pages/payroll/payroll_detail_page.dart';
@@ -117,6 +121,16 @@ class MyApp extends StatelessWidget {
             leave: Get.arguments['leave'],
           ),
           binding: LeaveHistoryDetailBinding(),
+        ),
+        GetPage(
+          name: AppRoutes.leaveAdd,
+          page: () => const LeaveAddPage(),
+          binding: LeaveAddBinding(),
+        ),
+        GetPage(
+          name: AppRoutes.leavePersonal,
+          page: () => const LeavePersonalPage(),
+          binding: LeavePersonalBinding(),
         ),
 
         // Profile

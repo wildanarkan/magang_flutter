@@ -1,28 +1,24 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:magang_flutter/common/app_color.dart';
-import 'package:magang_flutter/controllers/ask_leave_page_controller.dart';
+import 'package:magang_flutter/controllers/leave_add_page_controller.dart';
 import 'package:magang_flutter/widgets/appbars/build_appbar.dart';
 import 'package:magang_flutter/widgets/buttons/build_button.dart';
 import 'package:magang_flutter/widgets/dropdowns/build_dropdown.dart';
 import 'package:magang_flutter/widgets/fields/build_field_date.dart';
 import 'package:magang_flutter/widgets/fields/build_field_text.dart';
 
-class AskLeavePage extends StatelessWidget {
-  const AskLeavePage({super.key});
+class LeaveAddPage extends GetView<LeaveAddPageController> {
+  const LeaveAddPage({super.key});
 
   @override
   Widget build(BuildContext context) {
-    final controller = Get.put(AskLeavePageController());
-
     return Scaffold(
       appBar: const BuildAppbar(title: 'Form Ask to Leave'),
       body: Obx(() {
-        if (controller.companyItem.isEmpty) {
-          // Tampilkan loading indicator saat data belum siap
+        if (controller.leaveCategoryItem.isEmpty) {
           return const Center(child: CircularProgressIndicator());
         }
-
         return Column(
           children: [
             Expanded(
@@ -50,10 +46,10 @@ class AskLeavePage extends StatelessWidget {
                         BuildDropdown(
                           hint: 'Select',
                           title: '',
-                          selectedItem: controller.selectedCompany.value,
-                          item: controller.companyItem,
+                          selectedItem: controller.selectedCategory.value,
+                          item: controller.leaveCategoryItem,
                           onChanged: (newValue) {
-                            controller.selectedCompany.value = newValue!;
+                            controller.selectedCategory.value = newValue!;
                             controller.updateSelectedLimit(newValue);
                           },
                         ),

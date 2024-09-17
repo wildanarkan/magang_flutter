@@ -14,6 +14,8 @@ abstract class AppRoutes {
   // Leave
   static const leaveList = '/leave/list';
   static const leaveDetail = '/leave/list/detail';
+  static const leaveAdd = '/leave/add';
+  static const leavePersonal = '/leave/personal';
 
   // Profile
   static const profileDetail = '/profile/detail';

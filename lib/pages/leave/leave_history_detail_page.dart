@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:magang_flutter/common/app_color.dart';
 import 'package:magang_flutter/common/app_status.dart';
-import 'package:magang_flutter/controllers/leave_request_detail_controller_page.dart';
+import 'package:magang_flutter/controllers/leave_history_detail_page_controller.dart';
 import 'package:magang_flutter/controllers/navigator_page_controllers.dart';
 import 'package:magang_flutter/data/models/leave_model.dart';
 import 'package:magang_flutter/widgets/appbars/build_appbar.dart';
@@ -12,7 +12,7 @@ import 'package:magang_flutter/widgets/buttons/build_button.dart';
 import 'package:magang_flutter/widgets/texts/build_text_column.dart';
 import 'package:magang_flutter/widgets/texts/build_text_link.dart';
 
-class LeaveHistoryDetailPage extends GetView<LeaveRequestDetailController> {
+class LeaveHistoryDetailPage extends GetView<LeaveHistoryDetailPageController> {
   final Leaves leave;
 
   const LeaveHistoryDetailPage({super.key, required this.leave});
@@ -125,8 +125,8 @@ class LeaveHistoryDetailPage extends GetView<LeaveRequestDetailController> {
           Column(
             children: [
               if (navigatorPageControllers.rolePriority.value <= 2 &&
-                  navigatorPageControllers.nip != leave.nip &&
-                  leave.status != 'Approved')
+                  navigatorPageControllers.nip.value != leave.nip &&
+                  leave.status == 'Pending')
                 Padding(
                   padding:
                       const EdgeInsets.symmetric(horizontal: 35, vertical: 20),
@@ -142,8 +142,8 @@ class LeaveHistoryDetailPage extends GetView<LeaveRequestDetailController> {
                   ),
                 ),
               if (navigatorPageControllers.rolePriority.value <= 2 &&
-                  navigatorPageControllers.nip != leave.nip &&
-                  leave.status != 'Declined')
+                  navigatorPageControllers.nip.value != leave.nip &&
+                  leave.status == 'Pending')
                 Padding(
                   padding: const EdgeInsets.fromLTRB(35, 0, 35, 20),
                   child: BuildButton(
@@ -161,7 +161,7 @@ class LeaveHistoryDetailPage extends GetView<LeaveRequestDetailController> {
                   ),
                 ),
               if (leave.nip == navigatorPageControllers.nip.value &&
-                  leave.status != 'Canceled')
+                  leave.status == 'Pending')
                 Padding(
                   padding: const EdgeInsets.fromLTRB(35, 0, 35, 40),
                   child: BuildButton(

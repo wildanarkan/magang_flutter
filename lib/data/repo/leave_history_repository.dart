@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:developer';
 
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
@@ -20,10 +21,7 @@ class LeaveHistoryRepository extends GetxService {
       );
 
       if (response.statusCode == 200) {
-        // First, parse the entire JSON object
         final jsonData = json.decode(response.body);
-
-        // Then, extract the list from the 'leaves' key
         if (jsonData['leaves'] != null) {
           List<dynamic> leavesList = jsonData['leaves'];
           return leavesList.map((json) => Leaves.fromJson(json)).toList();
@@ -35,6 +33,62 @@ class LeaveHistoryRepository extends GetxService {
       }
     } catch (e) {
       throw Exception('Error fetching leaves: $e');
+    }
+  }
+
+  Future<List<Leaves>> fetchByUserId() async {
+    final userId = storage.read('userId');
+    if (userId == null) {
+      print('User ID not found');
+      return []; // Return empty list instead of null
+    }
+
+    try {
+      final token = storage.read('accessToken');
+      final response = await http.get(
+        Uri.parse('${URLs.leaveUser}$userId'),
+        headers: {
+          'Authorization': 'Bearer $token',
+        },
+      );
+
+      if (response.statusCode == 200) {
+        final jsonData = json.decode(response.body);
+        if (jsonData['leaves'] != null) {
+          List<dynamic> leavesList = jsonData['leaves'];
+          return leavesList.map((json) => Leaves.fromJson(json)).toList();
+        } else {
+          print('No leaves found');
+          return [];
+        }
+      } else {
+        log('Failed to load leaves by user');
+        log(response.statusCode.toString());
+        return [];
+      }
+    } catch (e) {
+      print('Error occurred: $e');
+      return [];
+    }
+  }
+
+  Future<List<dynamic>?> fetchCategoryItems() async {
+    try {
+      final token = storage.read('accessToken');
+      final response = await http.get(
+        Uri.parse(URLs.leaveCategory),
+        headers: {
+          'Authorization': 'Bearer $token',
+        },
+      );
+
+      if (response.statusCode == 200) {
+        return json.decode(response.body);
+      } else {
+        return null;
+      }
+    } catch (e) {
+      return null;
     }
   }
 }
