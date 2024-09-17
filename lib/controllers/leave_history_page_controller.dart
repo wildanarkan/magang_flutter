@@ -22,43 +22,39 @@ class LeaveHistoryPageController extends GetxController {
       Get.find<LeaveHistoryRepository>();
   final UserRepository _userRepository = Get.find<UserRepository>();
 
-  var leaves = <Leaves>[].obs; // Observable list to hold leave data
-  var isLoading = true.obs; // Observable to track loading status
+  var leaves = <Leaves>[].obs;
+  var isLoading = true.obs;
 
   var filteredLeaveHistory = <Leaves>[].obs;
   var leaveHistory = <Leaves>[].obs;
 
   var userItems = <String>[].obs;
 
-  // Variable
+  var selectedNip = Rxn<int>();
   var selectedStatus = Rxn<String>();
   var selectedUser = Rxn<String>();
   var selectedEndDate = Rxn<DateTime>();
   var selectedStartDate = Rxn<DateTime>();
 
-  // Text Editing Controller
   var endDateController = TextEditingController().obs;
   var startDateController = TextEditingController().obs;
 
   var noData = false.obs;
-  var pending = true.obs;
 
   @override
   void onInit() async {
-    if (Get.arguments != null && Get.arguments['pendingPage'] == true) {
-      selectedStatus.value = 'Pending';
-    }
-
     super.onInit();
+    await fetchUserItems();
     await fetchLeaves();
-    fetchUserItems();
     resetFilter();
   }
 
-  // void filterByNip(String nip) {
-  //   filteredLeaveHistory.value =
-  //       leaveHistory.where((leave) => leave.nip == nip).toList();
-  // }
+  void filterByNip(int nip) {
+    selectedNip.value = nip;
+    filteredLeaveHistory.value =
+        leaveHistory.where((leave) => leave.nip == nip).toList();
+    noData.value = filteredLeaveHistory.isEmpty;
+  }
 
   Future<void> fetchLeaves() async {
     try {
@@ -66,12 +62,12 @@ class LeaveHistoryPageController extends GetxController {
       final leaves = await _leaveHistoryRepository.fetchAll();
       leaveHistory.value = leaves;
 
-      if (selectedStatus.value == 'Pending') {
-        // Filter data yang hanya berstatus Pending
-        filteredLeaveHistory.value =
-            leaveHistory.where((leave) => leave.status == 'Pending').toList();
+      if (selectedNip.value != null) {
+        filteredLeaveHistory.value = leaveHistory
+            .where((leave) => leave.nip == selectedNip.value)
+            .toList();
       } else {
-        filterLeaves(); // Filter sesuai status dan data lainnya
+        filteredLeaveHistory.value = leaveHistory;
       }
 
       noData.value = filteredLeaveHistory.isEmpty;
@@ -93,6 +89,9 @@ class LeaveHistoryPageController extends GetxController {
     }
 
     filteredLeaveHistory.value = leaveHistory.where((leave) {
+      final matchesNip =
+          selectedNip.value == null || leave.nip == selectedNip.value;
+
       final matchesStatus = selectedStatus.value == null ||
           selectedStatus.value == 'All' ||
           leave.status == selectedStatus.value;
@@ -109,13 +108,13 @@ class LeaveHistoryPageController extends GetxController {
               leaveStartDate.isAtLeast(startDate) &&
               leaveStartDate.isAtMost(endDate));
 
-      return matchesStatus && matchesDateRange && matchesCompany;
+      return matchesNip && matchesStatus && matchesDateRange && matchesCompany;
     }).toList();
 
     noData.value = filteredLeaveHistory.isEmpty;
   }
 
-  void fetchUserItems() async {
+  Future<void> fetchUserItems() async {
     try {
       final data = await _userRepository.fetchAllUser();
       userItems.value = data
@@ -125,6 +124,10 @@ class LeaveHistoryPageController extends GetxController {
     } catch (e) {
       Get.snackbar('Error', 'Failed to load user items');
     }
+  }
+
+  void resetDropdown() {
+    fetchUserItems(); // Update the user items
   }
 
   Leaves? getTripById(int id) {
@@ -139,4 +142,6 @@ class LeaveHistoryPageController extends GetxController {
     startDateController.value.clear();
     endDateController.value.clear();
   }
+
+  bool get isOnUserPage => selectedNip.value != null;
 }

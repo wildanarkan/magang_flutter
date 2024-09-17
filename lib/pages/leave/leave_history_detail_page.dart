@@ -65,7 +65,7 @@ class LeaveHistoryDetailPage extends GetView<LeaveRequestDetailController> {
                             onTap: () {
                               Get.back(result: leave.nip);
                             },
-                          ),
+                          )
                         ],
                       ),
                       const SizedBox(height: 10),

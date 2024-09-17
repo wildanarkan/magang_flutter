@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:magang_flutter/common/app_routes.dart';
@@ -12,6 +14,15 @@ class LeaveHistoryPage extends GetView<LeaveHistoryPageController> {
 
   @override
   Widget build(BuildContext context) {
+    // Periksa apakah ada nip yang dikembalikan dari halaman sebelumnya
+    final nip = Get.arguments?['nip'] ?? Get.arguments;
+    log('ini adalah nip$nip');
+
+    if (nip == Get.arguments['nip']) {
+      // Filter data berdasarkan nip
+      controller.filterByNip(nip);
+    }
+
     return Scaffold(
       appBar: BuildAppbar(
         title: Get.arguments['pendingPage'] ? 'Leave Request' : 'Leave History',
@@ -56,8 +67,16 @@ class LeaveHistoryPage extends GetView<LeaveHistoryPageController> {
                   onTap: () {
                     Get.toNamed(
                       AppRoutes.leaveDetail,
-                      arguments: {'leave': leave},
-                    );
+                      arguments: {
+                        'leave': leave
+                      }, // Kirim data leave ke halaman detail
+                    )?.then((result) {
+                      // Setelah kembali dari halaman leaveDetail, cek hasilnya
+                      if (result != null && result is int) {
+                        // Jika ada result dan tipe result adalah int, panggil fungsi filterByNip dengan result sebagai nip
+                        controller.filterByNip(result);
+                      }
+                    });
                   },
                 );
               },
@@ -79,120 +98,131 @@ class LeaveHistoryPage extends GetView<LeaveHistoryPageController> {
             topRight: Radius.circular(20),
           ),
         ),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            const Text('Filter Leave History',
-                style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
-            const SizedBox(height: 20),
-            DropdownButtonFormField<String>(
-              decoration: const InputDecoration(
-                labelText: 'Employee',
-                border: OutlineInputBorder(),
-              ),
-              items: ['All', ...controller.userItems].map((String user) {
-                return DropdownMenuItem<String>(
-                  value: user,
-                  child: Text(user),
-                );
-              }).toList(),
-              onChanged: (value) {
-                controller.selectedUser.value = value!;
-              },
-            ),
-            const SizedBox(height: 20),
-            DropdownButtonFormField<String>(
-              decoration: const InputDecoration(
-                labelText: 'Status',
-                border: OutlineInputBorder(),
-              ),
-              items: ['Pending', 'Approved', 'Declined', 'Canceled', 'All']
-                  .map((String status) {
-                return DropdownMenuItem<String>(
-                  value: status,
-                  child: Text(status),
-                );
-              }).toList(),
-              onChanged: (value) {
-                controller.selectedStatus.value = value!;
-              },
-            ),
-            const SizedBox(height: 20),
-            Row(
+        child: Obx(() {
+          if (controller.isLoading.value) {
+            return const Center(child: CircularProgressIndicator());
+          } else {
+            return Column(
+              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Expanded(
-                  child: TextField(
-                    controller: controller.startDateController.value,
-                    readOnly: true,
+                const Text('Filter Leave History',
+                    style:
+                        TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+                const SizedBox(height: 20),
+                if (!controller.isOnUserPage)
+                  DropdownButtonFormField<String>(
                     decoration: const InputDecoration(
-                      labelText: 'Date',
+                      labelText: 'Employee',
                       border: OutlineInputBorder(),
-                      suffixIcon: Icon(Icons.calendar_today),
                     ),
-                    onTap: () async {
-                      DateTime? pickedDate = await showDatePicker(
-                        context: context,
-                        initialDate: DateTime.now(),
-                        firstDate: DateTime(2000),
-                        lastDate: DateTime(2101),
+                    items: ['All', ...controller.userItems].map((String user) {
+                      return DropdownMenuItem<String>(
+                        value: user,
+                        child: Text(user),
                       );
-                      if (pickedDate != null) {
-                        controller.selectedStartDate.value = pickedDate;
-                        controller.startDateController.value.text = pickedDate
-                            .toIso8601String()
-                            .substring(0, 10); // Update UI
-                      }
+                    }).toList(),
+                    onChanged: (value) {
+                      controller.selectedUser.value = value!;
+                      controller
+                          .filterLeaves(); // Memanggil filter setelah pemilihan
                     },
                   ),
+                const SizedBox(height: 20),
+                DropdownButtonFormField<String>(
+                  decoration: const InputDecoration(
+                    labelText: 'Status',
+                    border: OutlineInputBorder(),
+                  ),
+                  items: ['Pending', 'Approved', 'Declined', 'Canceled', 'All']
+                      .map((String status) {
+                    return DropdownMenuItem<String>(
+                      value: status,
+                      child: Text(status),
+                    );
+                  }).toList(),
+                  onChanged: (value) {
+                    controller.selectedStatus.value = value!;
+                  },
                 ),
-                Expanded(
-                  child: TextField(
-                    controller: controller.endDateController.value,
-                    readOnly: true,
-                    decoration: const InputDecoration(
-                      labelText: 'Date',
-                      border: OutlineInputBorder(),
-                      suffixIcon: Icon(Icons.calendar_today),
+                const SizedBox(height: 20),
+                Row(
+                  children: [
+                    Expanded(
+                      child: TextField(
+                        controller: controller.startDateController.value,
+                        readOnly: true,
+                        decoration: const InputDecoration(
+                          labelText: 'Date',
+                          border: OutlineInputBorder(),
+                          suffixIcon: Icon(Icons.calendar_today),
+                        ),
+                        onTap: () async {
+                          DateTime? pickedDate = await showDatePicker(
+                            context: context,
+                            initialDate: DateTime.now(),
+                            firstDate: DateTime(2000),
+                            lastDate: DateTime(2101),
+                          );
+                          if (pickedDate != null) {
+                            controller.selectedStartDate.value = pickedDate;
+                            controller.startDateController.value.text =
+                                pickedDate
+                                    .toIso8601String()
+                                    .substring(0, 10); // Update UI
+                          }
+                        },
+                      ),
                     ),
-                    onTap: () async {
-                      DateTime? pickedDate = await showDatePicker(
-                        context: context,
-                        initialDate: DateTime.now(),
-                        firstDate: DateTime(2000),
-                        lastDate: DateTime(2101),
-                      );
-                      if (pickedDate != null) {
-                        controller.selectedEndDate.value = pickedDate;
-                        controller.endDateController.value.text = pickedDate
-                            .toIso8601String()
-                            .substring(0, 10); // Update UI
-                      }
-                    },
-                  ),
+                    Expanded(
+                      child: TextField(
+                        controller: controller.endDateController.value,
+                        readOnly: true,
+                        decoration: const InputDecoration(
+                          labelText: 'Date',
+                          border: OutlineInputBorder(),
+                          suffixIcon: Icon(Icons.calendar_today),
+                        ),
+                        onTap: () async {
+                          DateTime? pickedDate = await showDatePicker(
+                            context: context,
+                            initialDate: DateTime.now(),
+                            firstDate: DateTime(2000),
+                            lastDate: DateTime(2101),
+                          );
+                          if (pickedDate != null) {
+                            controller.selectedEndDate.value = pickedDate;
+                            controller.endDateController.value.text = pickedDate
+                                .toIso8601String()
+                                .substring(0, 10); // Update UI
+                          }
+                        },
+                      ),
+                    ),
+                  ],
+                ),
+                const SizedBox(height: 20),
+                BuildButton(
+                  context: context,
+                  onPressed: () {
+                    final startDate = controller.selectedStartDate.value;
+                    final endDate = controller.selectedEndDate.value;
+                    if ((startDate != null && endDate == null) ||
+                        (startDate == null && endDate != null)) {
+                      Get.snackbar('Error', 'Data tanggal harus diisi semua');
+                      return;
+                    }
+                    controller.startDateController.value.clear();
+                    controller.endDateController.value.clear();
+                    controller.filterLeaves();
+                    Get.back();
+                  },
+                  title: 'Apply Filter',
                 ),
               ],
-            ),
-            const SizedBox(height: 20),
-            BuildButton(
-              context: context,
-              onPressed: () {
-                final startDate = controller.selectedStartDate.value;
-                final endDate = controller.selectedEndDate.value;
-                if ((startDate != null && endDate == null) ||
-                    (startDate == null && endDate != null)) {
-                  Get.snackbar('Error', 'Data tanggal harus diisi semua');
-                  return;
-                }
-                controller.startDateController.value.clear();
-                controller.endDateController.value.clear();
-                controller.filterLeaves();
-                Get.back();
-              },
-              title: 'Apply Filter',
-            ),
-          ],
-        ),
+            );
+          }
+        }),
       ),
     );
   }
