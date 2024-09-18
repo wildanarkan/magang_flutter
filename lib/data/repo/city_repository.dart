@@ -3,7 +3,7 @@ import 'dart:convert';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:http/http.dart' as http;
-import 'package:magang_flutter/common/urls.dart';
+import 'package:magang_flutter/common/app_endpoint.dart';
 
 
 class CityRepository extends GetxService {
@@ -12,7 +12,7 @@ class CityRepository extends GetxService {
   Future<List<Map<String, dynamic>>> fetchCity() async {
     final token = storage.read('accessToken');
     final response = await http.get(
-      Uri.parse(URLs.city),
+      Uri.parse(AppEndpoint.city),
       headers: {
         'Authorization': 'Bearer $token',
       },

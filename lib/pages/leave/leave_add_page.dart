@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:magang_flutter/controllers/leave_add_page_controller.dart';
+import 'package:magang_flutter/controllers/leave_add_controller.dart';
 import 'package:magang_flutter/widgets/appbars/build_appbar.dart';
 import 'package:magang_flutter/widgets/buttons/build_button.dart';
 import 'package:magang_flutter/widgets/dropdowns/build_dropdown.dart';
 import 'package:magang_flutter/widgets/fields/build_field_date.dart';
 import 'package:magang_flutter/widgets/fields/build_field_text.dart';
 
-class LeaveAddPage extends GetView<LeaveAddPageController> {
+class LeaveAddPage extends GetView<LeaveAddController> {
   const LeaveAddPage({super.key});
 
   @override

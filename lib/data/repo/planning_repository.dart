@@ -5,7 +5,7 @@ import 'dart:io';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:http/http.dart' as http;
-import 'package:magang_flutter/common/urls.dart';
+import 'package:magang_flutter/common/app_endpoint.dart';
 import 'package:magang_flutter/data/models/business_calculate_model.dart';
 import 'package:magang_flutter/data/models/business_percentage_model.dart';
 import 'package:magang_flutter/data/models/nominal_model.dart';
@@ -17,8 +17,8 @@ class PlanningRepository extends GetxService {
       int idBusinessTrip, String biayaType) async {
     final token = GetStorage().read('accessToken') ?? '';
     final url = biayaType == 'estimasi'
-        ? '${URLs.nominalPlanning}/$idBusinessTrip'
-        : '${URLs.nominalRealization}/$idBusinessTrip';
+        ? '${AppEndpoint.nominalPlanning}/$idBusinessTrip'
+        : '${AppEndpoint.nominalRealization}/$idBusinessTrip';
 
     try {
       final response = await http.get(
@@ -53,8 +53,8 @@ class PlanningRepository extends GetxService {
   Future<Map<String, dynamic>> fetchPlanningComparison(
       int idBusinessTrip) async {
     final token = GetStorage().read('accessToken') ?? '';
-    final urlPercentage = '${URLs.percentage}/$idBusinessTrip';
-    final urlCalculate = '${URLs.calculate}/$idBusinessTrip';
+    final urlPercentage = '${AppEndpoint.percentage}/$idBusinessTrip';
+    final urlCalculate = '${AppEndpoint.calculate}/$idBusinessTrip';
 
     try {
       final responses = await Future.wait([
@@ -103,7 +103,7 @@ class PlanningRepository extends GetxService {
   }) async {
     try {
       final token = GetStorage().read('accessToken');
-      final uri = Uri.parse('${URLs.putRealization}$idItem');
+      final uri = Uri.parse('${AppEndpoint.putRealization}$idItem');
 
       final request = http.MultipartRequest('POST', uri)
         ..headers['Authorization'] = 'Bearer $token';
@@ -137,7 +137,7 @@ class PlanningRepository extends GetxService {
     try {
       final token = GetStorage().read('accessToken');
       final response = await http.get(
-        Uri.parse(URLs.categoryExpenditure),
+        Uri.parse(AppEndpoint.categoryExpenditure),
         headers: {
           'Authorization': 'Bearer $token',
         },
@@ -161,7 +161,7 @@ class PlanningRepository extends GetxService {
     List<http.MultipartFile>? files,
   }) async {
     final token = storage.read('accessToken');
-    final uri = Uri.parse(URLs.addBusiness);
+    final uri = Uri.parse(AppEndpoint.addBusiness);
     final request = http.MultipartRequest('POST', uri)
       ..headers['Authorization'] = 'Bearer $token';
     request.fields['id_business_trip'] = idBusinessTrip;

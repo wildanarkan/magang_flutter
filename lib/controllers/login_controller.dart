@@ -4,7 +4,7 @@ import 'package:get_storage/get_storage.dart';
 import 'package:magang_flutter/common/app_routes.dart';
 import 'package:magang_flutter/data/repo/user_repository.dart';
 
-class LoginPageController extends GetxController {
+class LoginController extends GetxController {
   final edtEmail = TextEditingController().obs;
   final edtPassword = TextEditingController().obs;
   final storage = GetStorage();

@@ -1,9 +1,9 @@
 import 'package:get/get.dart';
-import 'package:magang_flutter/controllers/leave_add_page_controller.dart';
+import 'package:magang_flutter/controllers/leave_add_controller.dart';
 
 class LeaveAddBinding extends Bindings {
   @override
   void dependencies() {
-    Get.lazyPut<LeaveAddPageController>(() => LeaveAddPageController());
+    Get.lazyPut<LeaveAddController>(() => LeaveAddController());
   }
 }

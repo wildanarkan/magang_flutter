@@ -4,16 +4,16 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:magang_flutter/common/app_color.dart';
 import 'package:magang_flutter/common/app_status.dart';
-import 'package:magang_flutter/controllers/leave_history_detail_page_controller.dart';
-import 'package:magang_flutter/controllers/leave_personal_page_controller.dart';
-import 'package:magang_flutter/controllers/navigator_page_controllers.dart';
+import 'package:magang_flutter/controllers/leave_history_detail_controller.dart';
+import 'package:magang_flutter/controllers/leave_personal_controller.dart';
+import 'package:magang_flutter/controllers/navigator_controllers.dart';
 import 'package:magang_flutter/data/models/leave_model.dart';
 import 'package:magang_flutter/widgets/appbars/build_appbar.dart';
 import 'package:magang_flutter/widgets/buttons/build_button.dart';
 import 'package:magang_flutter/widgets/texts/build_text_column.dart';
 import 'package:magang_flutter/widgets/texts/build_text_link.dart';
 
-class LeaveHistoryDetailPage extends GetView<LeaveHistoryDetailPageController> {
+class LeaveHistoryDetailPage extends GetView<LeaveHistoryDetailController> {
   final Leaves leave;
 
   const LeaveHistoryDetailPage({super.key, required this.leave});
@@ -21,10 +21,10 @@ class LeaveHistoryDetailPage extends GetView<LeaveHistoryDetailPageController> {
   @override
   Widget build(BuildContext context) {
     final Leaves leave = Get.arguments['leave'];
-    final NavigatorPageControllers navigatorPageControllers =
-        Get.find<NavigatorPageControllers>();
-    final LeavePersonalPageController leavePersonalPageController =
-        Get.find<LeavePersonalPageController>();
+    final NavigatorControllers navigatorPageControllers =
+        Get.find<NavigatorControllers>();
+    final LeavePersonalController leavePersonalPageController =
+        Get.find<LeavePersonalController>();
     return Scaffold(
       appBar: const BuildAppbar(
         title: 'Leave Request',

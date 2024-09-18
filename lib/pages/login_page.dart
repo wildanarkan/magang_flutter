@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:magang_flutter/controllers/login_page_controller.dart';
+import 'package:magang_flutter/controllers/login_controller.dart';
 import 'package:magang_flutter/widgets/backgrounds/build_background_image.dart';
 import 'package:magang_flutter/widgets/buttons/build_button.dart';
 
-class LoginPage extends GetView<LoginPageController> {
+class LoginPage extends GetView<LoginController> {
   const LoginPage({super.key});
 
   @override
@@ -37,7 +37,7 @@ class LoginPage extends GetView<LoginPageController> {
     );
   }
 
-  Widget loginInput(BuildContext context, LoginPageController controller) {
+  Widget loginInput(BuildContext context, LoginController controller) {
     return Padding(
       padding: const EdgeInsets.all(30),
       child: Column(

@@ -3,7 +3,7 @@ import 'dart:convert';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:http/http.dart' as http;
-import 'package:magang_flutter/common/urls.dart';
+import 'package:magang_flutter/common/app_endpoint.dart';
 
 
 class CompanyRepository extends GetxService {
@@ -12,7 +12,7 @@ class CompanyRepository extends GetxService {
   Future<List<Map<String, dynamic>>> fetchCompany() async {
     final token = storage.read('accessToken');
     final response = await http.get(
-      Uri.parse(URLs.company),
+      Uri.parse(AppEndpoint.company),
       headers: {
         'Authorization': 'Bearer $token',
       },
@@ -28,7 +28,7 @@ class CompanyRepository extends GetxService {
   Future<List<dynamic>> fetchCompanyCity() async {
     final token = storage.read('accessToken');
     final response = await http.get(
-      Uri.parse(URLs.companyCity),
+      Uri.parse(AppEndpoint.companyCity),
       headers: {
         'Authorization': 'Bearer $token',
       },

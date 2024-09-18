@@ -1,9 +1,9 @@
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:magang_flutter/controllers/navigator_page_controllers.dart';
+import 'package:magang_flutter/controllers/navigator_controllers.dart';
 import 'package:magang_flutter/data/repo/user_repository.dart';
 
-class ProfilePageController extends GetxController {
+class ProfileController extends GetxController {
   var profilePhotoUrl = ''.obs;
   final ImagePicker _picker = ImagePicker();
   final UserRepository userRepository = Get.find<UserRepository>();
@@ -17,8 +17,8 @@ class ProfilePageController extends GetxController {
             await userRepository.updateProfilePhoto(image.path);
 
         if (newProfilePhotoUrl != null) {
-          final NavigatorPageControllers controller =
-              Get.find<NavigatorPageControllers>();
+          final NavigatorControllers controller =
+              Get.find<NavigatorControllers>();
           profilePhotoUrl.value = newProfilePhotoUrl;
           controller.fetchUserData();
           Get.snackbar('Success', 'Profile photo updated successfully');

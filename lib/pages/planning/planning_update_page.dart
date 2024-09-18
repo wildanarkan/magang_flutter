@@ -2,20 +2,20 @@ import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:magang_flutter/common/app_color.dart';
-import 'package:magang_flutter/common/urls.dart';
-import 'package:magang_flutter/controllers/edit_biaya_page_controller.dart';
+import 'package:magang_flutter/common/app_endpoint.dart';
+import 'package:magang_flutter/controllers/planning_update_controller.dart';
 import 'package:magang_flutter/widgets/appbars/build_appbar.dart';
 import 'package:magang_flutter/widgets/buttons/build_button.dart';
 import 'package:magang_flutter/widgets/dropdowns/build_dropdown.dart';
 import 'package:magang_flutter/widgets/fields/build_field_text.dart';
 
-class EditBiayaPage extends GetView<EditBiayaPageController> {
+class PlanningUpdatePage extends GetView<PlanningUpdateController> {
   final int idBusinessTrip;
   final int? idItem;
   final String biayaType;
   final bool isEditMode;
 
-  const EditBiayaPage({
+  const PlanningUpdatePage({
     super.key,
     required this.idBusinessTrip,
     this.idItem,
@@ -98,7 +98,7 @@ class EditBiayaPage extends GetView<EditBiayaPageController> {
                                   return ClipRRect(
                                     borderRadius: BorderRadius.circular(12),
                                     child: Image.network(
-                                      URLs.photoProofUrl +
+                                      AppEndpoint.photoProofUrl +
                                           controller.existingPhotoUrl.value,
                                       width: double.infinity,
                                       fit: BoxFit.cover,

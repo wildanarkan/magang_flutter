@@ -16,7 +16,7 @@ extension DateTimeComparison on DateTime {
   }
 }
 
-class BusinessTripController extends GetxController {
+class TripController extends GetxController {
   // Repository
   final CompanyRepository companyRepository = Get.find<CompanyRepository>();
   final BusinessTripRepository _businessTripRepository =

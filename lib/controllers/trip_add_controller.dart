@@ -8,7 +8,7 @@ import 'package:magang_flutter/data/repo/city_repository.dart';
 import 'package:magang_flutter/data/repo/company_repository.dart';
 import 'package:magang_flutter/data/repo/user_repository.dart';
 
-class AddBusiniessTripPageController extends GetxController {
+class TripAddController extends GetxController {
   // Repository
   final BusinessTripRepository _businessTripRepository =
       BusinessTripRepository();

@@ -2,13 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:magang_flutter/common/app_color.dart';
 import 'package:magang_flutter/common/app_routes.dart';
-import 'package:magang_flutter/controllers/nominal_page_controller.dart'; // Import the unified controller
+import 'package:magang_flutter/controllers/planning_controller.dart'; // Import the unified controller
 import 'package:magang_flutter/widgets/appbars/build_appbar.dart';
 import 'package:magang_flutter/widgets/build_total.dart';
 import 'package:magang_flutter/widgets/expansions/build_expansion_biaya.dart';
 
-class NominalPage extends GetView<NominalPageController> {
-  const NominalPage({super.key});
+class PlanningPage extends GetView<PlanningController> {
+  const PlanningPage({super.key});
   @override
   Widget build(BuildContext context) {
     return Scaffold(

@@ -1,7 +1,7 @@
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 
-class BalanceDetailPageController extends GetxController {
+class BalanceDetailController extends GetxController {
 
   final DateTime now = DateTime.now();
   final RxString formattedDate = ''.obs;

@@ -5,7 +5,7 @@ import 'dart:io';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:http/http.dart' as http;
-import 'package:magang_flutter/common/urls.dart';
+import 'package:magang_flutter/common/app_endpoint.dart';
 import 'package:magang_flutter/data/models/business_trip_model.dart';
 import 'package:open_file/open_file.dart';
 import 'package:path_provider/path_provider.dart';
@@ -17,7 +17,7 @@ class BusinessTripRepository extends GetxService {
     try {
       final token = storage.read('accessToken');
       final response = await http.get(
-        Uri.parse(URLs.tripToday),
+        Uri.parse(AppEndpoint.tripToday),
         headers: {
           'Authorization': 'Bearer $token',
         },
@@ -40,7 +40,7 @@ class BusinessTripRepository extends GetxService {
     try {
       final token = storage.read('accessToken');
       final response = await http.get(
-        Uri.parse(URLs.business),
+        Uri.parse(AppEndpoint.business),
         headers: {
           'Authorization': 'Bearer $token',
         },
@@ -68,7 +68,7 @@ class BusinessTripRepository extends GetxService {
   }) async {
     final token = storage.read('accessToken');
     final response = await http.post(
-      Uri.parse(URLs.postBusinessTrip),
+      Uri.parse(AppEndpoint.postBusinessTrip),
       headers: {
         'Content-Type': 'application/json',
         'Authorization': 'Bearer $token',
@@ -95,7 +95,7 @@ class BusinessTripRepository extends GetxService {
   }) async {
     final token = storage.read('accessToken');
     final response = await http.post(
-      Uri.parse(URLs.postTripdetail),
+      Uri.parse(AppEndpoint.postTripdetail),
       headers: {
         'Content-Type': 'application/json',
         'Authorization': 'Bearer $token',
@@ -118,7 +118,7 @@ class BusinessTripRepository extends GetxService {
   Future<void> updateExtendedDay(int businessTripId, int newExtendDay) async {
     try {
       final token = GetStorage().read('accessToken');
-      final url = Uri.parse('${URLs.updateExtendedDay}$businessTripId');
+      final url = Uri.parse('${AppEndpoint.updateExtendedDay}$businessTripId');
       print('URL: $url');
 
       final response = await http.put(
@@ -145,7 +145,7 @@ class BusinessTripRepository extends GetxService {
   Future<String> updatePhotoDocument(File file, int businessTripId) async {
     try {
       final token = GetStorage().read('accessToken');
-      final url = Uri.parse('${URLs.postPhotoDocument}$businessTripId');
+      final url = Uri.parse('${AppEndpoint.postPhotoDocument}$businessTripId');
       final request = http.MultipartRequest('POST', url);
 
       request.headers['Authorization'] = 'Bearer $token';

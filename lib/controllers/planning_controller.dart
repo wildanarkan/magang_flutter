@@ -2,7 +2,7 @@ import 'package:get/get.dart';
 import 'package:magang_flutter/data/models/nominal_model.dart';
 import 'package:magang_flutter/data/repo/planning_repository.dart';
 
-class NominalPageController extends GetxController {
+class PlanningController extends GetxController {
   final PlanningRepository _planningRepository =
       Get.find<PlanningRepository>();
 
@@ -13,7 +13,7 @@ class NominalPageController extends GetxController {
   RxMap<String, List<NominalModel>> groupedData =
       RxMap<String, List<NominalModel>>({});
 
-  NominalPageController({
+  PlanningController({
     required this.idBusinessTrip,
     required this.biayaType,
   });

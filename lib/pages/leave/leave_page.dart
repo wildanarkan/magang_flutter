@@ -4,11 +4,11 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:magang_flutter/common/app_color.dart';
 import 'package:magang_flutter/common/app_routes.dart';
-import 'package:magang_flutter/controllers/navigator_page_controllers.dart';
+import 'package:magang_flutter/controllers/navigator_controllers.dart';
 import 'package:magang_flutter/widgets/appbars/build_appbar.dart';
 import 'package:magang_flutter/widgets/buttons/build_button_icon.dart';
 
-class LeaveHistoryPage extends GetView<NavigatorPageControllers> {
+class LeaveHistoryPage extends GetView<NavigatorControllers> {
   const LeaveHistoryPage({super.key});
 
   @override

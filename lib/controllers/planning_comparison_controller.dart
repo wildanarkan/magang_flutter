@@ -3,7 +3,7 @@ import 'package:magang_flutter/data/models/business_calculate_model.dart';
 import 'package:magang_flutter/data/models/business_percentage_model.dart';
 import 'package:magang_flutter/data/repo/planning_repository.dart';
 
-class PerbandinganBiayaPageController extends GetxController {
+class PlanningComparisonController extends GetxController {
   final PlanningRepository _planningRepository = PlanningRepository();
 
   RxList<BusinessPercentageModel> percentages = <BusinessPercentageModel>[].obs;

@@ -83,9 +83,9 @@ class FABBottomAppBarState extends State<FABBottomAppBar> {
           onTap: () => onPressed!(index!),
           // onDoubleTap: () {
           //   if (index == 1) {
-          //     final businessTripController = Get.find<BusinessTripController>();
-          //     businessTripController.fetchBusinessTrips();
-          //     businessTripController.resetFilter();
+          //     final TripController = Get.find<TripController>();
+          //     TripController.fetchBusinessTrips();
+          //     TripController.resetFilter();
           //   }
           // },
           child: Column(

@@ -2,23 +2,23 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:magang_flutter/common/app_color.dart';
+import 'package:magang_flutter/common/app_endpoint.dart';
 import 'package:magang_flutter/common/app_routes.dart';
-import 'package:magang_flutter/common/urls.dart';
-import 'package:magang_flutter/controllers/home_page_controller.dart';
-import 'package:magang_flutter/controllers/login_page_controller.dart';
-import 'package:magang_flutter/controllers/navigator_page_controllers.dart';
-import 'package:magang_flutter/controllers/profile_page_controller.dart';
+import 'package:magang_flutter/controllers/home_controller.dart';
+import 'package:magang_flutter/controllers/login_controller.dart';
+import 'package:magang_flutter/controllers/navigator_controllers.dart';
+import 'package:magang_flutter/controllers/profile_controller.dart';
 import 'package:magang_flutter/widgets/buttons/build_button.dart';
 import 'package:magang_flutter/widgets/buttons/build_button_icon.dart';
 
-class ProfilePage extends GetView<NavigatorPageControllers> {
+class ProfilePage extends GetView<NavigatorControllers> {
   const ProfilePage({super.key});
 
   @override
   Widget build(BuildContext context) {
-    final LoginPageController loginController = Get.find<LoginPageController>();
-    final ProfilePageController profileController =
-        Get.find<ProfilePageController>();
+    final LoginController loginController = Get.find<LoginController>();
+    final ProfileController profileController =
+        Get.find<ProfileController>();
 
     return Scaffold(
       body: Stack(
@@ -160,7 +160,7 @@ class ProfilePage extends GetView<NavigatorPageControllers> {
                                 height: 80,
                                 width: 80,
                                 imageUrl:
-                                    '${URLs.photoUrl}${controller.profilePhotoUrl.value}',
+                                    '${AppEndpoint.photoUrl}${controller.profilePhotoUrl.value}',
                               ),
                             ),
                           ),

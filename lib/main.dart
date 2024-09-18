@@ -12,16 +12,16 @@ import 'package:magang_flutter/bindings/payroll_history_binding.dart';
 import 'package:magang_flutter/bindings/planning_binding.dart';
 import 'package:magang_flutter/bindings/planning_comparison_binding.dart';
 import 'package:magang_flutter/bindings/planning_edit_binding.dart';
-import 'package:magang_flutter/bindings/profile_edit_binding.dart';
+import 'package:magang_flutter/bindings/profile_update_binding.dart';
 import 'package:magang_flutter/bindings/trip_add_binding.dart';
 import 'package:magang_flutter/bindings/trip_detail_binding.dart';
 import 'package:magang_flutter/common/app_color.dart';
 import 'package:magang_flutter/common/app_routes.dart';
-import 'package:magang_flutter/controllers/login_page_controller.dart';
+import 'package:magang_flutter/controllers/login_controller.dart';
 import 'package:magang_flutter/data/models/business_trip_model.dart';
 import 'package:magang_flutter/data/repo/user_repository.dart';
-import 'package:magang_flutter/pages/business%20trip/add_businiess_trip_page.dart';
-import 'package:magang_flutter/pages/business%20trip/business_trip_detail_page.dart';
+import 'package:magang_flutter/pages/business%20trip/trip_add_page.dart';
+import 'package:magang_flutter/pages/business%20trip/trip_detail_page.dart';
 import 'package:magang_flutter/pages/contract/contract_history_page.dart';
 import 'package:magang_flutter/pages/leave/leave_add_page.dart';
 import 'package:magang_flutter/pages/leave/leave_history_detail_page.dart';
@@ -31,18 +31,18 @@ import 'package:magang_flutter/pages/login_page.dart';
 import 'package:magang_flutter/pages/navigator_page.dart';
 import 'package:magang_flutter/pages/payroll/payroll_detail_page.dart';
 import 'package:magang_flutter/pages/payroll/payroll_history_page.dart';
-import 'package:magang_flutter/pages/planning/edit_biaya_page.dart';
-import 'package:magang_flutter/pages/planning/nominal_page.dart';
-import 'package:magang_flutter/pages/planning/perbandingan_biaya_page.dart';
+import 'package:magang_flutter/pages/planning/planning_comparison_page..dart';
+import 'package:magang_flutter/pages/planning/planning_page.dart';
+import 'package:magang_flutter/pages/planning/planning_update_page.dart';
 import 'package:magang_flutter/pages/profile/change_password_page.dart';
-import 'package:magang_flutter/pages/profile/edit_profile_page.dart';
 import 'package:magang_flutter/pages/profile/profile_detail_page.dart';
+import 'package:magang_flutter/pages/profile/profile_update_page.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await GetStorage.init();
   Get.put(UserRepository());
-  Get.put<LoginPageController>(LoginPageController(), permanent: true);
+  Get.put<LoginController>(LoginController(), permanent: true);
   runApp(const MyApp());
 }
 
@@ -74,12 +74,12 @@ class MyApp extends StatelessWidget {
         // Business Trip
         GetPage(
           name: AppRoutes.tripAdd,
-          page: () => const AddBusiniessTripPage(),
+          page: () => const TripAddPage(),
           binding: TripAddBinding(),
         ),
         GetPage(
           name: AppRoutes.tripDetail,
-          page: () => BusinessTripDetailPage(
+          page: () => TripDetailPage(
             trip: Get.arguments['trip'] as BusinessTripModel,
             status: Get.arguments['status'] as String?,
           ),
@@ -89,18 +89,18 @@ class MyApp extends StatelessWidget {
         // Planning
         GetPage(
           name: AppRoutes.planning,
-          page: () => const NominalPage(),
+          page: () => const PlanningPage(),
           binding: PlanningBinding(),
         ),
         GetPage(
           name: AppRoutes.planningComparison,
-          page: () => PerbandinganBiayaPage(
+          page: () => PlanningComparisonPage(
               idBusinessTrip: Get.arguments['idBusinessTrip']),
           binding: PlanningComparisonBinding(),
         ),
         GetPage(
           name: AppRoutes.planningEdit,
-          page: () => EditBiayaPage(
+          page: () => PlanningUpdatePage(
             idBusinessTrip: Get.arguments['idBusinessTrip'],
             biayaType: Get.arguments['biayaType'],
             idItem: Get.arguments['idItem'],
@@ -146,8 +146,8 @@ class MyApp extends StatelessWidget {
         ),
         GetPage(
           name: AppRoutes.profileEdit,
-          page: () => const EditProfilePage(),
-          binding: ProfileEditBinding(),
+          page: () => const ProfileUpdatePage(),
+          binding: ProfileUpdateBinding(),
         ),
 
         // Payroll

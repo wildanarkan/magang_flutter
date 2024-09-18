@@ -16,7 +16,7 @@ extension DateTimeComparison on DateTime {
   }
 }
 
-class LeaveHistoryPageController extends GetxController {
+class LeaveHistoryController extends GetxController {
   // Repository
   final LeaveHistoryRepository _leaveHistoryRepository =
       Get.find<LeaveHistoryRepository>();

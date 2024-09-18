@@ -4,22 +4,22 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
-import 'package:magang_flutter/controllers/business_trip_controller.dart';
-import 'package:magang_flutter/controllers/home_page_controller.dart';
+import 'package:magang_flutter/controllers/home_controller.dart';
+import 'package:magang_flutter/controllers/trip_controller.dart';
 import 'package:magang_flutter/data/models/business_trip_model.dart';
 import 'package:magang_flutter/data/repo/business_trip_repository.dart';
 
-class BusinessTripDetailPageController extends GetxController {
+class TripDetailController extends GetxController {
   final BusinessTripModel trip;
 
-  BusinessTripDetailPageController({required this.trip});
+  TripDetailController({required this.trip});
   final storage = GetStorage();
 
   final BusinessTripRepository _businessTripRepository =
       BusinessTripRepository();
 
-  final BusinessTripController businessTripController =
-      Get.find<BusinessTripController>();
+  final TripController tripController =
+      Get.find<TripController>();
   final HomePageController homePageController = Get.find<HomePageController>();
 
   // var isCityEnabled = false.obs;
@@ -44,11 +44,11 @@ class BusinessTripDetailPageController extends GetxController {
   void onClose() async {
     if (isChangeExtend || isChangePhoto) {
       homePageController.fetchCurrentBusinessTrips();
-      await businessTripController.fetchBusinessTrips();
+      await tripController.fetchBusinessTrips();
       log('sudah refresh business trip');
 
       final updatedTrip =
-          businessTripController.getTripById(trip.idBusinessTrip!);
+          tripController.getTripById(trip.idBusinessTrip!);
       if (updatedTrip != null) {
         homePageController.refreshSavedTrips(updatedTrip);
       }

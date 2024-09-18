@@ -4,7 +4,7 @@ import 'dart:developer';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:http/http.dart' as http;
-import 'package:magang_flutter/common/urls.dart';
+import 'package:magang_flutter/common/app_endpoint.dart';
 import 'package:magang_flutter/data/models/leave_model.dart';
 
 class LeaveHistoryRepository extends GetxService {
@@ -14,7 +14,7 @@ class LeaveHistoryRepository extends GetxService {
     try {
       final token = storage.read('accessToken');
       final response = await http.get(
-        Uri.parse(URLs.leave),
+        Uri.parse(AppEndpoint.leave),
         headers: {
           'Authorization': 'Bearer $token',
         },
@@ -46,7 +46,7 @@ class LeaveHistoryRepository extends GetxService {
     try {
       final token = storage.read('accessToken');
       final response = await http.get(
-        Uri.parse('${URLs.leaveUser}$userId'),
+        Uri.parse('${AppEndpoint.leaveUser}$userId'),
         headers: {
           'Authorization': 'Bearer $token',
         },
@@ -76,7 +76,7 @@ class LeaveHistoryRepository extends GetxService {
     try {
       final token = storage.read('accessToken');
       final response = await http.get(
-        Uri.parse(URLs.leaveCategory),
+        Uri.parse(AppEndpoint.leaveCategory),
         headers: {
           'Authorization': 'Bearer $token',
         },
@@ -102,7 +102,7 @@ class LeaveHistoryRepository extends GetxService {
     try {
       final token = storage.read('accessToken');
       final response = await http.post(
-        Uri.parse(URLs.leaveStore),
+        Uri.parse(AppEndpoint.leaveStore),
         headers: {
           'Content-Type': 'application/json; charset=UTF-8',
           'Authorization': 'Bearer $token',
@@ -124,7 +124,7 @@ class LeaveHistoryRepository extends GetxService {
   Future<bool> updateLeaveStatus(int leaveId, String status) async {
     try {
       final token = storage.read('accessToken');
-      final url = Uri.parse('${URLs.leaveUpdate}$leaveId');
+      final url = Uri.parse('${AppEndpoint.leaveUpdate}$leaveId');
       
       final response = await http.put(
         url,

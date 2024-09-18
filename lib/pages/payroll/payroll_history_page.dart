@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:magang_flutter/common/app_routes.dart';
-import 'package:magang_flutter/controllers/payroll_history_page_controller.dart';
+import 'package:magang_flutter/controllers/payroll_history_controller.dart';
 import 'package:magang_flutter/widgets/appbars/build_appbar.dart';
 import 'package:magang_flutter/widgets/items/build_item_payroll_history.dart';
 import 'package:magang_flutter/widgets/nulls/build_null_icon_text.dart';
 
-class PayrollHistoryPage extends GetView<PayrollHistoryPageController> {
+class PayrollHistoryPage extends GetView<PayrollHistoryController> {
   const PayrollHistoryPage({super.key});
 
   @override

@@ -7,14 +7,14 @@ import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:http/http.dart' as http;
 import 'package:image_picker/image_picker.dart';
-import 'package:magang_flutter/common/urls.dart';
-import 'package:magang_flutter/controllers/nominal_page_controller.dart';
+import 'package:magang_flutter/common/app_endpoint.dart';
+import 'package:magang_flutter/controllers/planning_controller.dart';
 import 'package:magang_flutter/data/repo/planning_repository.dart';
 
-class EditBiayaPageController extends GetxController {
+class PlanningUpdateController extends GetxController {
   final PlanningRepository _planningRepository = PlanningRepository();
-  final NominalPageController nominalPageController =
-      Get.find<NominalPageController>();
+  final PlanningController nominalPageController =
+      Get.find<PlanningController>();
 
   final int idBusinessTrip;
   final int? idItem;
@@ -31,7 +31,7 @@ class EditBiayaPageController extends GetxController {
 
   List<dynamic> _apiData = [];
 
-  EditBiayaPageController({
+  PlanningUpdateController({
     required this.idBusinessTrip,
     this.idItem,
   });
@@ -53,7 +53,7 @@ class EditBiayaPageController extends GetxController {
     try {
       final token = GetStorage().read('accessToken');
       final response = await http.get(
-        Uri.parse('${URLs.getRealizationId}$idItem'),
+        Uri.parse('${AppEndpoint.getRealizationId}$idItem'),
         headers: {
           'Authorization': 'Bearer $token',
         },

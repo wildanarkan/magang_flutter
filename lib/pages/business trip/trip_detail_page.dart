@@ -5,11 +5,11 @@ import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:magang_flutter/common/app_color.dart';
+import 'package:magang_flutter/common/app_endpoint.dart';
 import 'package:magang_flutter/common/app_routes.dart';
 import 'package:magang_flutter/common/app_status.dart';
-import 'package:magang_flutter/common/urls.dart';
-import 'package:magang_flutter/controllers/business_trip_detail_page_controller.dart';
-import 'package:magang_flutter/controllers/home_page_controller.dart';
+import 'package:magang_flutter/controllers/home_controller.dart';
+import 'package:magang_flutter/controllers/trip_detail_controller.dart';
 import 'package:magang_flutter/data/models/business_trip_model.dart';
 import 'package:magang_flutter/widgets/appbars/build_appbar.dart';
 import 'package:magang_flutter/widgets/buttons/build_button.dart';
@@ -18,11 +18,11 @@ import 'package:magang_flutter/widgets/dialogs/build_dialog_error.dart';
 import 'package:magang_flutter/widgets/fields/build_field_text.dart';
 import 'package:magang_flutter/widgets/texts/build_text_icon.dart';
 
-class BusinessTripDetailPage extends GetView<BusinessTripDetailPageController> {
+class TripDetailPage extends GetView<TripDetailController> {
   final BusinessTripModel trip;
   final String? status;
 
-  const BusinessTripDetailPage({super.key, required this.trip, this.status});
+  const TripDetailPage({super.key, required this.trip, this.status});
 
   @override
   Widget build(BuildContext context) {
@@ -372,7 +372,7 @@ class BusinessTripDetailPage extends GetView<BusinessTripDetailPageController> {
                                         return;
                                       }
                                       final fullUrl =
-                                          '${URLs.photoDocumentUrl}${controller.photoDocument.value}';
+                                          '${AppEndpoint.photoDocumentUrl}${controller.photoDocument.value}';
                                       log(fullUrl);
                                       controller.downloadAndOpenFile(fullUrl,
                                           controller.photoDocument.value);

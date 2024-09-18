@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:magang_flutter/common/app_color.dart';
-import 'package:magang_flutter/controllers/navigator_page_controllers.dart';
+import 'package:magang_flutter/controllers/navigator_controllers.dart';
 import 'package:magang_flutter/widgets/fab_bottom_app_bar.dart';
 
-class NavigatorPage extends GetView<NavigatorPageControllers> {
+class NavigatorPage extends GetView<NavigatorControllers> {
   const NavigatorPage({super.key});
 
   @override
@@ -25,7 +25,7 @@ class NavigatorPage extends GetView<NavigatorPageControllers> {
     );
   }
 
-  Widget bottomNavigator(NavigatorPageControllers controller) {
+  Widget bottomNavigator(NavigatorControllers controller) {
     return Align(
       alignment: Alignment.bottomCenter,
       child: Container(

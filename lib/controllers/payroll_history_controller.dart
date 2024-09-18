@@ -2,7 +2,7 @@ import 'package:get/get.dart';
 import 'package:magang_flutter/data/models/payroll_model.dart';
 import 'package:magang_flutter/data/repo/user_repository.dart';
 
-class PayrollHistoryPageController extends GetxController {
+class PayrollHistoryController extends GetxController {
   // Repository
   final UserRepository _userRepository = UserRepository();
 

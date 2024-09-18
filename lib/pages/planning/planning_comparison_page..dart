@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:magang_flutter/common/app_color.dart';
-import 'package:magang_flutter/controllers/perbandingan_biaya_page_controller.dart';
+import 'package:magang_flutter/controllers/planning_comparison_controller.dart';
 import 'package:magang_flutter/data/models/business_percentage_model.dart';
 import 'package:magang_flutter/widgets/appbars/build_appbar.dart'; // Import BuildAppbar
 import 'package:magang_flutter/widgets/build_widget_between.dart'; // Import BuildWidgetBetween
 import 'package:magang_flutter/widgets/cards/build_card_biaya.dart';
 
-class PerbandinganBiayaPage extends GetView<PerbandinganBiayaPageController> {
+class PlanningComparisonPage extends GetView<PlanningComparisonController> {
   final int idBusinessTrip;
 
-  PerbandinganBiayaPage({super.key, required this.idBusinessTrip}) {
+  PlanningComparisonPage({super.key, required this.idBusinessTrip}) {
     controller.fetchComparisonData(idBusinessTrip);
   }
 

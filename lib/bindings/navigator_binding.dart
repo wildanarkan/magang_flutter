@@ -1,8 +1,8 @@
 import 'package:get/get.dart';
-import 'package:magang_flutter/controllers/business_trip_controller.dart';
-import 'package:magang_flutter/controllers/home_page_controller.dart';
-import 'package:magang_flutter/controllers/navigator_page_controllers.dart';
-import 'package:magang_flutter/controllers/profile_page_controller.dart';
+import 'package:magang_flutter/controllers/home_controller.dart';
+import 'package:magang_flutter/controllers/navigator_controllers.dart';
+import 'package:magang_flutter/controllers/profile_controller.dart';
+import 'package:magang_flutter/controllers/trip_controller.dart';
 import 'package:magang_flutter/data/repo/business_trip_repository.dart';
 import 'package:magang_flutter/data/repo/company_repository.dart';
 
@@ -14,9 +14,9 @@ class NavigatorBinding extends Bindings {
     Get.lazyPut<CompanyRepository>(() => CompanyRepository());
 
     // Inisialisasi Controller
-    Get.lazyPut<NavigatorPageControllers>(() => NavigatorPageControllers());
+    Get.lazyPut<NavigatorControllers>(() => NavigatorControllers());
     Get.lazyPut<HomePageController>(() => HomePageController());
-    Get.lazyPut<BusinessTripController>(() => BusinessTripController());
-    Get.lazyPut<ProfilePageController>(() => ProfilePageController());
+    Get.lazyPut<TripController>(() => TripController());
+    Get.lazyPut<ProfileController>(() => ProfileController());
   }
 }

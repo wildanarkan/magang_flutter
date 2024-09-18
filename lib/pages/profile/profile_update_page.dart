@@ -2,15 +2,15 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:magang_flutter/controllers/navigator_page_controllers.dart';
+import 'package:magang_flutter/controllers/navigator_controllers.dart';
 import 'package:magang_flutter/widgets/appbars/build_appbar.dart';
 import 'package:magang_flutter/widgets/buttons/build_button.dart';
 import 'package:magang_flutter/widgets/fields/build_field_text.dart';
 
-import '../../controllers/edit_profile_page_controller.dart';
+import '../../controllers/profile_update_controller.dart';
 
-class EditProfilePage extends GetView<EditProfilePageController> {
-  const EditProfilePage({super.key});
+class ProfileUpdatePage extends GetView<ProfileUpdateController> {
+  const ProfileUpdatePage({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -74,7 +74,7 @@ class EditProfilePage extends GetView<EditProfilePageController> {
                             final success = await controller.editProfile();
                             if (success) {
                               // Update data di NavigatorPageControllers
-                              Get.find<NavigatorPageControllers>()
+                              Get.find<NavigatorControllers>()
                                   .fetchUserData();
                               log('get back');
                               Get.back(); // Menggunakan Navigator.pop

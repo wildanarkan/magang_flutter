@@ -4,7 +4,7 @@ import 'dart:developer';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:http/http.dart' as http;
-import 'package:magang_flutter/common/urls.dart';
+import 'package:magang_flutter/common/app_endpoint.dart';
 import 'package:magang_flutter/data/models/login_model.dart';
 import 'package:magang_flutter/data/models/payroll_model.dart';
 
@@ -14,7 +14,7 @@ class UserRepository extends GetxService {
   Future<String?> login(String email, String password) async {
     try {
       final response = await http.post(
-        Uri.parse(URLs.login),
+        Uri.parse(AppEndpoint.login),
         headers: {'Content-Type': 'application/json'},
         body: jsonEncode({
           'email': email,
@@ -44,7 +44,7 @@ class UserRepository extends GetxService {
   Future<List<Map<String, dynamic>>> fetchAllUser() async {
     final token = storage.read('accessToken');
     final response = await http.get(
-      Uri.parse(URLs.allUser),
+      Uri.parse(AppEndpoint.allUser),
       headers: {
         'Authorization': 'Bearer $token',
       },
@@ -61,7 +61,7 @@ class UserRepository extends GetxService {
       double latitude, double longitude) async {
     final token = storage.read('accessToken');
     final response = await http.post(
-      Uri.parse(URLs.checkInActivity),
+      Uri.parse(AppEndpoint.checkInActivity),
       body: json.encode({
         'latitude': latitude,
         'longtitude': longitude,
@@ -85,7 +85,7 @@ class UserRepository extends GetxService {
   Future<List<Map<String, dynamic>>> fetchCheckinToday(String userId) async {
     final token = storage.read('accessToken');
     final response = await http.get(
-      Uri.parse('${URLs.checkInToday}$userId'),
+      Uri.parse('${AppEndpoint.checkInToday}$userId'),
       headers: {
         'Authorization': 'Bearer $token',
       },
@@ -100,7 +100,7 @@ class UserRepository extends GetxService {
 
   Future<String?> updateProfilePhoto(String imagePath) async {
     try {
-      final uri = Uri.parse(URLs.updatePhoto);
+      final uri = Uri.parse(AppEndpoint.updatePhoto);
       final request = http.MultipartRequest('POST', uri)
         ..headers['Authorization'] =
             'Bearer ${GetStorage().read('accessToken')}'
@@ -138,7 +138,7 @@ class UserRepository extends GetxService {
   }) async {
     final token = storage.read('accessToken');
     final response = await http.post(
-      Uri.parse(URLs.editprofile),
+      Uri.parse(AppEndpoint.editprofile),
       headers: <String, String>{
         'Content-Type': 'application/json; charset=UTF-8',
         'Authorization': 'Bearer $token',
@@ -166,7 +166,7 @@ class UserRepository extends GetxService {
   }) async {
     final token = storage.read('accessToken');
     final response = await http.post(
-      Uri.parse(URLs.changePassword),
+      Uri.parse(AppEndpoint.changePassword),
       headers: {
         'Content-Type': 'application/json',
         'Authorization': 'Bearer $token',
@@ -191,7 +191,7 @@ class UserRepository extends GetxService {
     try {
       final token = storage.read('accessToken');
       final response = await http.get(
-        Uri.parse(URLs.user),
+        Uri.parse(AppEndpoint.user),
         headers: {
           'Authorization': 'Bearer $token',
         },
@@ -208,7 +208,7 @@ class UserRepository extends GetxService {
   }
 
   Future<Map<String, dynamic>> fetchProfileData(int id) async {
-    final String url = '${URLs.profile}$id';
+    final String url = '${AppEndpoint.profile}$id';
 
     try {
       final token = storage.read('accessToken');
@@ -239,7 +239,7 @@ class UserRepository extends GetxService {
     try {
       final token = storage.read('accessToken');
       final response = await http.get(
-        Uri.parse('${URLs.payrolls}$userId'),
+        Uri.parse('${AppEndpoint.payrolls}$userId'),
         headers: {
           'Authorization': 'Bearer $token',
         },
@@ -262,7 +262,7 @@ class UserRepository extends GetxService {
 
   Future<Payrolls?> fetchPayrollDetail(String payrollId) async {
     final token = storage.read('accessToken');
-    final url = '${URLs.payroll}$payrollId';
+    final url = '${AppEndpoint.payroll}$payrollId';
 
     try {
       print('Fetching payroll detail from: $url'); // Log URL endpoint
@@ -298,7 +298,7 @@ class UserRepository extends GetxService {
     try {
       final token = storage.read('accessToken');
       final response = await http.get(
-        Uri.parse('${URLs.contract}$userId'),
+        Uri.parse('${AppEndpoint.contract}$userId'),
         headers: {
           'Authorization': 'Bearer $token',
         },

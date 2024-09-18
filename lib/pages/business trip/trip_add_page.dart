@@ -4,8 +4,8 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:magang_flutter/common/app_color.dart';
-import 'package:magang_flutter/controllers/add_businiess_trip_page_controller.dart';
-import 'package:magang_flutter/controllers/business_trip_controller.dart';
+import 'package:magang_flutter/controllers/trip_add_controller.dart';
+import 'package:magang_flutter/controllers/trip_controller.dart';
 import 'package:magang_flutter/widgets/appbars/build_appbar.dart';
 import 'package:magang_flutter/widgets/buttons/build_button.dart';
 import 'package:magang_flutter/widgets/dropdowns/build_dropdown.dart';
@@ -13,8 +13,8 @@ import 'package:magang_flutter/widgets/fields/build_field_date.dart';
 import 'package:magang_flutter/widgets/fields/build_field_text.dart';
 import 'package:magang_flutter/widgets/items/build_item_employee.dart';
 
-class AddBusiniessTripPage extends GetView<AddBusiniessTripPageController> {
-  const AddBusiniessTripPage({super.key});
+class TripAddPage extends GetView<TripAddController> {
+  const TripAddPage({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -192,9 +192,9 @@ class AddBusiniessTripPage extends GetView<AddBusiniessTripPageController> {
                     await controller.postTripDetail(businessTripId);
                   }
                   log('succes');
-                  final businessTripController =
-                      Get.find<BusinessTripController>();
-                  await businessTripController.fetchBusinessTrips();
+                  final tripController =
+                      Get.find<TripController>();
+                  await tripController.fetchBusinessTrips();
                   Get.back(closeOverlays: true);
                   Get.snackbar('Success', 'Success to create Business Trip');
                 } else {

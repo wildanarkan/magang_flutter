@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:magang_flutter/common/app_color.dart';
-import 'package:magang_flutter/controllers/balance_detail_page_controller.dart';
+import 'package:magang_flutter/controllers/balance_detail_controller.dart';
 import 'package:magang_flutter/pages/balance/balance_sheet_detail_page.dart';
 import 'package:magang_flutter/widgets/appbars/build_appbar.dart';
 import 'package:magang_flutter/widgets/build_widget_between.dart';
@@ -12,7 +12,7 @@ class BalanceDetailPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final controller = Get.put(BalanceDetailPageController());
+    final controller = Get.put(BalanceDetailController());
     
     return Scaffold(
       appBar: BuildAppbar(

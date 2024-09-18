@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:magang_flutter/controllers/contract_history_page_controller.dart';
+import 'package:magang_flutter/controllers/contract_history_controller.dart';
 import 'package:magang_flutter/widgets/appbars/build_appbar.dart';
 import 'package:magang_flutter/widgets/items/build_item_contract.dart';
 import 'package:magang_flutter/widgets/nulls/build_null_icon_text.dart';

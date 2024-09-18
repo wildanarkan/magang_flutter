@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:magang_flutter/data/repo/leave_history_repository.dart';
 
-class LeaveAddPageController extends GetxController {
+class LeaveAddController extends GetxController {
   final LeaveHistoryRepository _leaveHistoryRepository =
       LeaveHistoryRepository();
 

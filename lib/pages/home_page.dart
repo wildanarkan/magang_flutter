@@ -3,18 +3,18 @@ import 'package:floating_draggable_widget/floating_draggable_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:magang_flutter/common/app_color.dart';
+import 'package:magang_flutter/common/app_endpoint.dart';
 import 'package:magang_flutter/common/app_routes.dart';
-import 'package:magang_flutter/common/urls.dart';
-import 'package:magang_flutter/controllers/home_page_controller.dart';
+import 'package:magang_flutter/controllers/home_controller.dart';
 import 'package:magang_flutter/widgets/cards/build_card_info.dart';
 import 'package:magang_flutter/widgets/dialogs/build_dialog_confirmation.dart';
 import 'package:magang_flutter/widgets/expansions/build_expansion_tile.dart';
 import 'package:magang_flutter/widgets/nulls/build_null_icon_text.dart';
 import 'package:magang_flutter/widgets/texts/build_text_link.dart';
 
-import '../controllers/navigator_page_controllers.dart';
+import '../controllers/navigator_controllers.dart';
 
-class HomePage extends GetView<NavigatorPageControllers> {
+class HomePage extends GetView<NavigatorControllers> {
   final HomePageController homePageController = Get.find<HomePageController>();
   HomePage({super.key});
 
@@ -267,7 +267,7 @@ class HomePage extends GetView<NavigatorPageControllers> {
                       height: 40,
                       width: 40,
                       imageUrl:
-                          '${URLs.photoUrl}${controller.profilePhotoUrl.value}',
+                          '${AppEndpoint.photoUrl}${controller.profilePhotoUrl.value}',
                     ),
                   ),
                 ),

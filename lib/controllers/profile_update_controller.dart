@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:magang_flutter/controllers/navigator_page_controllers.dart';
+import 'package:magang_flutter/controllers/navigator_controllers.dart';
 import 'package:magang_flutter/data/repo/user_repository.dart';
 
-class EditProfilePageController extends GetxController {
+class ProfileUpdateController extends GetxController {
   // Controller
-  final navigatorController = Get.find<NavigatorPageControllers>();
+  final navigatorController = Get.find<NavigatorControllers>();
 
   // Repository
   final UserRepository _userRepository = Get.find<UserRepository>();

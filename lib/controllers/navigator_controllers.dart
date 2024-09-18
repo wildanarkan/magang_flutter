@@ -3,15 +3,15 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
-import 'package:magang_flutter/controllers/business_trip_controller.dart';
-import 'package:magang_flutter/controllers/home_page_controller.dart';
+import 'package:magang_flutter/controllers/home_controller.dart';
+import 'package:magang_flutter/controllers/trip_controller.dart';
 import 'package:magang_flutter/data/repo/user_repository.dart';
-import 'package:magang_flutter/pages/business%20trip/business_trip_page.dart';
+import 'package:magang_flutter/pages/business%20trip/trip_page.dart';
 import 'package:magang_flutter/pages/home_page.dart';
 import 'package:magang_flutter/pages/leave/leave_page.dart';
 import 'package:magang_flutter/pages/profile/profile_page.dart';
 
-class NavigatorPageControllers extends GetxController {
+class NavigatorControllers extends GetxController {
   RxInt selectedPage = 0.obs;
   RxString firstName = 'Null'.obs;
   RxString lastName = 'Null'.obs;
@@ -85,7 +85,7 @@ class NavigatorPageControllers extends GetxController {
 
   List<Widget> page = [
     HomePage(),
-    const BusinessTripPage(),
+    const TripPage(),
     const LeaveHistoryPage(),
     const ProfilePage(),
   ].obs;
@@ -93,9 +93,9 @@ class NavigatorPageControllers extends GetxController {
   void changePage(int index) {
     if (selectedPage.value == 1) {
       log(selectedPage.toString());
-      final businessTripController = Get.find<BusinessTripController>();
-      businessTripController.fetchBusinessTrips();
-      businessTripController.resetFilter();
+      final tripController = Get.find<TripController>();
+      tripController.fetchBusinessTrips();
+      tripController.resetFilter();
     }
     if (selectedPage.value == 0) {
       log(selectedPage.toString());

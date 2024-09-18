@@ -4,13 +4,13 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:magang_flutter/common/app_color.dart';
 import 'package:magang_flutter/common/app_routes.dart';
-import 'package:magang_flutter/controllers/leave_history_page_controller.dart';
+import 'package:magang_flutter/controllers/leave_history_controller.dart';
 import 'package:magang_flutter/widgets/appbars/build_appbar.dart';
 import 'package:magang_flutter/widgets/buttons/build_button.dart';
 import 'package:magang_flutter/widgets/cards/build_card_info.dart';
 import 'package:magang_flutter/widgets/nulls/build_null_icon_text.dart';
 
-class LeaveHistoryPage extends GetView<LeaveHistoryPageController> {
+class LeaveHistoryPage extends GetView<LeaveHistoryController> {
   const LeaveHistoryPage({super.key});
 
   @override
