@@ -1,4 +1,4 @@
-package com.example.magang_flutter
+package com.nextbasis.hris
 
 import io.flutter.embedding.android.FlutterActivity
 

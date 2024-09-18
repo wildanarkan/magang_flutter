@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:magang_flutter/common/app_color.dart';
-import 'package:magang_flutter/common/app_status.dart';
-import 'package:magang_flutter/widgets/build_widget_between.dart';
+import 'package:nextbasis_hris/common/app_color.dart';
+import 'package:nextbasis_hris/common/app_status.dart';
+import 'package:nextbasis_hris/widgets/build_widget_between.dart';
 
 class BuildCardBiaya extends StatelessWidget {
   const BuildCardBiaya({

@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:magang_flutter/common/app_color.dart';
-import 'package:magang_flutter/controllers/balance_detail_controller.dart';
-import 'package:magang_flutter/pages/balance/balance_sheet_detail_page.dart';
-import 'package:magang_flutter/widgets/appbars/build_appbar.dart';
-import 'package:magang_flutter/widgets/build_widget_between.dart';
-import 'package:magang_flutter/widgets/buttons/build_button_rounded.dart';
+import 'package:nextbasis_hris/common/app_color.dart';
+import 'package:nextbasis_hris/controllers/balance_detail_controller.dart';
+import 'package:nextbasis_hris/pages/balance/balance_sheet_detail_page.dart';
+import 'package:nextbasis_hris/widgets/appbars/build_appbar.dart';
+import 'package:nextbasis_hris/widgets/build_widget_between.dart';
+import 'package:nextbasis_hris/widgets/buttons/build_button_rounded.dart';
 
 class BalanceDetailPage extends StatelessWidget {
   const BalanceDetailPage({super.key});

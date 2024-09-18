@@ -1,5 +1,5 @@
 import 'package:get/get.dart';
-import 'package:magang_flutter/controllers/profile_update_controller.dart';
+import 'package:nextbasis_hris/controllers/profile_update_controller.dart';
 
 class ProfileUpdateBinding extends Bindings {
   @override

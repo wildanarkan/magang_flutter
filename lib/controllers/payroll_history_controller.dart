@@ -1,6 +1,6 @@
 import 'package:get/get.dart';
-import 'package:magang_flutter/data/models/payroll_model.dart';
-import 'package:magang_flutter/data/repo/user_repository.dart';
+import 'package:nextbasis_hris/data/models/payroll_model.dart';
+import 'package:nextbasis_hris/data/repo/user_repository.dart';
 
 class PayrollHistoryController extends GetxController {
   // Repository

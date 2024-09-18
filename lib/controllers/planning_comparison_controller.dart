@@ -1,7 +1,7 @@
 import 'package:get/get.dart';
-import 'package:magang_flutter/data/models/business_calculate_model.dart';
-import 'package:magang_flutter/data/models/business_percentage_model.dart';
-import 'package:magang_flutter/data/repo/planning_repository.dart';
+import 'package:nextbasis_hris/data/models/business_calculate_model.dart';
+import 'package:nextbasis_hris/data/models/business_percentage_model.dart';
+import 'package:nextbasis_hris/data/repo/planning_repository.dart';
 
 class PlanningComparisonController extends GetxController {
   final PlanningRepository _planningRepository = PlanningRepository();

@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:magang_flutter/pages/balance/balance_sheet_detail_page.dart';
-import 'package:magang_flutter/widgets/appbars/build_appbar.dart';
-import 'package:magang_flutter/widgets/buttons/build_button_rounded.dart';
-import 'package:magang_flutter/widgets/cards/build_card_wallet.dart';
+import 'package:nextbasis_hris/pages/balance/balance_sheet_detail_page.dart';
+import 'package:nextbasis_hris/widgets/appbars/build_appbar.dart';
+import 'package:nextbasis_hris/widgets/buttons/build_button_rounded.dart';
+import 'package:nextbasis_hris/widgets/cards/build_card_wallet.dart';
 
 class BalanceSheetPage extends StatelessWidget {
   const BalanceSheetPage({super.key});

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:magang_flutter/common/app_color.dart';
-import 'package:magang_flutter/widgets/buttons/build_button_rounded.dart';
+import 'package:nextbasis_hris/common/app_color.dart';
+import 'package:nextbasis_hris/widgets/buttons/build_button_rounded.dart';
 
 class BuildTotal extends StatelessWidget {
   const BuildTotal({

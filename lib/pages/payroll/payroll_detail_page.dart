@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:magang_flutter/common/app_color.dart';
-import 'package:magang_flutter/controllers/payroll_history_controller.dart';
-import 'package:magang_flutter/widgets/appbars/build_appbar.dart';
-import 'package:magang_flutter/widgets/items/build_item_payroll_detail.dart';
+import 'package:nextbasis_hris/common/app_color.dart';
+import 'package:nextbasis_hris/controllers/payroll_history_controller.dart';
+import 'package:nextbasis_hris/widgets/appbars/build_appbar.dart';
+import 'package:nextbasis_hris/widgets/items/build_item_payroll_detail.dart';
 
 class PayrollDetailPage extends GetView<PayrollHistoryController> {
   final String payrollId;

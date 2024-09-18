@@ -2,15 +2,15 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:floating_draggable_widget/floating_draggable_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:magang_flutter/common/app_color.dart';
-import 'package:magang_flutter/common/app_endpoint.dart';
-import 'package:magang_flutter/common/app_routes.dart';
-import 'package:magang_flutter/controllers/home_controller.dart';
-import 'package:magang_flutter/widgets/cards/build_card_info.dart';
-import 'package:magang_flutter/widgets/dialogs/build_dialog_confirmation.dart';
-import 'package:magang_flutter/widgets/expansions/build_expansion_tile.dart';
-import 'package:magang_flutter/widgets/nulls/build_null_icon_text.dart';
-import 'package:magang_flutter/widgets/texts/build_text_link.dart';
+import 'package:nextbasis_hris/common/app_color.dart';
+import 'package:nextbasis_hris/common/app_endpoint.dart';
+import 'package:nextbasis_hris/common/app_routes.dart';
+import 'package:nextbasis_hris/controllers/home_controller.dart';
+import 'package:nextbasis_hris/widgets/cards/build_card_info.dart';
+import 'package:nextbasis_hris/widgets/dialogs/build_dialog_confirmation.dart';
+import 'package:nextbasis_hris/widgets/expansions/build_expansion_tile.dart';
+import 'package:nextbasis_hris/widgets/nulls/build_null_icon_text.dart';
+import 'package:nextbasis_hris/widgets/texts/build_text_link.dart';
 
 import '../controllers/navigator_controllers.dart';
 

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:magang_flutter/common/app_color.dart';
-import 'package:magang_flutter/common/app_status.dart';
+import 'package:nextbasis_hris/common/app_color.dart';
+import 'package:nextbasis_hris/common/app_status.dart';
 
 class BuildCardInfo extends StatelessWidget {
   const BuildCardInfo({

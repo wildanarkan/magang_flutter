@@ -1,6 +1,6 @@
 import 'package:get/get.dart';
-import 'package:magang_flutter/data/models/nominal_model.dart';
-import 'package:magang_flutter/data/repo/planning_repository.dart';
+import 'package:nextbasis_hris/data/models/nominal_model.dart';
+import 'package:nextbasis_hris/data/repo/planning_repository.dart';
 
 class PlanningController extends GetxController {
   final PlanningRepository _planningRepository =

@@ -3,13 +3,13 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
-import 'package:magang_flutter/controllers/home_controller.dart';
-import 'package:magang_flutter/controllers/trip_controller.dart';
-import 'package:magang_flutter/data/repo/user_repository.dart';
-import 'package:magang_flutter/pages/business%20trip/trip_page.dart';
-import 'package:magang_flutter/pages/home_page.dart';
-import 'package:magang_flutter/pages/leave/leave_page.dart';
-import 'package:magang_flutter/pages/profile/profile_page.dart';
+import 'package:nextbasis_hris/controllers/home_controller.dart';
+import 'package:nextbasis_hris/controllers/trip_controller.dart';
+import 'package:nextbasis_hris/data/repo/user_repository.dart';
+import 'package:nextbasis_hris/pages/business%20trip/trip_page.dart';
+import 'package:nextbasis_hris/pages/home_page.dart';
+import 'package:nextbasis_hris/pages/leave/leave_page.dart';
+import 'package:nextbasis_hris/pages/profile/profile_page.dart';
 
 class NavigatorControllers extends GetxController {
   RxInt selectedPage = 0.obs;

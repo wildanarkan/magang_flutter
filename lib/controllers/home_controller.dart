@@ -4,9 +4,9 @@ import 'dart:developer';
 import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
-import 'package:magang_flutter/data/models/business_trip_model.dart';
-import 'package:magang_flutter/data/repo/business_trip_repository.dart';
-import 'package:magang_flutter/data/repo/user_repository.dart';
+import 'package:nextbasis_hris/data/models/business_trip_model.dart';
+import 'package:nextbasis_hris/data/repo/business_trip_repository.dart';
+import 'package:nextbasis_hris/data/repo/user_repository.dart';
 
 class HomePageController extends GetxController {
   var currentBusinessTrip = <BusinessTripModel>[].obs;

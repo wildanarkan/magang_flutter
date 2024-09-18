@@ -2,11 +2,11 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:magang_flutter/data/models/employee_name.dart';
-import 'package:magang_flutter/data/repo/business_trip_repository.dart';
-import 'package:magang_flutter/data/repo/city_repository.dart';
-import 'package:magang_flutter/data/repo/company_repository.dart';
-import 'package:magang_flutter/data/repo/user_repository.dart';
+import 'package:nextbasis_hris/data/models/employee_name.dart';
+import 'package:nextbasis_hris/data/repo/business_trip_repository.dart';
+import 'package:nextbasis_hris/data/repo/city_repository.dart';
+import 'package:nextbasis_hris/data/repo/company_repository.dart';
+import 'package:nextbasis_hris/data/repo/user_repository.dart';
 
 class TripAddController extends GetxController {
   // Repository

@@ -1,15 +1,15 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:magang_flutter/common/app_color.dart';
-import 'package:magang_flutter/common/app_endpoint.dart';
-import 'package:magang_flutter/common/app_routes.dart';
-import 'package:magang_flutter/controllers/home_controller.dart';
-import 'package:magang_flutter/controllers/login_controller.dart';
-import 'package:magang_flutter/controllers/navigator_controllers.dart';
-import 'package:magang_flutter/controllers/profile_controller.dart';
-import 'package:magang_flutter/widgets/buttons/build_button.dart';
-import 'package:magang_flutter/widgets/buttons/build_button_icon.dart';
+import 'package:nextbasis_hris/common/app_color.dart';
+import 'package:nextbasis_hris/common/app_endpoint.dart';
+import 'package:nextbasis_hris/common/app_routes.dart';
+import 'package:nextbasis_hris/controllers/home_controller.dart';
+import 'package:nextbasis_hris/controllers/login_controller.dart';
+import 'package:nextbasis_hris/controllers/navigator_controllers.dart';
+import 'package:nextbasis_hris/controllers/profile_controller.dart';
+import 'package:nextbasis_hris/widgets/buttons/build_button.dart';
+import 'package:nextbasis_hris/widgets/buttons/build_button_icon.dart';
 
 class ProfilePage extends GetView<NavigatorControllers> {
   const ProfilePage({super.key});

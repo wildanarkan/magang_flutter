@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:magang_flutter/controllers/contract_history_controller.dart';
-import 'package:magang_flutter/widgets/appbars/build_appbar.dart';
-import 'package:magang_flutter/widgets/items/build_item_contract.dart';
-import 'package:magang_flutter/widgets/nulls/build_null_icon_text.dart';
+import 'package:nextbasis_hris/controllers/contract_history_controller.dart';
+import 'package:nextbasis_hris/widgets/appbars/build_appbar.dart';
+import 'package:nextbasis_hris/widgets/items/build_item_contract.dart';
+import 'package:nextbasis_hris/widgets/nulls/build_null_icon_text.dart';
 
 class ContractHistoryPage extends GetView<ContractHistoryPageController> {
   const ContractHistoryPage({super.key});

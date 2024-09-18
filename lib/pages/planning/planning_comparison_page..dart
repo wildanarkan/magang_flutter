@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:magang_flutter/common/app_color.dart';
-import 'package:magang_flutter/controllers/planning_comparison_controller.dart';
-import 'package:magang_flutter/data/models/business_percentage_model.dart';
-import 'package:magang_flutter/widgets/appbars/build_appbar.dart'; // Import BuildAppbar
-import 'package:magang_flutter/widgets/build_widget_between.dart'; // Import BuildWidgetBetween
-import 'package:magang_flutter/widgets/cards/build_card_biaya.dart';
+import 'package:nextbasis_hris/common/app_color.dart';
+import 'package:nextbasis_hris/controllers/planning_comparison_controller.dart';
+import 'package:nextbasis_hris/data/models/business_percentage_model.dart';
+import 'package:nextbasis_hris/widgets/appbars/build_appbar.dart'; // Import BuildAppbar
+import 'package:nextbasis_hris/widgets/build_widget_between.dart'; // Import BuildWidgetBetween
+import 'package:nextbasis_hris/widgets/cards/build_card_biaya.dart';
 
 class PlanningComparisonPage extends GetView<PlanningComparisonController> {
   final int idBusinessTrip;

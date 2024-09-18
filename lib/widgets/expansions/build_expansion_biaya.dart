@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:magang_flutter/widgets/expansions/build_expansion_tile.dart';
+import 'package:nextbasis_hris/widgets/expansions/build_expansion_tile.dart';
 
 class BuildExpansionBiaya extends StatelessWidget {
   const BuildExpansionBiaya({

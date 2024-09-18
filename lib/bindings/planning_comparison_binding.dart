@@ -1,5 +1,5 @@
 import 'package:get/get.dart';
-import 'package:magang_flutter/controllers/planning_comparison_controller.dart';
+import 'package:nextbasis_hris/controllers/planning_comparison_controller.dart';
 
 class PlanningComparisonBinding extends Bindings {
   @override

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:magang_flutter/common/app_color.dart';
+import 'package:nextbasis_hris/common/app_color.dart';
 
 class BuildTextIcon extends StatelessWidget {
   const BuildTextIcon({

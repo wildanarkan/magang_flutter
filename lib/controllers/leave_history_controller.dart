@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:magang_flutter/data/models/leave_model.dart';
-import 'package:magang_flutter/data/repo/leave_history_repository.dart';
-import 'package:magang_flutter/data/repo/user_repository.dart';
+import 'package:nextbasis_hris/data/models/leave_model.dart';
+import 'package:nextbasis_hris/data/repo/leave_history_repository.dart';
+import 'package:nextbasis_hris/data/repo/user_repository.dart';
 
 extension DateTimeComparison on DateTime {
   bool isAtLeast(DateTime date) {

@@ -4,10 +4,10 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
-import 'package:magang_flutter/controllers/home_controller.dart';
-import 'package:magang_flutter/controllers/trip_controller.dart';
-import 'package:magang_flutter/data/models/business_trip_model.dart';
-import 'package:magang_flutter/data/repo/business_trip_repository.dart';
+import 'package:nextbasis_hris/controllers/home_controller.dart';
+import 'package:nextbasis_hris/controllers/trip_controller.dart';
+import 'package:nextbasis_hris/data/models/business_trip_model.dart';
+import 'package:nextbasis_hris/data/repo/business_trip_repository.dart';
 
 class TripDetailController extends GetxController {
   final BusinessTripModel trip;

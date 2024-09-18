@@ -1,4 +1,4 @@
-name: magang_flutter
+name: nextbasis_hris
 description: "A new Flutter project."
 # The following line prevents the package from being accidentally published to
 # pub.dev using `flutter pub publish`. This is preferred for private packages.
@@ -46,9 +46,15 @@ dependencies:
   url_launcher: ^6.3.0
 
 dev_dependencies:
+  flutter_launcher_icons: ^0.13.1
   flutter_lints: ^3.0.0
   flutter_test:
     sdk: flutter
+
+flutter_icons:
+  android: true
+  ios: true
+  image_path: "assets/icon.png"
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec

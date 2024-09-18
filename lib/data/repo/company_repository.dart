@@ -3,7 +3,7 @@ import 'dart:convert';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:http/http.dart' as http;
-import 'package:magang_flutter/common/app_endpoint.dart';
+import 'package:nextbasis_hris/common/app_endpoint.dart';
 
 
 class CompanyRepository extends GetxService {

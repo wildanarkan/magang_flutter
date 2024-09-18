@@ -2,16 +2,16 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:magang_flutter/common/app_color.dart';
-import 'package:magang_flutter/common/app_status.dart';
-import 'package:magang_flutter/controllers/leave_history_detail_controller.dart';
-import 'package:magang_flutter/controllers/leave_personal_controller.dart';
-import 'package:magang_flutter/controllers/navigator_controllers.dart';
-import 'package:magang_flutter/data/models/leave_model.dart';
-import 'package:magang_flutter/widgets/appbars/build_appbar.dart';
-import 'package:magang_flutter/widgets/buttons/build_button.dart';
-import 'package:magang_flutter/widgets/texts/build_text_column.dart';
-import 'package:magang_flutter/widgets/texts/build_text_link.dart';
+import 'package:nextbasis_hris/common/app_color.dart';
+import 'package:nextbasis_hris/common/app_status.dart';
+import 'package:nextbasis_hris/controllers/leave_history_detail_controller.dart';
+import 'package:nextbasis_hris/controllers/leave_personal_controller.dart';
+import 'package:nextbasis_hris/controllers/navigator_controllers.dart';
+import 'package:nextbasis_hris/data/models/leave_model.dart';
+import 'package:nextbasis_hris/widgets/appbars/build_appbar.dart';
+import 'package:nextbasis_hris/widgets/buttons/build_button.dart';
+import 'package:nextbasis_hris/widgets/texts/build_text_column.dart';
+import 'package:nextbasis_hris/widgets/texts/build_text_link.dart';
 
 class LeaveHistoryDetailPage extends GetView<LeaveHistoryDetailController> {
   final Leaves leave;

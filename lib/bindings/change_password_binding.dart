@@ -1,5 +1,5 @@
 import 'package:get/get.dart';
-import 'package:magang_flutter/controllers/change_password_page_controller.dart';
+import 'package:nextbasis_hris/controllers/change_password_page_controller.dart';
 
 class ChangePasswordBinding extends Bindings {
   @override

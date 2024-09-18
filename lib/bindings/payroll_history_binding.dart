@@ -1,5 +1,5 @@
 import 'package:get/get.dart';
-import 'package:magang_flutter/controllers/payroll_history_controller.dart';
+import 'package:nextbasis_hris/controllers/payroll_history_controller.dart';
 
 class PayrollHistoryBinding extends Bindings {
   @override

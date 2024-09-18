@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:magang_flutter/controllers/navigator_controllers.dart';
-import 'package:magang_flutter/data/repo/user_repository.dart';
+import 'package:nextbasis_hris/controllers/navigator_controllers.dart';
+import 'package:nextbasis_hris/data/repo/user_repository.dart';
 
 class ProfileUpdateController extends GetxController {
   // Controller

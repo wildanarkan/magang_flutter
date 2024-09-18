@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:magang_flutter/common/app_color.dart';
-import 'package:magang_flutter/common/app_routes.dart';
-import 'package:magang_flutter/controllers/planning_controller.dart'; // Import the unified controller
-import 'package:magang_flutter/widgets/appbars/build_appbar.dart';
-import 'package:magang_flutter/widgets/build_total.dart';
-import 'package:magang_flutter/widgets/expansions/build_expansion_biaya.dart';
+import 'package:nextbasis_hris/common/app_color.dart';
+import 'package:nextbasis_hris/common/app_routes.dart';
+import 'package:nextbasis_hris/controllers/planning_controller.dart'; // Import the unified controller
+import 'package:nextbasis_hris/widgets/appbars/build_appbar.dart';
+import 'package:nextbasis_hris/widgets/build_total.dart';
+import 'package:nextbasis_hris/widgets/expansions/build_expansion_biaya.dart';
 
 class PlanningPage extends GetView<PlanningController> {
   const PlanningPage({super.key});

@@ -2,10 +2,10 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:magang_flutter/controllers/navigator_controllers.dart';
-import 'package:magang_flutter/widgets/appbars/build_appbar.dart';
-import 'package:magang_flutter/widgets/buttons/build_button.dart';
-import 'package:magang_flutter/widgets/fields/build_field_text.dart';
+import 'package:nextbasis_hris/controllers/navigator_controllers.dart';
+import 'package:nextbasis_hris/widgets/appbars/build_appbar.dart';
+import 'package:nextbasis_hris/widgets/buttons/build_button.dart';
+import 'package:nextbasis_hris/widgets/fields/build_field_text.dart';
 
 import '../../controllers/profile_update_controller.dart';
 

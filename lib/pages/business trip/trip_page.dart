@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:magang_flutter/common/app_color.dart';
-import 'package:magang_flutter/common/app_routes.dart';
-import 'package:magang_flutter/controllers/trip_controller.dart';
-import 'package:magang_flutter/widgets/appbars/build_appbar.dart';
-import 'package:magang_flutter/widgets/buttons/build_button.dart';
-import 'package:magang_flutter/widgets/buttons/build_button_rounded.dart';
-import 'package:magang_flutter/widgets/cards/build_card_info.dart';
-import 'package:magang_flutter/widgets/nulls/build_null_icon_text.dart';
+import 'package:nextbasis_hris/common/app_color.dart';
+import 'package:nextbasis_hris/common/app_routes.dart';
+import 'package:nextbasis_hris/controllers/trip_controller.dart';
+import 'package:nextbasis_hris/widgets/appbars/build_appbar.dart';
+import 'package:nextbasis_hris/widgets/buttons/build_button.dart';
+import 'package:nextbasis_hris/widgets/buttons/build_button_rounded.dart';
+import 'package:nextbasis_hris/widgets/cards/build_card_info.dart';
+import 'package:nextbasis_hris/widgets/nulls/build_null_icon_text.dart';
 
 class TripPage extends GetView<TripController> {
   const TripPage({super.key});

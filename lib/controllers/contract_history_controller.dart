@@ -1,5 +1,5 @@
 import 'package:get/get.dart';
-import 'package:magang_flutter/data/repo/user_repository.dart';
+import 'package:nextbasis_hris/data/repo/user_repository.dart';
 
 class ContractHistoryPageController extends GetxController {
   // Repository

@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:magang_flutter/common/app_color.dart';
-import 'package:magang_flutter/common/app_routes.dart';
-import 'package:magang_flutter/controllers/navigator_controllers.dart';
-import 'package:magang_flutter/widgets/appbars/build_appbar.dart';
-import 'package:magang_flutter/widgets/buttons/build_button.dart';
+import 'package:nextbasis_hris/common/app_color.dart';
+import 'package:nextbasis_hris/common/app_routes.dart';
+import 'package:nextbasis_hris/controllers/navigator_controllers.dart';
+import 'package:nextbasis_hris/widgets/appbars/build_appbar.dart';
+import 'package:nextbasis_hris/widgets/buttons/build_button.dart';
 
 class ProfileDetailPage extends GetView<NavigatorControllers> {
   const ProfileDetailPage({super.key});

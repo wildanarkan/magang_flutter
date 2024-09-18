@@ -90,12 +90,12 @@ BEGIN
         BLOCK "040904e4"
         BEGIN
             VALUE "CompanyName", "com.example" "\0"
-            VALUE "FileDescription", "magang_flutter" "\0"
+            VALUE "FileDescription", "nextbasis_hris" "\0"
             VALUE "FileVersion", VERSION_AS_STRING "\0"
-            VALUE "InternalName", "magang_flutter" "\0"
+            VALUE "InternalName", "nextbasis_hris" "\0"
             VALUE "LegalCopyright", "Copyright (C) 2024 com.example. All rights reserved." "\0"
-            VALUE "OriginalFilename", "magang_flutter.exe" "\0"
-            VALUE "ProductName", "magang_flutter" "\0"
+            VALUE "OriginalFilename", "nextbasis_hris.exe" "\0"
+            VALUE "ProductName", "nextbasis_hris" "\0"
             VALUE "ProductVersion", VERSION_AS_STRING "\0"
         END
     END

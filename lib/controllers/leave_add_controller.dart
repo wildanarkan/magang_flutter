@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:magang_flutter/data/repo/leave_history_repository.dart';
+import 'package:nextbasis_hris/data/repo/leave_history_repository.dart';
 
 class LeaveAddController extends GetxController {
   final LeaveHistoryRepository _leaveHistoryRepository =

@@ -7,9 +7,9 @@ import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:http/http.dart' as http;
 import 'package:image_picker/image_picker.dart';
-import 'package:magang_flutter/common/app_endpoint.dart';
-import 'package:magang_flutter/controllers/planning_controller.dart';
-import 'package:magang_flutter/data/repo/planning_repository.dart';
+import 'package:nextbasis_hris/common/app_endpoint.dart';
+import 'package:nextbasis_hris/controllers/planning_controller.dart';
+import 'package:nextbasis_hris/data/repo/planning_repository.dart';
 
 class PlanningUpdateController extends GetxController {
   final PlanningRepository _planningRepository = PlanningRepository();

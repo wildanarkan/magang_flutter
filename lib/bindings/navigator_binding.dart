@@ -1,10 +1,10 @@
 import 'package:get/get.dart';
-import 'package:magang_flutter/controllers/home_controller.dart';
-import 'package:magang_flutter/controllers/navigator_controllers.dart';
-import 'package:magang_flutter/controllers/profile_controller.dart';
-import 'package:magang_flutter/controllers/trip_controller.dart';
-import 'package:magang_flutter/data/repo/business_trip_repository.dart';
-import 'package:magang_flutter/data/repo/company_repository.dart';
+import 'package:nextbasis_hris/controllers/home_controller.dart';
+import 'package:nextbasis_hris/controllers/navigator_controllers.dart';
+import 'package:nextbasis_hris/controllers/profile_controller.dart';
+import 'package:nextbasis_hris/controllers/trip_controller.dart';
+import 'package:nextbasis_hris/data/repo/business_trip_repository.dart';
+import 'package:nextbasis_hris/data/repo/company_repository.dart';
 
 class NavigatorBinding extends Bindings {
   @override

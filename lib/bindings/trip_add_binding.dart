@@ -1,5 +1,5 @@
 import 'package:get/get.dart';
-import 'package:magang_flutter/controllers/trip_add_controller.dart';
+import 'package:nextbasis_hris/controllers/trip_add_controller.dart';
 
 class TripAddBinding extends Bindings {
   @override

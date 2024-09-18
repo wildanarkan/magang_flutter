@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:magang_flutter/controllers/change_password_page_controller.dart';
-import 'package:magang_flutter/widgets/appbars/build_appbar.dart';
-import 'package:magang_flutter/widgets/buttons/build_button.dart';
-import 'package:magang_flutter/widgets/fields/build_field_text.dart';
+import 'package:nextbasis_hris/controllers/change_password_page_controller.dart';
+import 'package:nextbasis_hris/widgets/appbars/build_appbar.dart';
+import 'package:nextbasis_hris/widgets/buttons/build_button.dart';
+import 'package:nextbasis_hris/widgets/fields/build_field_text.dart';
 
 class ChangePasswordPage extends GetView<ChangePasswordPageController> {
   const ChangePasswordPage({super.key});

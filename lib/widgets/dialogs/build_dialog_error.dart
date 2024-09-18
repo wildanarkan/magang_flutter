@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:magang_flutter/common/app_color.dart';
-import 'package:magang_flutter/widgets/buttons/build_button.dart';
+import 'package:nextbasis_hris/common/app_color.dart';
+import 'package:nextbasis_hris/widgets/buttons/build_button.dart';
 
 class BuildDialogError extends StatelessWidget {
   final String title;

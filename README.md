@@ -1,4 +1,4 @@
-# magang_flutter
+# nextbasis_hris
 
 A new Flutter project.
 

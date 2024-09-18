@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:magang_flutter/controllers/login_controller.dart';
-import 'package:magang_flutter/widgets/backgrounds/build_background_image.dart';
-import 'package:magang_flutter/widgets/buttons/build_button.dart';
+import 'package:nextbasis_hris/controllers/login_controller.dart';
+import 'package:nextbasis_hris/widgets/backgrounds/build_background_image.dart';
+import 'package:nextbasis_hris/widgets/buttons/build_button.dart';
 
 class LoginPage extends GetView<LoginController> {
   const LoginPage({super.key});
