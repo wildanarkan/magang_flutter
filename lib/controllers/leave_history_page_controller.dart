@@ -71,11 +71,10 @@ class LeaveHistoryPageController extends GetxController {
       }
 
       if (Get.arguments != null && Get.arguments['pendingPage'] == true) {
-        // Filter data yang hanya berstatus Pending
         filteredLeaveHistory.value =
             leaveHistory.where((leave) => leave.status == 'Pending').toList();
       } else {
-        filterLeaves(); // Filter sesuai status dan data lainnya
+        filterLeaves();
       }
 
       noData.value = filteredLeaveHistory.isEmpty;
@@ -132,14 +131,6 @@ class LeaveHistoryPageController extends GetxController {
     } catch (e) {
       Get.snackbar('Error', 'Failed to load user items');
     }
-  }
-
-  void resetDropdown() {
-    fetchUserItems(); // Update the user items
-  }
-
-  Leaves? getTripById(int id) {
-    return leaveHistory.firstWhereOrNull((leave) => leave.id == id);
   }
 
   void resetFilter() {

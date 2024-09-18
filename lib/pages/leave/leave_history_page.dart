@@ -15,12 +15,10 @@ class LeaveHistoryPage extends GetView<LeaveHistoryPageController> {
 
   @override
   Widget build(BuildContext context) {
-    // Periksa apakah ada nip yang dikembalikan dari halaman sebelumnya
     final nip = Get.arguments?['nip'] ?? Get.arguments;
     log('ini adalah nip$nip');
 
     if (nip == Get.arguments['nip']) {
-      // Filter data berdasarkan nip
       controller.filterByNip(nip);
     }
 
@@ -126,7 +124,6 @@ class LeaveHistoryPage extends GetView<LeaveHistoryPageController> {
                     }).toList(),
                     onChanged: (value) {
                       controller.selectedUser.value = value!;
-                      controller.filterLeaves();
                     },
                   ),
                 if (!controller.isOnUserPage) const SizedBox(height: 20),
@@ -191,9 +188,8 @@ class LeaveHistoryPage extends GetView<LeaveHistoryPageController> {
                           );
                           if (pickedDate != null) {
                             controller.selectedEndDate.value = pickedDate;
-                            controller.endDateController.value.text = pickedDate
-                                .toIso8601String()
-                                .substring(0, 10); // Update UI
+                            controller.endDateController.value.text =
+                                pickedDate.toIso8601String().substring(0, 10);
                           }
                         },
                       ),

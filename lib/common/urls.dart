@@ -1,7 +1,7 @@
 class URLs {
-  // static const baseUrl = 'http://192.168.1.104:8000/';
+  static const baseUrl = 'http://192.168.1.104:8000/';
   // static const baseUrl = 'http://192.168.1.33:8000/';
-  static const baseUrl = 'http://192.168.43.191:8000/';
+  // static const baseUrl = 'http://192.168.43.191:8000/';
   static const baseAppUrl = '${baseUrl}api/app/';
   static const photoUrl = '${baseUrl}storage/profile_photos/';
   static const photoProofUrl = '${baseUrl}storage/photo_proofs/';

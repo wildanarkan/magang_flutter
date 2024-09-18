@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:magang_flutter/common/app_color.dart';
 import 'package:magang_flutter/controllers/leave_add_page_controller.dart';
 import 'package:magang_flutter/widgets/appbars/build_appbar.dart';
 import 'package:magang_flutter/widgets/buttons/build_button.dart';
@@ -35,17 +34,9 @@ class LeaveAddPage extends GetView<LeaveAddPageController> {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text(
-                          'Leave Category',
-                          style: TextStyle(
-                            fontWeight: FontWeight.w400,
-                            fontSize: 14,
-                            color: AppColor.textBody,
-                          ),
-                        ),
                         BuildDropdown(
                           hint: 'Select',
-                          title: '',
+                          title: 'Leave Category',
                           selectedItem: controller.selectedCategory.value,
                           item: controller.leaveCategoryItem,
                           onChanged: (newValue) {
@@ -53,24 +44,26 @@ class LeaveAddPage extends GetView<LeaveAddPageController> {
                             controller.updateSelectedLimit(newValue);
                           },
                         ),
-                        Obx(() => Row(
-                              children: [
-                                const Text(
-                                  'Limit:',
-                                  style: TextStyle(
-                                    fontSize: 14,
-                                    fontWeight: FontWeight.w400,
-                                  ),
+                        Row(
+                          children: [
+                            const Text(
+                              'Limit:',
+                              style: TextStyle(
+                                fontSize: 14,
+                                fontWeight: FontWeight.w400,
+                              ),
+                            ),
+                            Obx(
+                              () => Text(
+                                ' ${controller.selectedLimit.value}',
+                                style: const TextStyle(
+                                  fontSize: 14,
+                                  fontWeight: FontWeight.bold,
                                 ),
-                                Text(
-                                  ' ${controller.selectedLimit.value}',
-                                  style: const TextStyle(
-                                    fontSize: 14,
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                                ),
-                              ],
-                            )),
+                              ),
+                            ),
+                          ],
+                        ),
                         const SizedBox(height: 10),
                         BuildFieldText(
                           controller: controller.reasonForLeaveController.value,

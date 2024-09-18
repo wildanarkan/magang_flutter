@@ -68,12 +68,6 @@ class LeavePersonalPageController extends GetxController {
     final startDate = selectedStartDate.value;
     final endDate = selectedEndDate.value;
 
-    if ((startDate != null && endDate == null) ||
-        (startDate == null && endDate != null)) {
-      Get.snackbar('Error', 'Data harus diisi semua');
-      return;
-    }
-
     filteredLeaveHistory.value = leaveHistory.where((leave) {
       final matchesStatus = selectedStatus.value == null ||
           selectedStatus.value == 'All' ||
@@ -91,10 +85,6 @@ class LeavePersonalPageController extends GetxController {
     }).toList();
 
     noData.value = filteredLeaveHistory.isEmpty;
-  }
-
-  Leaves? getTripById(int id) {
-    return leaveHistory.firstWhereOrNull((leave) => leave.id == id);
   }
 
   void resetFilter() {

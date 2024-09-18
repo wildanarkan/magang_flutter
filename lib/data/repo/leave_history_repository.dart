@@ -91,4 +91,55 @@ class LeaveHistoryRepository extends GetxService {
       return null;
     }
   }
+
+  Future<bool> postLeave({
+    required String selectedCategory,
+    required String reasonForLeave,
+    required String startDate,
+    required String endDate,
+    required String apiData,
+  }) async {
+    try {
+      final token = storage.read('accessToken');
+      final response = await http.post(
+        Uri.parse(URLs.leaveStore),
+        headers: {
+          'Content-Type': 'application/json; charset=UTF-8',
+          'Authorization': 'Bearer $token',
+        },
+        body: jsonEncode({
+          'id_leave_category': apiData,
+          'reason_for_leave': reasonForLeave,
+          'start_date': startDate,
+          'end_date': endDate,
+        }),
+      );
+
+      return response.statusCode == 201;
+    } catch (e) {
+      return false;
+    }
+  }
+
+  Future<bool> updateLeaveStatus(int leaveId, String status) async {
+    try {
+      final token = storage.read('accessToken');
+      final url = Uri.parse('${URLs.leaveUpdate}$leaveId');
+      
+      final response = await http.put(
+        url,
+        headers: {
+          'Content-Type': 'application/json; charset=UTF-8',
+          'Authorization': 'Bearer $token',
+        },
+        body: jsonEncode({
+          'status': status,
+        }),
+      );
+
+      return response.statusCode == 200;
+    } catch (e) {
+      return false;
+    }
+  }
 }

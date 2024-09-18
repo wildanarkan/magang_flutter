@@ -155,7 +155,7 @@ class LeavePersonalPage extends GetView<LeavePersonalPageController> {
                         controller.selectedEndDate.value = pickedDate;
                         controller.endDateController.value.text = pickedDate
                             .toIso8601String()
-                            .substring(0, 10); // Update UI
+                            .substring(0, 10);
                       }
                     },
                   ),

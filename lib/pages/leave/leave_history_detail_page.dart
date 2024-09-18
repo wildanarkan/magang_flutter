@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 import 'package:magang_flutter/common/app_color.dart';
 import 'package:magang_flutter/common/app_status.dart';
 import 'package:magang_flutter/controllers/leave_history_detail_page_controller.dart';
+import 'package:magang_flutter/controllers/leave_personal_page_controller.dart';
 import 'package:magang_flutter/controllers/navigator_page_controllers.dart';
 import 'package:magang_flutter/data/models/leave_model.dart';
 import 'package:magang_flutter/widgets/appbars/build_appbar.dart';
@@ -22,6 +23,8 @@ class LeaveHistoryDetailPage extends GetView<LeaveHistoryDetailPageController> {
     final Leaves leave = Get.arguments['leave'];
     final NavigatorPageControllers navigatorPageControllers =
         Get.find<NavigatorPageControllers>();
+    final LeavePersonalPageController leavePersonalPageController =
+        Get.find<LeavePersonalPageController>();
     return Scaffold(
       appBar: const BuildAppbar(
         title: 'Leave Request',
@@ -63,9 +66,11 @@ class LeaveHistoryDetailPage extends GetView<LeaveHistoryDetailPageController> {
                             title: 'Look Employee History',
                             context: context,
                             onTap: () {
+                              leavePersonalPageController.resetFilter();
+                              leavePersonalPageController.fetchLeaves();
                               Get.back(result: leave.nip);
                             },
-                          )
+                          ),
                         ],
                       ),
                       const SizedBox(height: 10),
@@ -79,9 +84,10 @@ class LeaveHistoryDetailPage extends GetView<LeaveHistoryDetailPageController> {
                               Text(
                                 'Leave Category',
                                 style: TextStyle(
-                                    fontSize: 12,
-                                    fontWeight: FontWeight.w400,
-                                    color: AppColor.textBody),
+                                  fontSize: 12,
+                                  fontWeight: FontWeight.w400,
+                                  color: AppColor.textBody,
+                                ),
                               ),
                               const SizedBox(height: 5),
                               Text(

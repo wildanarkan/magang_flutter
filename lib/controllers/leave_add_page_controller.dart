@@ -1,10 +1,5 @@
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get_storage/get_storage.dart';
-import 'package:http/http.dart' as http;
-import 'package:magang_flutter/common/urls.dart';
 import 'package:magang_flutter/data/repo/leave_history_repository.dart';
 
 class LeaveAddPageController extends GetxController {
@@ -35,7 +30,7 @@ class LeaveAddPageController extends GetxController {
       selectedCategory.value = leaveCategoryItem[0];
       updateSelectedLimit(selectedCategory.value);
     }
-    }
+  }
 
   void updateSelectedLimit(String categoryName) {
     final limit = _apiData
@@ -45,34 +40,22 @@ class LeaveAddPageController extends GetxController {
   }
 
   Future<void> makeLeave() async {
-    try {
-      final token = GetStorage().read('accessToken');
-      final response = await http.post(
-        Uri.parse(URLs.leaveStore),
-        headers: {
-          'Content-Type': 'application/json; charset=UTF-8',
-          'Authorization': 'Bearer $token',
-        },
-        body: jsonEncode({
-          'id_leave_category': _apiData
-              .firstWhere(
-                  (item) => item['name'] == selectedCategory.value)['id']
-              .toString(),
-          'reason_for_leave': reasonForLeaveController.value.text,
-          'start_date': startDateController.value.text,
-          'end_date': endDateController.value.text,
-        }),
-      );
+    bool isSuccess = await _leaveHistoryRepository.postLeave(
+      selectedCategory: selectedCategory.value,
+      reasonForLeave: reasonForLeaveController.value.text,
+      startDate: startDateController.value.text,
+      endDate: endDateController.value.text,
+      apiData: _apiData
+          .firstWhere((item) => item['name'] == selectedCategory.value)['id']
+          .toString(),
+    );
 
-      if (response.statusCode == 201) {
-        Get.back(closeOverlays: true);
-        Get.snackbar('Success', 'Leave request successfully created');
-      } else {
-        Get.snackbar('Error',
-            'Failed to create leave, try adding data that has not been filled in');
-      }
-    } catch (e) {
-      Get.snackbar('Error', 'An error occurred: $e');
+    if (isSuccess) {
+      Get.back(closeOverlays: true);
+      Get.snackbar('Success', 'Leave request successfully created');
+    } else {
+      Get.snackbar('Error',
+          'Failed to create leave, try adding data that has not been filled in');
     }
   }
 }
