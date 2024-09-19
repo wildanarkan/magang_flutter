@@ -2,6 +2,7 @@ import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:nextbasis_hris/common/app_color.dart';
+import 'package:nextbasis_hris/common/app_component.dart';
 import 'package:nextbasis_hris/common/app_endpoint.dart';
 import 'package:nextbasis_hris/controllers/planning_update_controller.dart';
 import 'package:nextbasis_hris/widgets/appbars/build_appbar.dart';
@@ -32,7 +33,7 @@ class PlanningUpdatePage extends GetView<PlanningUpdateController> {
           return const Center(child: CircularProgressIndicator());
         }
         return Padding(
-          padding: const EdgeInsets.all(25.0),
+          padding: EdgeInsets.all(AppComponent.marginPage),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [

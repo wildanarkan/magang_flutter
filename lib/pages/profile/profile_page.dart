@@ -2,6 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:nextbasis_hris/common/app_color.dart';
+import 'package:nextbasis_hris/common/app_component.dart';
 import 'package:nextbasis_hris/common/app_endpoint.dart';
 import 'package:nextbasis_hris/common/app_routes.dart';
 import 'package:nextbasis_hris/controllers/home_controller.dart';
@@ -17,8 +18,7 @@ class ProfilePage extends GetView<NavigatorControllers> {
   @override
   Widget build(BuildContext context) {
     final LoginController loginController = Get.find<LoginController>();
-    final ProfileController profileController =
-        Get.find<ProfileController>();
+    final ProfileController profileController = Get.find<ProfileController>();
 
     return Scaffold(
       body: Stack(
@@ -34,8 +34,11 @@ class ProfilePage extends GetView<NavigatorControllers> {
             ),
           ),
           ListView(
-            padding: const EdgeInsets.only(
-                top: 25, bottom: 120, left: 25, right: 25),
+            padding: EdgeInsets.only(
+                top: 25,
+                bottom: 120,
+                left: AppComponent.marginPage,
+                right: AppComponent.marginPage),
             children: [
               Stack(
                 children: [
@@ -91,31 +94,37 @@ class ProfilePage extends GetView<NavigatorControllers> {
                                 height: 16,
                               ),
                               const Divider(),
-                              BuildButtonIcon(
-                                icon: Icons.contact_page_sharp,
-                                iconColor: AppColor.primary,
-                                title: 'Detail',
-                                onTap: () {
-                                  Get.toNamed(AppRoutes.profileDetail);
-                                },
+                              Padding(
+                                padding: EdgeInsets.all(AppComponent.marginPage ),
+                                child: Column(
+                                  children: [
+                                    BuildButtonIcon(
+                                      icon: Icons.contact_page_sharp,
+                                      iconColor: AppColor.primary,
+                                      title: 'Detail',
+                                      onTap: () {
+                                        Get.toNamed(AppRoutes.profileDetail);
+                                      },
+                                    ),
+                                    BuildButtonIcon(
+                                      icon: Icons.account_balance_wallet,
+                                      iconColor: AppColor.primary,
+                                      title: 'Payroll History',
+                                      onTap: () {
+                                        Get.toNamed(AppRoutes.payroll);
+                                      },
+                                    ),
+                                    BuildButtonIcon(
+                                      icon: Icons.contact_mail_outlined,
+                                      iconColor: AppColor.primary,
+                                      title: 'Contract History',
+                                      onTap: () {
+                                        Get.toNamed(AppRoutes.contract);
+                                      },
+                                    ),
+                                  ],
+                                ),
                               ),
-                              BuildButtonIcon(
-                                icon: Icons.account_balance_wallet,
-                                iconColor: AppColor.primary,
-                                title: 'Payroll History',
-                                onTap: () {
-                                  Get.toNamed(AppRoutes.payroll);
-                                },
-                              ),
-                              BuildButtonIcon(
-                                icon: Icons.contact_mail_outlined,
-                                iconColor: AppColor.primary,
-                                title: 'Contract History',
-                                onTap: () {
-                                  Get.toNamed(AppRoutes.contract);
-                                },
-                              ),
-                              const SizedBox(height: 20),
                             ],
                           ),
                         ),

@@ -1,65 +1,63 @@
 import 'package:flutter/material.dart';
 import 'package:nextbasis_hris/common/app_color.dart';
 
-class BuildItemContract extends StatelessWidget {
-  const BuildItemContract({
+class BuildCardDate extends StatelessWidget {
+  const BuildCardDate({
     super.key,
-    this.text,
-    this.start_date,
-    this.end_date,
+    required this.title,
+    required this.startDate,
+    this.onTap,
+    this.endDate,
   });
 
-  final String? text;
-  final String? start_date;
-  final String? end_date;
+  final String title;
+  final String startDate;
+  final String? endDate;
+  final VoidCallback? onTap;
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.fromLTRB(20, 10, 20, 10),
+    return InkWell(
+      onTap: onTap,
       child: Container(
         decoration: BoxDecoration(
-          color: Colors.white,
-          borderRadius: BorderRadius.circular(10),
-        ),
+            color: Colors.white, borderRadius: BorderRadius.circular(10)),
         width: double.infinity,
         child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 20),
+          padding: const EdgeInsets.all(16.0),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                text ?? 'Monthly Payroll',
-                style: const TextStyle(
-                  fontWeight: FontWeight.w600,
-                  fontSize: 14,
-                ),
+                title,
+                style:
+                    const TextStyle(fontWeight: FontWeight.w600, fontSize: 14),
               ),
-              const SizedBox(height: 10),
-              const Divider(),
-              const SizedBox(height: 10),
+              const Padding(
+                padding: EdgeInsets.symmetric(vertical: 8),
+                child: Divider(),
+              ),
               Row(
                 children: [
                   Text(
-                    start_date ?? '0000-00-00',
+                    startDate,
                     style: TextStyle(
                       fontWeight: FontWeight.w400,
                       fontSize: 14,
                       color: AppColor.textBody,
                     ),
                   ),
-                  const SizedBox(width: 10),
+                  if(endDate != null)
                   Text(
-                    '-',
+                    ' - ',
                     style: TextStyle(
                       fontWeight: FontWeight.w400,
                       fontSize: 14,
                       color: AppColor.textBody,
                     ),
                   ),
-                  const SizedBox(width: 10),
                   Text(
-                    end_date ?? '0000-00-00',
+                    endDate ?? '',
                     style: TextStyle(
                       fontWeight: FontWeight.w400,
                       fontSize: 14,

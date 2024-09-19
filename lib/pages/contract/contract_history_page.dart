@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:nextbasis_hris/common/app_component.dart';
 import 'package:nextbasis_hris/controllers/contract_history_controller.dart';
 import 'package:nextbasis_hris/widgets/appbars/build_appbar.dart';
-import 'package:nextbasis_hris/widgets/items/build_item_contract.dart';
+import 'package:nextbasis_hris/widgets/cards/build_card_date.dart';
 import 'package:nextbasis_hris/widgets/nulls/build_null_icon_text.dart';
 
 class ContractHistoryPage extends GetView<ContractHistoryPageController> {
@@ -27,13 +28,14 @@ class ContractHistoryPage extends GetView<ContractHistoryPageController> {
           );
         }
         return ListView.builder(
+          padding: EdgeInsets.all(AppComponent.marginPage),
           itemCount: controller.contracts.length,
           itemBuilder: (context, index) {
             final contract = controller.contracts[index];
-            return BuildItemContract(
-              text: contract['status'] ?? 'No Data',
-              start_date: contract['start_date'] ?? 'No Data',
-              end_date: contract['end_date'] ?? 'No Data',
+            return BuildCardDate(
+              title: contract['status'] ?? 'No Data',
+              startDate: contract['start_date'] ?? 'No Data',
+              endDate: contract['end_date'] ?? 'No Data',
             );
           },
         );

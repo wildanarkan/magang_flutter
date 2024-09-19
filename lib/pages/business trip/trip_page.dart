@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:nextbasis_hris/common/app_color.dart';
+import 'package:nextbasis_hris/common/app_component.dart';
 import 'package:nextbasis_hris/common/app_routes.dart';
 import 'package:nextbasis_hris/controllers/trip_controller.dart';
 import 'package:nextbasis_hris/widgets/appbars/build_appbar.dart';
@@ -41,7 +42,7 @@ class TripPage extends GetView<TripController> {
         ],
       ),
       body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 25),
+        padding:  EdgeInsets.symmetric(horizontal: AppComponent.marginPage),
         child: Obx(() {
           if (controller.isLoading.value) {
             return const Center(child: CircularProgressIndicator());

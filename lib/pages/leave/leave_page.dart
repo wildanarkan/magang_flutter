@@ -3,6 +3,7 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:nextbasis_hris/common/app_color.dart';
+import 'package:nextbasis_hris/common/app_component.dart';
 import 'package:nextbasis_hris/common/app_routes.dart';
 import 'package:nextbasis_hris/controllers/navigator_controllers.dart';
 import 'package:nextbasis_hris/widgets/appbars/build_appbar.dart';
@@ -24,53 +25,56 @@ class LeaveHistoryPage extends GetView<NavigatorControllers> {
         if (controller.rolePriority.value == 0) {
           return const Center(child: CircularProgressIndicator());
         }
-        return Column(
-          children: [
-            if (controller.rolePriority.value <= 2)
+        return Padding(
+          padding: EdgeInsets.symmetric(horizontal: AppComponent.marginPage),
+          child: Column(
+            children: [
+              if (controller.rolePriority.value <= 2)
+                BuildButtonIcon(
+                  icon: Icons.task,
+                  title: 'Approval',
+                  iconColor: AppColor.primary,
+                  onTap: () {
+                    Get.toNamed(
+                      AppRoutes.leaveList,
+                      arguments: {
+                        'pendingPage': true,
+                      },
+                    );
+                  },
+                ),
               BuildButtonIcon(
-                icon: Icons.task,
-                title: 'Approval',
+                icon: Icons.task_alt,
                 iconColor: AppColor.primary,
+                title: 'Make Leave Application',
                 onTap: () {
-                  Get.toNamed(
-                    AppRoutes.leaveList,
-                    arguments: {
-                      'pendingPage': true,
-                    },
-                  );
+                  Get.toNamed(AppRoutes.leaveAdd);
                 },
               ),
-            BuildButtonIcon(
-              icon: Icons.task_alt,
-              iconColor: AppColor.primary,
-              title: 'Make Leave Application',
-              onTap: () {
-                Get.toNamed(AppRoutes.leaveAdd);
-              },
-            ),
-            if (controller.rolePriority.value <= 2)
+              if (controller.rolePriority.value <= 2)
+                BuildButtonIcon(
+                  icon: Icons.people_alt,
+                  iconColor: AppColor.primary,
+                  title: 'Employee Leave History',
+                  onTap: () {
+                    Get.toNamed(
+                      AppRoutes.leaveList,
+                      arguments: {
+                        'pendingPage': false,
+                      },
+                    );
+                  },
+                ),
               BuildButtonIcon(
-                icon: Icons.people_alt,
+                icon: Icons.person,
                 iconColor: AppColor.primary,
-                title: 'Employee Leave History',
+                title: 'Personal Leave History',
                 onTap: () {
-                  Get.toNamed(
-                    AppRoutes.leaveList,
-                    arguments: {
-                      'pendingPage': false,
-                    },
-                  );
+                  Get.toNamed(AppRoutes.leavePersonal);
                 },
               ),
-            BuildButtonIcon(
-              icon: Icons.person,
-              iconColor: AppColor.primary,
-              title: 'Personal Leave History',
-              onTap: () {
-                Get.toNamed(AppRoutes.leavePersonal);
-              },
-            ),
-          ],
+            ],
+          ),
         );
       }),
     );

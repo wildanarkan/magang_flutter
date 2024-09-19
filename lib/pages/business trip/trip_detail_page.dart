@@ -5,6 +5,7 @@ import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:nextbasis_hris/common/app_color.dart';
+import 'package:nextbasis_hris/common/app_component.dart';
 import 'package:nextbasis_hris/common/app_endpoint.dart';
 import 'package:nextbasis_hris/common/app_routes.dart';
 import 'package:nextbasis_hris/common/app_status.dart';
@@ -60,11 +61,11 @@ class TripDetailPage extends GetView<TripDetailController> {
       body: Stack(
         children: [
           ListView(
-            padding: const EdgeInsets.only(bottom: 170),
+            padding: trip.status != 'Draft' ? const EdgeInsets.only(bottom: 170) : null,
             children: [
               Padding(
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 24, vertical: 10),
+                padding: EdgeInsets.symmetric(
+                    horizontal: AppComponent.marginPage, vertical: 10),
                 child: Container(
                   decoration: BoxDecoration(
                     color: Colors.white,
@@ -479,10 +480,11 @@ class TripDetailPage extends GetView<TripDetailController> {
               ),
             ],
           ),
+          if(trip.status != 'Draft')
           Align(
             alignment: Alignment.bottomCenter,
             child: Padding(
-              padding: const EdgeInsets.all(25.0),
+              padding: EdgeInsets.all(AppComponent.marginPage),
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 children: [
@@ -526,8 +528,6 @@ class TripDetailPage extends GetView<TripDetailController> {
                     context: context,
                     title: 'Perbandingan',
                     onPressed: () {
-                      // Get.to(() => PerbandinganBiayaPage(
-                      //     idBusinessTrip: trip.idBusinessTrip ?? 0));
                       Get.toNamed(
                         AppRoutes.planningComparison,
                         arguments: {

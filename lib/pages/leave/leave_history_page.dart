@@ -3,6 +3,7 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:nextbasis_hris/common/app_color.dart';
+import 'package:nextbasis_hris/common/app_component.dart';
 import 'package:nextbasis_hris/common/app_routes.dart';
 import 'package:nextbasis_hris/controllers/leave_history_controller.dart';
 import 'package:nextbasis_hris/widgets/appbars/build_appbar.dart';
@@ -38,52 +39,49 @@ class LeaveHistoryPage extends GetView<LeaveHistoryController> {
           ),
         ],
       ),
-      body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 25),
-        child: Obx(() {
-          if (controller.isLoading.value) {
-            return const Center(child: CircularProgressIndicator());
-          } else if (controller.noData.value) {
-            return const BuildNullIconText(
-              icon: Icons.airplanemode_off_outlined,
-              text: 'Leave history not found',
-            );
-          } else {
-            final leaves = controller.filteredLeaveHistory.isEmpty
-                ? controller.leaveHistory
-                : controller.filteredLeaveHistory;
-            return ListView.builder(
-              padding: const EdgeInsets.only(bottom: 120, top: 20),
-              itemCount: leaves.length,
-              itemBuilder: (context, index) {
-                final leave = leaves[index];
-                return BuildCardInfo(
-                  title: '${leave.firstName} ${leave.lastName}',
-                  subtitle: '${leave.leaveCategory}',
-                  appStatus: '${leave.status}',
-                  startDate: '${leave.startDate}',
-                  endDate: '${leave.endDate}',
-                  icon: Icon(
-                    Icons.date_range,
-                    size: 16,
-                    color: AppColor.textBody,
-                  ),
-                  onTap: () {
-                    Get.toNamed(
-                      AppRoutes.leaveDetail,
-                      arguments: {'leave': leave},
-                    )?.then((result) {
-                      if (result != null && result is int) {
-                        controller.filterByNip(result);
-                      }
-                    });
-                  },
-                );
-              },
-            );
-          }
-        }),
-      ),
+      body: Obx(() {
+        if (controller.isLoading.value) {
+          return const Center(child: CircularProgressIndicator());
+        } else if (controller.noData.value) {
+          return const BuildNullIconText(
+            icon: Icons.airplanemode_off_outlined,
+            text: 'Leave history not found',
+          );
+        } else {
+          final leaves = controller.filteredLeaveHistory.isEmpty
+              ? controller.leaveHistory
+              : controller.filteredLeaveHistory;
+          return ListView.builder(
+            padding: EdgeInsets.all(AppComponent.marginPage),
+            itemCount: leaves.length,
+            itemBuilder: (context, index) {
+              final leave = leaves[index];
+              return BuildCardInfo(
+                title: '${leave.firstName} ${leave.lastName}',
+                subtitle: '${leave.leaveCategory}',
+                appStatus: '${leave.status}',
+                startDate: '${leave.startDate}',
+                endDate: '${leave.endDate}',
+                icon: Icon(
+                  Icons.date_range,
+                  size: 16,
+                  color: AppColor.textBody,
+                ),
+                onTap: () {
+                  Get.toNamed(
+                    AppRoutes.leaveDetail,
+                    arguments: {'leave': leave},
+                  )?.then((result) {
+                    if (result != null && result is int) {
+                      controller.filterByNip(result);
+                    }
+                  });
+                },
+              );
+            },
+          );
+        }
+      }),
     );
   }
 

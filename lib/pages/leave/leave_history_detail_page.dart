@@ -3,6 +3,7 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:nextbasis_hris/common/app_color.dart';
+import 'package:nextbasis_hris/common/app_component.dart';
 import 'package:nextbasis_hris/common/app_status.dart';
 import 'package:nextbasis_hris/controllers/leave_history_detail_controller.dart';
 import 'package:nextbasis_hris/controllers/leave_personal_controller.dart';
@@ -29,12 +30,12 @@ class LeaveHistoryDetailPage extends GetView<LeaveHistoryDetailController> {
       appBar: const BuildAppbar(
         title: 'Leave Request',
       ),
-      body: Column(
-        children: [
-          Expanded(
-            child: SingleChildScrollView(
-              child: Padding(
-                padding: const EdgeInsets.all(24.0),
+      body: Padding(
+        padding: EdgeInsets.all(AppComponent.marginPage),
+        child: Column(
+          children: [
+            Expanded(
+              child: SingleChildScrollView(
                 child: Container(
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(8),
@@ -127,66 +128,59 @@ class LeaveHistoryDetailPage extends GetView<LeaveHistoryDetailController> {
                 ),
               ),
             ),
-          ),
-          Column(
-            children: [
-              if (navigatorPageControllers.rolePriority.value <= 2 &&
-                  navigatorPageControllers.nip.value != leave.nip &&
-                  leave.status == 'Pending')
-                Padding(
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 35, vertical: 20),
-                  child: BuildButton(
+            Column(
+              children: [
+                if (navigatorPageControllers.rolePriority.value <= 2 &&
+                    navigatorPageControllers.nip.value != leave.nip &&
+                    leave.status == 'Pending')
+                  BuildButton(
                     context: context,
                     title: 'Accept',
-                    width: 320,
+                    width: double.infinity,
                     onPressed: () async {
                       await controller.updateLeaveStatus(leave.id!, 'Approved');
                       log(leave.id.toString());
                       log('Approved');
                     },
                   ),
-                ),
-              if (navigatorPageControllers.rolePriority.value <= 2 &&
-                  navigatorPageControllers.nip.value != leave.nip &&
-                  leave.status == 'Pending')
-                Padding(
-                  padding: const EdgeInsets.fromLTRB(35, 0, 35, 20),
-                  child: BuildButton(
+                if (navigatorPageControllers.rolePriority.value <= 2 &&
+                    navigatorPageControllers.nip.value != leave.nip &&
+                    leave.status == 'Pending')
+                  BuildButton(
                     context: context,
                     title: 'Reject',
                     backgroundColor: Colors.white,
                     foregroundColor: AppColor.decline,
                     borderColor: AppColor.decline,
-                    width: 320,
+                    width: double.infinity,
                     onPressed: () async {
                       await controller.updateLeaveStatus(leave.id!, 'Declined');
                       log(leave.id.toString());
                       log('Declined');
                     },
                   ),
-                ),
-              if (leave.nip == navigatorPageControllers.nip.value &&
-                  leave.status == 'Pending')
-                Padding(
-                  padding: const EdgeInsets.fromLTRB(35, 0, 35, 40),
-                  child: BuildButton(
+                if (leave.nip == navigatorPageControllers.nip.value &&
+                    leave.status == 'Pending')
+                  BuildButton(
                     context: context,
                     title: 'Cancel',
                     backgroundColor: AppColor.decline,
                     foregroundColor: Colors.white,
                     borderColor: AppColor.decline,
-                    width: 320,
+                    width: double.infinity,
                     onPressed: () async {
                       await controller.updateLeaveStatus(leave.id!, 'Canceled');
                       log(leave.id.toString());
                       log('canceled');
                     },
                   ),
-                ),
-            ],
-          )
-        ],
+              ]
+                  .expand((widget) => [widget, const SizedBox(height: 16)])
+                  .toList()
+                ..removeLast(),
+            ),
+          ],
+        ),
       ),
     );
   }

@@ -1,4 +1,4 @@
 class AppComponent {
-  static int marginPage = 20;
+  static double marginPage = 18;
   static int marginCard = 10;
 }

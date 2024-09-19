@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:nextbasis_hris/common/app_color.dart';
+import 'package:nextbasis_hris/common/app_component.dart';
 import 'package:nextbasis_hris/common/app_routes.dart';
 import 'package:nextbasis_hris/controllers/planning_controller.dart'; // Import the unified controller
 import 'package:nextbasis_hris/widgets/appbars/build_appbar.dart';
@@ -30,7 +31,7 @@ class PlanningPage extends GetView<PlanningController> {
             }
 
             return ListView(
-              padding: const EdgeInsets.all(16),
+              padding: EdgeInsets.all(AppComponent.marginPage),
               children: groupedData.entries.map((entry) {
                 final categoryName = entry.key;
                 final items = entry.value;
@@ -71,14 +72,6 @@ class PlanningPage extends GetView<PlanningController> {
                                   'isEditMode': true,
                                 },
                               );
-                              //  Get.to(
-                              //   () => EditBiayaPage(
-                              //     idBusinessTrip: controller.idBusinessTrip,
-                              //     idItem: item.id,
-                              //     biayaType: controller.biayaType,
-                              //     isEditMode: true,
-                              //   ),
-                              // );
                               if (result != null && result) {
                                 controller.updateData();
                               }
@@ -115,6 +108,7 @@ class PlanningPage extends GetView<PlanningController> {
             return Align(
               alignment: Alignment.bottomCenter,
               child: BuildTotal(
+                padding: EdgeInsets.all(AppComponent.marginPage),
                 total: controller.calculateTotal(),
                 onPressed: controller.biayaType == 'realisasi'
                     ? () async {

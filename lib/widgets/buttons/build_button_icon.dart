@@ -19,8 +19,8 @@ class BuildButtonIcon extends StatelessWidget {
     return GestureDetector(
       onTap: onTap,
       child: Container(
-        color: Colors.transparent, // Pastikan Container dapat menerima gesture
-        padding: const EdgeInsets.symmetric(horizontal: 30 ,vertical: 20),
+        color: Colors.transparent,
+        padding: const EdgeInsets.symmetric(vertical: 20),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
@@ -28,7 +28,7 @@ class BuildButtonIcon extends StatelessWidget {
               children: [
                  if (icon != null) Icon(
                    icon, size: 24,
-                   color: iconColor,), // Tampilkan icon jika tidak null
+                   color: iconColor,),
                 if (icon != null) 
                 const SizedBox(width: 20),
                  Text(
@@ -40,7 +40,7 @@ class BuildButtonIcon extends StatelessWidget {
                 )
               ],
             ),
-            const Icon(Icons.arrow_forward_ios,
+            const Icon(Icons.arrow_forward_ios_rounded,
             size: 20,)
           ],
         ),

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:nextbasis_hris/common/app_component.dart';
 import 'package:nextbasis_hris/controllers/leave_add_controller.dart';
 import 'package:nextbasis_hris/widgets/appbars/build_appbar.dart';
 import 'package:nextbasis_hris/widgets/buttons/build_button.dart';
@@ -13,91 +14,92 @@ class LeaveAddPage extends GetView<LeaveAddController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: const BuildAppbar(title: 'Form Ask to Leave'),
+      appBar: const BuildAppbar(title: 'Change Password'),
+      resizeToAvoidBottomInset: true,
       body: Obx(() {
         if (controller.leaveCategoryItem.isEmpty) {
           return const Center(child: CircularProgressIndicator());
         }
-        return Column(
-          children: [
-            Expanded(
-              child: SingleChildScrollView(
-                child: Padding(
-                  padding: const EdgeInsets.all(24),
-                  child: Container(
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(8),
-                      color: Colors.white,
-                    ),
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: 35, vertical: 20),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        BuildDropdown(
-                          hint: 'Select',
-                          title: 'Leave Category',
-                          selectedItem: controller.selectedCategory.value,
-                          item: controller.leaveCategoryItem,
-                          onChanged: (newValue) {
-                            controller.selectedCategory.value = newValue!;
-                            controller.updateSelectedLimit(newValue);
-                          },
+        return Padding(
+          padding: EdgeInsets.all(AppComponent.marginPage),
+          child: Column(
+            children: [
+              Expanded(
+                child: SingleChildScrollView(
+                  child: Column(
+                    children: [
+                      Container(
+                        padding: const EdgeInsets.all(16),
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.circular(8),
                         ),
-                        Row(
+                        child: Column(
                           children: [
-                            const Text(
-                              'Limit:',
-                              style: TextStyle(
-                                fontSize: 14,
-                                fontWeight: FontWeight.w400,
-                              ),
+                            BuildDropdown(
+                              hint: 'Select',
+                              title: 'Leave Category',
+                              selectedItem: controller.selectedCategory.value,
+                              item: controller.leaveCategoryItem,
+                              onChanged: (newValue) {
+                                controller.selectedCategory.value = newValue!;
+                                controller.updateSelectedLimit(newValue);
+                              },
                             ),
-                            Obx(
-                              () => Text(
-                                ' ${controller.selectedLimit.value}',
-                                style: const TextStyle(
-                                  fontSize: 14,
-                                  fontWeight: FontWeight.bold,
+                            Row(
+                              children: [
+                                const Text(
+                                  'Limit:',
+                                  style: TextStyle(
+                                    fontSize: 14,
+                                    fontWeight: FontWeight.w400,
+                                  ),
                                 ),
-                              ),
+                                Obx(
+                                  () => Text(
+                                    ' ${controller.selectedLimit.value}',
+                                    style: const TextStyle(
+                                      fontSize: 14,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                            const SizedBox(height: 10),
+                            BuildFieldText(
+                              controller:
+                                  controller.reasonForLeaveController.value,
+                              title: 'Reason For Leave',
+                              hintText: 'Holiday',
+                            ),
+                            Row(
+                              children: [
+                                Expanded(
+                                  child: BuildFieldDate(
+                                    title: 'Start Leave Date',
+                                    dateController:
+                                        controller.startDateController.value,
+                                  ),
+                                ),
+                                const SizedBox(width: 10),
+                                Expanded(
+                                  child: BuildFieldDate(
+                                    title: 'End Leave Date',
+                                    dateController:
+                                        controller.endDateController.value,
+                                  ),
+                                ),
+                              ],
                             ),
                           ],
                         ),
-                        const SizedBox(height: 10),
-                        BuildFieldText(
-                          controller: controller.reasonForLeaveController.value,
-                          title: 'Reason For Leave',
-                          hintText: 'Holiday',
-                        ),
-                        Row(
-                          children: [
-                            Expanded(
-                              child: BuildFieldDate(
-                                title: 'Start Leave Date',
-                                dateController:
-                                    controller.startDateController.value,
-                              ),
-                            ),
-                            const SizedBox(width: 10),
-                            Expanded(
-                              child: BuildFieldDate(
-                                title: 'End Leave Date',
-                                dateController:
-                                    controller.endDateController.value,
-                              ),
-                            ),
-                          ],
-                        ),
-                      ],
-                    ),
+                      ),
+                    ],
                   ),
                 ),
               ),
-            ),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 35, vertical: 20),
-              child: BuildButton(
+              BuildButton(
                 context: context,
                 title: 'Simpan',
                 width: 320,
@@ -105,8 +107,8 @@ class LeaveAddPage extends GetView<LeaveAddController> {
                   await controller.makeLeave();
                 },
               ),
-            ),
-          ],
+            ],
+          ),
         );
       }),
     );

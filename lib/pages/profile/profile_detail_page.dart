@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:nextbasis_hris/common/app_color.dart';
+import 'package:nextbasis_hris/common/app_component.dart';
 import 'package:nextbasis_hris/common/app_routes.dart';
 import 'package:nextbasis_hris/controllers/navigator_controllers.dart';
 import 'package:nextbasis_hris/widgets/appbars/build_appbar.dart';
@@ -18,7 +19,7 @@ class ProfileDetailPage extends GetView<NavigatorControllers> {
             title: 'Profile Detail',
           ),
           Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 24),
+            padding: EdgeInsets.all(AppComponent.marginPage),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
@@ -312,7 +313,7 @@ class ProfileDetailPage extends GetView<NavigatorControllers> {
                   ),
                 ),
                 const SizedBox(
-                  height: 50,
+                  height: 15,
                 ),
                 BuildButton(
                   context: context,

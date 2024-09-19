@@ -29,19 +29,21 @@ class NavigatorPage extends GetView<NavigatorControllers> {
     return Align(
       alignment: Alignment.bottomCenter,
       child: Container(
-        height: 81,
-        padding: const EdgeInsets.symmetric(vertical: 20),
+        height: 60,
         decoration: BoxDecoration(
           color: Colors.white,
           borderRadius: BorderRadius.circular(8),
         ),
-        margin: const EdgeInsets.all(25),
+        margin:  const EdgeInsets.symmetric(horizontal: 50, vertical: 20),
         child: Column(
           mainAxisSize: MainAxisSize.min,
+          mainAxisAlignment: MainAxisAlignment.center,
           children: [
             FABBottomAppBar(
               selectedColor: AppColor.textTitle,
               selectedIndex: controller.selectedPage.value,
+              iconSize: 1,
+              height: 1,
               onTabSelected: (index) {
                 controller.changePage(index);
               },

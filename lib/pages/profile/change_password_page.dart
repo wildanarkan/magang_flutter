@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:nextbasis_hris/common/app_component.dart';
 import 'package:nextbasis_hris/controllers/change_password_page_controller.dart';
 import 'package:nextbasis_hris/widgets/appbars/build_appbar.dart';
 import 'package:nextbasis_hris/widgets/buttons/build_button.dart';
@@ -14,7 +15,7 @@ class ChangePasswordPage extends GetView<ChangePasswordPageController> {
       appBar: const BuildAppbar(title: 'Change Password'),
       resizeToAvoidBottomInset: true,
       body: Padding(
-        padding: const EdgeInsets.all(24.0),
+        padding: EdgeInsets.all(AppComponent.marginPage),
         child: Column(
           children: [
             Expanded(

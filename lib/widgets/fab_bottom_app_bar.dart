@@ -11,7 +11,7 @@ class FABBottomAppBar extends StatefulWidget {
   FABBottomAppBar({
     super.key,
     this.items,
-    this.height = 60.0,
+    this.height = 10.0,
     this.iconSize = 24.0,
     this.backgroundColor,
     this.color,
@@ -81,13 +81,6 @@ class FABBottomAppBarState extends State<FABBottomAppBar> {
       child: SizedBox(
         child: GestureDetector(
           onTap: () => onPressed!(index!),
-          // onDoubleTap: () {
-          //   if (index == 1) {
-          //     final TripController = Get.find<TripController>();
-          //     TripController.fetchBusinessTrips();
-          //     TripController.resetFilter();
-          //   }
-          // },
           child: Column(
             mainAxisSize: MainAxisSize.min,
             mainAxisAlignment: MainAxisAlignment.center,
@@ -102,7 +95,7 @@ class FABBottomAppBarState extends State<FABBottomAppBar> {
                 textAlign: TextAlign.center,
                 style: TextStyle(
                   color: color,
-                  fontSize: 12,
+                  fontSize: 10,
                   fontWeight: FontWeight.w400,
                 ),
               )

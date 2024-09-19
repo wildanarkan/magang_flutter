@@ -6,16 +6,17 @@ class BuildTotal extends StatelessWidget {
   const BuildTotal({
     super.key,
     this.total,
-    this.onPressed, // Membuat onPressed opsional
+    this.onPressed, this.padding,
   });
 
   final String? total;
+  final EdgeInsetsGeometry? padding;
   final VoidCallback? onPressed; // Mengubah onPressed menjadi nullable
 
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.all(25.0),
+      padding: padding ?? const EdgeInsets.all(0),
       child: Container(
         decoration: BoxDecoration(
           color: Colors.white,

@@ -3,6 +3,7 @@ import 'package:floating_draggable_widget/floating_draggable_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:nextbasis_hris/common/app_color.dart';
+import 'package:nextbasis_hris/common/app_component.dart';
 import 'package:nextbasis_hris/common/app_endpoint.dart';
 import 'package:nextbasis_hris/common/app_routes.dart';
 import 'package:nextbasis_hris/controllers/home_controller.dart';
@@ -85,8 +86,12 @@ class HomePage extends GetView<NavigatorControllers> {
               ),
             ),
             ListView(
-              padding: const EdgeInsets.only(
-                  top: 25, bottom: 120, left: 25, right: 25),
+              padding: EdgeInsets.only(
+                top: 25,
+                bottom: 120,
+                left: AppComponent.marginPage,
+                right: AppComponent.marginPage,
+              ),
               children: [
                 const Padding(
                   padding: EdgeInsets.only(top: 40, bottom: 25),

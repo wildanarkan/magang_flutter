@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:nextbasis_hris/common/app_color.dart';
+import 'package:nextbasis_hris/common/app_component.dart';
 import 'package:nextbasis_hris/controllers/planning_comparison_controller.dart';
 import 'package:nextbasis_hris/data/models/business_percentage_model.dart';
 import 'package:nextbasis_hris/widgets/appbars/build_appbar.dart'; // Import BuildAppbar
 import 'package:nextbasis_hris/widgets/build_widget_between.dart'; // Import BuildWidgetBetween
-import 'package:nextbasis_hris/widgets/cards/build_card_biaya.dart';
+import 'package:nextbasis_hris/widgets/cards/build_card_cost.dart';
 
 class PlanningComparisonPage extends GetView<PlanningComparisonController> {
   final int idBusinessTrip;
@@ -53,7 +54,7 @@ class PlanningComparisonPage extends GetView<PlanningComparisonController> {
           children: [
             Expanded(
               child: ListView(
-                padding: const EdgeInsets.all(16),
+                padding: EdgeInsets.all(AppComponent.marginPage),
                 children: [
                   ...percentages.map((percentage) {
                     final estimasi =
@@ -61,7 +62,7 @@ class PlanningComparisonPage extends GetView<PlanningComparisonController> {
                     final realisasi = formatCurrency(
                         percentage.totalNominalRealization ?? '0');
 
-                    return BuildCardBiaya(
+                    return BuildCardCost(
                       title: percentage.categoryName ?? 'No Title',
                       persentase: percentage.percentage ?? '0',
                       estimasi: estimasi,

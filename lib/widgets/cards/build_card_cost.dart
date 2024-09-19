@@ -3,8 +3,8 @@ import 'package:nextbasis_hris/common/app_color.dart';
 import 'package:nextbasis_hris/common/app_status.dart';
 import 'package:nextbasis_hris/widgets/build_widget_between.dart';
 
-class BuildCardBiaya extends StatelessWidget {
-  const BuildCardBiaya({
+class BuildCardCost extends StatelessWidget {
+  const BuildCardCost({
     super.key,
     required this.title,
     required this.persentase,

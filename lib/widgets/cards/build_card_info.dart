@@ -8,7 +8,7 @@ class BuildCardInfo extends StatelessWidget {
     this.subtitle,
     required this.title,
     required this.appStatus,
-    this.padding = const EdgeInsets.only(bottom: 20),
+    this.padding = const EdgeInsets.only(bottom: 10),
     this.useContainer = true,
     this.icon,
     this.onTap,
