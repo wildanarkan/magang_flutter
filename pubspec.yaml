@@ -32,6 +32,8 @@ dependencies:
   cupertino_icons: ^1.0.6
   dotted_border: ^2.1.0
   file_picker: ^8.1.2
+  firebase_auth: ^5.3.0
+  firebase_core: ^3.5.0
   floating_draggable_widget: ^2.1.5
   flutter:
     sdk: flutter
@@ -39,6 +41,7 @@ dependencies:
   geolocator: ^13.0.1
   get: ^4.6.6
   get_storage: ^2.1.1
+  google_sign_in: ^6.2.1
   image_picker: ^1.1.2
   intl: ^0.19.0
   open_file: ^3.2.1

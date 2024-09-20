@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "819287319733",
+    "project_id": "magang-8406b",
+    "storage_bucket": "magang-8406b.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:819287319733:android:9fc9a3490cc2e3ce480afc",
+        "android_client_info": {
+          "package_name": "com.nextbasis.hris"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "819287319733-g9u7pvc3ghm52kup1vesh77rt602vmds.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.nextbasis.hris",
+            "certificate_hash": "0b3048c1f753919e986a1a9fa24b674359859ed3"
+          }
+        },
+        {
+          "client_id": "819287319733-gnm8rsu57h2fnfs5tkfi6jduedc5r2lg.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB2uN1frNGhZnGOimlH9ewcIqmoJxyNkS0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "819287319733-gnm8rsu57h2fnfs5tkfi6jduedc5r2lg.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

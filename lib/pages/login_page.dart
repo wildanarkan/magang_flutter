@@ -1,6 +1,8 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:nextbasis_hris/controllers/login_controller.dart';
+import 'package:nextbasis_hris/services/auth_service.dart';
 import 'package:nextbasis_hris/widgets/backgrounds/build_background_image.dart';
 import 'package:nextbasis_hris/widgets/buttons/build_button.dart';
 
@@ -9,6 +11,7 @@ class LoginPage extends GetView<LoginController> {
 
   @override
   Widget build(BuildContext context) {
+    final AuthService authService = AuthService(); // Instance of AuthService
 
     return Scaffold(
       body: Stack(
@@ -27,7 +30,8 @@ class LoginPage extends GetView<LoginController> {
                 children: [
                   buildHeader(),
                   const Spacer(),
-                  loginInput(context, controller),
+                  loginInput(
+                      context, controller, authService), // Pass AuthService
                 ],
               ),
             ),
@@ -37,7 +41,8 @@ class LoginPage extends GetView<LoginController> {
     );
   }
 
-  Widget loginInput(BuildContext context, LoginController controller) {
+  Widget loginInput(BuildContext context, LoginController controller,
+      AuthService authService) {
     return Padding(
       padding: const EdgeInsets.all(30),
       child: Column(
@@ -93,7 +98,32 @@ class LoginPage extends GetView<LoginController> {
             onPressed: () {
               controller.login();
             },
-          )
+          ),
+          const SizedBox(height: 10),
+          // Google Sign-In Button
+          ElevatedButton.icon(
+            style: ElevatedButton.styleFrom(
+              foregroundColor: Colors.black,
+              backgroundColor: Colors.white, // Text color
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(15),
+              ),
+              padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 24),
+            ),
+            icon: Image.asset(
+              'assets/google_logo.png',
+              height: 20,
+              width: 20,
+            ),
+            label: const Text('Sign in with Google'),
+            onPressed: () async {
+              User? user = await authService.signInWithGoogle();
+              if (user != null) {
+                print('Logged in as: ${user.displayName}');
+                // Handle successful login
+              }
+            },
+          ),
         ],
       ),
     );
