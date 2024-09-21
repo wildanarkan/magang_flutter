@@ -14,7 +14,7 @@ class LeaveAddPage extends GetView<LeaveAddController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: const BuildAppbar(title: 'Change Password'),
+      appBar: const BuildAppbar(title: 'Form Ask to Leave'),
       resizeToAvoidBottomInset: true,
       body: Obx(() {
         if (controller.leaveCategoryItem.isEmpty) {

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:nextbasis_hris/common/app_color.dart';
+import 'package:nextbasis_hris/common/app_component.dart';
 import 'package:nextbasis_hris/controllers/navigator_controllers.dart';
 import 'package:nextbasis_hris/widgets/fab_bottom_app_bar.dart';
 
@@ -34,7 +35,7 @@ class NavigatorPage extends GetView<NavigatorControllers> {
           color: Colors.white,
           borderRadius: BorderRadius.circular(8),
         ),
-        margin:  const EdgeInsets.symmetric(horizontal: 50, vertical: 20),
+        margin:  EdgeInsets.symmetric(horizontal: AppComponent.marginPage, vertical: 10),
         child: Column(
           mainAxisSize: MainAxisSize.min,
           mainAxisAlignment: MainAxisAlignment.center,

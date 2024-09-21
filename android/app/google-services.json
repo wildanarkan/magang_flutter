@@ -1,44 +1,26 @@
 {
   "project_info": {
-    "project_number": "819287319733",
-    "project_id": "magang-8406b",
-    "storage_bucket": "magang-8406b.appspot.com"
+    "project_number": "960788493237",
+    "project_id": "intern-nextbasis",
+    "storage_bucket": "intern-nextbasis.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:819287319733:android:9fc9a3490cc2e3ce480afc",
+        "mobilesdk_app_id": "1:960788493237:android:7aa439ac22afc2e5001ffc",
         "android_client_info": {
           "package_name": "com.nextbasis.hris"
         }
       },
-      "oauth_client": [
-        {
-          "client_id": "819287319733-g9u7pvc3ghm52kup1vesh77rt602vmds.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.nextbasis.hris",
-            "certificate_hash": "0b3048c1f753919e986a1a9fa24b674359859ed3"
-          }
-        },
-        {
-          "client_id": "819287319733-gnm8rsu57h2fnfs5tkfi6jduedc5r2lg.apps.googleusercontent.com",
-          "client_type": 3
-        }
-      ],
+      "oauth_client": [],
       "api_key": [
         {
-          "current_key": "AIzaSyB2uN1frNGhZnGOimlH9ewcIqmoJxyNkS0"
+          "current_key": "AIzaSyCmPggbkDSkrN_hHU_aWB1I7-aNIMWTCA8"
         }
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": [
-            {
-              "client_id": "819287319733-gnm8rsu57h2fnfs5tkfi6jduedc5r2lg.apps.googleusercontent.com",
-              "client_type": 3
-            }
-          ]
+          "other_platform_oauth_client": []
         }
       }
     }
