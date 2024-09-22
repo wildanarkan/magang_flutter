@@ -34,7 +34,7 @@ class BuildNullIconText extends StatelessWidget {
             Icon(
               icon,
               size: iconSize ?? 60,
-              color: AppColor.textBody,
+              color: iconColor ?? AppColor.textBody,
             ),
             SizedBox(
               height: spacing ?? 0,
@@ -43,7 +43,7 @@ class BuildNullIconText extends StatelessWidget {
               text ?? '',
               style: TextStyle(
                 fontSize: textSize ?? 17,
-                color: AppColor.textBody,
+                color: textColor ?? AppColor.textBody,
               ),
             ),
           ],

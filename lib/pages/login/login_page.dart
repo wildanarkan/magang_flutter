@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:nextbasis_hris/common/app_routes.dart';
 import 'package:nextbasis_hris/controllers/login_controller.dart';
 import 'package:nextbasis_hris/widgets/backgrounds/build_background_image.dart';
 import 'package:nextbasis_hris/widgets/buttons/build_button.dart';
@@ -90,7 +91,8 @@ class LoginPage extends GetView<LoginController> {
             context: context,
             title: 'Login',
             onPressed: () {
-              controller.login();
+              // controller.login();
+              Get.toNamed(AppRoutes.otp);
             },
           )
         ],

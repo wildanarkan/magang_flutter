@@ -1,5 +1,8 @@
 abstract class AppRoutes {
+
+  // Login
   static const login = '/login';
+  static const otp = '/login/otp';
   static const navigator = '/navigator';
 
   // Business Trip
