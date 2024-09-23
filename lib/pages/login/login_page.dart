@@ -1,6 +1,7 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:nextbasis_hris/common/app_routes.dart';
 import 'package:nextbasis_hris/controllers/login_controller.dart';
 import 'package:nextbasis_hris/widgets/backgrounds/build_background_image.dart';
 import 'package:nextbasis_hris/widgets/buttons/build_button.dart';
@@ -52,11 +53,11 @@ class LoginPage extends GetView<LoginController> {
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 TextField(
-                  controller: controller.edtEmail.value,
+                  controller: controller.edtUsername.value,
                   decoration: const InputDecoration(
-                    hintText: "Email",
+                    hintText: "Username",
                     prefixIcon: Icon(
-                      Icons.email_rounded,
+                      Icons.person,
                       size: 25,
                       color: Colors.grey,
                     ),
@@ -91,8 +92,8 @@ class LoginPage extends GetView<LoginController> {
             context: context,
             title: 'Login',
             onPressed: () {
-              // controller.login();
-              Get.toNamed(AppRoutes.otp);
+              log('Login....');
+              controller.login();
             },
           )
         ],

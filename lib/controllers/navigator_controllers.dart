@@ -50,10 +50,10 @@ class NavigatorControllers extends GetxController {
     print('Fetching user data...');
     try {
       final data = await _userRepository.fetchUserData();
-      userId = data['result']['id']; // Ambil ID pengguna
-      nik.value = data['result']['nik'] ?? 'No Data';
-      city.value = data['result']['city'] ?? 'No Data';
-      profilePhotoUrl.value = data['result']['profile_photo'] ?? '';
+      userId = data['id']; // Ambil ID pengguna
+      nik.value = data['nik'] ?? 'No Data';
+      city.value = data['city'] ?? 'No Data';
+      profilePhotoUrl.value = data['profile_photo'] ?? '';
 
       log('User Id :${userId.toString()}');
 

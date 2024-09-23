@@ -38,13 +38,13 @@ class CodeOtpPage extends GetView<CodeOtpController> {
                 )
               ],
             ),
-             Column(
+            Column(
               children: [
                 const Text(
                   'We have sent the code verification to :',
                 ),
                 Text(
-                  controller.obscureEmail('cillmystic@gmail.com'),
+                  controller.obscureEmail(),
                 ),
               ],
             ),
@@ -97,6 +97,7 @@ class CodeOtpPage extends GetView<CodeOtpController> {
               title: 'VERIFY',
               onPressed: () {
                 controller.printField();
+                controller.verifyOtp();
               },
             ),
             const SizedBox(
@@ -104,9 +105,25 @@ class CodeOtpPage extends GetView<CodeOtpController> {
             ),
             Column(
               children: [
-                const Text("Didn't receive the Code OTP? "),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    const Text("Resend Code OTP in : "),
+                    Obx(
+                      () => Text(
+                        controller.getFormattedTime(),
+                        style: TextStyle(
+                          fontWeight: FontWeight.w600,
+                          color: AppColor.primary,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
                 GestureDetector(
-                  onTap: () {},
+                  onTap: () {
+                    controller.startTimer(); // Resend OTP and restart timer
+                  },
                   child: Text(
                     'RESEND',
                     style: TextStyle(

@@ -48,6 +48,8 @@ class HomePageController extends GetxController {
       isLoading(true);
       final userId = storage.read('userId');
       final data = await userRepository.fetchCheckinToday(userId);
+      log(data.toString());
+
       for (var item in data) {
         final type = item['type'];
         final time = item['time'];

@@ -11,13 +11,13 @@ import 'package:nextbasis_hris/data/models/payroll_model.dart';
 class UserRepository extends GetxService {
   final storage = GetStorage();
 
-  Future<String?> login(String email, String password) async {
+  Future<LoginModel> login(String username, String password) async {
     try {
       final response = await http.post(
         Uri.parse(AppEndpoint.login),
         headers: {'Content-Type': 'application/json'},
         body: jsonEncode({
-          'email': email,
+          'username': username,
           'password': password,
         }),
       );
@@ -25,19 +25,47 @@ class UserRepository extends GetxService {
       if (response.statusCode == 200) {
         final data = json.decode(response.body);
         final loginModel = LoginModel.fromJson(data);
-        final userId = loginModel.result!.user!.id;
-        log('Write userId : $userId');
-        GetStorage().write('userId', '$userId');
-        final fullname =
-            '${loginModel.result!.user!.firstName!} ${loginModel.result!.user!.lastName!}';
-        return loginModel.result?.accessToken;
+        return loginModel;
       } else {
+        log(username);
+        log(password);
         log('Login failed: ${response.statusCode}');
-        return null;
+        return LoginModel();
       }
     } catch (e) {
+      log(username);
+      log(password);
       log('Error Login: $e');
-      return null;
+      return LoginModel();
+    }
+  }
+
+  Future<bool> verifyOtp(String email, String code) async {
+    try {
+      final token = storage.read('accessToken');
+      final response = await http.post(
+        Uri.parse(AppEndpoint.verifyOtp),
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer $token',
+        },
+        body: jsonEncode({
+          'email': email,
+          'otp': code,
+        }),
+      );
+
+      if (response.statusCode == 200) {
+        return true;
+      } else {
+        log('Login failed: ${response.statusCode}');
+        return false;
+      }
+    } catch (e) {
+      log(email);
+      log(code);
+      log('Error Login: $e');
+      return false;
     }
   }
 
@@ -60,6 +88,8 @@ class UserRepository extends GetxService {
   Future<Map<String, dynamic>> checkInOut(
       double latitude, double longitude) async {
     final token = storage.read('accessToken');
+    log(latitude.toString());
+    log(longitude.toString());
     final response = await http.post(
       Uri.parse(AppEndpoint.checkInActivity),
       body: json.encode({
