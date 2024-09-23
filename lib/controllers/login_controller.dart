@@ -10,6 +10,7 @@ class LoginController extends GetxController {
   final edtUsername = TextEditingController().obs;
   final edtPassword = TextEditingController().obs;
   final storage = GetStorage();
+  RxBool isLoading = false.obs;
 
   void resetFields() {
     edtUsername.value.clear();
@@ -28,6 +29,8 @@ class LoginController extends GetxController {
     final password = edtPassword.value.text.trim();
 
     try {
+      isLoading.value = true;
+
       final model = await UserRepository().login(username, password);
       if (model.accessToken != null) {
         await storage.write('accessToken', model.accessToken);
@@ -44,6 +47,8 @@ class LoginController extends GetxController {
       }
     } catch (e) {
       Get.snackbar('Error', 'Terjadi kesalahan: $e');
-    } finally {}
+    } finally {
+      isLoading.value = false;
+    }
   }
 }

@@ -69,6 +69,29 @@ class UserRepository extends GetxService {
     }
   }
 
+  Future<bool> sendOtp() async {
+    try {
+      final token = storage.read('accessToken');
+      final response = await http.post(
+        Uri.parse(AppEndpoint.sendOtp),
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer $token',
+        },
+      );
+
+      if (response.statusCode == 200) {
+        return true;
+      } else {
+        log('send otp failed: ${response.statusCode}');
+        return false;
+      }
+    } catch (e) {
+      log('Error send otp: $e');
+      return false;
+    }
+  }
+
   Future<List<Map<String, dynamic>>> fetchAllUser() async {
     final token = storage.read('accessToken');
     final response = await http.get(

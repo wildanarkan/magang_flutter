@@ -88,12 +88,16 @@ class LoginPage extends GetView<LoginController> {
           const SizedBox(
             height: 20,
           ),
-          BuildButton(
-            context: context,
-            title: 'Login',
-            onPressed: () {
-              log('Login....');
-              controller.login();
+          Obx(
+            () {
+              return BuildButton(
+                context: context,
+                title: controller.isLoading.value ? 'Loading...' : 'Login',
+                onPressed: () {
+                  log('Login....');
+                  controller.login();
+                },
+              );
             },
           )
         ],

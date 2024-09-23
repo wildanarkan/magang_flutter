@@ -11,6 +11,7 @@ class AppEndpoint {
   // static const baseUrl = 'http://192.168.1.104:8000/api/app/';
   static const login = '${baseAppUrl}login';
   static const verifyOtp = '${baseAppUrl}otp/verify/';
+  static const sendOtp = '${baseAppUrl}otp/send/';
   static const user = '${baseAppUrl}user';
   static const profile = '${baseAppUrl}profile/';
   static const updatePhoto = '${baseAppUrl}profile/photo/';
