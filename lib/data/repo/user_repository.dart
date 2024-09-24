@@ -26,17 +26,17 @@ class UserRepository extends GetxService {
         final data = json.decode(response.body);
         final loginModel = LoginModel.fromJson(data);
         return loginModel;
-      } else {
-        log(username);
-        log(password);
-        log('Login failed: ${response.statusCode}');
-        return LoginModel();
       }
+      if (response.statusCode == 401) {
+        throw Exception('401');
+      }
+      if (response.statusCode == 403) {
+        log('Login failed: Karyawan tidak aktif');
+        throw Exception('403');
+      }
+      throw Exception('LoginError: ${response.statusCode}');
     } catch (e) {
-      log(username);
-      log(password);
-      log('Error Login: $e');
-      return LoginModel();
+      throw Exception(e);
     }
   }
 

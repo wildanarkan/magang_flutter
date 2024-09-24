@@ -17,7 +17,7 @@ class LeaveHistoryPage extends GetView<LeaveHistoryController> {
   @override
   Widget build(BuildContext context) {
     final nip = Get.arguments?['nip'] ?? Get.arguments;
-    log('ini adalah nip$nip');
+    log('ini adalah nip $nip');
 
     if (nip == Get.arguments['nip']) {
       controller.filterByNip(nip);
@@ -57,27 +57,28 @@ class LeaveHistoryPage extends GetView<LeaveHistoryController> {
             itemBuilder: (context, index) {
               final leave = leaves[index];
               return BuildCardInfo(
-                title: '${leave.firstName} ${leave.lastName}',
-                subtitle: '${leave.leaveCategory}',
-                appStatus: '${leave.status}',
-                startDate: '${leave.startDate}',
-                endDate: '${leave.endDate}',
-                icon: Icon(
-                  Icons.date_range,
-                  size: 16,
-                  color: AppColor.textBody,
-                ),
-                onTap: () {
-                  Get.toNamed(
-                    AppRoutes.leaveDetail,
-                    arguments: {'leave': leave},
-                  )?.then((result) {
-                    if (result != null && result is int) {
-                      controller.filterByNip(result);
-                    }
+                  title: '${leave.firstName} ${leave.lastName}',
+                  subtitle: '${leave.leaveCategory}',
+                  appStatus: '${leave.status}',
+                  startDate: '${leave.startDate}',
+                  endDate: '${leave.endDate}',
+                  icon: Icon(
+                    Icons.date_range,
+                    size: 16,
+                    color: AppColor.textBody,
+                  ),
+                  onTap: () {
+                    Get.toNamed(
+                      AppRoutes.leaveDetail,
+                      arguments: {
+                        'leave': leave
+                      }, // Passing the selected leave object
+                    )?.then((result) {
+                      if (result != null && result is int) {
+                        controller.filterByNip(result);
+                      }
+                    });
                   });
-                },
-              );
             },
           );
         }
@@ -166,6 +167,16 @@ class LeaveHistoryPage extends GetView<LeaveHistoryController> {
                                 pickedDate.toIso8601String().substring(0, 10);
                           }
                         },
+                      ),
+                    ),
+                    const Padding(
+                      padding: EdgeInsets.all(5),
+                      child: Text(
+                        '-',
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 16,
+                        ),
                       ),
                     ),
                     Expanded(

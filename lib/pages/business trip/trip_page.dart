@@ -42,7 +42,7 @@ class TripPage extends GetView<TripController> {
         ],
       ),
       body: Padding(
-        padding:  EdgeInsets.symmetric(horizontal: AppComponent.marginPage),
+        padding: EdgeInsets.symmetric(horizontal: AppComponent.marginPage),
         child: Obx(() {
           if (controller.isLoading.value) {
             return const Center(child: CircularProgressIndicator());
@@ -69,10 +69,7 @@ class TripPage extends GetView<TripController> {
                   onTap: () {
                     Get.toNamed(
                       AppRoutes.tripDetail,
-                      arguments: {
-                        'trip': trip,
-                        'status': trip.status
-                      },
+                      arguments: {'trip': trip, 'status': trip.status},
                     );
                   },
                 );
@@ -160,6 +157,16 @@ class TripPage extends GetView<TripController> {
                             .substring(0, 10); // Update UI
                       }
                     },
+                  ),
+                ),
+                const Padding(
+                  padding: EdgeInsets.all(5),
+                  child: Text(
+                    '-',
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 16,
+                    ),
                   ),
                 ),
                 Expanded(

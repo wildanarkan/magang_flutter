@@ -22,11 +22,16 @@ class LoginController extends GetxController {
     resetFields();
     Get.deleteAll();
     Get.offAllNamed('/login');
+    Get.snackbar('Success', 'Berhasil Logout');
   }
 
-  Future<void> login() async {
+  Future<SnackbarController> login() async {
     final username = edtUsername.value.text.trim();
     final password = edtPassword.value.text.trim();
+
+    if (username == '' || password == '') {
+      return Get.snackbar('Failed', 'Lengkapi username dan password');
+    }
 
     try {
       isLoading.value = true;
@@ -40,13 +45,21 @@ class LoginController extends GetxController {
         storage.getKeys().forEach((key) {
           log('$key: ${storage.read(key)}');
         });
+        resetFields();
         Get.toNamed(AppRoutes.otp);
-      } else {
-        Get.snackbar('Failed',
-            'Login gagal, Silakan cek kembali email dan password Anda.');
+        return Get.snackbar('Success', 'Check email anda untuk Code OTP');
       }
+      return Get.snackbar('Failed', 'Terjadi Keselahan');
     } catch (e) {
-      Get.snackbar('Error', 'Terjadi kesalahan: $e');
+      log(e.toString());
+      if (e.toString().contains('401')) {
+        return Get.snackbar('Failed', 'Username dan password tidak cocok');
+      } else if (e.toString().contains('403')) {
+        return Get.snackbar(
+            'Error', 'Karyawan tidak aktif. Silakan hubungi admin.');
+      } else {
+        return Get.snackbar('Error', 'Terjadi kesalahan: $e');
+      }
     } finally {
       isLoading.value = false;
     }

@@ -44,7 +44,7 @@ class AppPages {
     ),
     GetPage(
       name: AppRoutes.otp,
-      page: () => CodeOtpPage(),
+      page: () => const CodeOtpPage(),
       binding: CodeOtpBinding()
     ),
     GetPage(

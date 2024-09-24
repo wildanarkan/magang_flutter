@@ -133,7 +133,7 @@ class CodeOtpController extends GetxController {
           Get.back(result: true);
         },
         onCancel: () {
-          Get.back(result: false);
+          Get.back(closeOverlays: true, result: false);
         },
       ),
     );

@@ -174,6 +174,7 @@ class LeaveHistoryDetailPage extends GetView<LeaveHistoryDetailController> {
                       log('canceled');
                     },
                   ),
+                const SizedBox.shrink()
               ]
                   .expand((widget) => [widget, const SizedBox(height: 16)])
                   .toList()
