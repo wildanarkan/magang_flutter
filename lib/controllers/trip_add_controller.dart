@@ -48,11 +48,11 @@ class TripAddController extends GetxController {
   RxBool isLoading = false.obs;
 
   @override
-  void onInit() {
+  void onInit() async {
     super.onInit();
-    fetchCompanyItems();
-    fetchAllCityItems();
-    fetchAllUserItems();
+    await fetchCompanyItems();
+    await fetchAllCityItems();
+    await fetchAllUserItems();
   }
 
   Future<void> fetchCompanyItems() async {
@@ -64,19 +64,15 @@ class TripAddController extends GetxController {
       fetchCompanyCityItems();
       updateCityItems(selectedCompany.value);
     }
-    isLoading.value = false;
   }
 
   Future<void> fetchAllCityItems() async {
-    isLoading.value = true;
     _apiDataAllCity = await _cityRepository.fetchCity();
     allCityItem.value =
         _apiDataAllCity.map((item) => item['name'].toString()).toSet().toList();
-    isLoading.value = false;
   }
 
   Future<void> fetchAllUserItems() async {
-    isLoading.value = true;
     _apiDataAllUser = await _userRepository.fetchAllUser();
     allUserItem.value = _apiDataAllUser
         .map((item) => item['full_name'].toString())
@@ -87,10 +83,8 @@ class TripAddController extends GetxController {
   }
 
   Future<void> fetchCompanyCityItems() async {
-    isLoading.value = true;
     _apiDataCity = await _companyRepository.fetchCompanyCity();
     log(_apiDataCity.toString());
-    isLoading.value = false;
   }
 
   Future<dynamic> postBusinessTrip() async {

@@ -370,4 +370,38 @@ class UserRepository extends GetxService {
     }
     return [];
   }
+
+  Future<bool> saveFcmToken(
+      String userId, String fcmToken, String accessToken) async {
+    final response = await http.post(
+      Uri.parse(AppEndpoint.getFcmToken),
+      headers: {
+        'Authorization': 'Bearer $accessToken',
+      },
+      body: {
+        'user_id': userId,
+        'fcm_token': fcmToken,
+      },
+    );
+    if (response.statusCode == 200) {
+      return true;
+    }
+    return false;
+  }
+
+  Future<bool> deleteFcmToken(String userId, String accessToken) async {
+    final response = await http.post(
+      Uri.parse(AppEndpoint.deleteFcmToken),
+      headers: {
+        'Authorization': 'Bearer $accessToken',
+      },
+      body: {
+        'user_id': userId,
+      },
+    );
+    if (response.statusCode == 200) {
+      return true;
+    }
+    return false;
+  }
 }

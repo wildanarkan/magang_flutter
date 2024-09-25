@@ -7,6 +7,9 @@ import 'package:nextbasis_hris/common/app_routes.dart';
 import 'package:nextbasis_hris/data/repo/user_repository.dart';
 
 class LoginController extends GetxController {
+  // Repository
+  final UserRepository _userRepository = UserRepository();
+
   final edtUsername = TextEditingController().obs;
   final edtPassword = TextEditingController().obs;
   final storage = GetStorage();
@@ -18,11 +21,25 @@ class LoginController extends GetxController {
   }
 
   void logout() async {
-    await GetStorage().erase();
-    resetFields();
-    Get.deleteAll();
-    Get.offAllNamed('/login');
-    Get.snackbar('Success', 'Berhasil Logout');
+    final userId = storage.read('userId');
+    final token = storage.read('accessToken');
+
+    try {
+      // Kirim permintaan untuk menghapus token FCM dari server
+      final isDeleted = await _userRepository.deleteFcmToken(userId, token);
+      if (!isDeleted) {
+        log('Failed to delete FCM token');
+      }
+    } catch (e) {
+      log('Error while deleting FCM token: $e');
+    } finally {
+      // Hapus data dari GetStorage dan reset field
+      await GetStorage().erase();
+      resetFields();
+      Get.deleteAll();
+      Get.offAllNamed('/login');
+      Get.snackbar('Success', 'Berhasil Logout');
+    }
   }
 
   Future<SnackbarController> login() async {
@@ -36,7 +53,7 @@ class LoginController extends GetxController {
     try {
       isLoading.value = true;
 
-      final model = await UserRepository().login(username, password);
+      final model = await _userRepository.login(username, password);
       if (model.accessToken != null) {
         await storage.write('accessToken', model.accessToken);
         await storage.write('email', model.user!.email);

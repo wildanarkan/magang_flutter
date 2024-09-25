@@ -129,7 +129,7 @@ class LeaveHistoryController extends GetxController {
           .toSet()
           .toList();
     } catch (e) {
-      Get.snackbar('Error', 'Failed to load user items');
+      Get.snackbar('Error', 'Failed to load user items : $e');
     }
   }
 

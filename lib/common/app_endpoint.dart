@@ -27,11 +27,11 @@ class AppEndpoint {
   static const leaveStore = '${baseAppUrl}leave/make/';
   static const business = '${baseAppUrl}business/';
   static const tripToday = '${baseAppUrl}business/trip-today/';
-  static const company = '${baseAppUrl}business/company';
+  static const company = '${baseAppUrl}companycity/company';
   static const updateExtendedDay = '${baseAppUrl}business/extend/';
-  static const companyCity = '${baseAppUrl}business/companycity/';
-  static const city = '${baseAppUrl}business/city/';
-  static const allUser = '${baseAppUrl}business/users/fullname';
+  static const companyCity = '${baseAppUrl}companycity/companycity/';
+  static const city = '${baseAppUrl}companycity/city/';
+  static const allUser = '${baseAppUrl}user/users/fullname';
   static const percentage = '${baseAppUrl}business/percentage';
   static const calculate = '${baseAppUrl}business/calculate';
   static const nominalRealization = '${baseAppUrl}business/realization';
@@ -45,4 +45,6 @@ class AppEndpoint {
   static const getRealizationId = '${baseAppUrl}business/realizationid/';
   static const checkInActivity = '${baseAppUrl}checkin/';
   static const checkInToday = '${baseAppUrl}checkin/today/';
+  static const getFcmToken = '${baseAppUrl}user/fcm-token';
+  static const deleteFcmToken = '${baseAppUrl}user/delete-fcm-token';
 }

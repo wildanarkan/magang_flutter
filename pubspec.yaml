@@ -33,6 +33,7 @@ dependencies:
   dotted_border: ^2.1.0
   file_picker: ^8.1.2
   firebase_core: ^3.5.0
+  firebase_messaging: ^15.1.2
   floating_draggable_widget: ^2.1.5
   flutter:
     sdk: flutter

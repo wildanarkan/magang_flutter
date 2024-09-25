@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:developer';
 
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
@@ -38,6 +39,7 @@ class CodeOtpController extends GetxController {
   }
 
   Future<SnackbarController> verifyOtp() async {
+    final userId = storage.read('userId');
     if (otpController.text.length != 6) {
       return Get.snackbar('Failed', 'Please fill Code OTP');
     }
@@ -52,6 +54,17 @@ class CodeOtpController extends GetxController {
         storage.getKeys().forEach((key) {
           log('$key: ${storage.read(key)}');
         });
+
+        final fcmToken = await FirebaseMessaging.instance.getToken();
+        if (fcmToken != null) {
+          final token = storage.read('accessToken');
+          final isTokenSaved =
+              await _userRepository.saveFcmToken(userId, fcmToken, token);
+          if (!isTokenSaved) {
+            log('Failed to save FCM token');
+          }
+        }
+
         Get.offAllNamed(AppRoutes.navigator);
         return Get.snackbar('Success', 'Code OTP Valid');
       } else {
@@ -137,7 +150,6 @@ class CodeOtpController extends GetxController {
         },
       ),
     );
-    return result ??
-        false;
+    return result ?? false;
   }
 }
