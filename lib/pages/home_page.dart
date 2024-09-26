@@ -250,8 +250,6 @@ class HomePage extends GetView<NavigatorControllers> {
   }
 
   Widget buildCardProfile(BuildContext context) {
-    // final ProfilePageController profileController =
-    //   Get.find<ProfilePageController>();
     return Container(
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(10),
@@ -271,6 +269,7 @@ class HomePage extends GetView<NavigatorControllers> {
                     () => CachedNetworkImage(
                       height: 40,
                       width: 40,
+                      fit: BoxFit.cover,
                       imageUrl:
                           '${AppEndpoint.photoUrl}${controller.profilePhotoUrl.value}',
                     ),

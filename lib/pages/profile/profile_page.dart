@@ -168,6 +168,7 @@ class ProfilePage extends GetView<NavigatorControllers> {
                               () => CachedNetworkImage(
                                 height: 80,
                                 width: 80,
+                                fit: BoxFit.cover,
                                 imageUrl:
                                     '${AppEndpoint.photoUrl}${controller.profilePhotoUrl.value}',
                               ),
