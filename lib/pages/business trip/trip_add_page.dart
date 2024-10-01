@@ -53,7 +53,6 @@ class TripAddPage extends GetView<TripAddController> {
                               onChanged: (newValue) {
                                 if (controller.selectedCompany.value !=
                                     newValue) {
-                                  // Update company and reset city and related fields
                                   controller.selectedCompany.value = newValue!;
                                   controller.updateCityItems(newValue);
                                   controller.clearCityRelatedData();
@@ -181,7 +180,7 @@ class TripAddPage extends GetView<TripAddController> {
                             () => Column(
                               children: controller.employeeList.map((employee) {
                                 return BuildItemEmployee(
-                                  nameEmployee: employee.fullName,
+                                  nameEmployee: employee.fullName!,
                                   onDelete: () {
                                     controller.removeEmployee(employee);
                                   },
@@ -200,17 +199,28 @@ class TripAddPage extends GetView<TripAddController> {
                     context: context,
                     title: 'Simpan',
                     onPressed: () async {
+                      // Validasi input sebelum menyimpan
+                      if (controller.selectedCompany.value.isEmpty ||
+                          controller.selectedCity.value.isEmpty ||
+                          controller.startDateController.value.text.isEmpty ||
+                          controller.endDateController.value.text.isEmpty ||
+                          controller.employeeList.isEmpty) {
+                        Get.snackbar(
+                            'Error', 'Please fill all required fields');
+                        return;
+                      }
+
                       int? businessTripId = await controller.postBusinessTrip();
                       if (businessTripId != null) {
                         if (controller.employeeList.isNotEmpty) {
                           await controller.postTripDetail(businessTripId);
                         }
-                        log('succes');
+                        log('Success');
                         final tripController = Get.find<TripController>();
                         await tripController.fetchBusinessTrips();
                         Get.back(closeOverlays: true);
                         Get.snackbar(
-                            'Success', 'Success to create Business Trip');
+                            'Success', 'Successfully created Business Trip');
                       } else {
                         log(businessTripId.toString());
                         Get.snackbar('Error', 'Failed to create Business Trip');

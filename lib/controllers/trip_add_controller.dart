@@ -2,6 +2,7 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:nextbasis_hris/controllers/navigator_controllers.dart';
 import 'package:nextbasis_hris/data/models/employee_name.dart';
 import 'package:nextbasis_hris/data/repo/business_trip_repository.dart';
 import 'package:nextbasis_hris/data/repo/city_repository.dart';
@@ -9,12 +10,16 @@ import 'package:nextbasis_hris/data/repo/company_repository.dart';
 import 'package:nextbasis_hris/data/repo/user_repository.dart';
 
 class TripAddController extends GetxController {
+  final navigatorController = Get.find<NavigatorControllers>();
   // Repository
   final BusinessTripRepository _businessTripRepository =
       BusinessTripRepository();
   final UserRepository _userRepository = UserRepository();
   final CompanyRepository _companyRepository = CompanyRepository();
   final CityRepository _cityRepository = CityRepository();
+
+  var currentUserName = ''.obs;
+  var currentUserId = 0.obs;
 
   var selectedCompany = ''.obs;
   var selectedCity = ''.obs;
@@ -26,7 +31,7 @@ class TripAddController extends GetxController {
   var allCityItem = <String>[].obs;
   var allUserItem = <String>[].obs;
 
-  RxList employeeList = List.empty(growable: true).obs;
+  RxList<EmployeeName> employeeList = <EmployeeName>[].obs;
 
   var isCityEnabled = false.obs;
 
@@ -50,9 +55,50 @@ class TripAddController extends GetxController {
   @override
   void onInit() async {
     super.onInit();
+    await fetchUserData();
     await fetchCompanyItems();
     await fetchAllCityItems();
     await fetchAllUserItems();
+    addCurrentUserToEmployeeList();
+  }
+
+  Future<void> fetchUserData() async {
+    isLoading.value = true; // Mengatur status loading
+    try {
+      // Mengambil data pengguna
+      final userData = await _userRepository.fetchUserData();
+
+      // Mengatur nama lengkap dari first_name dan last_name
+      currentUserName.value =
+          "${userData['first_name']} ${userData['last_name']}".trim();
+
+      currentUserId.value = userData['id']; // Mengatur ID pengguna
+      log('Current User Name: ${currentUserName.value}'); // Menampilkan nama pengguna
+
+      addCurrentUserToEmployeeList(); // Menambahkan pengguna ke daftar employee
+    } catch (e) {
+      log('Error fetching user data: $e'); // Menangani error
+    } finally {
+      isLoading.value = false; // Mengatur status loading ke false
+    }
+  }
+
+  void addCurrentUserToEmployeeList() {
+    if (navigatorController.rolePriority.value > 2) {
+      log(navigatorController.rolePriority.value.toString());
+      // Pastikan currentUserName tidak kosong
+      if (currentUserName.value.isNotEmpty) {
+        // Tambahkan pengguna yang sedang login ke dalam daftar employee jika belum ada
+        if (!employeeList
+            .any((employee) => employee.fullName == currentUserName.value)) {
+          employeeList.add(EmployeeName(
+              id: currentUserId.value, fullName: currentUserName.value));
+          log('Added Current User: ${currentUserName.value}, ID: ${currentUserId.value}');
+        }
+      } else {
+        log('Current user name is empty, cannot add to employee list');
+      }
+    }
   }
 
   Future<void> fetchCompanyItems() async {
@@ -184,6 +230,15 @@ class TripAddController extends GetxController {
   }
 
   void removeEmployee(EmployeeName employee) {
+    
+    // Cek jika employee adalah pengguna yang sedang login
+    if (employee.fullName == currentUserName.value && navigatorController.rolePriority.value > 2 ){
+      // Perbaikan di sini
+      Get.snackbar(
+          'Error', 'Anda tidak dapat menghapus karyawan yang sedang login');
+      return;
+    }
+
     employeeList.remove(employee);
     update();
   }

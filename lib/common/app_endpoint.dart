@@ -1,12 +1,12 @@
 class AppEndpoint {
-  static const baseUrl = 'http://192.168.1.104:8000/';
+  // static const baseUrl = 'http://192.168.1.104:8000/';
   // static const baseUrl = 'http://192.168.1.30:8000/';
   // static const baseUrl = 'http://192.168.43.191:8000/';
   static const baseAppUrl = '${baseUrl}api/app/';
   static const photoUrl = '${baseUrl}storage/profile_photos/';
   static const photoProofUrl = '${baseUrl}storage/photo_proofs/';
   static const photoDocumentUrl = '${baseUrl}storage/photo_document/';
-  // static const baseUrl = 'http://192.168.0.12:8000/';
+  static const baseUrl = 'http://192.168.0.12:8000/';
   // static const photoUrl = 'http://192.168.0.12:8000';
   // static const baseUrl = 'http://192.168.1.104:8000/api/app/';
   static const login = '${baseAppUrl}login';
@@ -27,7 +27,7 @@ class AppEndpoint {
   static const leaveStore = '${baseAppUrl}leave/make/';
   static const business = '${baseAppUrl}business/';
   static const tripToday = '${baseAppUrl}business/trip-today/';
-  static const company = '${baseAppUrl}companycity/company';
+  static const company = '${baseAppUrl}companycity/company/';
   static const updateExtendedDay = '${baseAppUrl}business/extend/';
   static const companyCity = '${baseAppUrl}companycity/companycity/';
   static const city = '${baseAppUrl}companycity/city/';
