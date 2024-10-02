@@ -206,7 +206,7 @@ class TripPage extends GetView<TripController> {
                 // Hanya validasi jika salah satu tanggal diisi (untuk filter tanggal)
                 if ((startDate != null && endDate == null) ||
                     (startDate == null && endDate != null)) {
-                  Get.snackbar('Error', 'Data tanggal harus diisi semua');
+                  Get.snackbar('Error', backgroundColor: AppColor.error, 'Data tanggal harus diisi semua');
                   return;
                 }
 

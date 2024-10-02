@@ -5,6 +5,7 @@ import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
+import 'package:nextbasis_hris/common/app_color.dart';
 import 'package:nextbasis_hris/common/app_routes.dart';
 import 'package:nextbasis_hris/data/repo/user_repository.dart';
 import 'package:nextbasis_hris/widgets/dialogs/build_dialog_confirmation.dart';
@@ -41,7 +42,7 @@ class CodeOtpController extends GetxController {
   Future<SnackbarController> verifyOtp() async {
     final userId = storage.read('userId');
     if (otpController.text.length != 6) {
-      return Get.snackbar('Failed', 'Please fill Code OTP');
+      return Get.snackbar('Failed', backgroundColor: AppColor.failed, 'Please fill Code OTP');
     }
     try {
       isLoading.value = true;
@@ -66,12 +67,12 @@ class CodeOtpController extends GetxController {
         }
 
         Get.offAllNamed(AppRoutes.navigator);
-        return Get.snackbar('Success', 'Code OTP Valid');
+        return Get.snackbar('Success', backgroundColor: AppColor.success, 'Code OTP Valid');
       } else {
-        return Get.snackbar('Failed', 'Code OTP Invalid Or Expired');
+        return Get.snackbar('Failed', backgroundColor: AppColor.failed, 'Code OTP Invalid Or Expired');
       }
     } catch (e) {
-      return Get.snackbar('Error', 'Terjadi kesalahan: $e');
+      return Get.snackbar('Error', backgroundColor: AppColor.error, 'Terjadi kesalahan: $e');
     } finally {
       isLoading.value = false;
     }
@@ -80,17 +81,17 @@ class CodeOtpController extends GetxController {
   Future<SnackbarController> sendOtp() async {
     try {
       if (secondsRemaining.value != 0) {
-        return Get.snackbar('Failed', 'Wait for a minute!');
+        return Get.snackbar('Failed', backgroundColor: AppColor.failed, 'Wait for a minute!');
       }
       isLoading.value = true;
       final success = await _userRepository.sendOtp();
       if (success) {
         startTimer();
-        return Get.snackbar('Success', 'Code OTP send to your email');
+        return Get.snackbar('Success', backgroundColor: AppColor.success, 'Code OTP send to your email');
       }
-      return Get.snackbar('Failed', 'Code OTP Invalid Or Expired');
+      return Get.snackbar('Failed', backgroundColor: AppColor.failed, 'Code OTP Invalid Or Expired');
     } catch (e) {
-      return Get.snackbar('Error', 'Terjadi kesalahan: $e');
+      return Get.snackbar('Error', backgroundColor: AppColor.error, 'Terjadi kesalahan: $e');
     } finally {
       isLoading.value = false;
     }

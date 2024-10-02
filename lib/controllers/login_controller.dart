@@ -3,6 +3,7 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
+import 'package:nextbasis_hris/common/app_color.dart';
 import 'package:nextbasis_hris/common/app_routes.dart';
 import 'package:nextbasis_hris/data/repo/user_repository.dart';
 
@@ -38,7 +39,7 @@ class LoginController extends GetxController {
       resetFields();
       Get.deleteAll();
       Get.offAllNamed('/login');
-      Get.snackbar('Success', 'Berhasil Logout');
+      Get.snackbar('Success', backgroundColor: AppColor.success, 'Berhasil Logout');
     }
   }
 
@@ -47,7 +48,7 @@ class LoginController extends GetxController {
     final password = edtPassword.value.text.trim();
 
     if (username == '' || password == '') {
-      return Get.snackbar('Failed', 'Lengkapi username dan password');
+      return Get.snackbar('Failed', backgroundColor: AppColor.failed, 'Lengkapi username dan password');
     }
 
     try {
@@ -64,18 +65,18 @@ class LoginController extends GetxController {
         });
         resetFields();
         Get.toNamed(AppRoutes.otp);
-        return Get.snackbar('Success', 'Check email anda untuk Code OTP');
+        return Get.snackbar('Success', backgroundColor: AppColor.success, 'Check email anda untuk Code OTP');
       }
-      return Get.snackbar('Failed', 'Terjadi Keselahan');
+      return Get.snackbar('Failed', backgroundColor: AppColor.failed, 'Terjadi Keselahan');
     } catch (e) {
       log(e.toString());
       if (e.toString().contains('401')) {
-        return Get.snackbar('Failed', 'Username dan password tidak cocok');
+        return Get.snackbar('Failed', backgroundColor: AppColor.failed, 'Username dan password tidak cocok');
       } else if (e.toString().contains('403')) {
         return Get.snackbar(
             'Error', 'Karyawan tidak aktif. Silakan hubungi admin.');
       } else {
-        return Get.snackbar('Error', 'Terjadi kesalahan: $e');
+        return Get.snackbar('Error', backgroundColor: AppColor.error, 'Terjadi kesalahan: $e');
       }
     } finally {
       isLoading.value = false;

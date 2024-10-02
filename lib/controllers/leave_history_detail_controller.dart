@@ -1,4 +1,5 @@
 import 'package:get/get.dart';
+import 'package:nextbasis_hris/common/app_color.dart';
 import 'package:nextbasis_hris/controllers/leave_history_controller.dart';
 import 'package:nextbasis_hris/controllers/leave_personal_controller.dart';
 import 'package:nextbasis_hris/data/repo/leave_history_repository.dart';
@@ -17,9 +18,9 @@ class LeaveHistoryDetailController extends GetxController {
       Get.back(closeOverlays: true);
       leaveController.fetchLeaves();
       leavePersonalPageController.fetchLeaves();
-      Get.snackbar('Success', 'Leave status updated to $status');
+      Get.snackbar('Success', backgroundColor: AppColor.success, 'Leave status updated to $status');
     } else {
-      Get.snackbar('Error', 'Failed to update leave status');
+      Get.snackbar('Error', backgroundColor: AppColor.error, 'Failed to update leave status');
     }
   }
 }

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:nextbasis_hris/common/app_color.dart';
 import 'package:nextbasis_hris/controllers/navigator_controllers.dart';
 import 'package:nextbasis_hris/data/repo/user_repository.dart';
 
@@ -68,7 +69,7 @@ class ProfileUpdateController extends GetxController {
         city.value = cityController.text;
         address.value = addressController.text;
 
-        Get.snackbar('Success', 'Profile updated successfully');
+        Get.snackbar('Success', backgroundColor: AppColor.success, 'Profile updated successfully');
 
         await Future.delayed(const Duration(seconds: 1));
         Navigator.pop(Get.context!);
@@ -76,7 +77,7 @@ class ProfileUpdateController extends GetxController {
 
       return success;
     } catch (e) {
-      Get.snackbar('Error', e.toString().replaceFirst('Exception: ', ''));
+      Get.snackbar('Error', backgroundColor: AppColor.error, e.toString().replaceFirst('Exception: ', ''));
       return false;
     }
   }

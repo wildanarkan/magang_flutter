@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:nextbasis_hris/common/app_color.dart';
 import 'package:nextbasis_hris/data/models/leave_model.dart';
 import 'package:nextbasis_hris/data/repo/leave_history_repository.dart';
 import 'package:nextbasis_hris/data/repo/user_repository.dart';
@@ -91,7 +92,7 @@ class LeaveHistoryController extends GetxController {
 
     if ((startDate != null && endDate == null) ||
         (startDate == null && endDate != null)) {
-      Get.snackbar('Error', 'Data harus diisi semua');
+      Get.snackbar('Error', backgroundColor: AppColor.error, 'Data harus diisi semua');
       return;
     }
 
@@ -129,7 +130,7 @@ class LeaveHistoryController extends GetxController {
           .toSet()
           .toList();
     } catch (e) {
-      Get.snackbar('Error', 'Failed to load user items : $e');
+      Get.snackbar('Error', backgroundColor: AppColor.error, 'Failed to load user items : $e');
     }
   }
 

@@ -7,6 +7,7 @@ import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:http/http.dart' as http;
 import 'package:image_picker/image_picker.dart';
+import 'package:nextbasis_hris/common/app_color.dart';
 import 'package:nextbasis_hris/common/app_endpoint.dart';
 import 'package:nextbasis_hris/controllers/planning_controller.dart';
 import 'package:nextbasis_hris/data/repo/planning_repository.dart';
@@ -72,10 +73,10 @@ class PlanningUpdateController extends GetxController {
 
         log(data.toString());
       } else {
-        Get.snackbar('Error', 'Failed to load item details');
+        Get.snackbar('Error', backgroundColor: AppColor.error, 'Failed to load item details');
       }
     } catch (e) {
-      Get.snackbar('Error', 'An error occurred: $e');
+      Get.snackbar('Error', backgroundColor: AppColor.error, 'An error occurred: $e');
     } finally {
       isLoading.value = false;
     }
@@ -94,9 +95,9 @@ class PlanningUpdateController extends GetxController {
       if (success) {
         nominalPageController.fetchNominalData(idBusinessTrip);
         Get.back(closeOverlays: true);
-        Get.snackbar('Success', 'Data successfully updated');
+        Get.snackbar('Success', backgroundColor: AppColor.success, 'Data successfully updated');
       } else {
-        Get.snackbar('Error', 'Failed to edit data');
+        Get.snackbar('Error', backgroundColor: AppColor.error, 'Failed to edit data');
       }
     } finally {
       isLoading.value = false;
@@ -135,7 +136,7 @@ class PlanningUpdateController extends GetxController {
         selectedCompany.value = companyItem[0];
       }
     } catch (e) {
-      Get.snackbar('Error', e.toString());
+      Get.snackbar('Error', backgroundColor: AppColor.error, e.toString());
     } finally {
       isLoading.value = false;
     }
@@ -168,9 +169,9 @@ class PlanningUpdateController extends GetxController {
 
     if (success) {
       Get.back(result: true, closeOverlays: true);
-      Get.snackbar('Success', 'Expense successfully created');
+      Get.snackbar('Success', backgroundColor: AppColor.success, 'Expense successfully created');
     } else {
-      Get.snackbar('Error', 'Failed to created expense');
+      Get.snackbar('Error', backgroundColor: AppColor.error, 'Failed to created expense');
     }
   }
 }

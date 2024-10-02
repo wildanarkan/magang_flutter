@@ -2,6 +2,7 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:nextbasis_hris/common/app_color.dart';
 import 'package:nextbasis_hris/controllers/navigator_controllers.dart';
 import 'package:nextbasis_hris/data/models/employee_name.dart';
 import 'package:nextbasis_hris/data/repo/business_trip_repository.dart';
@@ -147,7 +148,7 @@ class TripAddController extends GetxController {
       log('Business trip ID: ${responseData['data']['id']}');
       return responseData['data']['id'];
     } catch (e) {
-      Get.snackbar('Error', e.toString().replaceFirst('Exception: ', ''));
+      Get.snackbar('Error', backgroundColor: AppColor.error, e.toString().replaceFirst('Exception: ', ''));
     }
   }
 
@@ -164,7 +165,7 @@ class TripAddController extends GetxController {
         log('Error Failed create trip detail');
       }
     } catch (e) {
-      Get.snackbar('Error', e.toString().replaceFirst('Exception: ', ''));
+      Get.snackbar('Error', backgroundColor: AppColor.error, e.toString().replaceFirst('Exception: ', ''));
     }
   }
 
@@ -212,7 +213,7 @@ class TripAddController extends GetxController {
   void addEmployeeToList() {
     if (employeeList.length < 2) {
       if (selectedAllUser.isEmpty) {
-        Get.snackbar('Error', 'Mohon pilih employee terlebih dahulu');
+        Get.snackbar('Error', backgroundColor: AppColor.error, 'Mohon pilih employee terlebih dahulu');
       } else if (!employeeList
           .any((employee) => employee.fullName == selectedAllUser.value)) {
         var selectedUser = _apiDataAllUser
@@ -221,10 +222,10 @@ class TripAddController extends GetxController {
             id: selectedUser['id'], fullName: selectedAllUser.value));
         log('Added Employee: ${selectedAllUser.value}, ID: ${selectedUser['id']}');
       } else {
-        Get.snackbar('Error', 'Employee sudah ada dalam list');
+        Get.snackbar('Error', backgroundColor: AppColor.error, 'Employee sudah ada dalam list');
       }
     } else {
-      Get.snackbar('Error', 'Maksimal hanya bisa menambah 2 orang');
+      Get.snackbar('Error', backgroundColor: AppColor.error, 'Maksimal hanya bisa menambah 2 orang');
     }
     update();
   }

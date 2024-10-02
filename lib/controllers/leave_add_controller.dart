@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:nextbasis_hris/common/app_color.dart';
 import 'package:nextbasis_hris/data/repo/leave_history_repository.dart';
 
 class LeaveAddController extends GetxController {
@@ -52,9 +53,9 @@ class LeaveAddController extends GetxController {
 
     if (isSuccess) {
       Get.back(closeOverlays: true);
-      Get.snackbar('Success', 'Leave request successfully created');
+      Get.snackbar('Success', backgroundColor: AppColor.success, 'Leave request successfully created');
     } else {
-      Get.snackbar('Failed',
+      Get.snackbar('Failed', backgroundColor: AppColor.failed,
           'Masukkan semua data dengan benar');
     }
   }

@@ -4,6 +4,7 @@ import 'dart:developer';
 import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
+import 'package:nextbasis_hris/common/app_color.dart';
 import 'package:nextbasis_hris/data/models/business_trip_model.dart';
 import 'package:nextbasis_hris/data/repo/business_trip_repository.dart';
 import 'package:nextbasis_hris/data/repo/user_repository.dart';
@@ -72,7 +73,7 @@ class HomePageController extends GetxController {
 
     serviceEnabled = await Geolocator.isLocationServiceEnabled();
     if (!serviceEnabled) {
-      Get.snackbar('Error',
+      Get.snackbar('Error', backgroundColor: AppColor.error,
           'Location services are disabled. Please enable the services');
       return false;
     }
@@ -81,13 +82,13 @@ class HomePageController extends GetxController {
     if (permission == LocationPermission.denied) {
       permission = await Geolocator.requestPermission();
       if (permission == LocationPermission.denied) {
-        Get.snackbar('Error', 'Location permissions are denied');
+        Get.snackbar('Error', backgroundColor: AppColor.error, 'Location permissions are denied');
         return false;
       }
     }
 
     if (permission == LocationPermission.deniedForever) {
-      Get.snackbar('Error',
+      Get.snackbar('Error', backgroundColor: AppColor.error,
           'Location permissions are permanently denied, we cannot request permissions.');
       return false;
     }
@@ -108,13 +109,13 @@ class HomePageController extends GetxController {
 
       if (data['message'].contains('Check-in')) {
         startTime.value = data['check_in_time'];
-        Get.snackbar('Success', 'Check-in successful');
+        Get.snackbar('Success', backgroundColor: AppColor.success, 'Check-in successful');
       } else if (data['message'].contains('Check-out')) {
         endTime.value = data['check_out_time'];
-        Get.snackbar('Success', 'Check-out successful');
+        Get.snackbar('Success', backgroundColor: AppColor.success, 'Check-out successful');
       }
     } catch (e) {
-      Get.snackbar('Error', e.toString().replaceAll('Exception: ', ''));
+      Get.snackbar('Error', backgroundColor: AppColor.error, e.toString().replaceAll('Exception: ', ''));
       log('Error in checkInOut: ${e.toString()}');
     } finally {
       isLoading.value = false;
@@ -163,14 +164,14 @@ class HomePageController extends GetxController {
       // Remove from saved trips
       savedBusinessTrips.removeWhere(
           (savedTrip) => savedTrip.idBusinessTrip == trip.idBusinessTrip);
-      Get.snackbar('Success', 'Remove at saved business trip');
+      Get.snackbar('Success', backgroundColor: AppColor.success, 'Remove at saved business trip');
     } else if (savedBusinessTrips.length < 2) {
       // Add to saved trips
       savedBusinessTrips.add(trip);
-      Get.snackbar('Success', 'Add at saved business trip');
+      Get.snackbar('Success', backgroundColor: AppColor.success, 'Add at saved business trip');
     } else {
       log(savedBusinessTrips.length.toString());
-      Get.snackbar('Failed', 'Limit add saved business trip');
+      Get.snackbar('Failed', backgroundColor: AppColor.failed, 'Limit add saved business trip');
     }
     updateStorage();
   }

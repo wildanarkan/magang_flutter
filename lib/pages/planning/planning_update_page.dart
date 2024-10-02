@@ -177,7 +177,7 @@ class PlanningUpdatePage extends GetView<PlanningUpdateController> {
                             controller.amountController.value.text != '') {
                           controller.postRealization();
                         } else {
-                          Get.snackbar('Error', 'Fill your data');
+                          Get.snackbar('Error', backgroundColor: AppColor.error, 'Fill your data');
                         }
                       }
                     },

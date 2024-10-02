@@ -223,7 +223,7 @@ class TripAddPage extends GetView<TripAddController> {
                             'Success', 'Successfully created Business Trip');
                       } else {
                         log(businessTripId.toString());
-                        Get.snackbar('Error', 'Failed to create Business Trip');
+                        Get.snackbar('Error', backgroundColor: AppColor.error, 'Failed to create Business Trip');
                       }
                     },
                   ),

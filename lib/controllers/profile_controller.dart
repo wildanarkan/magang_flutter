@@ -3,6 +3,7 @@ import 'dart:developer';
 import 'package:get/get.dart';
 import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:nextbasis_hris/common/app_color.dart';
 import 'package:nextbasis_hris/controllers/navigator_controllers.dart';
 import 'package:nextbasis_hris/data/repo/user_repository.dart';
 
@@ -34,9 +35,9 @@ class ProfileController extends GetxController {
                 Get.find<NavigatorControllers>();
             profilePhotoUrl.value = newProfilePhotoUrl;
             controller.fetchUserData();
-            Get.snackbar('Success', 'Profile photo updated successfully');
+            Get.snackbar('Success', backgroundColor: AppColor.success, 'Profile photo updated successfully');
           } else {
-            Get.snackbar('Error', 'Failed to update profile photo');
+            Get.snackbar('Error', backgroundColor: AppColor.error, 'Failed to update profile photo');
           }
         } else {
           Get.snackbar('Canceled', 'Photo cropping canceled');
@@ -44,7 +45,7 @@ class ProfileController extends GetxController {
       }
     } catch (e) {
       log(e.toString());
-      Get.snackbar('Error', 'An error occurred: $e');
+      Get.snackbar('Error', backgroundColor: AppColor.error, 'An error occurred: $e');
     }
   }
 }

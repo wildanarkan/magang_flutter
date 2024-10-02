@@ -35,6 +35,10 @@ class AppColor {
   static Color decline = const Color(0xffA81616);
   static Color backgroundDecline= const Color(0x1AA81616);
 
+  // SNACKBAR
+  static Color success = const Color(0xFFC8E6C9);
+  static Color error = const Color(0xFFFFCDD2);
+  static Color failed = const Color(0xFFFFF9C4);
 
 
 }

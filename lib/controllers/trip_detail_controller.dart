@@ -4,6 +4,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
+import 'package:nextbasis_hris/common/app_color.dart';
 import 'package:nextbasis_hris/controllers/home_controller.dart';
 import 'package:nextbasis_hris/controllers/trip_controller.dart';
 import 'package:nextbasis_hris/data/models/business_trip_model.dart';
@@ -69,7 +70,7 @@ class TripDetailController extends GetxController {
     try {
       await _businessTripRepository.getPhotoDocument(url, fileName);
     } catch (e) {
-      Get.snackbar('Error', 'Photo document tidak dapat ditemukan');
+      Get.snackbar('Error', backgroundColor: AppColor.error, 'Photo document tidak dapat ditemukan');
       print('Error: $e');
     }
   }
@@ -82,9 +83,9 @@ class TripDetailController extends GetxController {
       extendedController.value.clear();
       isChangeExtend = true;
       Get.back(closeOverlays: true);
-      Get.snackbar('Success', 'Extend updated to $newExtendDay');
+      Get.snackbar('Success', backgroundColor: AppColor.success, 'Extend updated to $newExtendDay');
     } catch (e) {
-      Get.snackbar('Error', 'An error occurred: $e');
+      Get.snackbar('Error', backgroundColor: AppColor.error, 'An error occurred: $e');
     }
   }
 
@@ -96,10 +97,10 @@ class TripDetailController extends GetxController {
       isChangePhoto = true;
       log('File updated: ${photoDocument.value}');
       Get.back();
-      Get.snackbar('Success', 'File updated successfully');
+      Get.snackbar('Success', backgroundColor: AppColor.success, 'File updated successfully');
     } catch (e) {
       Get.back();
-      Get.snackbar('Error', 'An error occurred: $e');
+      Get.snackbar('Error', backgroundColor: AppColor.error, 'An error occurred: $e');
     }
   }
 

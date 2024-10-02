@@ -213,7 +213,7 @@ class LeaveHistoryPage extends GetView<LeaveHistoryController> {
                     final endDate = controller.selectedEndDate.value;
                     if ((startDate != null && endDate == null) ||
                         (startDate == null && endDate != null)) {
-                      Get.snackbar('Error', 'Data tanggal harus diisi semua');
+                      Get.snackbar('Error', backgroundColor: AppColor.error, 'Data tanggal harus diisi semua');
                       return;
                     }
                     controller.startDateController.value.clear();

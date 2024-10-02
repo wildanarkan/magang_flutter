@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:nextbasis_hris/common/app_color.dart';
 import 'package:nextbasis_hris/data/models/business_trip_model.dart';
 import 'package:nextbasis_hris/data/repo/business_trip_repository.dart';
 import 'package:nextbasis_hris/data/repo/company_repository.dart';
@@ -68,7 +69,7 @@ class TripController extends GetxController {
       companyItem.value =
           data.map<String>((item) => item['name'].toString()).toSet().toList();
     } catch (e) {
-      Get.snackbar('Error', 'Failed to load company items');
+      Get.snackbar('Error', backgroundColor: AppColor.error, 'Failed to load company items');
     }
   }
 
@@ -82,7 +83,7 @@ class TripController extends GetxController {
 
     if ((startDate != null && endDate == null) ||
         (startDate == null && endDate != null)) {
-      Get.snackbar('Error', 'Data harus diisi semua');
+      Get.snackbar('Error', backgroundColor: AppColor.error, 'Data harus diisi semua');
       return;
     }
 

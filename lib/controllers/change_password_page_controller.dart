@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:nextbasis_hris/common/app_color.dart';
 import 'package:nextbasis_hris/data/repo/user_repository.dart';
 
 class ChangePasswordPageController extends GetxController {
@@ -23,17 +24,17 @@ class ChangePasswordPageController extends GetxController {
     if (currentPasswordController.text.isEmpty ||
         newPasswordController.text.isEmpty ||
         confirmPasswordController.text.isEmpty) {
-      Get.snackbar('Error', 'Please fill all data');
+      Get.snackbar('Error', backgroundColor: AppColor.error, 'Please fill all data');
       return;
     }
 
     if (newPasswordController.text.length < 8) {
-      Get.snackbar('Error', 'New Password must be at least 8 characters long');
+      Get.snackbar('Error', backgroundColor: AppColor.error, 'New Password must be at least 8 characters long');
       return;
     }
 
     if (newPasswordController.text != confirmPasswordController.text) {
-      Get.snackbar('Error', 'New Password and Confirm Password do not match');
+      Get.snackbar('Error', backgroundColor: AppColor.error, 'New Password and Confirm Password do not match');
       return;
     }
 
@@ -46,10 +47,10 @@ class ChangePasswordPageController extends GetxController {
 
       if (success) {
         resetFields();
-        Get.snackbar('Success', 'Password successfully changed');
+        Get.snackbar('Success', backgroundColor: AppColor.success, 'Password successfully changed');
       }
     } catch (e) {
-      Get.snackbar('Error', e.toString().replaceFirst('Exception: ', ''));
+      Get.snackbar('Error', backgroundColor: AppColor.error, e.toString().replaceFirst('Exception: ', ''));
     }
   }
 

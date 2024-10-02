@@ -286,7 +286,7 @@ class TripDetailPage extends GetView<TripDetailController> {
                                                   trip.idBusinessTrip!,
                                                   extendDayValue);
                                             } else {
-                                              Get.snackbar('Error',
+                                              Get.snackbar('Error', backgroundColor: AppColor.error,
                                                   'Please enter a valid number of days');
                                             }
                                           },
