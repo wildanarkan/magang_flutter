@@ -38,9 +38,17 @@ void main() async {
   // Listener untuk notifikasi ketika aplikasi sedang dibuka (foreground)
   FirebaseMessaging.onMessage.listen((RemoteMessage message) {
     print('Got a message while in the foreground!');
+
     if (message.notification != null) {
-      print('Message also contained a notification: ${message.notification}');
-      // Tampilkan notifikasi di UI atau Snackbar
+      String? title = message.notification?.title;
+      String? body = message.notification?.body;
+      print('Message contained a notification: $title - $body');
+
+      Get.snackbar(
+        title ?? 'Notification',
+        body ?? 'You have a new message.',
+        backgroundColor: AppColor.success,
+      );
     }
   });
 
