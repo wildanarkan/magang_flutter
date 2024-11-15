@@ -148,7 +148,10 @@ class TripAddController extends GetxController {
       log('Business trip ID: ${responseData['data']['id']}');
       return responseData['data']['id'];
     } catch (e) {
-      Get.snackbar('Error', backgroundColor: AppColor.error, e.toString().replaceFirst('Exception: ', ''));
+      Get.snackbar(
+          'Error',
+          backgroundColor: AppColor.error,
+          e.toString().replaceFirst('Exception: ', ''));
     }
   }
 
@@ -165,7 +168,10 @@ class TripAddController extends GetxController {
         log('Error Failed create trip detail');
       }
     } catch (e) {
-      Get.snackbar('Error', backgroundColor: AppColor.error, e.toString().replaceFirst('Exception: ', ''));
+      Get.snackbar(
+          'Error',
+          backgroundColor: AppColor.error,
+          e.toString().replaceFirst('Exception: ', ''));
     }
   }
 
@@ -213,7 +219,10 @@ class TripAddController extends GetxController {
   void addEmployeeToList() {
     if (employeeList.length < 2) {
       if (selectedAllUser.isEmpty) {
-        Get.snackbar('Error', backgroundColor: AppColor.error, 'Mohon pilih employee terlebih dahulu');
+        Get.snackbar(
+            'Error',
+            backgroundColor: AppColor.error,
+            'Mohon pilih employee terlebih dahulu');
       } else if (!employeeList
           .any((employee) => employee.fullName == selectedAllUser.value)) {
         var selectedUser = _apiDataAllUser
@@ -222,21 +231,30 @@ class TripAddController extends GetxController {
             id: selectedUser['id'], fullName: selectedAllUser.value));
         log('Added Employee: ${selectedAllUser.value}, ID: ${selectedUser['id']}');
       } else {
-        Get.snackbar('Error', backgroundColor: AppColor.error, 'Employee sudah ada dalam list');
+        Get.snackbar(
+            'Error',
+            backgroundColor: AppColor.error,
+            'Employee sudah ada dalam list');
       }
     } else {
-      Get.snackbar('Error', backgroundColor: AppColor.error, 'Maksimal hanya bisa menambah 2 orang');
+      Get.snackbar(
+          'Error',
+          backgroundColor: AppColor.error,
+          'Anda tidak dapat menghapus karyawan yang sedang login');
     }
     update();
   }
 
   void removeEmployee(EmployeeName employee) {
-    
     // Cek jika employee adalah pengguna yang sedang login
-    if (employee.fullName == currentUserName.value && navigatorController.rolePriority.value > 2 ){
+    if (employee.fullName == currentUserName.value &&
+        navigatorController.rolePriority.value > 2) {
       // Perbaikan di sini
       Get.snackbar(
-          'Error', 'Anda tidak dapat menghapus karyawan yang sedang login');
+          'Error',
+          backgroundColor: AppColor.error,
+          'Maksimal hanya bisa menambah 2 orang');
+
       return;
     }
 

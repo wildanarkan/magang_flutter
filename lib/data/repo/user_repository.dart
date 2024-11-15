@@ -4,6 +4,8 @@ import 'dart:developer';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:http/http.dart' as http;
+import 'package:http_parser/http_parser.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:nextbasis_hris/common/app_endpoint.dart';
 import 'package:nextbasis_hris/data/models/login_model.dart';
 import 'package:nextbasis_hris/data/models/payroll_model.dart';
@@ -108,25 +110,44 @@ class UserRepository extends GetxService {
     }
   }
 
-  Future<Map<String, dynamic>> checkInOut(
-      double latitude, double longitude) async {
-    final token = storage.read('accessToken');
-    log(latitude.toString());
-    log(longitude.toString());
-    final response = await http.post(
-      Uri.parse(AppEndpoint.checkInActivity),
-      body: json.encode({
-        'latitude': latitude,
-        'longtitude': longitude,
-      }),
-      headers: {
-        'Authorization': 'Bearer $token',
-        'Content-Type': 'application/json',
-      },
-    );
+  Future<Map<String, dynamic>> checkInOut({
+    required double latitude,
+    required double longitude,
+    XFile? photo,
+  }) async {
+    final token = GetStorage().read('accessToken');
+    final uri = Uri.parse(AppEndpoint.checkInActivity);
 
+    // Membuat multipart request
+    var request = http.MultipartRequest('POST', uri)
+      ..headers['Authorization'] = 'Bearer $token'
+      ..fields['latitude'] = latitude.toString()
+      ..fields['longitude'] = longitude.toString();
+
+    // Tambahkan file jika ada
+    if (photo != null) {
+      request.files.add(await http.MultipartFile.fromPath(
+        'photo',
+        photo.path,
+        contentType: MediaType('image', 'jpeg'),
+      ));
+    }
+
+    // Kirim request
+    final streamedResponse = await request.send();
+    final response = await http.Response.fromStream(streamedResponse);
+
+    // Periksa status respons
     if (response.statusCode == 200) {
-      return json.decode(response.body);
+      final data = json.decode(response.body);
+      log(data.toString());
+
+      // Jika status dari API adalah 1, lempar error
+      if (data['status'] == 1) {
+        throw Exception(data['message'] ?? 'Check-in/out gagal');
+      }
+
+      return data;
     } else if (response.statusCode == 400) {
       final data = json.decode(response.body);
       throw Exception(data['message']);

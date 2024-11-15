@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:floating_draggable_widget/floating_draggable_widget.dart';
 import 'package:flutter/material.dart';
@@ -34,20 +36,27 @@ class HomePage extends GetView<NavigatorControllers> {
         () => FloatingActionButton(
           onPressed: homePageController.isLoading.value
               ? null
-              : () {
-                  Get.dialog(
-                    BuildDialogConfirmation(
-                      title: "Are you sure?",
-                      message: "Do you really want to check in/out?",
-                      onCancel: () {
-                        Get.back(closeOverlays: true);
-                      },
-                      onConfirm: () {
-                        Get.back(closeOverlays: true);
-                        homePageController.checkInOut();
-                      },
-                    ),
-                  );
+              : () async {
+                  await homePageController.fetchCurrentBusinessTrips();
+                  // Jika perjalanan tidak kosong, langsung ke GPS Camera
+                  if (homePageController.currentBusinessTrip.isNotEmpty) {
+                    log('camera');
+                    homePageController.openGpsCamera();
+                  } else {
+                    Get.dialog(
+                      BuildDialogConfirmation(
+                        title: "Are you sure?",
+                        message: "Do you really want to check in/out?",
+                        onCancel: () {
+                          Get.back(closeOverlays: true);
+                        },
+                        onConfirm: () {
+                          Get.back(closeOverlays: true);
+                          homePageController.checkInOut();
+                        },
+                      ),
+                    );
+                  }
                 },
           backgroundColor: homePageController.isLoading.value
               ? Colors.white
