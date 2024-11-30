@@ -125,7 +125,8 @@ class _GpsCameraScreenState extends State<GpsCameraScreen> {
         ],
       ),
       floatingActionButton: FloatingActionButton(
-        child: const Icon(Icons.camera),
+        backgroundColor: Colors.blue,
+        child: const Icon(Icons.camera, color: Colors.white,),
         onPressed: () async {
           try {
             await _updatePosition();

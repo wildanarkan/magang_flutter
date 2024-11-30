@@ -27,7 +27,7 @@ class NavigatorControllers extends GetxController {
   RxString email = 'Null'.obs;
   RxInt nip = 0.obs;
   RxInt nik = 0.obs;
-  RxString profilePhotoUrl = 'dudul3.jpeg'.obs;
+  RxString profilePhotoUrl = 'dudul1.jpeg'.obs;
   String? accessToken; // Tambahkan ini untuk menyimpan token
   int? userId; // Tambahkan ini untuk menyimpan ID pengguna
   final storage = GetStorage();
@@ -54,7 +54,6 @@ class NavigatorControllers extends GetxController {
       nik.value = data['nik'] ?? 'No Data';
       city.value = data['city'] ?? 'No Data';
       profilePhotoUrl.value = data['profile_photo'] ?? '';
-
       log('User Id :${userId.toString()}');
 
       if (userId != null) {
