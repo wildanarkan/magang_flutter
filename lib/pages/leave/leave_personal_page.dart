@@ -133,6 +133,16 @@ class LeavePersonalPage extends GetView<LeavePersonalController> {
                     },
                   ),
                 ),
+                const Padding(
+                  padding: EdgeInsets.all(5),
+                  child: Text(
+                    '-',
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 16,
+                    ),
+                  ),
+                ),
                 Expanded(
                   child: TextField(
                     controller: controller.endDateController.value,
@@ -151,9 +161,8 @@ class LeavePersonalPage extends GetView<LeavePersonalController> {
                       );
                       if (pickedDate != null) {
                         controller.selectedEndDate.value = pickedDate;
-                        controller.endDateController.value.text = pickedDate
-                            .toIso8601String()
-                            .substring(0, 10);
+                        controller.endDateController.value.text =
+                            pickedDate.toIso8601String().substring(0, 10);
                       }
                     },
                   ),
@@ -168,7 +177,10 @@ class LeavePersonalPage extends GetView<LeavePersonalController> {
                 final endDate = controller.selectedEndDate.value;
                 if ((startDate != null && endDate == null) ||
                     (startDate == null && endDate != null)) {
-                  Get.snackbar('Error', backgroundColor: AppColor.error, 'Data tanggal harus diisi semua');
+                  Get.snackbar(
+                      'Error',
+                      backgroundColor: AppColor.error,
+                      'Data tanggal harus diisi semua');
                   return;
                 }
                 controller.startDateController.value.clear();

@@ -13,18 +13,18 @@ import 'package:nextbasis_hris/pages/profile/profile_page.dart';
 
 class NavigatorControllers extends GetxController {
   RxInt selectedPage = 0.obs;
-  RxString firstName = 'Null'.obs;
-  RxString lastName = 'Null'.obs;
-  RxString gender = 'Null'.obs;
-  RxString religion = 'Null'.obs;
-  RxString role = 'Null'.obs;
+  RxString firstName = '...'.obs;
+  RxString lastName = '...'.obs;
+  RxString gender = '...'.obs;
+  RxString religion = '...'.obs;
+  RxString role = '...'.obs;
   RxInt rolePriority = 0.obs;
   RxInt employee_group = 0.obs;
-  RxString position = 'Null'.obs;
-  RxString phone_number = 'Null'.obs;
-  RxString city = 'Null'.obs;
-  RxString address = 'Null'.obs;
-  RxString email = 'Null'.obs;
+  RxString position = '...'.obs;
+  RxString phone_number = '...'.obs;
+  RxString city = '...'.obs;
+  RxString address = '...'.obs;
+  RxString email = '...'.obs;
   RxInt nip = 0.obs;
   RxInt nik = 0.obs;
   RxString profilePhotoUrl = 'dudul1.jpeg'.obs;

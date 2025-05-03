@@ -70,7 +70,7 @@ class HomePage extends GetView<NavigatorControllers> {
                   color: AppColor.primary,
                 )
               : const Icon(
-                  Icons.fingerprint,
+                  Icons.login,
                   size: 35,
                   color: Colors.white,
                 ),

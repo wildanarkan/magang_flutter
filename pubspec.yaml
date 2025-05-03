@@ -48,8 +48,9 @@ dependencies:
   image_cropper: ^8.0.2
   image_picker: ^1.1.2
   intl: ^0.19.0
-  open_file: ^3.2.1
+  open_file: ^3.5.10
   path_provider: ^2.1.5
+  permission_handler: ^12.0.0+1
   pin_code_fields: ^8.0.1
   url_launcher: ^6.3.0
 

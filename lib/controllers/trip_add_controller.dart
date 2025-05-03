@@ -216,49 +216,61 @@ class TripAddController extends GetxController {
     }
   }
 
-  void addEmployeeToList() {
-    if (employeeList.length < 2) {
-      if (selectedAllUser.isEmpty) {
-        Get.snackbar(
-            'Error',
-            backgroundColor: AppColor.error,
-            'Mohon pilih employee terlebih dahulu');
-      } else if (!employeeList
-          .any((employee) => employee.fullName == selectedAllUser.value)) {
-        var selectedUser = _apiDataAllUser
-            .firstWhere((user) => user['full_name'] == selectedAllUser.value);
-        employeeList.add(EmployeeName(
-            id: selectedUser['id'], fullName: selectedAllUser.value));
-        log('Added Employee: ${selectedAllUser.value}, ID: ${selectedUser['id']}');
-      } else {
-        Get.snackbar(
-            'Error',
-            backgroundColor: AppColor.error,
-            'Employee sudah ada dalam list');
-      }
-    } else {
-      Get.snackbar(
-          'Error',
-          backgroundColor: AppColor.error,
-          'Anda tidak dapat menghapus karyawan yang sedang login');
-    }
-    update();
+ void addEmployeeToList() {
+  if (employeeList.length >= 2) {
+    Get.snackbar(
+      'Error',
+      'Maksimal 2 employee dapat ditambahkan',
+      backgroundColor: AppColor.error,
+    );
+    return;
   }
 
-  void removeEmployee(EmployeeName employee) {
-    // Cek jika employee adalah pengguna yang sedang login
-    if (employee.fullName == currentUserName.value &&
-        navigatorController.rolePriority.value > 2) {
-      // Perbaikan di sini
-      Get.snackbar(
-          'Error',
-          backgroundColor: AppColor.error,
-          'Maksimal hanya bisa menambah 2 orang');
-
-      return;
-    }
-
-    employeeList.remove(employee);
-    update();
+  if (selectedAllUser.isEmpty) {
+    Get.snackbar(
+      'Error',
+      'Mohon pilih employee terlebih dahulu',
+      backgroundColor: AppColor.error,
+    );
+    return;
   }
+
+  if (employeeList.any((employee) => employee.fullName == selectedAllUser.value)) {
+    Get.snackbar(
+      'Error',
+      'Employee sudah ada dalam list',
+      backgroundColor: AppColor.error,
+    );
+    return;
+  }
+
+  var selectedUser = _apiDataAllUser
+      .firstWhere((user) => user['full_name'] == selectedAllUser.value);
+
+  // Tambahkan employee ke dalam list
+  employeeList.add(EmployeeName(
+    id: selectedUser['id'],
+    fullName: selectedAllUser.value,
+  ));
+
+  log('Added Employee: ${selectedAllUser.value}, ID: ${selectedUser['id']}');
+  update();
+}
+
+void removeEmployee(EmployeeName employee) {
+  // Cegah user yang sedang login menghapus dirinya sendiri, kecuali dia punya hak akses tinggi
+  if (employee.fullName == currentUserName.value && 
+      navigatorController.rolePriority.value >= 2) {
+    Get.snackbar(
+      'Error',
+      'Anda tidak bisa menghapus diri sendiri dari daftar trip',
+      backgroundColor: AppColor.error,
+    );
+    return;
+  }
+
+  employeeList.remove(employee);
+  update();
+}
+
 }

@@ -9,6 +9,7 @@ import 'package:nextbasis_hris/common/app_endpoint.dart';
 import 'package:nextbasis_hris/data/models/business_trip_model.dart';
 import 'package:open_file/open_file.dart';
 import 'package:path_provider/path_provider.dart';
+import 'package:permission_handler/permission_handler.dart';
 
 class BusinessTripRepository extends GetxService {
   final storage = GetStorage();
@@ -174,11 +175,38 @@ class BusinessTripRepository extends GetxService {
       // Mengunduh file dari URL
       final response = await http.get(Uri.parse(url));
       await file.writeAsBytes(response.bodyBytes);
-
+      // final result = await OpenFile.open(file.path);
       // Membuka file yang telah diunduh
-      OpenFile.open(file.path);
+      // OpenFile.open(file.path);
+      requestPermissionAndOpen(file.path);
+      // print('OpenFile result: ${result.message}');
     } catch (e) {
       throw Exception('Photo document tidak dapat ditemukan: $e');
+    }
+  }
+
+  Future<void> requestPermissionAndOpen(String filePath) async {
+    var status = await Permission.storage.status;
+
+    if (!status.isGranted) {
+      status = 
+      // await Permission.storage.request();
+      // await Permission.photos.request();
+      await Permission.mediaLibrary.request();
+    }
+
+    if (status.isGranted) {
+      final result = await OpenFile.open(filePath);
+      print('OpenFile result: ${result.message}');
+    } else if (status.isPermanentlyDenied) {
+      Get.snackbar(
+        'Permission permanently denied',
+        'Silakan aktifkan izin penyimpanan di pengaturan aplikasi',
+      );
+      openAppSettings(); // Buka pengaturan app
+    } else {
+      Get.snackbar('Permission denied',
+          'Tidak dapat membuka dokumen karena izin ditolak');
     }
   }
 }

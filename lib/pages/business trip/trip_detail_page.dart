@@ -480,7 +480,7 @@ class TripDetailPage extends GetView<TripDetailController> {
               ),
             ],
           ),
-          if(trip.status != 'Draft')
+          if(trip.status != 'Draft' && trip.status != 'Canceled')
           Align(
             alignment: Alignment.bottomCenter,
             child: Padding(

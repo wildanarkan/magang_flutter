@@ -129,21 +129,23 @@ class ProfilePage extends GetView<NavigatorControllers> {
                           ),
                         ),
                       ),
-                      BuildButton(
-                        context: context,
-                        title: 'Logout',
-                        backgroundColor: Colors.white,
-                        foregroundColor: AppColor.decline,
-                        borderColor: AppColor.decline,
-                        width: 320,
-                        onPressed: () {
-                          final HomePageController homePageController =
-                              Get.find<HomePageController>();
-                          homePageController.savedBusinessTrips.clear();
-                          print(homePageController.savedBusinessTrips.length);
-
-                          loginController.logout();
-                        },
+                      Center(
+                        child: BuildButton(
+                          context: context,
+                          title: 'Logout',
+                          backgroundColor: Colors.white,
+                          foregroundColor: AppColor.decline,
+                          borderColor: AppColor.decline,
+                          width: 320,
+                          onPressed: () {
+                            final HomePageController homePageController =
+                                Get.find<HomePageController>();
+                            homePageController.savedBusinessTrips.clear();
+                            print(homePageController.savedBusinessTrips.length);
+                        
+                            loginController.logout();
+                          },
+                        ),
                       ),
                     ],
                   ),
