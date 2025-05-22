@@ -1,0 +1,2 @@
+D:/github/clone/magang_flutter/android/app/.cxx/Debug/4z6qb5p6/arm64-v8a/CMakeFiles/edit_cache.dir
+D:/github/clone/magang_flutter/android/app/.cxx/Debug/4z6qb5p6/arm64-v8a/CMakeFiles/rebuild_cache.dir

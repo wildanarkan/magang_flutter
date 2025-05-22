@@ -1,7 +1,8 @@
 class AppEndpoint {
   // static const baseUrl = 'http://192.168.1.104:8000/';
   // static const baseUrl = 'http://192.168.1.30:8000/';
-  static const baseUrl = 'http://192.168.220.191:8000/';
+  // static const baseUrl = 'http://192.168.220.191:8000/';
+  static const baseUrl = 'http://192.168.1.52:8000/';
   static const baseAppUrl = '${baseUrl}api/app/';
   static const photoUrl = '${baseUrl}storage/profile_photos/';
   static const photoProofUrl = '${baseUrl}storage/photo_proofs/';

@@ -26,18 +26,22 @@ if (flutterVersionName == null) {
 
 android {
     namespace = "com.nextbasis.hris"
-    compileSdk = flutter.compileSdkVersion
+    compileSdk = 35  // Updated to support permission_handler_android
     ndkVersion = flutter.ndkVersion
 
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_1_8
-        targetCompatibility = JavaVersion.VERSION_1_8
+        sourceCompatibility = JavaVersion.VERSION_17
+        targetCompatibility = JavaVersion.VERSION_17
+    }
+    
+    kotlinOptions {
+        jvmTarget = '17'
     }
 
     defaultConfig {
         applicationId "com.nextbasis.hris"
         minSdk = flutter.minSdkVersion
-        targetSdk = flutter.targetSdkVersion
+        targetSdk = 35  // Updated to match compileSdk
         versionCode = flutterVersionCode.toInteger()
         versionName = flutterVersionName
     }
